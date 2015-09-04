@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	xmlns:bridge="http://www.liferay.com/xml/ns/liferay-faces-bridge-2.0-extension"
+	xmlns:util="http://www.liferay.com/xml/ns/liferay-faces-util-extension">
+	<name>LiferayFacesBridgeExt</name>
+	<ordering>
+		<after>
+			<name>LiferayFacesBridge</name>
+		</after>
+		<before>
+			<others/>
+		</before>
+	</ordering>
+	<factory>
+		<client-window-factory>com.liferay.faces.bridge.lifecycle.liferay.internal.ClientWindowFactoryLiferayImpl</client-window-factory>
+		<partial-view-context-factory>com.liferay.faces.bridge.context.liferay.internal.PartialViewContextFactoryLiferayImpl</partial-view-context-factory>
+		<factory-extension>
+			<bridge:body-script-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.BodyScriptEncoderFactoryLiferayImpl</bridge:body-script-encoder-factory>
+			<bridge:bridge-context-factory>com.liferay.faces.bridge.context.liferay.internal.BridgeContextFactoryLiferayImpl</bridge:bridge-context-factory>
+			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
+			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
+			<bridge:head-response-writer-factory>com.liferay.faces.bridge.context.liferay.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
+			<bridge:bridge-portlet-context-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletContextFactoryLiferayImpl</bridge:bridge-portlet-context-factory>
+			<bridge:request-attribute-inspector-factory>com.liferay.faces.bridge.scope.liferay.internal.RequestAttributeInspectorFactoryLiferayImpl</bridge:request-attribute-inspector-factory>
+			<bridge:window-state-validator-factory>com.liferay.faces.bridge.liferay.internal.WindowStateValidatorFactoryLiferayImpl</bridge:window-state-validator-factory>
+			<util:browser-sniffer-factory>com.liferay.faces.bridge.client.liferay.internal.BrowserSnifferFactoryLiferayImpl</util:browser-sniffer-factory>
+			<util:resource-validator-factory>com.liferay.faces.bridge.application.liferay.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
+		</factory-extension>
+	</factory>
+	<lifecycle>
+		<!-- Section 5.2.6 also indicates that the bridge must proactively ensure that only the- RESTORE_VIEW phase -->
+		<!-- executes, and Section 6.4 indicates that a PhaseListener must be used. The RenderRequestPhaseListener -->
+		<!-- satisfies this requirement. -->
+		<phase-listener>com.liferay.faces.bridge.event.liferay.internal.LiferayPageTopPhaseListener</phase-listener>
+	</lifecycle>
+</faces-config>
