@@ -18,18 +18,18 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.faces.FacesWrapper;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 import com.liferay.faces.bridge.context.BridgePortalContext;
+import com.liferay.faces.util.helper.Wrapper;
 
 
 /**
  * @author  Neil Griffin
  */
-public abstract class BridgePortalContextBaseImpl implements BridgePortalContext, FacesWrapper<PortalContext> {
+public abstract class BridgePortalContextBaseImpl implements BridgePortalContext, Wrapper<PortalContext> {
 
 	// Private Data Members
 	private List<String> propertyNameList;

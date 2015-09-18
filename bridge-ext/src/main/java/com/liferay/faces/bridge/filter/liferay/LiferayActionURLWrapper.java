@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
-import javax.faces.FacesWrapper;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
@@ -25,12 +24,13 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import com.liferay.faces.bridge.filter.liferay.LiferayActionURL;
+import com.liferay.faces.util.helper.Wrapper;
 
 
 /**
  * @author  Neil Griffin
  */
-public abstract class LiferayActionURLWrapper implements LiferayActionURL, FacesWrapper<LiferayActionURL> {
+public abstract class LiferayActionURLWrapper implements LiferayActionURL, Wrapper<LiferayActionURL> {
 
 	public void addProperty(String key, String value) {
 		getWrapped().addProperty(key, value);
