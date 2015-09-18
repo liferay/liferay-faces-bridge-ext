@@ -39,7 +39,7 @@ public class LiferayPageTopPhaseListener implements PhaseListener {
 	public LiferayPageTopPhaseListener() {
 
 		if (LIFERAY_PORTAL_DETECTED) {
-			delegatePhaseListener = new LiferyPageTopPhaseListenerCompat();
+			delegatePhaseListener = new LiferayPageTopPhaseListenerCompat();
 		}
 	}
 
