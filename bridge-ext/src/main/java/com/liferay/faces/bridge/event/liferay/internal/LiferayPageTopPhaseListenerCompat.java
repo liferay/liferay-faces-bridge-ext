@@ -32,7 +32,7 @@ import com.liferay.portal.util.PortalUtil;
  *
  * @author  Neil Griffin
  */
-public class LiferyPageTopPhaseListenerCompat implements PhaseListener {
+public class LiferayPageTopPhaseListenerCompat implements PhaseListener {
 
 	// serialVersionUID
 	private static final long serialVersionUID = 8713570232856573935L;
