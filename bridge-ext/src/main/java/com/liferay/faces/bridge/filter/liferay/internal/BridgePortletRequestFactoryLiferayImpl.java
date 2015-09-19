@@ -13,18 +13,18 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.EventRequest;
+import javax.portlet.PortalContext;
+import javax.portlet.RenderRequest;
+import javax.portlet.ResourceRequest;
+
 import com.liferay.faces.bridge.context.BridgePortalContext;
 import com.liferay.faces.bridge.context.liferay.internal.BridgePortalContextLiferayImpl;
 import com.liferay.faces.bridge.filter.BridgePortletRequestFactory;
 import com.liferay.faces.util.product.Product;
 import com.liferay.faces.util.product.ProductConstants;
 import com.liferay.faces.util.product.ProductMap;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.EventRequest;
-import javax.portlet.PortalContext;
-import javax.portlet.RenderRequest;
-import javax.portlet.ResourceRequest;
 
 
 /**
