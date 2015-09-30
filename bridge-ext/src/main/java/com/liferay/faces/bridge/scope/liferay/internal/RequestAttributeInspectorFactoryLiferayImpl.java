@@ -45,7 +45,7 @@ public class RequestAttributeInspectorFactoryLiferayImpl extends RequestAttribut
 		return new RequestAttributeInspectorLiferayImpl(wrappedRequestAttributeInspector);
 	}
 
-	@Override
+	// Java 1.6+ @Override
 	public RequestAttributeInspectorFactory getWrapped() {
 		return wrappedRequestAttributeInspectorFactory;
 	}
