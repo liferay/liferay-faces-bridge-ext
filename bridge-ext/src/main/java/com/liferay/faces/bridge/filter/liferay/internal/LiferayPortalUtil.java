@@ -13,12 +13,12 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
-import java.lang.reflect.Method;
-
 import javax.portlet.PortletRequest;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
+
+import com.liferay.portal.util.PortalUtil;
 
 
 /**
@@ -27,10 +27,6 @@ import com.liferay.faces.util.logging.LoggerFactory;
  */
 public class LiferayPortalUtil {
 
-	// Private Constants
-	private static final String PORTAL_UTIL_FQCN = "com.liferay.portal.util.PortalUtil";
-	private static final String METHOD_NAME_GET_PORTLET_ID = "getPortletId";
-
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(LiferayPortalUtil.class);
 
@@ -38,9 +34,7 @@ public class LiferayPortalUtil {
 		String portletId = null;
 
 		try {
-			Class<?> portalUtilClass = Class.forName(PORTAL_UTIL_FQCN);
-			Method method = portalUtilClass.getMethod(METHOD_NAME_GET_PORTLET_ID, new Class[] { PortletRequest.class });
-			portletId = (String) method.invoke(null, new Object[] { portletRequest });
+			portletId = PortalUtil.getPortletId(portletRequest);
 
 			if (portletRequest.getParameter("wsrp") != null) {
 

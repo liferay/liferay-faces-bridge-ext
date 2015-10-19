@@ -35,12 +35,18 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 
 	@Override
 	public ActionResponse getActionResponse(ActionResponse actionResponse) {
-		return getWrapped().getActionResponse(actionResponse);
+
+		ActionResponse wrappedActionResponse = getWrapped().getActionResponse(actionResponse);
+
+		return new ActionResponseBridgeLiferayImpl(wrappedActionResponse);
 	}
 
 	@Override
 	public EventResponse getEventResponse(EventResponse eventResponse) {
-		return getWrapped().getEventResponse(eventResponse);
+
+		EventResponse wrappedEventResponse = getWrapped().getEventResponse(eventResponse);
+
+		return new EventResponseBridgeLiferayImpl(wrappedEventResponse);
 	}
 
 	@Override
