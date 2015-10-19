@@ -45,7 +45,7 @@ public class RenderResponseBridgeLiferayImpl extends RenderResponseWrapper {
 
 		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
 
-		return liferayURLFactory.getLiferayActionURL(bridgeContext, getResponse(), getNamespace());
+		return liferayURLFactory.getLiferayActionURL(bridgeContext, getResponse(), super.getNamespace());
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class RenderResponseBridgeLiferayImpl extends RenderResponseWrapper {
 
 		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
 
-		return liferayURLFactory.getLiferayRenderURL(bridgeContext, getResponse(), getNamespace(),
+		return liferayURLFactory.getLiferayRenderURL(bridgeContext, getResponse(), super.getNamespace(),
 				isFriendlyURLMapperEnabled(bridgeContext));
 	}
 
@@ -62,7 +62,7 @@ public class RenderResponseBridgeLiferayImpl extends RenderResponseWrapper {
 
 		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
 
-		return liferayURLFactory.getLiferayResourceURL(bridgeContext, getResponse(), getNamespace());
+		return liferayURLFactory.getLiferayResourceURL(bridgeContext, getResponse(), super.getNamespace());
 	}
 
 	protected boolean isFriendlyURLMapperEnabled(BridgeContext bridgeContext) {
