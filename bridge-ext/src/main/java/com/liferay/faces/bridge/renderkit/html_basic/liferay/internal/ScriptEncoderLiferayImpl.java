@@ -17,14 +17,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import com.liferay.faces.bridge.client.liferay.internal.ScriptDataUtil;
-import com.liferay.faces.bridge.render.BodyScriptEncoder;
 import com.liferay.faces.util.client.Script;
+import com.liferay.faces.util.client.ScriptEncoder;
 import com.liferay.faces.util.context.FacesRequestContext;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -34,15 +33,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 /**
  * @author  Neil Griffin
  */
-public class BodyScriptEncoderLiferayImpl implements BodyScriptEncoder {
+public class ScriptEncoderLiferayImpl implements ScriptEncoder {
 
 	@Override
-	public void encodeScripts(FacesContext facesContext, ResponseWriter responseWriter, UIComponent uiComponent)
-		throws IOException {
+	public void encodeScripts(ResponseWriter responseWriter) throws IOException {
 
 		FacesRequestContext facesRequestContext = FacesRequestContext.getCurrentInstance();
 		List<Script> scripts = facesRequestContext.getScripts();
 
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		Map<String, Object> requestMap = externalContext.getRequestMap();
 		ScriptData scriptData = (ScriptData) requestMap.get(WebKeys.AUI_SCRIPT_DATA);
