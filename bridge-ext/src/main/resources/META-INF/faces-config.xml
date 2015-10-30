@@ -15,7 +15,6 @@
 	<factory>
 		<partial-view-context-factory>com.liferay.faces.bridge.context.liferay.internal.PartialViewContextFactoryLiferayImpl</partial-view-context-factory>
 		<factory-extension>
-			<bridge:body-script-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.BodyScriptEncoderFactoryLiferayImpl</bridge:body-script-encoder-factory>
 			<bridge:bridge-context-factory>com.liferay.faces.bridge.context.liferay.internal.BridgeContextFactoryLiferayImpl</bridge:bridge-context-factory>
 			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
 			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
@@ -26,6 +25,7 @@
 			<bridge:window-state-validator-factory>com.liferay.faces.bridge.liferay.internal.WindowStateValidatorFactoryLiferayImpl</bridge:window-state-validator-factory>
 			<util:browser-sniffer-factory>com.liferay.faces.bridge.client.liferay.internal.BrowserSnifferFactoryLiferayImpl</util:browser-sniffer-factory>
 			<util:resource-validator-factory>com.liferay.faces.bridge.application.liferay.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
+			<util:script-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.ScriptEncoderFactoryLiferayImpl</util:script-encoder-factory>
 		</factory-extension>
 	</factory>
 	<lifecycle>
