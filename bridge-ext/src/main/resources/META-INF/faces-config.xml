@@ -13,7 +13,6 @@
 		</before>
 	</ordering>
 	<factory>
-		<partial-view-context-factory>com.liferay.faces.bridge.context.liferay.internal.PartialViewContextFactoryLiferayImpl</partial-view-context-factory>
 		<factory-extension>
 			<bridge:bridge-context-factory>com.liferay.faces.bridge.context.liferay.internal.BridgeContextFactoryLiferayImpl</bridge:bridge-context-factory>
 			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
