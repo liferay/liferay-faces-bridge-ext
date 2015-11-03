@@ -26,9 +26,8 @@
 		</factory-extension>
 	</factory>
 	<lifecycle>
-		<!-- Section 5.2.6 also indicates that the bridge must proactively ensure that only the- RESTORE_VIEW phase -->
-		<!-- executes, and Section 6.4 indicates that a PhaseListener must be used. The RenderRequestPhaseListener -->
-		<!-- satisfies this requirement. -->
+		<!-- Add the LiferayPageTopPhaseListener in order to remove duplicate resources from the -->
+		<!-- LIFERAY_SHARED_PAGE_TOP request attribute. -->
 		<phase-listener>com.liferay.faces.bridge.event.liferay.internal.LiferayPageTopPhaseListener</phase-listener>
 	</lifecycle>
 </faces-config>
