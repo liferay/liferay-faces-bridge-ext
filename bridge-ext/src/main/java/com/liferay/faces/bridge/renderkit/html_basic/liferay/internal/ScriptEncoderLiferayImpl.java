@@ -19,12 +19,8 @@ import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 
-import com.liferay.faces.bridge.client.liferay.internal.ScriptDataUtil;
 import com.liferay.faces.util.client.Script;
-import com.liferay.faces.util.client.ScriptEncoder;
-import com.liferay.faces.util.context.FacesRequestContext;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -33,17 +29,43 @@ import com.liferay.portal.kernel.util.WebKeys;
 /**
  * @author  Neil Griffin
  */
-public class ScriptEncoderLiferayImpl implements ScriptEncoder {
+public class ScriptEncoderLiferayImpl extends ScriptEncoderLiferayBaseImpl {
 
 	@Override
-	public void encodeScripts(ResponseWriter responseWriter) throws IOException {
+	public void encodeScripts(FacesContext facesContext, List<Script> scripts) throws IOException {
 
-		FacesRequestContext facesRequestContext = FacesRequestContext.getCurrentInstance();
-		List<Script> scripts = facesRequestContext.getScripts();
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		Map<String, Object> requestMap = externalContext.getRequestMap();
+		ScriptData scriptData = getScriptData(requestMap);
+		String portletId = getPortletId(requestMap);
+
+		for (Script script : scripts) { 
+			scriptDataAppendScript(scriptData, portletId, script);
+		}
+	}
+
+	@Override
+	public void encodeScript(FacesContext facesContext, Script script) throws IOException {
+
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		ScriptData scriptData = getScriptData(requestMap);
+		String portletId = getPortletId(requestMap);
+		scriptDataAppendScript(scriptData, portletId, script);		
+	}
+
+	@Override
+	public void encodeScript(FacesContext facesContext, String script) throws IOException {
+
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		ScriptData scriptData = getScriptData(requestMap);
+		String portletId = getPortletId(requestMap);
+		scriptData.append(portletId, script, null, ScriptData.ModulesType.AUI);
+	}
+
+	private ScriptData getScriptData(Map<String, Object> requestMap) {
+
 		ScriptData scriptData = (ScriptData) requestMap.get(WebKeys.AUI_SCRIPT_DATA);
 
 		if (scriptData == null) {
@@ -52,6 +74,6 @@ public class ScriptEncoderLiferayImpl implements ScriptEncoder {
 			requestMap.put(WebKeys.AUI_SCRIPT_DATA, scriptData);
 		}
 
-		ScriptDataUtil.scriptDataAppendScripts(scriptData, requestMap, scripts);
+		return scriptData;
 	}
 }
