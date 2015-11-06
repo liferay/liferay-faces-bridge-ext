@@ -14,91 +14,87 @@
 package com.liferay.faces.bridge.renderkit.html_basic.liferay.internal;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
-import javax.el.ELContext;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 
-import com.liferay.faces.bridge.client.liferay.internal.ScriptDataUtil;
-import com.liferay.faces.bridge.context.liferay.internal.ScriptTagUtil;
 import com.liferay.faces.util.client.Script;
-import com.liferay.faces.util.client.ScriptEncoder;
-import com.liferay.faces.util.context.FacesRequestContext;
-import com.liferay.faces.util.factory.FactoryExtensionFinder;
-import com.liferay.faces.util.jsp.JspAdapterFactory;
-import com.liferay.faces.util.jsp.JspWriterWrapper;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalUtil;
 
 
 /**
  * @author  Kyle Stiemann
  */
-public class ScriptEncoderLiferayAjaxImpl implements ScriptEncoder {
+public class ScriptEncoderLiferayAjaxImpl extends ScriptEncoderLiferayBase {
 
 	@Override
-	public void encodeScripts(ResponseWriter responseWriter) throws IOException {
+	public void encodeScript(FacesContext facesContext, Script script) throws IOException {
 
-		FacesRequestContext facesRequestContext = FacesRequestContext.getCurrentInstance();
-		List<Script> scripts = facesRequestContext.getScripts();
 		ScriptData scriptData = new ScriptData();
-		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		Map<String, Object> requestMap = externalContext.getRequestMap();
-		ScriptDataUtil.scriptDataAppendScripts(scriptData, requestMap, scripts);
+		String portletId = getPortletId(requestMap);
+		scriptDataAppendScript(scriptData, portletId, script);
 
-		ScriptData savedScriptData = (ScriptData) requestMap.get(WebKeys.AUI_SCRIPT_DATA);
-		requestMap.put(WebKeys.AUI_SCRIPT_DATA, scriptData);
+		ResponseWriter responseWriter = facesContext.getResponseWriter();
+		responseWriter.write(scriptDataToString(scriptData, externalContext));
+	}
+
+	@Override
+	public void encodeScript(FacesContext facesContext, String script) throws IOException {
+
+		ScriptData scriptData = new ScriptData();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		String portletId = getPortletId(requestMap);
+		scriptDataAppendScript(scriptData, portletId, script);
+
+		ResponseWriter responseWriter = facesContext.getResponseWriter();
+		responseWriter.write(scriptDataToString(scriptData, externalContext));
+	}
+
+	@Override
+	public void encodeScripts(FacesContext facesContext, List<Script> scripts) throws IOException {
+
+		ScriptData scriptData = new ScriptData();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		String portletId = getPortletId(requestMap);
+
+		for (Script script : scripts) {
+			scriptDataAppendScript(scriptData, portletId, script);
+		}
+
+		ResponseWriter responseWriter = facesContext.getResponseWriter();
+		responseWriter.write(scriptDataToString(scriptData, externalContext));
+	}
+
+	private String scriptDataToString(ScriptData scriptData, ExternalContext externalContext) throws IOException {
 
 		PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
-		PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
-		HttpServletResponse httpServletResponse = PortalUtil.getHttpServletResponse(portletResponse);
-		ELContext elContext = facesContext.getELContext();
-		JspAdapterFactory jspAdapterFactory = (JspAdapterFactory) FactoryExtensionFinder.getFactory(
-				JspAdapterFactory.class);
-		JspWriter stringJspWriter = jspAdapterFactory.getStringJspWriter();
-		ScriptEncoderLiferayAjaxImpl.ScriptDataWriter scriptDataWriter =
-			new ScriptEncoderLiferayAjaxImpl.ScriptDataWriter(stringJspWriter);
-		PageContext stringPageContext = jspAdapterFactory.getStringPageContext(httpServletRequest, httpServletResponse,
-				elContext, scriptDataWriter);
-		ScriptTagUtil.flushScriptData(stringPageContext);
-		requestMap.put(WebKeys.AUI_SCRIPT_DATA, savedScriptData);
-		responseWriter.write(scriptDataWriter.toString());
+		ScriptDataWriter scriptDataWriter = new ScriptDataWriter();
+		scriptData.writeTo(httpServletRequest, scriptDataWriter);
+
+		return scriptDataWriter.toString();
 	}
 
-	private class ScriptDataWriter extends JspWriterWrapper {
-
-		// Private Data Members
-		private JspWriter wrappedStringJspWriter;
-
-		public ScriptDataWriter(JspWriter stringJspWriter) {
-			super(0, true);
-			this.wrappedStringJspWriter = stringJspWriter;
-		}
+	private class ScriptDataWriter extends StringWriter {
 
 		@Override
-		public void write(String string) throws IOException {
+		public void write(String string) {
 
 			if (!(string.startsWith("<script") || string.endsWith("script>"))) {
 				super.write(string);
 			}
-		}
-
-		@Override
-		public JspWriter getWrapped() {
-			return wrappedStringJspWriter;
 		}
 	}
 }
