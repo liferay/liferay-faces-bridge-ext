@@ -11,7 +11,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.client.liferay.internal;
+package com.liferay.faces.bridge.renderkit.html_basic.liferay.internal;
+
+import com.liferay.faces.util.client.ScriptEncoder;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 
@@ -19,9 +21,9 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 /**
  * @author  Kyle Stiemann
  */
-public class ScriptDataUtilCompat {
+public abstract class ScriptEncoderLiferayCompat implements ScriptEncoder {
 
-	protected static void scriptDataAppend(ScriptData scriptData, String portletId, String content, String use) {
-		scriptData.append(portletId, content, use);
+	protected void scriptDataAppendScript(ScriptData scriptData, String portletId, String script, String modules) {
+		scriptData.append(portletId, script, modules);
 	}
 }
