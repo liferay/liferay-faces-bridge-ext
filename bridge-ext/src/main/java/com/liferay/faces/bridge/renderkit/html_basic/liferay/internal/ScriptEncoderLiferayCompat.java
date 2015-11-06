@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 /**
  * @author  Kyle Stiemann
  */
-public abstract class ScriptEncoderLiferayCompatImpl implements ScriptEncoder {
+public abstract class ScriptEncoderLiferayCompat implements ScriptEncoder {
 
 	protected void scriptDataAppendScript(ScriptData scriptData, String portletId, String script, String modules) {
 		scriptData.append(portletId, script, modules, ScriptData.ModulesType.AUI);

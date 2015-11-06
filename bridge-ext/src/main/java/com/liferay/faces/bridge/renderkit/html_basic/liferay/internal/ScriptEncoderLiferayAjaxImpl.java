@@ -33,7 +33,7 @@ import com.liferay.portal.util.PortalUtil;
 /**
  * @author  Kyle Stiemann
  */
-public class ScriptEncoderLiferayAjaxImpl extends ScriptEncoderLiferayBaseImpl {
+public class ScriptEncoderLiferayAjaxImpl extends ScriptEncoderLiferayBase {
 
 	@Override
 	public void encodeScript(FacesContext facesContext, Script script) throws IOException {

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 /**
  * @author  Neil Griffin
  */
-public class ScriptEncoderLiferayImpl extends ScriptEncoderLiferayBaseImpl {
+public class ScriptEncoderLiferayImpl extends ScriptEncoderLiferayBase {
 
 	@Override
 	public void encodeScript(FacesContext facesContext, Script script) throws IOException {

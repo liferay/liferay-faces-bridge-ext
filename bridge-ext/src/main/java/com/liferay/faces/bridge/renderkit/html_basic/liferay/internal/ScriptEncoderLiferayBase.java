@@ -32,7 +32,7 @@ import com.liferay.portal.model.Portlet;
 /**
  * @author  Kyle Stiemann
  */
-public abstract class ScriptEncoderLiferayBaseImpl extends ScriptEncoderLiferayCompatImpl {
+public abstract class ScriptEncoderLiferayBase extends ScriptEncoderLiferayCompat {
 
 	protected void scriptDataAppendScript(ScriptData scriptData, String portletId, Script script) throws IOException {
 
