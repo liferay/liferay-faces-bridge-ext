@@ -23,9 +23,9 @@
 			<bridge:liferay-url-factory>com.liferay.faces.bridge.filter.liferay.internal.LiferayURLFactoryImpl</bridge:liferay-url-factory>
 			<bridge:request-attribute-inspector-factory>com.liferay.faces.bridge.scope.liferay.internal.RequestAttributeInspectorFactoryLiferayImpl</bridge:request-attribute-inspector-factory>
 			<bridge:window-state-validator-factory>com.liferay.faces.bridge.liferay.internal.WindowStateValidatorFactoryLiferayImpl</bridge:window-state-validator-factory>
+			<util:bottom-scripts-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.BottomScriptsEncoderFactoryLiferayImpl</util:bottom-scripts-encoder-factory>
 			<util:browser-sniffer-factory>com.liferay.faces.bridge.client.liferay.internal.BrowserSnifferFactoryLiferayImpl</util:browser-sniffer-factory>
 			<util:resource-validator-factory>com.liferay.faces.bridge.application.liferay.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
-			<util:script-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.ScriptEncoderFactoryLiferayImpl</util:script-encoder-factory>
 		</factory-extension>
 	</factory>
 	<lifecycle>
