@@ -13,7 +13,7 @@
  */
 package com.liferay.faces.bridge.renderkit.html_basic.liferay.internal;
 
-import com.liferay.faces.util.client.ScriptEncoder;
+import com.liferay.faces.util.client.ScriptsEncoder;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 /**
  * @author  Kyle Stiemann
  */
-public abstract class ScriptEncoderLiferayCompat implements ScriptEncoder {
+public abstract class ScriptsEncoderLiferayCompatImpl implements ScriptsEncoder {
 
 	protected void scriptDataAppendScript(ScriptData scriptData, String portletId, String script, String modules) {
 		scriptData.append(portletId, script, modules, ScriptData.ModulesType.AUI);
