@@ -36,7 +36,7 @@ import com.liferay.portal.util.PortalUtil;
 /**
  * @author  Kyle Stiemann
  */
-public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl{
+public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 
 	@Override
 	public void encodeBodyScripts(FacesContext facesContext, List<Script> scripts) throws IOException {
