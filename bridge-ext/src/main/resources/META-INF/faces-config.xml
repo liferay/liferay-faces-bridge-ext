@@ -24,7 +24,7 @@
 			<bridge:window-state-validator-factory>com.liferay.faces.bridge.liferay.internal.WindowStateValidatorFactoryLiferayImpl</bridge:window-state-validator-factory>
 			<util:browser-sniffer-factory>com.liferay.faces.bridge.client.liferay.internal.BrowserSnifferFactoryLiferayImpl</util:browser-sniffer-factory>
 			<util:resource-validator-factory>com.liferay.faces.bridge.application.liferay.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
-			<util:script-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.ScriptEncoderFactoryLiferayImpl</util:script-encoder-factory>
+			<util:scripts-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.ScriptsEncoderFactoryLiferayImpl</util:scripts-encoder-factory>
 		</factory-extension>
 	</factory>
 	<lifecycle>
