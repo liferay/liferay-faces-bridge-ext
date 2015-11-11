@@ -24,57 +24,86 @@ import javax.faces.context.ResponseWriter;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.faces.util.client.AlloyScript;
 import com.liferay.faces.util.client.Script;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PortalUtil;
 
 
 /**
  * @author  Kyle Stiemann
  */
-public class ScriptEncoderLiferayAjaxImpl extends ScriptEncoderLiferayBase {
+public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl{
 
 	@Override
-	public void encodeScript(FacesContext facesContext, Script script) throws IOException {
+	public void encodeBodyScripts(FacesContext facesContext, List<Script> scripts) throws IOException {
 
-		ScriptData scriptData = new ScriptData();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		Map<String, Object> requestMap = externalContext.getRequestMap();
-		String portletId = getPortletId(requestMap);
-		scriptDataAppendScript(scriptData, portletId, script);
+		ScriptData scriptData = (ScriptData) requestMap.get(WebKeys.AUI_SCRIPT_DATA);
 
-		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		responseWriter.write(scriptDataToString(scriptData, externalContext));
-	}
+		if (scriptData == null) {
 
-	@Override
-	public void encodeScript(FacesContext facesContext, String script) throws IOException {
-
-		ScriptData scriptData = new ScriptData();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		Map<String, Object> requestMap = externalContext.getRequestMap();
-		String portletId = getPortletId(requestMap);
-		scriptDataAppendScript(scriptData, portletId, script);
-
-		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		responseWriter.write(scriptDataToString(scriptData, externalContext));
-	}
-
-	@Override
-	public void encodeScripts(FacesContext facesContext, List<Script> scripts) throws IOException {
-
-		ScriptData scriptData = new ScriptData();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		Map<String, Object> requestMap = externalContext.getRequestMap();
-		String portletId = getPortletId(requestMap);
-
-		for (Script script : scripts) {
-			scriptDataAppendScript(scriptData, portletId, script);
+			scriptData = new ScriptData();
+			requestMap.put(WebKeys.AUI_SCRIPT_DATA, scriptData);
 		}
 
+		scriptDataAppendScripts(scriptData, requestMap, scripts);
+	}
+
+	@Override
+	public void encodeEvalScripts(FacesContext facesContext, List<Script> scripts) throws IOException {
+
+		ScriptData scriptData = new ScriptData();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		scriptDataAppendScripts(scriptData, requestMap, scripts);
+
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
 		responseWriter.write(scriptDataToString(scriptData, externalContext));
+	}
+
+	private void scriptDataAppendScripts(ScriptData scriptData, Map<String, Object> requestMap, List<Script> scripts)
+		throws IOException {
+
+		String portletId = "";
+		Object portletObject = requestMap.get(WebKeys.RENDER_PORTLET);
+
+		if ((portletObject != null) && (portletObject instanceof Portlet)) {
+
+			Portlet portlet = (Portlet) portletObject;
+			portletId = portlet.getPortletId();
+		}
+
+		for (Script script : scripts) {
+
+			if (script instanceof AlloyScript) {
+
+				AlloyScript alloyScript = (AlloyScript) script;
+				StringBuilder modulesStringBuilder = new StringBuilder();
+				final String[] modules = alloyScript.getModules();
+				boolean firstModule = true;
+
+				for (String module : modules) {
+
+					if (!firstModule) {
+						modulesStringBuilder.append(",");
+					}
+
+					modulesStringBuilder.append(module);
+					firstModule = false;
+				}
+
+				scriptDataAppendScript(scriptData, portletId, alloyScript.getSourceCode(),
+					modulesStringBuilder.toString());
+			}
+			else {
+				scriptDataAppendScript(scriptData, portletId, script.getSourceCode(), null);
+			}
+		}
 	}
 
 	private String scriptDataToString(ScriptData scriptData, ExternalContext externalContext) throws IOException {
