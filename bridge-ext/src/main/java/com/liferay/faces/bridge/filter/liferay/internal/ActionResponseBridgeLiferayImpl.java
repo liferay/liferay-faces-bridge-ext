@@ -13,11 +13,11 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
-import com.liferay.faces.bridge.context.BridgeContext;
-
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.filter.ActionResponseWrapper;
+
+import com.liferay.faces.bridge.context.BridgeContext;
 
 
 /**
