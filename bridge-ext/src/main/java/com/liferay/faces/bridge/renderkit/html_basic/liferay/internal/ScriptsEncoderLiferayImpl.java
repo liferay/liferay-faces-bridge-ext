@@ -24,7 +24,6 @@ import javax.faces.context.ResponseWriter;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.faces.util.client.AlloyScript;
 import com.liferay.faces.util.client.Script;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -80,25 +79,29 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 
 		for (Script script : scripts) {
 
-			if (script instanceof AlloyScript) {
+			Script.Type type = script.getType();
 
-				AlloyScript alloyScript = (AlloyScript) script;
+			if (Script.Type.ALLOY.equals(type)) {
+
 				StringBuilder modulesStringBuilder = new StringBuilder();
-				final String[] modules = alloyScript.getModules();
-				boolean firstModule = true;
+				String[] modules = script.getModules();
 
-				for (String module : modules) {
+				if (modules != null) {
 
-					if (!firstModule) {
-						modulesStringBuilder.append(",");
+					boolean firstModule = true;
+
+					for (String module : modules) {
+
+						if (!firstModule) {
+							modulesStringBuilder.append(",");
+						}
+
+						modulesStringBuilder.append(module);
+						firstModule = false;
 					}
-
-					modulesStringBuilder.append(module);
-					firstModule = false;
 				}
 
-				scriptDataAppendScript(scriptData, portletId, alloyScript.getSourceCode(),
-					modulesStringBuilder.toString());
+				scriptDataAppendScript(scriptData, portletId, script.getSourceCode(), modulesStringBuilder.toString());
 			}
 			else {
 				scriptDataAppendScript(scriptData, portletId, script.getSourceCode(), null);
