@@ -20,12 +20,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.Renderer;
-import javax.faces.render.RendererWrapper;
 
 import com.liferay.faces.util.client.Script;
 import com.liferay.faces.util.client.ScriptsEncoder;
 import com.liferay.faces.util.client.ScriptsEncoderFactory;
 import com.liferay.faces.util.factory.FactoryExtensionFinder;
+import com.liferay.faces.util.render.RendererWrapper;
 
 
 /**
