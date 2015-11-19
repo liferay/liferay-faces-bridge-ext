@@ -47,7 +47,6 @@ public class ScriptCapturingResponseWriter extends ResponseWriterWrapper {
 		this.wrappedResponseWriter = wrappedResponseWriter;
 		scriptStringWriter = new StringWriter();
 		scripts = new ArrayList<Script>();
-
 	}
 
 	@Override
@@ -55,10 +54,12 @@ public class ScriptCapturingResponseWriter extends ResponseWriterWrapper {
 
 		if (writingScript && "script".equals(name)) {
 
-			String script = scriptStringWriter.toString();
+			String scriptSource = scriptStringWriter.toString();
 			ScriptFactory scriptFactory = (ScriptFactory) FactoryExtensionFinder.getFactory(ScriptFactory.class);
-			scripts.add(scriptFactory.getScript(script));
-			scriptStringWriter.getBuffer().setLength(0);
+			Script script = scriptFactory.getScript(scriptSource);
+			scripts.add(script);
+			StringBuffer scriptStringWriterBuffer = scriptStringWriter.getBuffer();
+			scriptStringWriterBuffer.setLength(0);
 			writingScript = false;
 		}
 		else {
