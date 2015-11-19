@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -24,7 +25,6 @@ import javax.faces.context.ResponseWriter;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.faces.util.client.AlloyScript;
 import com.liferay.faces.util.client.Script;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -80,11 +80,12 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 
 		for (Script script : scripts) {
 
-			if (script instanceof AlloyScript) {
+			Script.Type type = script.getType();
 
-				AlloyScript alloyScript = (AlloyScript) script;
+			if (Script.Type.ALLOY.equals(type)) {
+
 				StringBuilder modulesStringBuilder = new StringBuilder();
-				final String[] modules = alloyScript.getModules();
+				Set<String> modules = script.getModules();
 				boolean firstModule = true;
 
 				for (String module : modules) {
@@ -97,8 +98,7 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 					firstModule = false;
 				}
 
-				scriptDataAppendScript(scriptData, portletId, alloyScript.getSourceCode(),
-					modulesStringBuilder.toString());
+				scriptDataAppendScript(scriptData, portletId, script.getSourceCode(), modulesStringBuilder.toString());
 			}
 			else {
 				scriptDataAppendScript(scriptData, portletId, script.getSourceCode(), null);
