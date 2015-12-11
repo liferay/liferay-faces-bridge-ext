@@ -82,7 +82,7 @@
 		<faces.api.version>${faces.spec.version}</faces.api.version>
 		<faces.spec.version>2.1</faces.spec.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
-		<liferay.version>6.2.3</liferay.version>
+		<liferay.version>6.2.4</liferay.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<surefire.version>2.12</surefire.version>
 	</properties>
