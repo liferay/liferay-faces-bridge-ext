@@ -119,9 +119,9 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 		return scriptDataWriter.toString();
 	}
 
-	/*
-		ScriptDataWriter is designed to suppress the opening and closing <script> and CDATA tags.
-	*/
+	/**
+	 * ScriptDataWriter is designed to suppress the opening and closing <script> and CDATA tags.
+	 */
 	private static class ScriptDataWriter extends StringWriter {
 
 		@Override
