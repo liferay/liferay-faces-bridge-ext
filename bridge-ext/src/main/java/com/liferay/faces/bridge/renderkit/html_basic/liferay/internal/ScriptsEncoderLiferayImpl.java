@@ -119,14 +119,29 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 		return scriptDataWriter.toString();
 	}
 
-	private class ScriptDataWriter extends StringWriter {
+	/*
+		ScriptDataWriter is designed to suppress the opening and closing <script> and CDATA tags.
+	*/
+	private static class ScriptDataWriter extends StringWriter {
 
 		@Override
-		public void write(String string) {
+		public String toString() {
 
-			if (!(string.startsWith("<script") || string.endsWith("script>"))) {
-				super.write(string);
+			String string = super.toString();
+
+			int startCDATAIndex = string.indexOf("<![CDATA[");
+
+			if (startCDATAIndex != -1) {
+				string = string.substring(startCDATAIndex + "<![CDATA[".length());
 			}
+
+			int endCDATAIndex = string.indexOf("]]>");
+
+			if (endCDATAIndex != -1) {
+				string = string.substring(0, endCDATAIndex);
+			}
+
+			return string;
 		}
 	}
 }
