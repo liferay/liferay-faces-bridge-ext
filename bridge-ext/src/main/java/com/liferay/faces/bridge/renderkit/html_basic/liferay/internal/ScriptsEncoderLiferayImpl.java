@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2015 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2016 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -29,6 +29,7 @@ import com.liferay.faces.util.client.Script;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 
@@ -42,27 +43,53 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 
 		ExternalContext externalContext = facesContext.getExternalContext();
 		Map<String, Object> requestMap = externalContext.getRequestMap();
-		ScriptData scriptData = (ScriptData) requestMap.get(WebKeys.AUI_SCRIPT_DATA);
+		ThemeDisplay themeDisplay = (ThemeDisplay) requestMap.get(WebKeys.THEME_DISPLAY);
 
-		if (scriptData == null) {
+		// If the portlet is being rendered on its own, then render the scripts immediately before the closing <div>
+		// of the portlet.
+		if (themeDisplay.isStateExclusive() || themeDisplay.isIsolated()) {
 
-			scriptData = new ScriptData();
-			requestMap.put(WebKeys.AUI_SCRIPT_DATA, scriptData);
+			String scriptsString = getScriptsAsString(facesContext, scripts);
+			ResponseWriter responseWriter = facesContext.getResponseWriter();
+			responseWriter.write(scriptsString);
 		}
 
-		scriptDataAppendScripts(scriptData, requestMap, scripts);
+		// Otherwise, allow Liferay to render the scripts at the bottom of the page before the closing <body> tag.
+		else {
+
+			ScriptData scriptData = (ScriptData) requestMap.get(WebKeys.AUI_SCRIPT_DATA);
+
+			if (scriptData == null) {
+
+				scriptData = new ScriptData();
+				requestMap.put(WebKeys.AUI_SCRIPT_DATA, scriptData);
+			}
+
+			scriptDataAppendScripts(scriptData, requestMap, scripts);
+		}
 	}
 
 	@Override
 	public void encodeEvalScripts(FacesContext facesContext, List<Script> scripts) throws IOException {
 
-		ScriptData scriptData = new ScriptData();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		Map<String, Object> requestMap = externalContext.getRequestMap();
-		scriptDataAppendScripts(scriptData, requestMap, scripts);
+		String scriptsString = getScriptsAsString(facesContext, scripts);
+
+		// Strip off opening <script> and CDATA tags.
+		int startCDATAIndex = scriptsString.indexOf("<![CDATA[");
+
+		if (startCDATAIndex != -1) {
+			scriptsString = scriptsString.substring(startCDATAIndex + "<![CDATA[".length());
+		}
+
+		// Strip off closing <script> and CDATA tags.
+		int endCDATAIndex = scriptsString.indexOf("]]>");
+
+		if (endCDATAIndex != -1) {
+			scriptsString = scriptsString.substring(0, endCDATAIndex);
+		}
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		responseWriter.write(scriptDataToString(scriptData, externalContext));
+		responseWriter.write(scriptsString);
 	}
 
 	private void scriptDataAppendScripts(ScriptData scriptData, Map<String, Object> requestMap, List<Script> scripts)
@@ -109,39 +136,18 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 		}
 	}
 
-	private String scriptDataToString(ScriptData scriptData, ExternalContext externalContext) throws IOException {
+	private String getScriptsAsString(FacesContext facesContext, List<Script> scripts) throws IOException {
+
+		ScriptData scriptData = new ScriptData();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		scriptDataAppendScripts(scriptData, requestMap, scripts);
 
 		PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
-		ScriptDataWriter scriptDataWriter = new ScriptDataWriter();
-		scriptData.writeTo(httpServletRequest, scriptDataWriter);
+		StringWriter stringWriter = new StringWriter();
+		scriptData.writeTo(httpServletRequest, stringWriter);
 
-		return scriptDataWriter.toString();
-	}
-
-	/**
-	 * ScriptDataWriter is designed to suppress the opening and closing <script> and CDATA tags.
-	 */
-	private static class ScriptDataWriter extends StringWriter {
-
-		@Override
-		public String toString() {
-
-			String string = super.toString();
-
-			int startCDATAIndex = string.indexOf("<![CDATA[");
-
-			if (startCDATAIndex != -1) {
-				string = string.substring(startCDATAIndex + "<![CDATA[".length());
-			}
-
-			int endCDATAIndex = string.indexOf("]]>");
-
-			if (endCDATAIndex != -1) {
-				string = string.substring(0, endCDATAIndex);
-			}
-
-			return string;
-		}
+		return stringWriter.toString();
 	}
 }
