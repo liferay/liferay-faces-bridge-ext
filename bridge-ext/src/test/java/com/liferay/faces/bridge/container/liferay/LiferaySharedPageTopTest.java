@@ -153,7 +153,7 @@ public class LiferaySharedPageTopTest {
 			duration, totalPassed, totalFailed);
 	}
 
-	protected class TestThread extends Thread {
+	private static class TestThread extends Thread {
 
 		// Private Data Members
 		LiferaySharedPageTopTest liferaySharedPageTopTest;
