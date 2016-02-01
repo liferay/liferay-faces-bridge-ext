@@ -12,6 +12,9 @@
 			<others/>
 		</before>
 	</ordering>
+	<application>
+		<resource-handler>com.liferay.faces.bridge.application.liferay.internal.ResourceHandlerLiferayImpl</resource-handler>
+	</application>
 	<factory>
 		<client-window-factory>com.liferay.faces.bridge.lifecycle.liferay.internal.ClientWindowFactoryLiferayImpl</client-window-factory>
 		<factory-extension>
