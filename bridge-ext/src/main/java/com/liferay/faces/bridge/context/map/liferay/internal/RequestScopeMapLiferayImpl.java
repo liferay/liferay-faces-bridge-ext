@@ -78,54 +78,49 @@ public class RequestScopeMapLiferayImpl implements Map<String, Object> {
 	@Override
 	public Object get(Object key) {
 
-		if ("javax.servlet.include.path_info".equals(key) || "javax.servlet.include.servlet_path".equals(key)) {
-			return null;
-		}
-		else {
-			Object attributeValue = wrappedRequestScopeMap.get(key);
+		Object attributeValue = wrappedRequestScopeMap.get(key);
 
-			// FACES-1446: Strictly enforce Liferay Portal's private-request-attribute feature so that each portlet
-			// will have its own managed-bean instance.
-			if (distinctRequestScopedManagedBeans) {
+		// FACES-1446: Strictly enforce Liferay Portal's private-request-attribute feature so that each portlet
+		// will have its own managed-bean instance.
+		if (distinctRequestScopedManagedBeans) {
 
-				if (attributeValue != null) {
+			if (attributeValue != null) {
 
-					boolean requestScopedBean = false;
-					Annotation[] annotations = attributeValue.getClass().getAnnotations();
+				boolean requestScopedBean = false;
+				Annotation[] annotations = attributeValue.getClass().getAnnotations();
 
-					if (annotations != null) {
+				if (annotations != null) {
 
-						for (Annotation annotation : annotations) {
+					for (Annotation annotation : annotations) {
 
-							if (annotation.annotationType().getName().equals(REQUEST_SCOPED_FQCN)) {
-								requestScopedBean = true;
+						if (annotation.annotationType().getName().equals(REQUEST_SCOPED_FQCN)) {
+							requestScopedBean = true;
 
-								break;
-							}
-						}
-					}
-
-					if (requestScopedBean) {
-
-						// If the private-request-attribute feature is enabled in WEB-INF/liferay-portlet.xml, then the
-						// NamespaceServletRequest.getAttribute(String) method first tries to get the attribute value by
-						// prepending the portlet namespace. If the value is null, then it attempts to get it WITHOUT
-						// the prepending the portlet namespace. But that causes a problem for @RequestScoped
-						// managed-beans if the same name is used in a different portlet. In the case that the JSF
-						// runtime is trying to resolve an EL-expression like "#{backingBean}", then this method must
-						// return null if the bean has not yet been created (for this portlet) by the JSF managed-bean
-						// facility.
-						Object namespacedAttributeValue = portletRequest.getAttribute(responseNamespace + key);
-
-						if (namespacedAttributeValue != attributeValue) {
-							attributeValue = null;
+							break;
 						}
 					}
 				}
-			}
 
-			return attributeValue;
+				if (requestScopedBean) {
+
+					// If the private-request-attribute feature is enabled in WEB-INF/liferay-portlet.xml, then the
+					// NamespaceServletRequest.getAttribute(String) method first tries to get the attribute value by
+					// prepending the portlet namespace. If the value is null, then it attempts to get it WITHOUT
+					// the prepending the portlet namespace. But that causes a problem for @RequestScoped
+					// managed-beans if the same name is used in a different portlet. In the case that the JSF
+					// runtime is trying to resolve an EL-expression like "#{backingBean}", then this method must
+					// return null if the bean has not yet been created (for this portlet) by the JSF managed-bean
+					// facility.
+					Object namespacedAttributeValue = portletRequest.getAttribute(responseNamespace + key);
+
+					if (namespacedAttributeValue != attributeValue) {
+						attributeValue = null;
+					}
+				}
+			}
 		}
+
+		return attributeValue;
 	}
 
 	@Override
