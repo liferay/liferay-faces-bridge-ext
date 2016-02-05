@@ -27,9 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.liferay.faces.util.client.Script;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 
