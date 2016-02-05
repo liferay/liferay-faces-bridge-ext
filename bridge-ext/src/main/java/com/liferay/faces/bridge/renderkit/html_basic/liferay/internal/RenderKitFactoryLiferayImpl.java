@@ -25,7 +25,7 @@ import javax.faces.render.RenderKitFactory;
  */
 public class RenderKitFactoryLiferayImpl extends RenderKitFactory {
 
-	// Private Members
+	// Private Data Members
 	private RenderKitFactory wrappedRenderKitFactory;
 
 	public RenderKitFactoryLiferayImpl(RenderKitFactory wrappedRenderKitFactory) {

@@ -25,7 +25,7 @@ import javax.faces.context.ResponseWriterWrapper;
  */
 public class CommandLinkResponseWriterLiferayImpl extends ResponseWriterWrapper {
 
-	// Private Members
+	// Private Data Members
 	private ResponseWriter wrappedResponseWriter;
 
 	public CommandLinkResponseWriterLiferayImpl(ResponseWriter wrappedResponseWriter) {
