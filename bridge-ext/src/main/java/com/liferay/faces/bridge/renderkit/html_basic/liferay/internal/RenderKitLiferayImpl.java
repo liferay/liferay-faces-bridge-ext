@@ -30,7 +30,7 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 	private static boolean PRIMEFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.PRIMEFACES).isDetected();
 	private static boolean RICHFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.RICHFACES).isDetected();
 
-	// Private Members
+	// Private Data Members
 	private RenderKit wrappedRenderKit;
 
 	public RenderKitLiferayImpl(RenderKit wrappedRenderKit) {

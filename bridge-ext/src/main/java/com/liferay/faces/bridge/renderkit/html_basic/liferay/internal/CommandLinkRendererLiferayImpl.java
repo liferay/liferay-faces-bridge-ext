@@ -27,6 +27,7 @@ import javax.faces.render.RendererWrapper;
  */
 public class CommandLinkRendererLiferayImpl extends RendererWrapper {
 
+	// Private Data Members
 	private Renderer wrappedRenderer;
 
 	public CommandLinkRendererLiferayImpl(Renderer wrappedRenderer) {
@@ -37,8 +38,8 @@ public class CommandLinkRendererLiferayImpl extends RendererWrapper {
 	public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter responseWriterCommandLinkImpl = new CommandLinkResponseWriterLiferayImpl(responseWriter);
-		facesContext.setResponseWriter(responseWriterCommandLinkImpl);
+		ResponseWriter commandLinkResponseWriter = new CommandLinkResponseWriterLiferayImpl(responseWriter);
+		facesContext.setResponseWriter(commandLinkResponseWriter);
 		super.encodeBegin(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
 	}
@@ -47,8 +48,8 @@ public class CommandLinkRendererLiferayImpl extends RendererWrapper {
 	public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter responseWriterCommandLinkImpl = new CommandLinkResponseWriterLiferayImpl(responseWriter);
-		facesContext.setResponseWriter(responseWriterCommandLinkImpl);
+		ResponseWriter commandLinkResponseWriter = new CommandLinkResponseWriterLiferayImpl(responseWriter);
+		facesContext.setResponseWriter(commandLinkResponseWriter);
 		super.encodeChildren(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
 	}
@@ -57,8 +58,8 @@ public class CommandLinkRendererLiferayImpl extends RendererWrapper {
 	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter responseWriterCommandLinkImpl = new CommandLinkResponseWriterLiferayImpl(responseWriter);
-		facesContext.setResponseWriter(responseWriterCommandLinkImpl);
+		ResponseWriter commandLinkResponseWriter = new CommandLinkResponseWriterLiferayImpl(responseWriter);
+		facesContext.setResponseWriter(commandLinkResponseWriter);
 		super.encodeEnd(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
 	}
