@@ -23,8 +23,8 @@ import javax.faces.lifecycle.ClientWindowWrapper;
 import javax.faces.render.ResponseStateManager;
 
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 
 /**
