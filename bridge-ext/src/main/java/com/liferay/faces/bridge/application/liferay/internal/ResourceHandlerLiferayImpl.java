@@ -13,6 +13,10 @@
  */
 package com.liferay.faces.bridge.application.liferay.internal;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
@@ -29,6 +33,23 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 	// Private Constants
 	private static final boolean PRIMEFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.PRIMEFACES)
 		.isDetected();
+	private static final Set<String> PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES;
+
+	static {
+
+		// This list of resources (excepting jquery/jquery-plugins.js) was obtained via the following search of the
+		// Primefaces github source: https://github.com/primefaces/primefaces/search?utf8=%E2%9C%93&q=amd
+		Set<String> primefacesJQueryPluginResources = new HashSet<String>();
+		primefacesJQueryPluginResources.add("inputnumber/0-autoNumeric.js");
+		primefacesJQueryPluginResources.add("knob/1-jquery.knob.js");
+		primefacesJQueryPluginResources.add("fileupload/fileupload.js");
+		primefacesJQueryPluginResources.add("jquery/jquery-plugins.js");
+		primefacesJQueryPluginResources.add("moment/moment.js");
+		primefacesJQueryPluginResources.add("push/push.js");
+		primefacesJQueryPluginResources.add("schedule/schedule.js");
+		primefacesJQueryPluginResources.add("touch/touchswipe.js");
+		PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(primefacesJQueryPluginResources);
+	}
 
 	// Private Members
 	private ResourceHandler wrappedResourceHandler;
@@ -75,7 +96,8 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	private boolean isPrimeFacesJQueryPluginJSResource(Resource resource, String resourceLibrary, String resourceName) {
 		return (resource != null) && PRIMEFACES_DETECTED &&
-			((resourceLibrary == null) || resourceLibrary.equals("primefaces")) && resourceName.endsWith(".js");
+			((resourceLibrary == null) || resourceLibrary.equals("primefaces")) &&
+			PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName);
 	}
 
 	@Override
