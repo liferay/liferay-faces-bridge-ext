@@ -35,7 +35,7 @@ import com.liferay.faces.util.jsp.JspAdapterFactory;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 
 /**
