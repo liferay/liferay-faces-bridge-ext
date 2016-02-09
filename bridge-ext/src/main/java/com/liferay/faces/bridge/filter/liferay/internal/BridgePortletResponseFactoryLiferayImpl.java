@@ -13,11 +13,17 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import com.liferay.faces.bridge.config.BridgeConfig;
 import com.liferay.faces.bridge.filter.BridgePortletResponseFactory;
 
 
@@ -34,33 +40,41 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 	}
 
 	@Override
-	public ActionResponse getActionResponse(ActionResponse actionResponse) {
+	public ActionResponse getActionResponse(ActionRequest actionRequest, ActionResponse actionResponse,
+		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		ActionResponse wrappedActionResponse = getWrapped().getActionResponse(actionResponse);
+		ActionResponse wrappedActionResponse = getWrapped().getActionResponse(actionRequest, actionResponse,
+				portletConfig, bridgeConfig);
 
 		return new ActionResponseBridgeLiferayImpl(wrappedActionResponse);
 	}
 
 	@Override
-	public EventResponse getEventResponse(EventResponse eventResponse) {
+	public EventResponse getEventResponse(EventRequest eventRequest, EventResponse eventResponse,
+		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		EventResponse wrappedEventResponse = getWrapped().getEventResponse(eventResponse);
+		EventResponse wrappedEventResponse = getWrapped().getEventResponse(eventRequest, eventResponse, portletConfig,
+				bridgeConfig);
 
 		return new EventResponseBridgeLiferayImpl(wrappedEventResponse);
 	}
 
 	@Override
-	public RenderResponse getRenderResponse(RenderResponse renderResponse) {
+	public RenderResponse getRenderResponse(RenderRequest renderRequest, RenderResponse renderResponse,
+		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		RenderResponse wrappedRenderResponse = getWrapped().getRenderResponse(renderResponse);
+		RenderResponse wrappedRenderResponse = getWrapped().getRenderResponse(renderRequest, renderResponse,
+				portletConfig, bridgeConfig);
 
 		return new RenderResponseBridgeLiferayImpl(wrappedRenderResponse);
 	}
 
 	@Override
-	public ResourceResponse getResourceResponse(ResourceResponse resourceResponse) {
+	public ResourceResponse getResourceResponse(ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		ResourceResponse wrappedResourceResponse = getWrapped().getResourceResponse(resourceResponse);
+		ResourceResponse wrappedResourceResponse = getWrapped().getResourceResponse(resourceRequest, resourceResponse,
+				portletConfig, bridgeConfig);
 
 		return new ResourceResponseBridgeLiferayImpl(wrappedResourceResponse);
 	}

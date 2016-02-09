@@ -13,16 +13,19 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.filter.PortletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.faces.bridge.config.liferay.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.HttpHeaders;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -39,17 +42,20 @@ public class LiferayPortletRequest {
 	// Private Constants
 	private static final String METHOD_NAME_GET_ORIGINAL_HTTP_SERVLET_REQUEST = "getOriginalHttpServletRequest";
 	private static final String METHOD_NAME_GET_PORTLET = "getPortlet";
+	private static final String REQUEST_SCOPED_FQCN = "javax.faces.bean.RequestScoped";
 
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(LiferayPortletRequest.class);
 
 	// Private Data Members
+	private boolean distinctRequestScopedManagedBeans;
 	private LiferayHttpServletRequest liferayHttpServletRequest;
 	private Portlet portlet;
 	private List<String> propertyNameList;
+	private String responseNamespace;
 	private PortletRequest wrappedPortletRequest;
 
-	public LiferayPortletRequest(PortletRequest portletRequest) {
+	public LiferayPortletRequest(PortletRequest portletRequest, String responseNamespace, PortletConfig portletConfig) {
 
 		if (portletRequest != null) {
 
@@ -124,6 +130,66 @@ public class LiferayPortletRequest {
 			if (foundUserAgent) {
 				propertyNameList.add(HttpHeaders.USER_AGENT);
 			}
+		}
+
+		this.distinctRequestScopedManagedBeans = LiferayPortletConfigParam.DistinctRequestScopedManagedBeans
+			.getBooleanValue(portletConfig);
+		this.responseNamespace = responseNamespace;
+	}
+
+	public Object getAttribute(String name) {
+
+		// If the specified name is a Servlet-API reserved attribute name, then the JSF runtime is attempting to
+		// determine the viewId for a webapp environment. Because of this, it is necessary to return null so that the
+		// JSF runtime will attempt to determine the viewId a different way, namely by calling
+		// ExternalContext#getRequestPathInfo() or ExternalContext#getRequestServletPath().
+		if ("javax.servlet.include.path_info".equals(name) || "javax.servlet.include.servlet_path".equals(name)) {
+			return null;
+		}
+		else {
+			Object attributeValue = wrappedPortletRequest.getAttribute(name);
+
+			// FACES-1446: Strictly enforce Liferay Portal's private-request-attribute feature so that each portlet
+			// will have its own managed-bean instance.
+			if (distinctRequestScopedManagedBeans) {
+
+				if (attributeValue != null) {
+
+					boolean requestScopedBean = false;
+					Annotation[] annotations = attributeValue.getClass().getAnnotations();
+
+					if (annotations != null) {
+
+						for (Annotation annotation : annotations) {
+
+							if (annotation.annotationType().getName().equals(REQUEST_SCOPED_FQCN)) {
+								requestScopedBean = true;
+
+								break;
+							}
+						}
+					}
+
+					if (requestScopedBean) {
+
+						// If the private-request-attribute feature is enabled in WEB-INF/liferay-portlet.xml, then the
+						// NamespaceServletRequest.getAttribute(String) method first tries to get the attribute value by
+						// prepending the portlet namespace. If the value is null, then it attempts to get it WITHOUT
+						// the prepending the portlet namespace. But that causes a problem for @RequestScoped
+						// managed-beans if the same name is used in a different portlet. In the case that the JSF
+						// runtime is trying to resolve an EL-expression like "#{backingBean}", then this method must
+						// return null if the bean has not yet been created (for this portlet) by the JSF managed-bean
+						// facility.
+						Object namespacedAttributeValue = wrappedPortletRequest.getAttribute(responseNamespace + name);
+
+						if (namespacedAttributeValue != attributeValue) {
+							attributeValue = null;
+						}
+					}
+				}
+			}
+
+			return attributeValue;
 		}
 	}
 
