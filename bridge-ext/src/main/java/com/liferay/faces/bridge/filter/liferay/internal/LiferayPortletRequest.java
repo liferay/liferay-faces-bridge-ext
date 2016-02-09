@@ -30,7 +30,7 @@ import com.liferay.faces.util.HttpHeaders;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
-import com.liferay.portal.model.Portlet;
+import com.liferay.portal.kernel.model.Portlet;
 
 
 /**
