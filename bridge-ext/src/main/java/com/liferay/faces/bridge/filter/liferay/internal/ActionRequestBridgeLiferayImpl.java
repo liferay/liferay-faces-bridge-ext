@@ -17,6 +17,7 @@ import java.util.Enumeration;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortalContext;
+import javax.portlet.PortletConfig;
 import javax.portlet.filter.ActionRequestWrapper;
 
 import com.liferay.faces.bridge.context.BridgePortalContext;
@@ -31,10 +32,16 @@ public class ActionRequestBridgeLiferayImpl extends ActionRequestWrapper {
 	private BridgePortalContext bridgePortalContext;
 	private LiferayPortletRequest liferayPortletRequest;
 
-	public ActionRequestBridgeLiferayImpl(ActionRequest actionRequest, BridgePortalContext bridgePortalContext) {
+	public ActionRequestBridgeLiferayImpl(ActionRequest actionRequest, String responseNamespace,
+		PortletConfig portletConfig, BridgePortalContext bridgePortalContext) {
 		super(actionRequest);
+		this.liferayPortletRequest = new LiferayPortletRequest(actionRequest, responseNamespace, portletConfig);
 		this.bridgePortalContext = bridgePortalContext;
-		this.liferayPortletRequest = new LiferayPortletRequest(actionRequest);
+	}
+
+	@Override
+	public Object getAttribute(String name) {
+		return liferayPortletRequest.getAttribute(name);
 	}
 
 	@Override
