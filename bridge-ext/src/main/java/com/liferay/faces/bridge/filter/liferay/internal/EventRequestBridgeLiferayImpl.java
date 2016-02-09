@@ -17,6 +17,7 @@ import java.util.Enumeration;
 
 import javax.portlet.EventRequest;
 import javax.portlet.PortalContext;
+import javax.portlet.PortletConfig;
 import javax.portlet.filter.EventRequestWrapper;
 
 import com.liferay.faces.bridge.context.BridgePortalContext;
@@ -31,10 +32,11 @@ public class EventRequestBridgeLiferayImpl extends EventRequestWrapper {
 	private BridgePortalContext bridgePortalContext;
 	private LiferayPortletRequest liferayPortletRequest;
 
-	public EventRequestBridgeLiferayImpl(EventRequest eventRequest, BridgePortalContext bridgePortalContext) {
+	public EventRequestBridgeLiferayImpl(EventRequest eventRequest, String responseNamespace,
+		PortletConfig portletConfig, BridgePortalContext bridgePortalContext) {
 		super(eventRequest);
+		this.liferayPortletRequest = new LiferayPortletRequest(eventRequest, responseNamespace, portletConfig);
 		this.bridgePortalContext = bridgePortalContext;
-		this.liferayPortletRequest = new LiferayPortletRequest(eventRequest);
 	}
 
 	@Override

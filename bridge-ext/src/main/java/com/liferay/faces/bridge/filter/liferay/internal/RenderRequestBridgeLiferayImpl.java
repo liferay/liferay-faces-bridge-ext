@@ -16,6 +16,7 @@ package com.liferay.faces.bridge.filter.liferay.internal;
 import java.util.Enumeration;
 
 import javax.portlet.PortalContext;
+import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.filter.RenderRequestWrapper;
 
@@ -31,25 +32,16 @@ public class RenderRequestBridgeLiferayImpl extends RenderRequestWrapper {
 	private BridgePortalContext bridgePortalContext;
 	private LiferayPortletRequest liferayPortletRequest;
 
-	public RenderRequestBridgeLiferayImpl(RenderRequest renderRequest, BridgePortalContext bridgePortalContext) {
+	public RenderRequestBridgeLiferayImpl(RenderRequest renderRequest, String responseNamespace,
+		PortletConfig portletConfig, BridgePortalContext bridgePortalContext) {
 		super(renderRequest);
+		this.liferayPortletRequest = new LiferayPortletRequest(renderRequest, responseNamespace, portletConfig);
 		this.bridgePortalContext = bridgePortalContext;
-		this.liferayPortletRequest = new LiferayPortletRequest(renderRequest);
 	}
 
 	@Override
 	public Object getAttribute(String name) {
-
-		// If the specified name is a Servlet-API reserved attribute name, then the JSF runtime is attempting to
-		// determine the viewId for a webapp environment. Because of this, it is necessary to return null so that the
-		// JSF runtime will attempt to determine the viewId a different way, namely by calling
-		// ExternalContext#getRequestPathInfo() or ExternalContext#getRequestServletPath().
-		if ("javax.servlet.include.path_info".equals(name) || "javax.servlet.include.servlet_path".equals(name)) {
-			return null;
-		}
-		else {
-			return super.getAttribute(name);
-		}
+		return liferayPortletRequest.getAttribute(name);
 	}
 
 	@Override
