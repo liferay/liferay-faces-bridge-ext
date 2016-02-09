@@ -13,7 +13,9 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -69,7 +71,10 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 
 		if (friendlyURLMapperEnabled == null) {
 			PortletRequest portletRequest = bridgeContext.getPortletRequest();
-			LiferayPortletRequest liferayPortletRequest = new LiferayPortletRequest(portletRequest);
+			PortletResponse portletResponse = bridgeContext.getPortletResponse();
+			PortletConfig portletConfig = bridgeContext.getPortletConfig();
+			LiferayPortletRequest liferayPortletRequest = new LiferayPortletRequest(portletRequest,
+					portletResponse.getNamespace(), portletConfig);
 			friendlyURLMapperEnabled = (liferayPortletRequest.getPortlet().getFriendlyURLMapperInstance() != null);
 		}
 
