@@ -19,6 +19,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
+import com.liferay.faces.util.application.ApplicationUtil;
+
 
 /**
  * @author  Kyle Stiemann
@@ -38,11 +40,13 @@ public class RenderKitFactoryLiferayImpl extends RenderKitFactory {
 	}
 
 	@Override
-	public RenderKit getRenderKit(FacesContext context, String renderKitId) {
+	public RenderKit getRenderKit(FacesContext facesContext, String renderKitId) {
 
-		RenderKit renderKit = getWrapped().getRenderKit(context, renderKitId);
+		RenderKit renderKit = getWrapped().getRenderKit(facesContext, renderKitId);
 
-		if ("HTML_BASIC".equals(renderKitId)) {
+		// FACES-2615 Only Add the RenderKit to the delegation chain when the application is not starting up or
+		// shutting down.
+		if ("HTML_BASIC".equals(renderKitId) && !ApplicationUtil.isStartupOrShutdown(facesContext)) {
 			renderKit = new RenderKitLiferayImpl(renderKit);
 		}
 
