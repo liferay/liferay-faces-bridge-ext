@@ -19,7 +19,11 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
+import javax.portlet.faces.BridgeWriteBehindResponse;
 import javax.portlet.filter.PortletRequestWrapper;
+import javax.portlet.filter.PortletResponseWrapper;
+import javax.servlet.ServletResponse;
+import javax.servlet.ServletResponseWrapper;
 
 import com.liferay.faces.util.product.Product;
 import com.liferay.faces.util.product.ProductConstants;
@@ -91,24 +95,78 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 		}
 
 		if (unwrapRequest) {
-			super.include(getLiferayPortletRequest(portletRequest), portletResponse);
+			portletRequest = unwrapPortletRequest(portletRequest);
 		}
-		else {
-			super.include(portletRequest, portletResponse);
+
+		// If the specified portletResponse implements BridgeWriteBehindResponse then the bridge implementation might be
+		// trying to overcome a Servlet API dependency in the JSF implementation by wrapping the portletResponse with
+		// HttpServletResponseRenderAdapter or HttpServletResponseResourceAdapter. If that's the case then Liferay
+		// Portal's PortletRequestDispatcher.include(PortletRequest,PortletResponse) method will be unable to unwrap the
+		// portletResponse since those classes do not extend PortletResponseWrapper. As a workaround, unwrap the
+		// portletResponse to a point such that Liferay's PortletResponseImpl is decorated only by instances of
+		// PortletResponseWrapper.
+		if ((portletResponse instanceof BridgeWriteBehindResponse) &&
+				(portletResponse instanceof PortletResponseWrapper)) {
+			portletResponse = unwrapPortletResponse(portletResponse);
 		}
+
+		super.include(portletRequest, portletResponse);
 	}
 
-	protected PortletRequest getLiferayPortletRequest(PortletRequest portletRequest) {
+	protected PortletRequest unwrapPortletRequest(PortletRequest portletRequest) {
 
 		if (portletRequest instanceof PortletRequestWrapper) {
 
 			PortletRequestWrapper portletRequestWrapper = (PortletRequestWrapper) portletRequest;
+			portletRequest = portletRequestWrapper.getRequest();
 
-			PortletRequest wrappedPortletRequest = portletRequestWrapper.getRequest();
-			portletRequest = getLiferayPortletRequest(wrappedPortletRequest);
+			return unwrapPortletRequest(portletRequest);
 		}
+		else {
+			return portletRequest;
+		}
+	}
 
-		return portletRequest;
+	protected PortletResponse unwrapPortletResponse(PortletResponse portletResponse) {
+
+		if (portletResponse instanceof ServletResponse) {
+
+			PortletResponse unwrappedServletResponse = unwrapServletResponse((ServletResponse) portletResponse);
+
+			if (unwrappedServletResponse != null) {
+				return unwrappedServletResponse;
+			}
+			else {
+				return portletResponse;
+			}
+		}
+		else if (portletResponse instanceof PortletResponseWrapper) {
+
+			PortletResponseWrapper portletResponseWrapper = (PortletResponseWrapper) portletResponse;
+			portletResponse = portletResponseWrapper.getResponse();
+
+			return unwrapPortletResponse(portletResponse);
+		}
+		else {
+			return portletResponse;
+		}
+	}
+
+	protected PortletResponse unwrapServletResponse(ServletResponse servletResponse) {
+
+		if (servletResponse instanceof ServletResponseWrapper) {
+
+			ServletResponseWrapper servletResponseWrapper = (ServletResponseWrapper) servletResponse;
+			servletResponse = servletResponseWrapper.getResponse();
+
+			return unwrapServletResponse(servletResponse);
+		}
+		else if (servletResponse instanceof PortletResponse) {
+			return (PortletResponse) servletResponse;
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
