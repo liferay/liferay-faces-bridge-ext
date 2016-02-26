@@ -20,7 +20,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.filter.RenderRequestWrapper;
 
-import com.liferay.faces.bridge.context.BridgePortalContext;
+import com.liferay.faces.bridge.context.liferay.internal.PortalContextBridgeLiferayImpl;
 
 
 /**
@@ -29,14 +29,14 @@ import com.liferay.faces.bridge.context.BridgePortalContext;
 public class RenderRequestBridgeLiferayImpl extends RenderRequestWrapper {
 
 	// Private Data Members
-	private BridgePortalContext bridgePortalContext;
+	private PortalContext portalContext;
 	private LiferayPortletRequest liferayPortletRequest;
 
 	public RenderRequestBridgeLiferayImpl(RenderRequest renderRequest, String responseNamespace,
-		PortletConfig portletConfig, BridgePortalContext bridgePortalContext) {
+		PortletConfig portletConfig) {
 		super(renderRequest);
 		this.liferayPortletRequest = new LiferayPortletRequest(renderRequest, responseNamespace, portletConfig);
-		this.bridgePortalContext = bridgePortalContext;
+		this.portalContext = new PortalContextBridgeLiferayImpl(renderRequest);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class RenderRequestBridgeLiferayImpl extends RenderRequestWrapper {
 
 	@Override
 	public PortalContext getPortalContext() {
-		return bridgePortalContext;
+		return portalContext;
 	}
 
 	@Override
