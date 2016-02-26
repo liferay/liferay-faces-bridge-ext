@@ -23,7 +23,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.WindowState;
 import javax.portlet.filter.RenderRequestWrapper;
 
-import com.liferay.faces.bridge.context.BridgePortalContext;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
@@ -41,14 +40,14 @@ public class RenderRequestBridgeLiferayImpl extends RenderRequestWrapper {
 	private static final Logger logger = LoggerFactory.getLogger(RenderRequestBridgeLiferayImpl.class);
 
 	// Private Data Members
-	private BridgePortalContext bridgePortalContext;
+	private PortalContext portalContext;
 	private LiferayPortletRequest liferayPortletRequest;
 
 	public RenderRequestBridgeLiferayImpl(RenderRequest renderRequest, String responseNamespace,
-		PortletConfig portletConfig, BridgePortalContext bridgePortalContext) {
+		PortletConfig portletConfig, PortalContext portalContext) {
 		super(renderRequest);
 		this.liferayPortletRequest = new LiferayPortletRequest(renderRequest, responseNamespace, portletConfig);
-		this.bridgePortalContext = bridgePortalContext;
+		this.portalContext = portalContext;
 
 		// Hack: Need to save information that's only available at RenderRequest time in order to have
 		// LiferayURLGeneratorBaseImpl be able to create ResourceURLs properly during the RESOURCE_PHASE.
@@ -88,9 +87,7 @@ public class RenderRequestBridgeLiferayImpl extends RenderRequestWrapper {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage(), e);
-
 		}
-
 	}
 
 	@Override
@@ -100,7 +97,7 @@ public class RenderRequestBridgeLiferayImpl extends RenderRequestWrapper {
 
 	@Override
 	public PortalContext getPortalContext() {
-		return bridgePortalContext;
+		return portalContext;
 	}
 
 	@Override
