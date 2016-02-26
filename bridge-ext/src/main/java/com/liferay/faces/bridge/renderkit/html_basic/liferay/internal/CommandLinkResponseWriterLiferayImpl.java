@@ -21,6 +21,9 @@ import javax.faces.context.ResponseWriterWrapper;
 
 
 /**
+ * The purpose of this class is to turn off Single Page Application (SennaJS) navigation for command links. See
+ * FACES-2585 for more details.
+ *
  * @author  Kyle Stiemann
  */
 public class CommandLinkResponseWriterLiferayImpl extends ResponseWriterWrapper {

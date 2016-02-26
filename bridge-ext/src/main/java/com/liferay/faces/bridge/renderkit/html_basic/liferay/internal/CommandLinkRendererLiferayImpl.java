@@ -23,6 +23,9 @@ import javax.faces.render.RendererWrapper;
 
 
 /**
+ * The purpose of this class is to wrap the default {@link ResponseWriter} with a {@link
+ * CommandLinkResponseWriterLiferayImpl} before rendering.
+ *
  * @author  Kyle Stiemann
  */
 public class CommandLinkRendererLiferayImpl extends RendererWrapper {
