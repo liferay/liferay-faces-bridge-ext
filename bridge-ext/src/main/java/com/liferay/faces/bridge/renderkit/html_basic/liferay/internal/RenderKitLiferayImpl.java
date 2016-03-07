@@ -32,23 +32,6 @@ import com.liferay.faces.util.product.ProductMap;
  */
 public class RenderKitLiferayImpl extends RenderKitWrapper {
 
-	// Package-Private Constants
-	/**
-	 * This constant is used by {@link
-	 * com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.SennaJSDisablingResponseWriterImpl} to determine
-	 * if SennaJS should be disabled for an element.
-	 */
-	/* package-private */ static final List<String> DISABLE_SENNAJS_ELEMENT_NAMES;
-
-	// FACES-2585 and FACES-2629 Turn off Single Page Application (SennaJS) features for command links and forms.
-	static {
-
-		List<String> disableSennaJSElementNames = new ArrayList<String>();
-		disableSennaJSElementNames.add("a");
-		disableSennaJSElementNames.add("form");
-		DISABLE_SENNAJS_ELEMENT_NAMES = Collections.unmodifiableList(disableSennaJSElementNames);
-	}
-
 	// Private Constants
 	private static final boolean ICEFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.ICEFACES)
 		.isDetected();
@@ -75,7 +58,7 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 				(UICommand.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Link".equals(rendererType)) ||
 				(ICEFACES_DETECTED && "com.icesoft.faces.Form".equals(rendererType)) ||
 				(UIForm.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Form".equals(rendererType))) {
-			renderer = new SennaJSDisablingRendererImpl(renderer);
+			renderer = new SennaJSDisablingRenderer(renderer);
 		}
 
 		return renderer;

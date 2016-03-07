@@ -29,12 +29,12 @@ import com.liferay.faces.util.render.RendererWrapper;
  *
  * @author  Kyle Stiemann
  */
-public class SennaJSDisablingRendererImpl extends RendererWrapper {
+public class SennaJSDisablingRenderer extends RendererWrapper {
 
 	// Private Data Members
 	private Renderer wrappedRenderer;
 
-	public SennaJSDisablingRendererImpl(Renderer wrappedRenderer) {
+	public SennaJSDisablingRenderer(Renderer wrappedRenderer) {
 		this.wrappedRenderer = wrappedRenderer;
 	}
 
@@ -42,8 +42,8 @@ public class SennaJSDisablingRendererImpl extends RendererWrapper {
 	public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter commandLinkResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
-		facesContext.setResponseWriter(commandLinkResponseWriter);
+		ResponseWriter sennaJSDisablingResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
+		facesContext.setResponseWriter(sennaJSDisablingResponseWriter);
 		super.encodeBegin(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
 	}
@@ -52,8 +52,8 @@ public class SennaJSDisablingRendererImpl extends RendererWrapper {
 	public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter commandLinkResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
-		facesContext.setResponseWriter(commandLinkResponseWriter);
+		ResponseWriter sennaJSDisablingResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
+		facesContext.setResponseWriter(sennaJSDisablingResponseWriter);
 		super.encodeChildren(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
 	}
@@ -62,8 +62,8 @@ public class SennaJSDisablingRendererImpl extends RendererWrapper {
 	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter commandLinkResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
-		facesContext.setResponseWriter(commandLinkResponseWriter);
+		ResponseWriter sennaJSDisablingResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
+		facesContext.setResponseWriter(sennaJSDisablingResponseWriter);
 		super.encodeEnd(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
 	}
