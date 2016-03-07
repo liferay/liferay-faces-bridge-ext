@@ -24,16 +24,16 @@ import javax.faces.render.RendererWrapper;
 
 /**
  * The purpose of this class is to wrap the default {@link ResponseWriter} with a {@link
- * CommandLinkResponseWriterLiferayImpl} before rendering.
+ * SennaJSDisablingResponseWriterImpl} before rendering.
  *
  * @author  Kyle Stiemann
  */
-public class CommandLinkRendererLiferayImpl extends RendererWrapper {
+public class SennaJSDisablingRendererImpl extends RendererWrapper {
 
 	// Private Data Members
 	private Renderer wrappedRenderer;
 
-	public CommandLinkRendererLiferayImpl(Renderer wrappedRenderer) {
+	public SennaJSDisablingRendererImpl(Renderer wrappedRenderer) {
 		this.wrappedRenderer = wrappedRenderer;
 	}
 
@@ -41,7 +41,7 @@ public class CommandLinkRendererLiferayImpl extends RendererWrapper {
 	public void encodeBegin(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter commandLinkResponseWriter = new CommandLinkResponseWriterLiferayImpl(responseWriter);
+		ResponseWriter commandLinkResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
 		facesContext.setResponseWriter(commandLinkResponseWriter);
 		super.encodeBegin(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
@@ -51,7 +51,7 @@ public class CommandLinkRendererLiferayImpl extends RendererWrapper {
 	public void encodeChildren(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter commandLinkResponseWriter = new CommandLinkResponseWriterLiferayImpl(responseWriter);
+		ResponseWriter commandLinkResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
 		facesContext.setResponseWriter(commandLinkResponseWriter);
 		super.encodeChildren(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
@@ -61,7 +61,7 @@ public class CommandLinkRendererLiferayImpl extends RendererWrapper {
 	public void encodeEnd(FacesContext facesContext, UIComponent uiComponent) throws IOException {
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		ResponseWriter commandLinkResponseWriter = new CommandLinkResponseWriterLiferayImpl(responseWriter);
+		ResponseWriter commandLinkResponseWriter = new SennaJSDisablingResponseWriterImpl(responseWriter);
 		facesContext.setResponseWriter(commandLinkResponseWriter);
 		super.encodeEnd(facesContext, uiComponent);
 		facesContext.setResponseWriter(responseWriter);
