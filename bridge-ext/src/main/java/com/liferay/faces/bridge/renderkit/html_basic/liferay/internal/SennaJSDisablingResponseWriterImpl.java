@@ -21,17 +21,17 @@ import javax.faces.context.ResponseWriterWrapper;
 
 
 /**
- * The purpose of this class is to turn off Single Page Application (SennaJS) navigation for command links. See
- * FACES-2585 for more details.
+ * The purpose of this class is to turn off Single Page Application (SennaJS) features for certain components. See
+ * {@link RenderKitLiferayImpl} and FACES-2585 for more details.
  *
  * @author  Kyle Stiemann
  */
-public class CommandLinkResponseWriterLiferayImpl extends ResponseWriterWrapper {
+public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 
 	// Private Data Members
 	private ResponseWriter wrappedResponseWriter;
 
-	public CommandLinkResponseWriterLiferayImpl(ResponseWriter wrappedResponseWriter) {
+	public SennaJSDisablingResponseWriterImpl(ResponseWriter wrappedResponseWriter) {
 		this.wrappedResponseWriter = wrappedResponseWriter;
 	}
 
@@ -40,10 +40,7 @@ public class CommandLinkResponseWriterLiferayImpl extends ResponseWriterWrapper 
 
 		super.startElement(name, component);
 
-		// FACES-2585 Turn off Single Page Application (SennaJS) navigation for command links.
-		if ("a".equals(name)) {
-
-			writeAttribute("data-navigation", "false", null);
+		if (RenderKitLiferayImpl.DISABLE_SENNAJS_ELEMENT_NAMES.contains(name)) {
 			writeAttribute("data-senna-off", "true", null);
 		}
 	}

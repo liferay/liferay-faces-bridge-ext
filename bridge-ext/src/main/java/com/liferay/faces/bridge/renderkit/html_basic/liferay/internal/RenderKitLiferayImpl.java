@@ -13,6 +13,12 @@
  */
 package com.liferay.faces.bridge.renderkit.html_basic.liferay.internal;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.faces.component.UICommand;
+import javax.faces.component.UIForm;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitWrapper;
 import javax.faces.render.Renderer;
@@ -26,9 +32,30 @@ import com.liferay.faces.util.product.ProductMap;
  */
 public class RenderKitLiferayImpl extends RenderKitWrapper {
 
+	// Package-Private Constants
+	/**
+	 * This constant is used by {@link
+	 * com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.SennaJSDisablingResponseWriterImpl} to determine
+	 * if SennaJS should be disabled for an element.
+	 */
+	/* package-private */ static final List<String> DISABLE_SENNAJS_ELEMENT_NAMES;
+
+	// FACES-2585 and FACES-2629 Turn off Single Page Application (SennaJS) features for command links and forms.
+	static {
+
+		List<String> disableSennaJSElementNames = new ArrayList<String>();
+		disableSennaJSElementNames.add("a");
+		disableSennaJSElementNames.add("form");
+		DISABLE_SENNAJS_ELEMENT_NAMES = Collections.unmodifiableList(disableSennaJSElementNames);
+	}
+
 	// Private Constants
-	private static boolean PRIMEFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.PRIMEFACES).isDetected();
-	private static boolean RICHFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.RICHFACES).isDetected();
+	private static final boolean ICEFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.ICEFACES)
+		.isDetected();
+	private static final boolean PRIMEFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.PRIMEFACES)
+		.isDetected();
+	private static final boolean RICHFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.RICHFACES)
+		.isDetected();
 
 	// Private Data Members
 	private RenderKit wrappedRenderKit;
@@ -42,10 +69,13 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 
 		Renderer renderer = super.getRenderer(componentFamily, rendererType);
 
+		// FACES-2585 and FACES-2629 Turn off Single Page Application (SennaJS) features for command links and forms.
 		if ((PRIMEFACES_DETECTED && "org.primefaces.component.CommandLinkRenderer".equals(rendererType)) ||
 				(RICHFACES_DETECTED && "org.richfaces.CommandLinkRenderer".equals(rendererType)) ||
-				("javax.faces.Command".equals(componentFamily) && "javax.faces.Link".equals(rendererType))) {
-			renderer = new CommandLinkRendererLiferayImpl(renderer);
+				(UICommand.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Link".equals(rendererType)) ||
+				(ICEFACES_DETECTED && "com.icesoft.faces.Form".equals(rendererType)) ||
+				(UIForm.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Form".equals(rendererType))) {
+			renderer = new SennaJSDisablingRendererImpl(renderer);
 		}
 
 		return renderer;
