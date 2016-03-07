@@ -22,7 +22,7 @@ import javax.faces.context.ResponseWriterWrapper;
 
 /**
  * The purpose of this class is to turn off Single Page Application (SennaJS) features for certain components. See
- * {@link RenderKitLiferayImpl} and FACES-2585 for more details.
+ * {@link RenderKitLiferayImpl}, FACES-2585, and FACES-2629 for more details.
  *
  * @author  Kyle Stiemann
  */
@@ -40,7 +40,8 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 
 		super.startElement(name, component);
 
-		if (RenderKitLiferayImpl.DISABLE_SENNAJS_ELEMENT_NAMES.contains(name)) {
+		// FACES-2585 and FACES-2629 Turn off Single Page Application (SennaJS) features for command links and forms.
+		if ("a".equals(name) || "form".equals(name)) {
 			writeAttribute("data-senna-off", "true", null);
 		}
 	}
