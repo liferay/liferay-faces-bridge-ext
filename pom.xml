@@ -81,6 +81,7 @@
 	<properties>
 		<faces.api.version>${faces.spec.version}</faces.api.version>
 		<faces.spec.version>2.1</faces.spec.version>
+		<mojarra.version>${faces.spec.version}.29-05</mojarra.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
 		<liferay.version>7.0.0-SNAPSHOT</liferay.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -274,6 +275,12 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${mojarra.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
 				<groupId>javax.portlet</groupId>
 				<artifactId>portlet-api</artifactId>
 				<version>2.0</version>
@@ -296,6 +303,12 @@
 				<artifactId>junit</artifactId>
 				<version>4.10</version>
 				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>5.0.0</version>
+				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
