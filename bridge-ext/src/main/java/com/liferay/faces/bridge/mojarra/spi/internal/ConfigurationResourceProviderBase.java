@@ -40,7 +40,10 @@ public abstract class ConfigurationResourceProviderBase implements Configuration
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(ConfigurationResourceProviderBase.class);
 
-	protected Collection<URI> getResources(ServletContext servletContext, String resourceFilePattern) {
+	@Override
+	public abstract Collection<URI> getResources(ServletContext context);
+
+	protected Collection<URI> getResources(String resourceFilePattern) {
 
 		Bundle portletBundle = FrameworkUtil.getBundle(ConfigurationResourceProviderBase.class);
 		BundleWiring bundleWiring = portletBundle.adapt(BundleWiring.class);

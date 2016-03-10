@@ -81,7 +81,7 @@
 	<properties>
 		<faces.api.version>${faces.spec.version}</faces.api.version>
 		<faces.spec.version>2.1</faces.spec.version>
-		<mojarra.version>${faces.spec.version}.29-05</mojarra.version>
+		<mojarra.version>2.1.29-05</mojarra.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
 		<liferay.version>7.0.0-SNAPSHOT</liferay.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

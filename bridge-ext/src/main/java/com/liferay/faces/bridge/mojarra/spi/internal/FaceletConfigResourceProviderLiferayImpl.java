@@ -22,13 +22,20 @@ import com.sun.faces.spi.FaceletConfigResourceProvider;
 
 
 /**
+ * This class implements the Mojarra {@link com.sun.faces.spi.ConfigurationResourceProvider} SPI in order to enable the
+ * discovery of resources within the OSGi bundle that match the "*.taglib.xml" wildcard.
+ *
  * @author  Kyle Stiemann
  */
 public class FaceletConfigResourceProviderLiferayImpl extends ConfigurationResourceProviderBase
 	implements FaceletConfigResourceProvider {
 
+	/**
+	 * Returns the list of resources matching the "*.taglib.xml" wildcard found within the OSGi bundle. For more
+	 * information, see {@link com.sun.faces.spi.ConfigurationResourceProvider#getResources(ServletContext)}.
+	 */
 	@Override
 	public Collection<URI> getResources(ServletContext servletContext) {
-		return getResources(servletContext, "*.taglib.xml");
+		return getResources("*.taglib.xml");
 	}
 }
