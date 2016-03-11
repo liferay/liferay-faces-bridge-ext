@@ -14,15 +14,12 @@
 package com.liferay.faces.bridge.renderkit.html_basic.liferay.internal;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
 
 import com.liferay.faces.util.client.Script;
 
@@ -30,7 +27,6 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 
 
 /**
@@ -143,11 +139,6 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 		Map<String, Object> requestMap = externalContext.getRequestMap();
 		scriptDataAppendScripts(scriptData, requestMap, scripts);
 
-		PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
-		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
-		StringWriter stringWriter = new StringWriter();
-		scriptData.writeTo(httpServletRequest, stringWriter);
-
-		return stringWriter.toString();
+		return scriptDataToString(externalContext, scriptData);
 	}
 }

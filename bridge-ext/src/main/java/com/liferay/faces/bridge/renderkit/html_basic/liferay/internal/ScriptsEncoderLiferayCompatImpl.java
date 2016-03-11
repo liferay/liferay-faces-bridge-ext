@@ -13,9 +13,17 @@
  */
 package com.liferay.faces.bridge.renderkit.html_basic.liferay.internal;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
+import javax.faces.context.ExternalContext;
+import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import com.liferay.faces.util.client.ScriptsEncoder;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.util.PortalUtil;
 
 
 /**
@@ -25,5 +33,16 @@ public abstract class ScriptsEncoderLiferayCompatImpl implements ScriptsEncoder 
 
 	protected void scriptDataAppendScript(ScriptData scriptData, String portletId, String script, String modules) {
 		scriptData.append(portletId, script, modules);
+	}
+
+	protected final String scriptDataToString(ExternalContext externalContext, ScriptData scriptData)
+		throws IOException {
+
+		PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
+		StringWriter stringWriter = new StringWriter();
+		scriptData.writeTo(httpServletRequest, stringWriter);
+
+		return stringWriter.toString();
 	}
 }
