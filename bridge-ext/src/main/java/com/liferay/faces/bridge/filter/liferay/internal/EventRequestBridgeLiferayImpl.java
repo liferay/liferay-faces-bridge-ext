@@ -40,6 +40,11 @@ public class EventRequestBridgeLiferayImpl extends EventRequestWrapper {
 	}
 
 	@Override
+	public Object getAttribute(String name) {
+		return liferayPortletRequest.getAttribute(name);
+	}
+
+	@Override
 	public PortalContext getPortalContext() {
 		return bridgePortalContext;
 	}
