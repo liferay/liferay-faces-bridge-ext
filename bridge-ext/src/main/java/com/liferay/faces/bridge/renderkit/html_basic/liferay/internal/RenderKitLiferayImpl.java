@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.faces.component.UICommand;
 import javax.faces.component.UIForm;
+import javax.faces.component.UIOutput;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitWrapper;
 import javax.faces.render.Renderer;
@@ -59,6 +60,10 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 				(ICEFACES_DETECTED && "com.icesoft.faces.Form".equals(rendererType)) ||
 				(UIForm.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Form".equals(rendererType))) {
 			renderer = new SennaJSDisablingRenderer(renderer);
+		}
+		else if (UIOutput.COMPONENT_FAMILY.equals(componentFamily) &&
+				"javax.faces.resource.Stylesheet".equals(rendererType)) {
+			renderer = new SennaJSStyleSheetRenderer(renderer);
 		}
 
 		return renderer;
