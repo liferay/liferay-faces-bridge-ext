@@ -17,7 +17,6 @@ import java.io.IOException;
 
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.component.ValueHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.AbortProcessingException;
@@ -30,7 +29,6 @@ import javax.faces.render.RendererWrapper;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
-import com.liferay.faces.util.render.internal.ResourceRendererUtilImpl;
 
 
 /**
@@ -40,7 +38,7 @@ import com.liferay.faces.util.render.internal.ResourceRendererUtilImpl;
 public class SennaJSStyleSheetRenderer extends RendererWrapper implements ComponentSystemEventListener, StateHolder {
 
 	// Logger
-	private static final Logger logger = LoggerFactory.getLogger(ResourceRendererUtilImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(SennaJSStyleSheetRenderer.class);
 
 	// Private Members
 	private boolean transientFlag;
