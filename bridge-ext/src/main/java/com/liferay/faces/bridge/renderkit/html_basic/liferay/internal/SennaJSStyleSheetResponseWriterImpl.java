@@ -36,7 +36,7 @@ public class SennaJSStyleSheetResponseWriterImpl extends ResponseWriterWrapper {
 	public void startElement(String name, UIComponent component) throws IOException {
 		super.startElement(name, component);
 
-		if ("link".equals(name)) {
+		if ("link".equals(name) || "style".equals(name)) {
 			writeAttribute("data-senna-track", "temporary", null);
 		}
 	}
