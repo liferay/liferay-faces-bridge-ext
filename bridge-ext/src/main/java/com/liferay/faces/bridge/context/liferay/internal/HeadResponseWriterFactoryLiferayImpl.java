@@ -14,8 +14,8 @@
 package com.liferay.faces.bridge.context.liferay.internal;
 
 import javax.faces.context.ResponseWriter;
+import javax.portlet.PortletResponse;
 
-import com.liferay.faces.bridge.context.BridgeContext;
 import com.liferay.faces.bridge.context.HeadResponseWriter;
 import com.liferay.faces.bridge.context.HeadResponseWriterFactory;
 
@@ -33,7 +33,7 @@ public class HeadResponseWriterFactoryLiferayImpl extends HeadResponseWriterFact
 	}
 
 	@Override
-	public HeadResponseWriter getHeadResponseWriter(BridgeContext bridgeContext, ResponseWriter responseWriter) {
+	public HeadResponseWriter getHeadResponseWriter(ResponseWriter responseWriter, PortletResponse portletResponse) {
 		return new HeadResponseWriterLiferayImpl(responseWriter);
 	}
 

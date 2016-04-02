@@ -13,11 +13,14 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
+import java.util.Map;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
-import com.liferay.faces.bridge.context.BridgeContext;
 import com.liferay.faces.bridge.filter.liferay.LiferayActionURL;
 import com.liferay.faces.bridge.filter.liferay.LiferayRenderURL;
 import com.liferay.faces.bridge.filter.liferay.LiferayResourceURL;
@@ -48,44 +51,47 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 		"com.liferay.faces.bridge.container.liferay.RESOURCE_URL_GENERATOR";
 
 	@Override
-	public LiferayActionURL getLiferayActionURL(BridgeContext bridgeContext, MimeResponse mimeResponse,
-		String responseNamespace) {
+	public LiferayActionURL getLiferayActionURL(FacesContext facesContext) {
 
-		LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) bridgeContext.getAttributes().get(
-				ACTION_URL_GENERATOR);
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) requestMap.get(ACTION_URL_GENERATOR);
 
 		if (liferayURLGenerator == null) {
 
+			MimeResponse mimeResponse = (MimeResponse) externalContext.getResponse();
 			PortletURL actionURL = mimeResponse.createActionURL();
 			liferayURLGenerator = new LiferayURLGeneratorActionImpl(actionURL.toString(), actionURL.getPortletMode(),
-					responseNamespace, actionURL.getWindowState());
-			bridgeContext.getAttributes().put(ACTION_URL_GENERATOR, liferayURLGenerator);
+					mimeResponse.getNamespace(), actionURL.getWindowState());
+			requestMap.put(ACTION_URL_GENERATOR, liferayURLGenerator);
 		}
 
 		return new LiferayActionURLImpl(liferayURLGenerator);
 	}
 
 	@Override
-	public LiferayRenderURL getLiferayRenderURL(BridgeContext bridgeContext, MimeResponse mimeResponse,
-		String responseNamespace, boolean friendlyURLMapperEnabled) {
+	public LiferayRenderURL getLiferayRenderURL(FacesContext facesContext, boolean friendlyURLMapperEnabled) {
 
 		LiferayRenderURL liferayRenderURL;
+		ExternalContext externalContext = facesContext.getExternalContext();
+		MimeResponse mimeResponse = (MimeResponse) externalContext.getResponse();
 
 		if (friendlyURLMapperEnabled) {
 
 			PortletURL renderURL = mimeResponse.createRenderURL();
-			liferayRenderURL = new LiferayRenderURLFriendlyImpl(renderURL, responseNamespace);
+			liferayRenderURL = new LiferayRenderURLFriendlyImpl(renderURL, mimeResponse.getNamespace());
 		}
 		else {
-			LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) bridgeContext.getAttributes().get(
-					RENDER_URL_GENERATOR);
+
+			Map<String, Object> requestMap = externalContext.getRequestMap();
+			LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) requestMap.get(RENDER_URL_GENERATOR);
 
 			if (liferayURLGenerator == null) {
 
 				PortletURL renderURL = mimeResponse.createRenderURL();
 				liferayURLGenerator = new LiferayURLGeneratorRenderImpl(renderURL.toString(),
-						renderURL.getPortletMode(), responseNamespace, renderURL.getWindowState());
-				bridgeContext.getAttributes().put(RENDER_URL_GENERATOR, liferayURLGenerator);
+						renderURL.getPortletMode(), mimeResponse.getNamespace(), renderURL.getWindowState());
+				requestMap.put(RENDER_URL_GENERATOR, liferayURLGenerator);
 			}
 
 			liferayRenderURL = new LiferayRenderURLImpl(liferayURLGenerator);
@@ -95,22 +101,26 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 	}
 
 	@Override
-	public LiferayResourceURL getLiferayResourceURL(BridgeContext bridgeContext, MimeResponse mimeResponse,
-		String responseNamespace) {
+	public LiferayResourceURL getLiferayResourceURL(FacesContext facesContext) {
 
-		LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) bridgeContext.getAttributes().get(
-				RESOURCE_URL_GENERATOR);
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+
+		LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) requestMap.get(RESOURCE_URL_GENERATOR);
 
 		if (liferayURLGenerator == null) {
 
+			MimeResponse mimeResponse = (MimeResponse) externalContext.getResponse();
 			ResourceURL resourceURL = mimeResponse.createResourceURL();
-			liferayURLGenerator = new LiferayURLGeneratorResourceImpl(resourceURL.toString(), responseNamespace);
-			bridgeContext.getAttributes().put(RESOURCE_URL_GENERATOR, liferayURLGenerator);
+			liferayURLGenerator = new LiferayURLGeneratorResourceImpl(resourceURL.toString(),
+					mimeResponse.getNamespace());
+			requestMap.put(RESOURCE_URL_GENERATOR, liferayURLGenerator);
 		}
 
 		return new LiferayResourceURLImpl(liferayURLGenerator);
 	}
 
+	@Override
 	public LiferayURLFactory getWrapped() {
 
 		// Since this is the factory instance provided by the bridge, it will never wrap another factory.

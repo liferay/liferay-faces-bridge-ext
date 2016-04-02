@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.portlet.BaseURL;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -25,9 +27,12 @@ import javax.portlet.faces.Bridge;
 import javax.portlet.faces.BridgeUtil;
 
 import com.liferay.faces.bridge.config.BridgeConfig;
-import com.liferay.faces.bridge.context.BridgeContext;
+import com.liferay.faces.bridge.config.liferay.internal.LiferayBridgeConfigAttributeMap;
 import com.liferay.faces.bridge.context.url.BridgeURI;
 import com.liferay.faces.bridge.context.url.BridgeURL;
+import com.liferay.faces.util.config.ConfiguredServletMapping;
+import com.liferay.faces.util.logging.Logger;
+import com.liferay.faces.util.logging.LoggerFactory;
 
 
 /**
@@ -35,23 +40,19 @@ import com.liferay.faces.bridge.context.url.BridgeURL;
  */
 public class BridgeRedirectURLLiferayImpl extends BridgeURLLiferayBase {
 
+	// Logger
+	private static final Logger logger = LoggerFactory.getLogger(BridgeRedirectURLLiferayImpl.class);
+
 	// Private Data Members
-	private PortletResponse portletResponse;
-	private String uri;
-	private String viewId;
-	private String viewIdRenderParameterName;
+	private List<ConfiguredServletMapping> configuredFacesServletMappings;
 	private BridgeURL wrappedBridgeRedirectURL;
 
-	public BridgeRedirectURLLiferayImpl(BridgeContext bridgeContext, BridgeURI bridgeURI,
-		Map<String, List<String>> parameters, String viewId, BridgeURL bridgeRedirectURL) {
+	public BridgeRedirectURLLiferayImpl(BridgeURI bridgeURI, String contextPath, String namespace, String viewId,
+		String viewIdRenderParameterName, String viewIdResourceParameterName, BridgeConfig bridgeConfig,
+		Map<String, List<String>> parameters, BridgeURL bridgeRedirectURL) {
 
-		super(bridgeContext, bridgeURI, viewId);
-		this.uri = bridgeURI.toString();
-		this.portletResponse = bridgeContext.getPortletResponse();
-		this.viewId = viewId;
+		super(bridgeURI, contextPath, namespace, viewId, viewIdRenderParameterName, viewIdResourceParameterName);
 
-		BridgeConfig bridgeConfig = bridgeContext.getBridgeConfig();
-		this.viewIdRenderParameterName = bridgeConfig.getViewIdRenderParameterName();
 		this.wrappedBridgeRedirectURL = bridgeRedirectURL;
 
 		if (parameters != null) {
@@ -73,11 +74,15 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLLiferayBase {
 			}
 		}
 
+		this.configuredFacesServletMappings = (List<ConfiguredServletMapping>) bridgeConfig.getAttributes().get(
+				LiferayBridgeConfigAttributeMap.CONFIGURED_FACES_SERVLET_MAPPINGS);
 	}
 
 	@Override
-	public PortletURL createRenderURL(String fromURL) throws MalformedURLException {
+	public PortletURL createRenderURL(FacesContext facesContext, String fromURL) throws MalformedURLException {
 
+		ExternalContext externalContext = facesContext.getExternalContext();
+		PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
 		LiferayPortletResponse liferayPortletResponse = new LiferayPortletResponse(portletResponse);
 
 		return liferayPortletResponse.createRenderURL();
@@ -90,8 +95,9 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLLiferayBase {
 
 		if (BridgeUtil.getPortletRequestPhase() == Bridge.PortletPhase.ACTION_PHASE) {
 
-			baseURL = createRenderURL(uri);
-			baseURL.setParameter(viewIdRenderParameterName, viewId);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			baseURL = createRenderURL(facesContext, getBridgeURI().toString());
+			baseURL.setParameter(getViewIdRenderParameterName(), getViewId());
 
 			Map<String, String[]> parameterMap = getParameterMap();
 			Set<Map.Entry<String, String[]>> entrySet = parameterMap.entrySet();
@@ -109,5 +115,23 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLLiferayBase {
 		}
 
 		return baseURL;
+	}
+
+	@Override
+	protected boolean isMappedToFacesServlet(String viewPath) {
+
+		// Try to determine the viewId by examining the servlet-mapping entries for the Faces Servlet.
+		// For each servlet-mapping:
+		for (ConfiguredServletMapping configuredFacesServletMapping : configuredFacesServletMappings) {
+
+			// If the current servlet-mapping matches the viewPath, then
+			logger.debug("Attempting to determine the facesViewId from {0}=[{1}]", Bridge.VIEW_PATH, viewPath);
+
+			if (configuredFacesServletMapping.isMatch(viewPath)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

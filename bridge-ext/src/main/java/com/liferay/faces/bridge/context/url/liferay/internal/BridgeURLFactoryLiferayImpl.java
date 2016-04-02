@@ -16,7 +16,11 @@ package com.liferay.faces.bridge.context.url.liferay.internal;
 import java.util.List;
 import java.util.Map;
 
-import com.liferay.faces.bridge.context.BridgeContext;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.portlet.PortletRequest;
+
+import com.liferay.faces.bridge.config.BridgeConfig;
 import com.liferay.faces.bridge.context.url.BridgeResourceURL;
 import com.liferay.faces.bridge.context.url.BridgeURI;
 import com.liferay.faces.bridge.context.url.BridgeURL;
@@ -36,39 +40,86 @@ public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory {
 	}
 
 	@Override
-	public BridgeURL getBridgeActionURL(BridgeContext bridgeContext, BridgeURI bridgeURI, String viewId) {
-		return wrappedBridgeURLFactory.getBridgeActionURL(bridgeContext, bridgeURI, viewId);
+	public BridgeURL getBridgeActionURL(FacesContext facesContext, BridgeURI bridgeURI, String viewId) {
+		return wrappedBridgeURLFactory.getBridgeActionURL(facesContext, bridgeURI, viewId);
 	}
 
 	@Override
-	public BridgeURL getBridgeBookmarkableURL(BridgeContext bridgeContext, BridgeURI bridgeURI,
+	public BridgeURL getBridgeBookmarkableURL(FacesContext facesContext, BridgeURI bridgeURI,
 		Map<String, List<String>> parameters, String viewId) {
-		return wrappedBridgeURLFactory.getBridgeBookmarkableURL(bridgeContext, bridgeURI, parameters, viewId);
+		return wrappedBridgeURLFactory.getBridgeBookmarkableURL(facesContext, bridgeURI, parameters, viewId);
 	}
 
 	@Override
-	public BridgeURL getBridgePartialActionURL(BridgeContext bridgeContext, BridgeURI bridgeURI, String viewId) {
-		return wrappedBridgeURLFactory.getBridgePartialActionURL(bridgeContext, bridgeURI, viewId);
+	public BridgeURL getBridgePartialActionURL(FacesContext facesContext, BridgeURI bridgeURI, String viewId) {
+		return wrappedBridgeURLFactory.getBridgePartialActionURL(facesContext, bridgeURI, viewId);
 	}
 
 	@Override
-	public BridgeURL getBridgeRedirectURL(BridgeContext bridgeContext, BridgeURI bridgeURI,
-		Map<String, List<String>> parameters, String redirectViewId) {
+	public BridgeURL getBridgeRedirectURL(FacesContext facesContext, BridgeURI bridgeURI,
+		Map<String, List<String>> parameters, String viewId) {
 
-		BridgeURL wrappedBridgeRedirectURL = wrappedBridgeURLFactory.getBridgeRedirectURL(bridgeContext, bridgeURI,
-				parameters, redirectViewId);
+		BridgeURL wrappedBridgeRedirectURL = wrappedBridgeURLFactory.getBridgeRedirectURL(facesContext, bridgeURI,
+				parameters, viewId);
 
-		return new BridgeRedirectURLLiferayImpl(bridgeContext, bridgeURI, parameters, redirectViewId,
-				wrappedBridgeRedirectURL);
+		ContextInfo contextInfo = new ContextInfo(facesContext);
+
+		return new BridgeRedirectURLLiferayImpl(bridgeURI, contextInfo.getContextPath(), contextInfo.getNamespace(),
+				viewId, contextInfo.getViewIdRenderParameterName(), contextInfo.getViewIdResourceParameterName(),
+				contextInfo.getBridgeConfig(), parameters, wrappedBridgeRedirectURL);
 	}
 
 	@Override
-	public BridgeResourceURL getBridgeResourceURL(BridgeContext bridgeContext, BridgeURI bridgeURI, String viewId) {
-		return wrappedBridgeURLFactory.getBridgeResourceURL(bridgeContext, bridgeURI, viewId);
+	public BridgeResourceURL getBridgeResourceURL(FacesContext facesContext, BridgeURI bridgeURI, String viewId) {
+		return wrappedBridgeURLFactory.getBridgeResourceURL(facesContext, bridgeURI, viewId);
 	}
 
 	@Override
 	public BridgeURLFactory getWrapped() {
 		return wrappedBridgeURLFactory;
+	}
+
+	private static class ContextInfo {
+
+		// Private Data Members
+		private BridgeConfig bridgeConfig;
+		private String contextPath;
+		private String namespace;
+		private String viewIdRenderParameterName;
+		private String viewIdResourceParameterName;
+
+		public ContextInfo(FacesContext facesContext) {
+
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+			this.bridgeConfig = (BridgeConfig) portletRequest.getAttribute(BridgeConfig.class.getName());
+			this.contextPath = externalContext.getRequestContextPath();
+			this.namespace = externalContext.encodeNamespace("");
+
+			Map<String, Object> requestMap = externalContext.getRequestMap();
+			BridgeConfig bridgeConfig = (BridgeConfig) requestMap.get(BridgeConfig.class.getName());
+			this.viewIdRenderParameterName = bridgeConfig.getViewIdRenderParameterName();
+			this.viewIdResourceParameterName = bridgeConfig.getViewIdResourceParameterName();
+		}
+
+		public BridgeConfig getBridgeConfig() {
+			return bridgeConfig;
+		}
+
+		public String getContextPath() {
+			return contextPath;
+		}
+
+		public String getNamespace() {
+			return namespace;
+		}
+
+		public String getViewIdRenderParameterName() {
+			return viewIdRenderParameterName;
+		}
+
+		public String getViewIdResourceParameterName() {
+			return this.viewIdResourceParameterName;
+		}
 	}
 }
