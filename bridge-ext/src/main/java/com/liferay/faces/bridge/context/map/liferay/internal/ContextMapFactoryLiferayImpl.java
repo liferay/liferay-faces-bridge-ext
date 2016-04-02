@@ -15,15 +15,21 @@ package com.liferay.faces.bridge.context.map.liferay.internal;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
 import javax.servlet.ServletContext;
 
 import com.liferay.faces.bridge.config.liferay.internal.LiferayPortletConfigParam;
-import com.liferay.faces.bridge.context.BridgeContext;
 import com.liferay.faces.bridge.context.ContextMapFactory;
 import com.liferay.faces.bridge.model.UploadedFile;
+import com.liferay.faces.bridge.scope.BridgeRequestScope;
 
 
 /**
@@ -39,13 +45,13 @@ public class ContextMapFactoryLiferayImpl extends ContextMapFactory {
 	}
 
 	@Override
-	public Map<String, Object> getApplicationScopeMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getApplicationScopeMap(bridgeContext);
+	public Map<String, Object> getApplicationScopeMap(PortletContext portletContext, boolean preferPreDestroy) {
+		return wrappedContextMapFactory.getApplicationScopeMap(portletContext, preferPreDestroy);
 	}
 
 	@Override
-	public Map<String, String> getFacesViewParameterMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getFacesViewParameterMap(bridgeContext);
+	public Map<String, String> getFacesViewParameterMap(String facesViewQueryString) {
+		return wrappedContextMapFactory.getFacesViewParameterMap(facesViewQueryString);
 	}
 
 	@Override
@@ -54,40 +60,53 @@ public class ContextMapFactoryLiferayImpl extends ContextMapFactory {
 	}
 
 	@Override
-	public Map<String, Object> getRequestCookieMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getRequestCookieMap(bridgeContext);
+	public Map<String, Object> getRequestCookieMap(PortletRequest portletRequest) {
+		return wrappedContextMapFactory.getRequestCookieMap(portletRequest);
 	}
 
 	@Override
-	public Map<String, String> getRequestHeaderMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getRequestHeaderMap(bridgeContext);
+	public Map<String, String> getRequestHeaderMap(PortletRequest portletRequest) {
+		return wrappedContextMapFactory.getRequestHeaderMap(portletRequest);
 	}
 
 	@Override
-	public Map<String, String[]> getRequestHeaderValuesMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getRequestHeaderValuesMap(bridgeContext);
+	public Map<String, String[]> getRequestHeaderValuesMap(PortletRequest portletRequest) {
+		return wrappedContextMapFactory.getRequestHeaderValuesMap(portletRequest);
 	}
 
 	@Override
-	public Map<String, String> getRequestParameterMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getRequestParameterMap(bridgeContext);
+	public Map<String, String> getRequestParameterMap(PortletRequest portletRequest, String responseNamespace,
+		PortletConfig portletConfig, BridgeRequestScope bridgeRequestScope, String defaultRenderKitId,
+		String facesViewQueryString) {
+		return wrappedContextMapFactory.getRequestParameterMap(portletRequest, responseNamespace, portletConfig,
+				bridgeRequestScope, defaultRenderKitId, facesViewQueryString);
 	}
 
 	@Override
-	public Map<String, String[]> getRequestParameterValuesMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getRequestParameterValuesMap(bridgeContext);
+	public Map<String, String[]> getRequestParameterValuesMap(PortletRequest portletRequest, String responseNamespace,
+		PortletConfig portletConfig, BridgeRequestScope bridgeRequestScope, String defaultRenderKitId,
+		String facesViewQueryString) {
+		return wrappedContextMapFactory.getRequestParameterValuesMap(portletRequest, responseNamespace, portletConfig,
+				bridgeRequestScope, defaultRenderKitId, facesViewQueryString);
 	}
 
 	@Override
-	public Map<String, Object> getRequestScopeMap(BridgeContext bridgeContext) {
+	public Map<String, Object> getRequestScopeMap(PortletContext portletContext, PortletRequest portletRequest,
+		Set<String> removedAttributeNames, boolean preferPreDestroy) {
 
-		Map<String, Object> requestScopeMap = wrappedContextMapFactory.getRequestScopeMap(bridgeContext);
-		PortletConfig portletConfig = bridgeContext.getPortletConfig();
+		Map<String, Object> requestScopeMap = wrappedContextMapFactory.getRequestScopeMap(portletContext,
+				portletRequest, removedAttributeNames, preferPreDestroy);
+		PortletConfig portletConfig = (PortletConfig) portletRequest.getAttribute(PortletConfig.class.getName());
 		boolean distinctRequestScopedManagedBeans = LiferayPortletConfigParam.DistinctRequestScopedManagedBeans
 			.getBooleanValue(portletConfig);
 
-		return new RequestScopeMapLiferayImpl(requestScopeMap, bridgeContext.getPortletRequest(),
-				bridgeContext.getPortletResponse().getNamespace(), distinctRequestScopedManagedBeans);
+		// TODO: Remove FacesContext hack by adding responseNamespace as a parameter
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
+
+		return new RequestScopeMapLiferayImpl(requestScopeMap, portletRequest, portletResponse.getNamespace(),
+				distinctRequestScopedManagedBeans);
 	}
 
 	@Override
@@ -96,13 +115,14 @@ public class ContextMapFactoryLiferayImpl extends ContextMapFactory {
 	}
 
 	@Override
-	public Map<String, Object> getSessionScopeMap(BridgeContext bridgeContext, int scope) {
-		return wrappedContextMapFactory.getSessionScopeMap(bridgeContext, scope);
+	public Map<String, Object> getSessionScopeMap(PortletContext portletContext, PortletSession portletSession,
+		int scope, boolean preferPreDestroy) {
+		return wrappedContextMapFactory.getSessionScopeMap(portletContext, portletSession, scope, preferPreDestroy);
 	}
 
 	@Override
-	public Map<String, List<UploadedFile>> getUploadedFileMap(BridgeContext bridgeContext) {
-		return wrappedContextMapFactory.getUploadedFileMap(bridgeContext);
+	public Map<String, List<UploadedFile>> getUploadedFileMap(PortletRequest portletRequest) {
+		return wrappedContextMapFactory.getUploadedFileMap(portletRequest);
 	}
 
 	@Override

@@ -14,9 +14,7 @@
 package com.liferay.faces.bridge.filter.liferay;
 
 import javax.faces.FacesWrapper;
-import javax.portlet.MimeResponse;
-
-import com.liferay.faces.bridge.context.BridgeContext;
+import javax.faces.context.FacesContext;
 
 
 /**
@@ -24,12 +22,9 @@ import com.liferay.faces.bridge.context.BridgeContext;
  */
 public abstract class LiferayURLFactory implements FacesWrapper<LiferayURLFactory> {
 
-	public abstract LiferayActionURL getLiferayActionURL(BridgeContext bridgeContext, MimeResponse mimeResponse,
-		String responseNamespace);
+	public abstract LiferayActionURL getLiferayActionURL(FacesContext facesContext);
 
-	public abstract LiferayRenderURL getLiferayRenderURL(BridgeContext bridgeContext, MimeResponse mimeResponse,
-		String responseNamespace, boolean friendlyURLMapperEnabled);
+	public abstract LiferayRenderURL getLiferayRenderURL(FacesContext facesContext, boolean friendlyURLMapperEnabled);
 
-	public abstract LiferayResourceURL getLiferayResourceURL(BridgeContext bridgeContext, MimeResponse mimeResponse,
-		String responseNamespace);
+	public abstract LiferayResourceURL getLiferayResourceURL(FacesContext facesContext);
 }

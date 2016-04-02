@@ -13,11 +13,11 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.filter.ActionResponseWrapper;
-
-import com.liferay.faces.bridge.context.BridgeContext;
 
 
 /**
@@ -27,7 +27,7 @@ public class ActionResponseBridgeLiferayImpl extends ActionResponseWrapper {
 
 	// Private Data Members
 	private String namespace;
-	private String responseNamespaceWSRP;
+	private String namespaceWSRP;
 
 	public ActionResponseBridgeLiferayImpl(ActionResponse response) {
 		super(response);
@@ -42,22 +42,23 @@ public class ActionResponseBridgeLiferayImpl extends ActionResponseWrapper {
 
 			if (namespace.startsWith("wsrp_rewrite")) {
 
-				BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
-				namespace = getNamespaceWSRP(bridgeContext);
+				namespace = getNamespaceWSRP();
 			}
 		}
 
 		return namespace;
 	}
 
-	protected String getNamespaceWSRP(BridgeContext bridgeContext) {
+	protected String getNamespaceWSRP() {
 
-		if (responseNamespaceWSRP == null) {
+		if (namespaceWSRP == null) {
 
-			PortletRequest portletRequest = bridgeContext.getPortletRequest();
-			responseNamespaceWSRP = LiferayPortalUtil.getPortletId(portletRequest);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+			namespaceWSRP = LiferayPortalUtil.getPortletId(portletRequest);
 		}
 
-		return responseNamespaceWSRP;
+		return namespaceWSRP;
 	}
 }

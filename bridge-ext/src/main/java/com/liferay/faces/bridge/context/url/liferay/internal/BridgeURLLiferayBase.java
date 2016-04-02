@@ -15,7 +15,6 @@ package com.liferay.faces.bridge.context.url.liferay.internal;
 
 import java.util.logging.Level;
 
-import com.liferay.faces.bridge.context.BridgeContext;
 import com.liferay.faces.bridge.context.url.BridgeURI;
 import com.liferay.faces.bridge.context.url.BridgeURLBase;
 import com.liferay.faces.util.logging.Logger;
@@ -30,8 +29,9 @@ public abstract class BridgeURLLiferayBase extends BridgeURLBase {
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(BridgeURLLiferayBase.class);
 
-	public BridgeURLLiferayBase(BridgeContext bridgeContext, BridgeURI bridgeURI, String viewId) {
-		super(bridgeContext, bridgeURI, viewId);
+	public BridgeURLLiferayBase(BridgeURI bridgeURI, String contextPath, String namespace, String viewId,
+		String viewIdRenderParameterName, String viewIdResourceParameterName) {
+		super(bridgeURI, contextPath, namespace, viewId, viewIdRenderParameterName, viewIdResourceParameterName);
 	}
 
 	@Override
