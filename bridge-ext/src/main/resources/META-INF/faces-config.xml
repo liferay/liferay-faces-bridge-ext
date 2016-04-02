@@ -18,7 +18,6 @@
 	<factory>
 		<render-kit-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.RenderKitFactoryLiferayImpl</render-kit-factory>
 		<factory-extension>
-			<bridge:bridge-context-factory>com.liferay.faces.bridge.context.liferay.internal.BridgeContextFactoryLiferayImpl</bridge:bridge-context-factory>
 			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
 			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
 			<bridge:head-response-writer-factory>com.liferay.faces.bridge.context.liferay.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
