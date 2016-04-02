@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -22,7 +24,6 @@ import javax.portlet.ResourceURL;
 import javax.portlet.filter.ResourceResponseWrapper;
 
 import com.liferay.faces.bridge.BridgeFactoryFinder;
-import com.liferay.faces.bridge.context.BridgeContext;
 import com.liferay.faces.bridge.filter.liferay.LiferayURLFactory;
 
 
@@ -35,7 +36,7 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 	private Boolean friendlyURLMapperEnabled;
 	private LiferayURLFactory liferayURLFactory;
 	private String namespace;
-	private String responseNamespaceWSRP;
+	private String namespaceWSRP;
 
 	public ResourceResponseBridgeLiferayImpl(ResourceResponse resourceResponse) {
 		super(resourceResponse);
@@ -45,34 +46,34 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 	@Override
 	public PortletURL createActionURL() throws IllegalStateException {
 
-		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-		return liferayURLFactory.getLiferayActionURL(bridgeContext, getResponse(), super.getNamespace());
+		return liferayURLFactory.getLiferayActionURL(facesContext);
 	}
 
 	@Override
 	public PortletURL createRenderURL() throws IllegalStateException {
 
-		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-		return liferayURLFactory.getLiferayRenderURL(bridgeContext, getResponse(), super.getNamespace(),
-				isFriendlyURLMapperEnabled(bridgeContext));
+		return liferayURLFactory.getLiferayRenderURL(facesContext, isFriendlyURLMapperEnabled(facesContext));
 	}
 
 	@Override
 	public ResourceURL createResourceURL() throws IllegalStateException {
 
-		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-		return liferayURLFactory.getLiferayResourceURL(bridgeContext, getResponse(), super.getNamespace());
+		return liferayURLFactory.getLiferayResourceURL(facesContext);
 	}
 
-	protected boolean isFriendlyURLMapperEnabled(BridgeContext bridgeContext) {
+	protected boolean isFriendlyURLMapperEnabled(FacesContext facesContext) {
 
 		if (friendlyURLMapperEnabled == null) {
-			PortletRequest portletRequest = bridgeContext.getPortletRequest();
-			PortletResponse portletResponse = bridgeContext.getPortletResponse();
-			PortletConfig portletConfig = bridgeContext.getPortletConfig();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+			PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
+			PortletConfig portletConfig = (PortletConfig) portletRequest.getAttribute(PortletConfig.class.getName());
 			LiferayPortletRequest liferayPortletRequest = new LiferayPortletRequest(portletRequest,
 					portletResponse.getNamespace(), portletConfig);
 			friendlyURLMapperEnabled = (liferayPortletRequest.getPortlet().getFriendlyURLMapperInstance() != null);
@@ -90,22 +91,23 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 
 			if (namespace.startsWith("wsrp_rewrite")) {
 
-				BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
-				namespace = getNamespaceWSRP(bridgeContext);
+				namespace = getNamespaceWSRP();
 			}
 		}
 
 		return namespace;
 	}
 
-	protected String getNamespaceWSRP(BridgeContext bridgeContext) {
+	protected String getNamespaceWSRP() {
 
-		if (responseNamespaceWSRP == null) {
+		if (namespaceWSRP == null) {
 
-			PortletRequest portletRequest = bridgeContext.getPortletRequest();
-			responseNamespaceWSRP = LiferayPortalUtil.getPortletId(portletRequest);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+			namespaceWSRP = LiferayPortalUtil.getPortletId(portletRequest);
 		}
 
-		return responseNamespaceWSRP;
+		return namespaceWSRP;
 	}
 }
