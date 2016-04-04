@@ -36,6 +36,8 @@ public class FacesConfigResourceProviderLiferayImpl extends ConfigurationResourc
 	 */
 	@Override
 	public Collection<URI> getResources(ServletContext servletContext) {
-		return getResources("*.faces-config.xml");
+		Collection<URI> facesResources = getResources("faces-config.xml");
+		facesResources.addAll(getResourcesPattern("*.faces-config.xml"));
+		return facesResources;
 	}
 }

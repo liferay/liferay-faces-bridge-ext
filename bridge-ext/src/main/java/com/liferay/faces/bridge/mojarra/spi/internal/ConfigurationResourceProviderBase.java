@@ -13,11 +13,13 @@
  */
 package com.liferay.faces.bridge.mojarra.spi.internal;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -43,7 +45,46 @@ public abstract class ConfigurationResourceProviderBase implements Configuration
 	@Override
 	public abstract Collection<URI> getResources(ServletContext context);
 
-	protected Collection<URI> getResources(String resourceFilePattern) {
+	protected Collection<URI> getResources(String resourceName) {
+		Bundle portletBundle = FrameworkUtil.getBundle(ConfigurationResourceProviderBase.class);
+		Enumeration<URL> resourceFilePaths = null;
+
+		try {
+			resourceFilePaths = portletBundle.getResources("META-INF/" + resourceName);
+		}
+		catch (IOException ioe) {
+			logger.error(ioe);
+		}
+
+		List<URI> resourceURIs = new ArrayList<URI>();
+
+		if (resourceFilePaths == null) {
+			return resourceURIs;
+		}
+
+		while (resourceFilePaths.hasMoreElements()) {
+
+			try {
+				URL resourceURL = resourceFilePaths.nextElement();
+
+				if (resourceURL != null) {
+
+					URI resrouceURI = resourceURL.toURI();
+					resourceURIs.add(resrouceURI);
+				}
+				else {
+					logger.warn("URL for resource file path \"{0}\" is null.", resourceURL);
+				}
+			}
+			catch (URISyntaxException e) {
+				logger.error(e);
+			}
+		}
+
+		return resourceURIs;
+	}
+
+	protected Collection<URI> getResourcesPattern(String resourceFilePattern) {
 
 		Bundle portletBundle = FrameworkUtil.getBundle(ConfigurationResourceProviderBase.class);
 		BundleWiring bundleWiring = portletBundle.adapt(BundleWiring.class);
