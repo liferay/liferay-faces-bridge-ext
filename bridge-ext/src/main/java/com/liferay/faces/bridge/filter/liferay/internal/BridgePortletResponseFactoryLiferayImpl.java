@@ -66,7 +66,7 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 		RenderResponse wrappedRenderResponse = getWrapped().getRenderResponse(renderRequest, renderResponse,
 				portletConfig, bridgeConfig);
 
-		return new RenderResponseBridgeLiferayImpl(wrappedRenderResponse);
+		return new RenderResponseBridgeLiferayImpl(renderRequest, wrappedRenderResponse);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 		ResourceResponse wrappedResourceResponse = getWrapped().getResourceResponse(resourceRequest, resourceResponse,
 				portletConfig, bridgeConfig);
 
-		return new ResourceResponseBridgeLiferayImpl(wrappedResourceResponse);
+		return new ResourceResponseBridgeLiferayImpl(resourceRequest, wrappedResourceResponse);
 	}
 
 	@Override
