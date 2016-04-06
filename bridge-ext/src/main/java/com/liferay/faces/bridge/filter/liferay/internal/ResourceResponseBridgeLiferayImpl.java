@@ -13,12 +13,9 @@
  */
 package com.liferay.faces.bridge.filter.liferay.internal;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.portlet.filter.ResourceResponseWrapper;
@@ -37,46 +34,36 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 	private LiferayURLFactory liferayURLFactory;
 	private String namespace;
 	private String namespaceWSRP;
+	private ResourceRequest resourceRequest;
 
-	public ResourceResponseBridgeLiferayImpl(ResourceResponse resourceResponse) {
+	public ResourceResponseBridgeLiferayImpl(ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 		super(resourceResponse);
+		this.resourceRequest = resourceRequest;
 		this.liferayURLFactory = (LiferayURLFactory) BridgeFactoryFinder.getFactory(LiferayURLFactory.class);
 	}
 
 	@Override
 	public PortletURL createActionURL() throws IllegalStateException {
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-
-		return liferayURLFactory.getLiferayActionURL(facesContext);
+		return liferayURLFactory.getLiferayActionURL(resourceRequest, getResponse());
 	}
 
 	@Override
 	public PortletURL createRenderURL() throws IllegalStateException {
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-
-		return liferayURLFactory.getLiferayRenderURL(facesContext, isFriendlyURLMapperEnabled(facesContext));
+		return liferayURLFactory.getLiferayRenderURL(resourceRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
 	public ResourceURL createResourceURL() throws IllegalStateException {
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-
-		return liferayURLFactory.getLiferayResourceURL(facesContext);
+		return liferayURLFactory.getLiferayResourceURL(resourceRequest, getResponse());
 	}
 
-	protected boolean isFriendlyURLMapperEnabled(FacesContext facesContext) {
+	protected boolean isFriendlyURLMapperEnabled() {
 
 		if (friendlyURLMapperEnabled == null) {
-			ExternalContext externalContext = facesContext.getExternalContext();
-			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
-			PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
-			PortletConfig portletConfig = (PortletConfig) portletRequest.getAttribute(PortletConfig.class.getName());
-			LiferayPortletRequest liferayPortletRequest = new LiferayPortletRequest(portletRequest,
-					portletResponse.getNamespace(), portletConfig);
-			friendlyURLMapperEnabled = (liferayPortletRequest.getPortlet().getFriendlyURLMapperInstance() != null);
+			PortletConfig portletConfig = (PortletConfig) resourceRequest.getAttribute(PortletConfig.class.getName());
+			LiferayPortletRequest liferayResourceRequest = new LiferayPortletRequest(resourceRequest,
+					getResponse().getNamespace(), portletConfig);
+			friendlyURLMapperEnabled = (liferayResourceRequest.getPortlet().getFriendlyURLMapperInstance() != null);
 		}
 
 		return friendlyURLMapperEnabled;
@@ -101,11 +88,7 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 	protected String getNamespaceWSRP() {
 
 		if (namespaceWSRP == null) {
-
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = facesContext.getExternalContext();
-			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
-			namespaceWSRP = LiferayPortalUtil.getPortletId(portletRequest);
+			namespaceWSRP = LiferayPortalUtil.getPortletId(resourceRequest);
 		}
 
 		return namespaceWSRP;

@@ -92,20 +92,15 @@ public class ContextMapFactoryLiferayImpl extends ContextMapFactory {
 
 	@Override
 	public Map<String, Object> getRequestScopeMap(PortletContext portletContext, PortletRequest portletRequest,
-		Set<String> removedAttributeNames, boolean preferPreDestroy) {
+		String responseNamespace, Set<String> removedAttributeNames, boolean preferPreDestroy) {
 
 		Map<String, Object> requestScopeMap = wrappedContextMapFactory.getRequestScopeMap(portletContext,
-				portletRequest, removedAttributeNames, preferPreDestroy);
+				portletRequest, responseNamespace, removedAttributeNames, preferPreDestroy);
 		PortletConfig portletConfig = (PortletConfig) portletRequest.getAttribute(PortletConfig.class.getName());
 		boolean distinctRequestScopedManagedBeans = LiferayPortletConfigParam.DistinctRequestScopedManagedBeans
 			.getBooleanValue(portletConfig);
 
-		// TODO: Remove FacesContext hack by adding responseNamespace as a parameter
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
-
-		return new RequestScopeMapLiferayImpl(requestScopeMap, portletRequest, portletResponse.getNamespace(),
+		return new RequestScopeMapLiferayImpl(requestScopeMap, portletRequest, responseNamespace,
 				distinctRequestScopedManagedBeans);
 	}
 
