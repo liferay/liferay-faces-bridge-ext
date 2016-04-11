@@ -61,10 +61,6 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 				(UIForm.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Form".equals(rendererType))) {
 			renderer = new SennaJSDisablingRenderer(renderer);
 		}
-		else if (UIOutput.COMPONENT_FAMILY.equals(componentFamily) &&
-				"javax.faces.resource.Stylesheet".equals(rendererType)) {
-			renderer = new SennaJSStyleSheetRenderer(renderer);
-		}
 
 		return renderer;
 	}
