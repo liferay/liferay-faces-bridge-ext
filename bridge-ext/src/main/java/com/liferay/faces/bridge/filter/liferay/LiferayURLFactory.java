@@ -13,15 +13,16 @@
  */
 package com.liferay.faces.bridge.filter.liferay;
 
-import javax.faces.FacesWrapper;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
+
+import com.liferay.faces.util.helper.Wrapper;
 
 
 /**
  * @author  Neil Griffin
  */
-public abstract class LiferayURLFactory implements FacesWrapper<LiferayURLFactory> {
+public abstract class LiferayURLFactory implements Wrapper<LiferayURLFactory> {
 
 	public abstract LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse);
 
