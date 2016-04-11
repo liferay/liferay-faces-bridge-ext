@@ -13,13 +13,13 @@
  */
 package com.liferay.faces.bridge.event.liferay.internal;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
-
-import com.liferay.faces.bridge.context.BridgeContext;
 
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -43,15 +43,16 @@ public class LiferayPageTopPhaseListenerCompat implements PhaseListener {
 	/**
 	 * This method is called after the {@link PhaseId#RENDER_RESPONSE} phase of the JSF lifecycle.
 	 */
+	@Override
 	public void afterPhase(PhaseEvent phaseEvent) {
-
-		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
 
 		// Remove duplicate resources from the LIFERAY_SHARED_PAGE_TOP request attribute. For more information, see:
 		// http://issues.liferay.com/browse/FACES-1216
 		if (liferaySharedPageTopLength > 0) {
 
-			PortletRequest portletRequest = bridgeContext.getPortletRequest();
+			FacesContext facesContext = phaseEvent.getFacesContext();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
 
 			StringBundler pageTop = getPageTop(portletRequest);
 
@@ -69,14 +70,16 @@ public class LiferayPageTopPhaseListenerCompat implements PhaseListener {
 	/**
 	 * This method is called prior to the {@link PhaseId#RENDER_RESPONSE} phase of the JSF lifecycle.
 	 */
+	@Override
 	public void beforePhase(PhaseEvent phaseEvent) {
 
 		// Determine if there are any resources in the LIFERAY_SHARED_PAGE_TOP request attribute, so that execution of
 		// the {@link #afterPhase(PhaseEvent)} can be optimized.
 		liferaySharedPageTopLength = 0;
 
-		BridgeContext bridgeContext = BridgeContext.getCurrentInstance();
-		PortletRequest portletRequest = bridgeContext.getPortletRequest();
+		FacesContext facesContext = phaseEvent.getFacesContext();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
 		StringBundler pageTop = getPageTop(portletRequest);
 
 		if (pageTop != null) {
