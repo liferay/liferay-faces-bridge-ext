@@ -1,1 +1,1 @@
-com.liferay.faces.bridge.mojarra.spi.internal.FacesConfigResourceProviderLiferayImpl
+com.liferay.faces.bridge.ext.mojarra.spi.internal.FacesConfigResourceProviderLiferayImpl
