@@ -13,29 +13,29 @@
 		</before>
 	</ordering>
 	<application>
-		<resource-handler>com.liferay.faces.bridge.application.liferay.internal.ResourceHandlerLiferayImpl</resource-handler>
+		<resource-handler>com.liferay.faces.bridge.ext.application.internal.ResourceHandlerLiferayImpl</resource-handler>
 	</application>
 	<factory>
-		<client-window-factory>com.liferay.faces.bridge.lifecycle.liferay.internal.ClientWindowFactoryLiferayImpl</client-window-factory>
-		<render-kit-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.RenderKitFactoryLiferayImpl</render-kit-factory>
+		<client-window-factory>com.liferay.faces.bridge.ext.lifecycle.internal.ClientWindowFactoryLiferayImpl</client-window-factory>
+		<render-kit-factory>com.liferay.faces.bridge.ext.renderkit.html_basic.internal.RenderKitFactoryLiferayImpl</render-kit-factory>
 		<factory-extension>
-			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
-			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
-			<bridge:head-response-writer-factory>com.liferay.faces.bridge.context.liferay.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
-			<bridge:bridge-portlet-context-factory>com.liferay.faces.bridge.filter.liferay.internal.BridgePortletContextFactoryLiferayImpl</bridge:bridge-portlet-context-factory>
-			<bridge:bridge-url-factory>com.liferay.faces.bridge.context.url.liferay.internal.BridgeURLFactoryLiferayImpl</bridge:bridge-url-factory>
-			<bridge:context-map-factory>com.liferay.faces.bridge.context.map.liferay.internal.ContextMapFactoryLiferayImpl</bridge:context-map-factory>
-			<bridge:liferay-url-factory>com.liferay.faces.bridge.filter.liferay.internal.LiferayURLFactoryImpl</bridge:liferay-url-factory>
-			<bridge:request-attribute-inspector-factory>com.liferay.faces.bridge.scope.liferay.internal.RequestAttributeInspectorFactoryLiferayImpl</bridge:request-attribute-inspector-factory>
-			<bridge:window-state-validator-factory>com.liferay.faces.bridge.liferay.internal.WindowStateValidatorFactoryLiferayImpl</bridge:window-state-validator-factory>
-			<util:browser-sniffer-factory>com.liferay.faces.bridge.client.liferay.internal.BrowserSnifferFactoryLiferayImpl</util:browser-sniffer-factory>
-			<util:resource-validator-factory>com.liferay.faces.bridge.application.liferay.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
-			<util:scripts-encoder-factory>com.liferay.faces.bridge.renderkit.html_basic.liferay.internal.ScriptsEncoderFactoryLiferayImpl</util:scripts-encoder-factory>
+			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
+			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
+			<bridge:head-response-writer-factory>com.liferay.faces.bridge.ext.context.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
+			<bridge:bridge-portlet-context-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletContextFactoryLiferayImpl</bridge:bridge-portlet-context-factory>
+			<bridge:bridge-url-factory>com.liferay.faces.bridge.ext.context.url.internal.BridgeURLFactoryLiferayImpl</bridge:bridge-url-factory>
+			<bridge:context-map-factory>com.liferay.faces.bridge.ext.context.map.internal.ContextMapFactoryLiferayImpl</bridge:context-map-factory>
+			<bridge:liferay-url-factory>com.liferay.faces.bridge.ext.filter.internal.LiferayURLFactoryImpl</bridge:liferay-url-factory>
+			<bridge:request-attribute-inspector-factory>com.liferay.faces.bridge.ext.scope.internal.RequestAttributeInspectorFactoryLiferayImpl</bridge:request-attribute-inspector-factory>
+			<bridge:window-state-validator-factory>com.liferay.faces.bridge.ext.internal.WindowStateValidatorFactoryLiferayImpl</bridge:window-state-validator-factory>
+			<util:browser-sniffer-factory>com.liferay.faces.bridge.ext.client.internal.BrowserSnifferFactoryLiferayImpl</util:browser-sniffer-factory>
+			<util:resource-validator-factory>com.liferay.faces.bridge.ext.application.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
+			<util:scripts-encoder-factory>com.liferay.faces.bridge.ext.renderkit.html_basic.internal.ScriptsEncoderFactoryLiferayImpl</util:scripts-encoder-factory>
 		</factory-extension>
 	</factory>
 	<lifecycle>
 		<!-- Add the LiferayPageTopPhaseListener in order to remove duplicate resources from the -->
 		<!-- LIFERAY_SHARED_PAGE_TOP request attribute. -->
-		<phase-listener>com.liferay.faces.bridge.event.liferay.internal.LiferayPageTopPhaseListener</phase-listener>
+		<phase-listener>com.liferay.faces.bridge.ext.event.internal.LiferayPageTopPhaseListener</phase-listener>
 	</lifecycle>
 </faces-config>
