@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.context.url.internal;
+package com.liferay.faces.bridge.ext.internal;
 
 import java.lang.reflect.Method;
 
