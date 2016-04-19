@@ -62,9 +62,8 @@ public abstract class LiferayBaseURLFriendlyImpl extends BaseURLWrapper implemen
 		String valueAsString = toString();
 
 		if (escapeXML) {
-			FacesURLEncoderFactory facesURLEncoderFactory = (FacesURLEncoderFactory) BridgeFactoryFinder.getFactory(
-					FacesURLEncoderFactory.class);
-			FacesURLEncoder facesURLEncoder = facesURLEncoderFactory.getFacesURLEncoder();
+
+			FacesURLEncoder facesURLEncoder = FacesURLEncoderFactory.getFacesURLEncoderInstance();
 			valueAsString = facesURLEncoder.encode(valueAsString, "UTF-8");
 		}
 
