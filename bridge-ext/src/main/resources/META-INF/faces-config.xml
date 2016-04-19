@@ -19,7 +19,7 @@
 			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
 			<bridge:head-response-writer-factory>com.liferay.faces.bridge.ext.context.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
 			<bridge:bridge-portlet-context-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletContextFactoryLiferayImpl</bridge:bridge-portlet-context-factory>
-			<bridge:bridge-url-factory>com.liferay.faces.bridge.ext.context.url.internal.BridgeURLFactoryLiferayImpl</bridge:bridge-url-factory>
+			<bridge:bridge-url-factory>com.liferay.faces.bridge.ext.internal.BridgeURLFactoryLiferayImpl</bridge:bridge-url-factory>
 			<bridge:context-map-factory>com.liferay.faces.bridge.ext.context.map.internal.ContextMapFactoryLiferayImpl</bridge:context-map-factory>
 			<bridge:liferay-url-factory>com.liferay.faces.bridge.ext.filter.internal.LiferayURLFactoryImpl</bridge:liferay-url-factory>
 			<bridge:request-attribute-inspector-factory>com.liferay.faces.bridge.ext.scope.internal.RequestAttributeInspectorFactoryLiferayImpl</bridge:request-attribute-inspector-factory>
