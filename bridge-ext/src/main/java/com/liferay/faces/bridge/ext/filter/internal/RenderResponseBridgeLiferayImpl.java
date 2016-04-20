@@ -21,7 +21,6 @@ import javax.portlet.ResourceURL;
 import javax.portlet.filter.RenderResponseWrapper;
 
 import com.liferay.faces.bridge.BridgeFactoryFinder;
-import com.liferay.faces.bridge.ext.filter.LiferayURLFactory;
 
 
 /**
