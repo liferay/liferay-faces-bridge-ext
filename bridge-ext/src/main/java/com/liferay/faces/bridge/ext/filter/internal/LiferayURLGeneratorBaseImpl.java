@@ -27,7 +27,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
-import com.liferay.faces.bridge.ext.filter.LiferayURLGenerator;
 import com.liferay.faces.util.helper.StringHelper;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -43,7 +42,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 
 
 /**
- * <p>This abstract class implements the {@link com.liferay.faces.bridge.ext.filter.LiferayURLGenerator} contract
+ * <p>This abstract class implements the {@link LiferayURLGenerator} contract
  * for generating URLs that are compatible with Liferay Portal. The main reason why this is necessary is because the
  * Liferay Portal's com.liferay.portlet.PortletURLImpl#toString() method returns different values depending on the
  * portlet lifecycle phase during which it is called. Additionally, it sometimes includes the public render parameters

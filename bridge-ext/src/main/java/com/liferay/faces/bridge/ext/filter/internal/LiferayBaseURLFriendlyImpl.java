@@ -19,9 +19,6 @@ import java.util.Map;
 
 import javax.portlet.PortletSecurityException;
 
-import com.liferay.faces.bridge.BridgeFactoryFinder;
-import com.liferay.faces.bridge.ext.filter.LiferayBaseURL;
-import com.liferay.faces.bridge.ext.filter.LiferayURLGenerator;
 import com.liferay.faces.util.render.FacesURLEncoder;
 import com.liferay.faces.util.render.FacesURLEncoderFactory;
 
