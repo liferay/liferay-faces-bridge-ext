@@ -18,16 +18,11 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
-import com.liferay.faces.bridge.ext.filter.LiferayActionURL;
-import com.liferay.faces.bridge.ext.filter.LiferayRenderURL;
-import com.liferay.faces.bridge.ext.filter.LiferayResourceURL;
-import com.liferay.faces.bridge.ext.filter.LiferayURLFactory;
-import com.liferay.faces.bridge.ext.filter.LiferayURLGenerator;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
 
 /**
- * This class implements the {@link com.liferay.faces.bridge.ext.filter.LiferayURLFactory} contract for creating
+ * This class implements the {@link LiferayURLFactory} contract for creating
  * Liferay-compatible URLs. The design provides a performance optimization that was first introduced in FACES-220 and
  * FACES-245. The optimization prevents repetitive calls to Liferay Portal's {@link PortletURL#toString()} method by
  * ensuring that the toString() method of {@link MimeResponse#createActionURL()}, {@link

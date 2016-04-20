@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter;
+package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -23,14 +23,13 @@ import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
-import com.liferay.faces.bridge.ext.filter.LiferayRenderURL;
 import com.liferay.faces.util.helper.Wrapper;
 
 
 /**
  * @author  Neil Griffin
  */
-public abstract class LiferayRenderURLWrapper implements LiferayRenderURL, Wrapper<LiferayRenderURL> {
+public abstract class LiferayActionURLWrapper implements LiferayActionURL, Wrapper<LiferayActionURL> {
 
 	public void addProperty(String key, String value) {
 		getWrapped().addProperty(key, value);
@@ -38,6 +37,11 @@ public abstract class LiferayRenderURLWrapper implements LiferayRenderURL, Wrapp
 
 	public void removePublicRenderParameter(String name) {
 		getWrapped().removePublicRenderParameter(name);
+	}
+
+	@Override
+	public String toString() {
+		return getWrapped().toString();
 	}
 
 	public void write(Writer out) throws IOException {
@@ -88,5 +92,5 @@ public abstract class LiferayRenderURLWrapper implements LiferayRenderURL, Wrapp
 		getWrapped().setWindowState(windowState);
 	}
 
-	public abstract LiferayRenderURL getWrapped();
+	public abstract LiferayActionURL getWrapped();
 }

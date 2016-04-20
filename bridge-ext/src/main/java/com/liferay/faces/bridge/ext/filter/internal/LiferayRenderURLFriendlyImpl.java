@@ -15,8 +15,6 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.PortletURL;
 
-import com.liferay.faces.bridge.ext.filter.LiferayRenderURL;
-import com.liferay.faces.bridge.ext.filter.LiferayURLGenerator;
 import com.liferay.faces.util.helper.Wrapper;
 
 /**

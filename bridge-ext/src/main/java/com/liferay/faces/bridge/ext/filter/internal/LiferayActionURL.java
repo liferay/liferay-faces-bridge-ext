@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter;
+package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.PortletURL;
 
@@ -22,6 +22,6 @@ import javax.portlet.PortletURL;
  *
  * @author  Neil Griffin
  */
-public interface LiferayRenderURL extends PortletURL {
+public interface LiferayActionURL extends PortletURL {
 
 }

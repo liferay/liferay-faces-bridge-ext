@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter;
+package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -19,7 +19,6 @@ import java.util.Map;
 
 import javax.portlet.PortletSecurityException;
 
-import com.liferay.faces.bridge.ext.filter.LiferayResourceURL;
 import com.liferay.faces.util.helper.Wrapper;
 
 

@@ -19,8 +19,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
-import com.liferay.faces.bridge.ext.filter.LiferayPortletURL;
-
 
 /**
  * @author  Neil Griffin

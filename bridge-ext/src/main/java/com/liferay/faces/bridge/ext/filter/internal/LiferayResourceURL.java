@@ -11,17 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter;
+package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 
 /**
- * This is a marker interface that extends the {@link PortletURL} interface in order to provide more readable names for
+ * This is a marker interface that extends the {@link ResourceURL} interface in order to provide more readable names for
  * implementing classes.
  *
  * @author  Neil Griffin
  */
-public interface LiferayActionURL extends PortletURL {
+public interface LiferayResourceURL extends ResourceURL {
 
 }
