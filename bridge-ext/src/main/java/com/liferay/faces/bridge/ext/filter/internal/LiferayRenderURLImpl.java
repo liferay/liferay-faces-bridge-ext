@@ -13,9 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import com.liferay.faces.bridge.ext.filter.LiferayRenderURL;
-import com.liferay.faces.bridge.ext.filter.LiferayURLGenerator;
-
 
 /**
  * @author  Neil Griffin
