@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter;
+package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -23,8 +23,6 @@ import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
-
-import com.liferay.faces.bridge.ext.filter.LiferayRenderURL;
 
 
 /**
