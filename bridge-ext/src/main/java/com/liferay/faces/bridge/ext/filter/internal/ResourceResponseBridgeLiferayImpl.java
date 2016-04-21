@@ -43,7 +43,7 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 
 	@Override
 	public PortletURL createActionURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayActionURL(resourceRequest, getResponse());
+		return liferayURLFactory.getLiferayActionURL(resourceRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 
 	@Override
 	public ResourceURL createResourceURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayResourceURL(resourceRequest, getResponse());
+		return liferayURLFactory.getLiferayResourceURL(resourceRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	protected boolean isFriendlyURLMapperEnabled() {
