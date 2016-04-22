@@ -30,8 +30,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.w3c.dom.Element;
 
 import com.liferay.faces.bridge.ext.taglib.internal.HtmlTopTag;
-import com.liferay.faces.util.factory.FactoryExtensionFinder;
-import com.liferay.faces.util.jsp.JspAdapterFactory;
+import com.liferay.faces.util.jsp.PageContextFactory;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
@@ -71,16 +70,15 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
 		ELContext elContext = facesContext.getELContext();
 
 		// Invoke the Liferay HtmlTopTag class directly (rather than using liferay-util:html-top from a JSP).
-		JspAdapterFactory jspAdapterFactory = (JspAdapterFactory) FactoryExtensionFinder.getFactory(
-				JspAdapterFactory.class);
-		JspWriter stringJspWriter = jspAdapterFactory.getStringJspWriter();
-		BodyContent stringBodyContent = jspAdapterFactory.getStringBodyContent(stringJspWriter);
-		String elementAsString = element.toString();
 		HtmlTopTag htmlTopTag = new HtmlTopTag();
-		PageContext stringPageContext = jspAdapterFactory.getStringPageContext(httpServletRequest, httpServletResponse,
-				elContext, stringJspWriter);
+		PageContext stringPageContext = PageContextFactory.getStringPageContextInstance(httpServletRequest,
+				httpServletResponse, elContext);
 		htmlTopTag.setPageContext(stringPageContext);
 		htmlTopTag.doStartTag();
+
+		String elementAsString = element.toString();
+		JspWriter jspWriter = stringPageContext.getOut();
+		BodyContent stringBodyContent = new BodyContentStringImpl(jspWriter);
 		stringBodyContent.print(elementAsString);
 		htmlTopTag.setBodyContent(stringBodyContent);
 
