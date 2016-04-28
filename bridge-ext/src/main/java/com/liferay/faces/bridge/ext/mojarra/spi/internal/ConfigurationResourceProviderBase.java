@@ -77,11 +77,11 @@ public abstract class ConfigurationResourceProviderBase implements Configuration
 
 						if (resourceURL != null) {
 
-							URI resrouceURI = resourceURL.toURI();
-							resourceURIs.add(resrouceURI);
+							URI resourceURI = resourceURL.toURI();
+							resourceURIs.add(resourceURI);
 						}
 						else {
-							logger.warn("URL for resource file path \"{0}\" is null.", resourceURL);
+							logger.warn("URL for resourceFilePath=[{0}] is null.", resourceFilePath);
 						}
 					}
 					catch (URISyntaxException e) {
