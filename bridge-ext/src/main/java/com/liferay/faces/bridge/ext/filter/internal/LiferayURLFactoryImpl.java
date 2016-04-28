@@ -18,17 +18,19 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
+import com.liferay.faces.portlet.component.actionurl.ActionURL;
+
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
 
 /**
- * This class implements the {@link LiferayURLFactory} contract for creating
- * Liferay-compatible URLs. The design provides a performance optimization that was first introduced in FACES-220 and
- * FACES-245. The optimization prevents repetitive calls to Liferay Portal's {@link PortletURL#toString()} method by
- * ensuring that the toString() method of {@link MimeResponse#createActionURL()}, {@link
- * MimeResponse#createRenderURL()}, and {@link MimeResponse#createResourceURL()} are called only once during the JSF
- * lifecycle, and that the pertinent parts of the String are cached. However, the optimization is only usable for
- * portlets that do not have an associated Liferay {@link FriendlyURLMapper}. For more info, see FACES-257.
+ * This class implements the {@link LiferayURLFactory} contract for creating Liferay-compatible URLs. The design
+ * provides a performance optimization that was first introduced in FACES-220 and FACES-245. The optimization prevents
+ * repetitive calls to Liferay Portal's {@link PortletURL#toString()} method by ensuring that the toString() method of
+ * {@link MimeResponse#createActionURL()}, {@link MimeResponse#createRenderURL()}, and {@link
+ * MimeResponse#createResourceURL()} are called only once during the JSF lifecycle, and that the pertinent parts of the
+ * String are cached. However, the optimization is only usable for portlets that do not have an associated Liferay
+ * {@link FriendlyURLMapper}. For more info, see FACES-257.
  *
  * @author  Neil Griffin
  */
@@ -42,20 +44,30 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 		"com.liferay.faces.bridge.container.liferay.RESOURCE_URL_GENERATOR";
 
 	@Override
-	public LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse) {
+	public LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled) {
 
-		LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) portletRequest.getAttribute(
-				ACTION_URL_GENERATOR);
-
-		if (liferayURLGenerator == null) {
+		if (friendlyURLMapperEnabled) {
 
 			PortletURL actionURL = mimeResponse.createActionURL();
-			liferayURLGenerator = new LiferayURLGeneratorActionImpl(actionURL.toString(), actionURL.getPortletMode(),
-					mimeResponse.getNamespace(), actionURL.getWindowState());
-			portletRequest.setAttribute(ACTION_URL_GENERATOR, liferayURLGenerator);
-		}
 
-		return new LiferayActionURLImpl(liferayURLGenerator);
+			return new LiferayActionURLFriendlyImpl(actionURL, mimeResponse.getNamespace());
+		}
+		else {
+
+			LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) portletRequest.getAttribute(
+					ACTION_URL_GENERATOR);
+
+			if (liferayURLGenerator == null) {
+
+				PortletURL actionURL = mimeResponse.createActionURL();
+				liferayURLGenerator = new LiferayURLGeneratorActionImpl(actionURL.toString(),
+						actionURL.getPortletMode(), mimeResponse.getNamespace(), actionURL.getWindowState());
+				portletRequest.setAttribute(ACTION_URL_GENERATOR, liferayURLGenerator);
+			}
+
+			return new LiferayActionURLImpl(liferayURLGenerator);
+		}
 	}
 
 	@Override
@@ -87,20 +99,30 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 	}
 
 	@Override
-	public LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse) {
+	public LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled) {
 
-		LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) portletRequest.getAttribute(
-				RESOURCE_URL_GENERATOR);
-
-		if (liferayURLGenerator == null) {
+		if (friendlyURLMapperEnabled) {
 
 			ResourceURL resourceURL = mimeResponse.createResourceURL();
-			liferayURLGenerator = new LiferayURLGeneratorResourceImpl(resourceURL.toString(),
-					mimeResponse.getNamespace());
-			portletRequest.setAttribute(RESOURCE_URL_GENERATOR, liferayURLGenerator);
-		}
 
-		return new LiferayResourceURLImpl(liferayURLGenerator);
+			return new LiferayResourceURLFriendlyImpl(resourceURL, mimeResponse.getNamespace());
+		}
+		else {
+
+			LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) portletRequest.getAttribute(
+					RESOURCE_URL_GENERATOR);
+
+			if (liferayURLGenerator == null) {
+
+				ResourceURL resourceURL = mimeResponse.createResourceURL();
+				liferayURLGenerator = new LiferayURLGeneratorResourceImpl(resourceURL.toString(),
+						mimeResponse.getNamespace());
+				portletRequest.setAttribute(RESOURCE_URL_GENERATOR, liferayURLGenerator);
+			}
+
+			return new LiferayResourceURLImpl(liferayURLGenerator);
+		}
 	}
 
 	@Override

@@ -24,10 +24,12 @@ import com.liferay.faces.util.helper.Wrapper;
  */
 public abstract class LiferayURLFactory implements Wrapper<LiferayURLFactory> {
 
-	public abstract LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse);
+	public abstract LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled);
 
 	public abstract LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
 		boolean friendlyURLMapperEnabled);
 
-	public abstract LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse);
+	public abstract LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled);
 }
