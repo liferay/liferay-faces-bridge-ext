@@ -13,7 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.faces.FacesWrapper;
+import com.liferay.faces.util.helper.Wrapper;
+
 import javax.portlet.ResourceURL;
 
 
@@ -21,7 +22,7 @@ import javax.portlet.ResourceURL;
  * @author  Kyle Stiemann
  */
 public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl implements LiferayResourceURL,
-	FacesWrapper<ResourceURL> {
+	Wrapper<ResourceURL> {
 
 	// Private Members
 	private String responseNamespace;
@@ -32,12 +33,12 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 		this.responseNamespace = responseNamespace;
 	}
 
-	@Override
+	// Java 1.6+ @Override
 	public String getCacheability() {
 		return getWrapped().getCacheability();
 	}
 
-	@Override
+	// Java 1.6+ @Override
 	public void setCacheability(String cacheLevel) {
 		getWrapped().setCacheability(cacheLevel);
 		resetToString();

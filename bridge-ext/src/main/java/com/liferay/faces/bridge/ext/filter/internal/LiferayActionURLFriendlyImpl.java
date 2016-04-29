@@ -13,7 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.faces.FacesWrapper;
+import com.liferay.faces.util.helper.Wrapper;
+
 import javax.portlet.PortletURL;
 
 
@@ -21,7 +22,7 @@ import javax.portlet.PortletURL;
  * @author  Kyle Stiemann
  */
 public class LiferayActionURLFriendlyImpl extends LiferayPortletURLFriendlyImpl implements LiferayActionURL,
-	FacesWrapper<PortletURL> {
+	Wrapper<PortletURL> {
 
 	// Private Members
 	private String responseNamespace;
