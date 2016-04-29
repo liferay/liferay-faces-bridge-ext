@@ -25,12 +25,8 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import com.liferay.faces.bridge.config.BridgeConfig;
-import com.liferay.faces.bridge.context.BridgePortalContext;
-import com.liferay.faces.bridge.ext.context.internal.BridgePortalContextLiferayImpl;
+import com.liferay.faces.bridge.context.liferay.internal.PortalContextBridgeLiferayImpl;
 import com.liferay.faces.bridge.filter.BridgePortletRequestFactory;
-import com.liferay.faces.util.product.Product;
-import com.liferay.faces.util.product.ProductConstants;
-import com.liferay.faces.util.product.ProductMap;
 
 
 /**
@@ -38,62 +34,64 @@ import com.liferay.faces.util.product.ProductMap;
  */
 public class BridgePortletRequestFactoryLiferayImpl extends BridgePortletRequestFactory {
 
-	// Private Constants
-	private static final Product LIFERAY_PORTAL = ProductMap.getInstance().get(ProductConstants.LIFERAY_PORTAL);
+	// Private Members
+	private BridgePortletRequestFactory wrappedBridgePortletRequestFactory;
+
+	public BridgePortletRequestFactoryLiferayImpl(BridgePortletRequestFactory wrappedBridgePortletRequestFactory) {
+		this.wrappedBridgePortletRequestFactory = wrappedBridgePortletRequestFactory;
+	}
 
 	@Override
 	public ActionRequest getActionRequest(ActionRequest actionRequest, ActionResponse actionResponse,
 		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		PortalContext portalContext = actionRequest.getPortalContext();
-		BridgePortalContext bridgePortalContext = new BridgePortalContextLiferayImpl(portalContext, actionRequest,
-				LIFERAY_PORTAL);
+		actionRequest = getWrapped().getActionRequest(actionRequest, actionResponse, portletConfig, bridgeConfig);
+
+		PortalContext portalContext = new PortalContextBridgeLiferayImpl(actionRequest);
 
 		return new ActionRequestBridgeLiferayImpl(actionRequest, actionResponse.getNamespace(), portletConfig,
-				bridgePortalContext);
+				portalContext);
 	}
 
 	@Override
 	public EventRequest getEventRequest(EventRequest eventRequest, EventResponse eventResponse,
 		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		PortalContext portalContext = eventRequest.getPortalContext();
-		BridgePortalContext bridgePortalContext = new BridgePortalContextLiferayImpl(portalContext, eventRequest,
-				LIFERAY_PORTAL);
+		eventRequest = getWrapped().getEventRequest(eventRequest, eventResponse, portletConfig, bridgeConfig);
+
+		PortalContext portalContext = new PortalContextBridgeLiferayImpl(eventRequest);
 
 		return new EventRequestBridgeLiferayImpl(eventRequest, eventResponse.getNamespace(), portletConfig,
-				bridgePortalContext);
+				portalContext);
 	}
 
 	@Override
 	public RenderRequest getRenderRequest(RenderRequest renderRequest, RenderResponse renderResponse,
 		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		PortalContext portalContext = renderRequest.getPortalContext();
-		BridgePortalContext bridgePortalContext = new BridgePortalContextLiferayImpl(portalContext, renderRequest,
-				LIFERAY_PORTAL);
+		renderRequest = getWrapped().getRenderRequest(renderRequest, renderResponse, portletConfig, bridgeConfig);
+
+		PortalContext portalContext = new PortalContextBridgeLiferayImpl(renderRequest);
 
 		return new RenderRequestBridgeLiferayImpl(renderRequest, renderResponse.getNamespace(), portletConfig,
-				bridgePortalContext);
+				portalContext);
 	}
 
 	@Override
 	public ResourceRequest getResourceRequest(ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
 
-		PortalContext portalContext = resourceRequest.getPortalContext();
+		resourceRequest = getWrapped().getResourceRequest(resourceRequest, resourceResponse, portletConfig,
+				bridgeConfig);
 
-		BridgePortalContext bridgePortalContext = new BridgePortalContextLiferayImpl(portalContext, resourceRequest,
-				LIFERAY_PORTAL);
+		PortalContext portalContext = new PortalContextBridgeLiferayImpl(resourceRequest);
 
 		return new ResourceRequestBridgeLiferayImpl(resourceRequest, resourceResponse.getNamespace(), portletConfig,
-				bridgePortalContext);
+				portalContext);
 	}
 
 	@Override
 	public BridgePortletRequestFactory getWrapped() {
-
-		// Since this is the factory instance provided by the bridge, it will never wrap another factory.
-		return null;
+		return wrappedBridgePortletRequestFactory;
 	}
 }
