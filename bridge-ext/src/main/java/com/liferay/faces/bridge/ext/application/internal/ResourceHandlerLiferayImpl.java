@@ -37,13 +37,17 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	static {
 
-		// This list of resources (excepting jquery/jquery-plugins.js) was obtained via the following search of the
-		// Primefaces github source: https://github.com/primefaces/primefaces/search?utf8=%E2%9C%93&q=amd
+		// This list of resources was obtained by building Primefaces and searching the target/ directory for js files
+		// containg "amd".
 		Set<String> primefacesJQueryPluginResources = new HashSet<String>();
-		primefacesJQueryPluginResources.add("inputnumber/0-autoNumeric.js");
-		primefacesJQueryPluginResources.add("knob/1-jquery.knob.js");
 		primefacesJQueryPluginResources.add("fileupload/fileupload.js");
+		primefacesJQueryPluginResources.add("inputnumber/0-autoNumeric.js");
+		primefacesJQueryPluginResources.add("inputnumber/inputnumber.js");
 		primefacesJQueryPluginResources.add("jquery/jquery-plugins.js");
+		primefacesJQueryPluginResources.add("jquery/jquery.js");
+		primefacesJQueryPluginResources.add("knob/1-jquery.knob.js");
+		primefacesJQueryPluginResources.add("knob/knob.js");
+		primefacesJQueryPluginResources.add("mobile/jquery-mobile.js");
 		primefacesJQueryPluginResources.add("moment/moment.js");
 		primefacesJQueryPluginResources.add("push/push.js");
 		primefacesJQueryPluginResources.add("schedule/schedule.js");
