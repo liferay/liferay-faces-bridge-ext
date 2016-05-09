@@ -67,6 +67,9 @@ public class LiferayPortletRequest {
 
 		this.wrappedPortletRequest = portletRequest;
 
+		this.distinctRequestScopedManagedBeans = LiferayPortletConfigParam.DistinctRequestScopedManagedBeans
+			.getBooleanValue(portletConfig);
+
 		try {
 			Method method = wrappedPortletRequest.getClass().getMethod(METHOD_NAME_GET_PORTLET, (Class[]) null);
 
