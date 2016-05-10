@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.context.liferay.internal;
+package com.liferay.faces.bridge.ext.context.internal;
 
 import java.util.Enumeration;
 
