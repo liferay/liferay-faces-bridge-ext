@@ -26,7 +26,7 @@ import com.liferay.faces.util.render.FacesURLEncoderFactory;
 /**
  * @author  Neil Griffin
  */
-public abstract class LiferayBaseURLFriendlyImpl extends BaseURLWrapper implements LiferayBaseURL {
+public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyCompatImpl implements LiferayBaseURL {
 
 	// Private Data Members
 	private String toStringValue;
@@ -72,12 +72,6 @@ public abstract class LiferayBaseURLFriendlyImpl extends BaseURLWrapper implemen
 	}
 
 	protected abstract LiferayURLGenerator getLiferayURLGenerator();
-
-	@Override
-	public void setParameter(String name, String value) {
-		super.setParameter(name, value);
-		resetToString();
-	}
 
 	@Override
 	public void setParameter(String name, String[] values) {
