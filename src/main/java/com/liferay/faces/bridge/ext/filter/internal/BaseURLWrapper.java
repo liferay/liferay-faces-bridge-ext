@@ -24,8 +24,34 @@ import javax.portlet.PortletSecurityException;
 /**
  * @author  Neil Griffin
  */
-public abstract class BaseURLWrapper implements BaseURL {
+public abstract class BaseURLWrapper extends BaseURLWrapperCompat {
 
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return getWrapped().getParameterMap();
+	}
+
+	@Override
+	public void setParameter(String name, String[] values) {
+		getWrapped().setParameter(name, values);
+	}
+
+	@Override
+	public void setParameters(Map<String, String[]> parameters) {
+		getWrapped().setParameters(parameters);
+	}
+
+	@Override
+	public void setProperty(String key, String value) {
+		getWrapped().setProperty(key, value);
+	}
+
+	@Override
+	public void setSecure(boolean secure) throws PortletSecurityException {
+		getWrapped().setSecure(secure);
+	}
+
+	@Override
 	public void addProperty(String key, String value) {
 		getWrapped().addProperty(key, value);
 	}
@@ -35,37 +61,13 @@ public abstract class BaseURLWrapper implements BaseURL {
 		return getWrapped().toString();
 	}
 
+	@Override
 	public void write(Writer out) throws IOException {
 		getWrapped().write(out);
 	}
 
+	@Override
 	public void write(Writer out, boolean escapeXML) throws IOException {
 		getWrapped().write(out, escapeXML);
 	}
-
-	public void setParameter(String name, String value) {
-		getWrapped().setParameter(name, value);
-	}
-
-	public void setParameter(String name, String[] values) {
-		getWrapped().setParameter(name, values);
-	}
-
-	public Map<String, String[]> getParameterMap() {
-		return getWrapped().getParameterMap();
-	}
-
-	public void setParameters(Map<String, String[]> parameters) {
-		getWrapped().setParameters(parameters);
-	}
-
-	public void setProperty(String key, String value) {
-		getWrapped().setProperty(key, value);
-	}
-
-	public void setSecure(boolean secure) throws PortletSecurityException {
-		getWrapped().setSecure(secure);
-	}
-
-	public abstract BaseURL getWrapped();
 }
