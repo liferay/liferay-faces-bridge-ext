@@ -23,7 +23,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.faces.Bridge;
 import javax.portlet.faces.BridgeUtil;
 
-import com.liferay.faces.bridge.config.BridgeConfig;
+import com.liferay.faces.bridge.BridgeConfig;
 import com.liferay.faces.bridge.BridgeURL;
 import com.liferay.faces.bridge.BridgeURLWrapper;
 
