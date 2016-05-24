@@ -25,12 +25,19 @@ import javax.portlet.WindowStateException;
  */
 public abstract class LiferayPortletURLFriendlyImpl extends LiferayBaseURLFriendlyImpl implements LiferayPortletURL {
 
-	public void removePublicRenderParameter(String name) {
-		getWrapped().removePublicRenderParameter(name);
-	}
+	@Override
+	public abstract PortletURL getWrapped();
 
 	public PortletMode getPortletMode() {
 		return getWrapped().getPortletMode();
+	}
+
+	public WindowState getWindowState() {
+		return getWrapped().getWindowState();
+	}
+
+	public void removePublicRenderParameter(String name) {
+		getWrapped().removePublicRenderParameter(name);
 	}
 
 	public void setPortletMode(PortletMode portletMode) throws PortletModeException {
@@ -38,15 +45,8 @@ public abstract class LiferayPortletURLFriendlyImpl extends LiferayBaseURLFriend
 		resetToString();
 	}
 
-	public WindowState getWindowState() {
-		return getWrapped().getWindowState();
-	}
-
 	public void setWindowState(WindowState windowState) throws WindowStateException {
 		getWrapped().setWindowState(windowState);
 		resetToString();
 	}
-
-	@Override
-	public abstract PortletURL getWrapped();
 }

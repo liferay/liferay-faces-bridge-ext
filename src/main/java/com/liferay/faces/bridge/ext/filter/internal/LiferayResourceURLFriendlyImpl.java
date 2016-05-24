@@ -38,8 +38,18 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 	}
 
 	@Override
+	public ResourceURL getWrapped() {
+		return wrappedLiferayResourceURL;
+	}
+
+	@Override
 	public void setCacheability(String cacheLevel) {
 		getWrapped().setCacheability(cacheLevel);
+		resetToString();
+	}
+
+	public void setResourceID(String resourceID) {
+		getWrapped().setResourceID(resourceID);
 		resetToString();
 	}
 
@@ -49,15 +59,5 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 		ResourceURL resourceURL = getWrapped();
 
 		return new LiferayURLGeneratorResourceImpl(resourceURL.toString(), responseNamespace);
-	}
-
-	public void setResourceID(String resourceID) {
-		getWrapped().setResourceID(resourceID);
-		resetToString();
-	}
-
-	@Override
-	public ResourceURL getWrapped() {
-		return wrappedLiferayResourceURL;
 	}
 }

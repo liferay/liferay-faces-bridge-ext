@@ -113,6 +113,16 @@ public class PortalContextBridgeLiferayImpl implements PortalContext {
 		return wrappedPortalContext.getPropertyNames();
 	}
 
+	@Override
+	public Enumeration<PortletMode> getSupportedPortletModes() {
+		return wrappedPortalContext.getSupportedPortletModes();
+	}
+
+	@Override
+	public Enumeration<WindowState> getSupportedWindowStates() {
+		return wrappedPortalContext.getSupportedWindowStates();
+	}
+
 	private boolean isLiferayNamespacingParameters(PortletRequest portletRequest) {
 
 		boolean liferayNamespacingParameters = false;
@@ -129,15 +139,5 @@ public class PortalContextBridgeLiferayImpl implements PortalContext {
 		}
 
 		return liferayNamespacingParameters;
-	}
-
-	@Override
-	public Enumeration<PortletMode> getSupportedPortletModes() {
-		return wrappedPortalContext.getSupportedPortletModes();
-	}
-
-	@Override
-	public Enumeration<WindowState> getSupportedWindowStates() {
-		return wrappedPortalContext.getSupportedWindowStates();
 	}
 }

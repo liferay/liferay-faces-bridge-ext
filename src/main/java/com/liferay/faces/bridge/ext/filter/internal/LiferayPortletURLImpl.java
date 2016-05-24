@@ -33,8 +33,26 @@ public abstract class LiferayPortletURLImpl extends LiferayBaseURLImpl implement
 		super(liferayURLGenerator);
 	}
 
+	public PortletMode getPortletMode() {
+		return portletMode;
+	}
+
+	public WindowState getWindowState() {
+		return windowState;
+	}
+
 	public void removePublicRenderParameter(String name) {
 		// no-op
+	}
+
+	public void setPortletMode(PortletMode portletMode) throws PortletModeException {
+		this.portletMode = portletMode;
+		resetToString();
+	}
+
+	public void setWindowState(WindowState windowState) throws WindowStateException {
+		this.windowState = windowState;
+		resetToString();
 	}
 
 	@Override
@@ -49,24 +67,6 @@ public abstract class LiferayPortletURLImpl extends LiferayBaseURLImpl implement
 
 	protected void resetToString() {
 		this.toStringValue = null;
-	}
-
-	public PortletMode getPortletMode() {
-		return portletMode;
-	}
-
-	public void setPortletMode(PortletMode portletMode) throws PortletModeException {
-		this.portletMode = portletMode;
-		resetToString();
-	}
-
-	public WindowState getWindowState() {
-		return windowState;
-	}
-
-	public void setWindowState(WindowState windowState) throws WindowStateException {
-		this.windowState = windowState;
-		resetToString();
 	}
 
 }
