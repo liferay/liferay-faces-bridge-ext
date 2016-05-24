@@ -64,21 +64,6 @@ public class ExternalContextBrowserSnifferImpl extends ExternalContext implement
 	}
 
 	@Override
-	public void log(String message) {
-		wrappedExternalContext.log(message);
-	}
-
-	@Override
-	public void log(String message, Throwable exception) {
-		wrappedExternalContext.log(message, exception);
-	}
-
-	@Override
-	public void redirect(String url) throws IOException {
-		wrappedExternalContext.redirect(url);
-	}
-
-	@Override
 	public Map<String, Object> getApplicationMap() {
 		return wrappedExternalContext.getApplicationMap();
 	}
@@ -91,11 +76,6 @@ public class ExternalContextBrowserSnifferImpl extends ExternalContext implement
 	@Override
 	public Object getContext() {
 		return wrappedExternalContext.getContext();
-	}
-
-	@Override
-	public boolean isUserInRole(String role) {
-		return wrappedExternalContext.isUserInRole(role);
 	}
 
 	@Override
@@ -216,5 +196,25 @@ public class ExternalContextBrowserSnifferImpl extends ExternalContext implement
 	@Override
 	public ExternalContext getWrapped() {
 		return wrappedExternalContext;
+	}
+
+	@Override
+	public boolean isUserInRole(String role) {
+		return wrappedExternalContext.isUserInRole(role);
+	}
+
+	@Override
+	public void log(String message) {
+		wrappedExternalContext.log(message);
+	}
+
+	@Override
+	public void log(String message, Throwable exception) {
+		wrappedExternalContext.log(message, exception);
+	}
+
+	@Override
+	public void redirect(String url) throws IOException {
+		wrappedExternalContext.redirect(url);
 	}
 }

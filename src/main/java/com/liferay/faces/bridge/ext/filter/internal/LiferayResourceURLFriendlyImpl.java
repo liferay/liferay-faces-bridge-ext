@@ -13,9 +13,9 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import com.liferay.faces.util.helper.Wrapper;
-
 import javax.portlet.ResourceURL;
+
+import com.liferay.faces.util.helper.Wrapper;
 
 
 /**
@@ -38,9 +38,19 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 		return getWrapped().getCacheability();
 	}
 
+	@Override
+	public ResourceURL getWrapped() {
+		return wrappedLiferayResourceURL;
+	}
+
 	// Java 1.6+ @Override
 	public void setCacheability(String cacheLevel) {
 		getWrapped().setCacheability(cacheLevel);
+		resetToString();
+	}
+
+	public void setResourceID(String resourceID) {
+		getWrapped().setResourceID(resourceID);
 		resetToString();
 	}
 
@@ -50,15 +60,5 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 		ResourceURL resourceURL = getWrapped();
 
 		return new LiferayURLGeneratorResourceImpl(resourceURL.toString(), responseNamespace);
-	}
-
-	public void setResourceID(String resourceID) {
-		getWrapped().setResourceID(resourceID);
-		resetToString();
-	}
-
-	@Override
-	public ResourceURL getWrapped() {
-		return wrappedLiferayResourceURL;
 	}
 }

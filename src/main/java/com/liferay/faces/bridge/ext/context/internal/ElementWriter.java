@@ -82,6 +82,10 @@ public class ElementWriter extends Writer {
 		// no-op
 	}
 
+	public Element getElement() {
+		return element;
+	}
+
 	@Override
 	public void write(int c) throws IOException {
 		StringWriter stringWriter = new StringWriter();
@@ -113,10 +117,6 @@ public class ElementWriter extends Writer {
 		StringWriter stringWriter = new StringWriter();
 		stringWriter.write(cbuf, off, len);
 		append(stringWriter.getBuffer().toString());
-	}
-
-	public Element getElement() {
-		return element;
 	}
 
 }

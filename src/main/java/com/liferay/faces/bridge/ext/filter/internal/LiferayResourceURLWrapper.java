@@ -27,20 +27,18 @@ import com.liferay.faces.util.helper.Wrapper;
  */
 public abstract class LiferayResourceURLWrapper implements LiferayResourceURL, Wrapper<LiferayResourceURL> {
 
+	public abstract LiferayResourceURL getWrapped();
+
 	public void addProperty(String key, String value) {
 		getWrapped().addProperty(key, value);
 	}
 
-	public void write(Writer out) throws IOException {
-		getWrapped().write(out);
-	}
-
-	public void write(Writer out, boolean escapeXML) throws IOException {
-		getWrapped().write(out, escapeXML);
-	}
-
 	public String getCacheability() {
 		return getWrapped().getCacheability();
+	}
+
+	public Map<String, String[]> getParameterMap() {
+		return getWrapped().getParameterMap();
 	}
 
 	public void setCacheability(String cacheLevel) {
@@ -53,10 +51,6 @@ public abstract class LiferayResourceURLWrapper implements LiferayResourceURL, W
 
 	public void setParameter(String name, String[] values) {
 		getWrapped().setParameter(name, values);
-	}
-
-	public Map<String, String[]> getParameterMap() {
-		return getWrapped().getParameterMap();
 	}
 
 	public void setParameters(Map<String, String[]> parameters) {
@@ -75,5 +69,11 @@ public abstract class LiferayResourceURLWrapper implements LiferayResourceURL, W
 		getWrapped().setSecure(secure);
 	}
 
-	public abstract LiferayResourceURL getWrapped();
+	public void write(Writer out) throws IOException {
+		getWrapped().write(out);
+	}
+
+	public void write(Writer out, boolean escapeXML) throws IOException {
+		getWrapped().write(out, escapeXML);
+	}
 }

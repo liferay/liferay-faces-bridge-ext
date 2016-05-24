@@ -13,9 +13,9 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import com.liferay.faces.util.helper.Wrapper;
-
 import javax.portlet.PortletURL;
+
+import com.liferay.faces.util.helper.Wrapper;
 
 
 /**
@@ -34,16 +34,16 @@ public class LiferayActionURLFriendlyImpl extends LiferayPortletURLFriendlyImpl 
 	}
 
 	@Override
+	public PortletURL getWrapped() {
+		return wrappedLiferayPortletURL;
+	}
+
+	@Override
 	protected LiferayURLGenerator getLiferayURLGenerator() {
 
 		PortletURL actionURL = getWrapped();
 
 		return new LiferayURLGeneratorActionImpl(actionURL.toString(), actionURL.getPortletMode(), responseNamespace,
 				actionURL.getWindowState());
-	}
-
-	@Override
-	public PortletURL getWrapped() {
-		return wrappedLiferayPortletURL;
 	}
 }
