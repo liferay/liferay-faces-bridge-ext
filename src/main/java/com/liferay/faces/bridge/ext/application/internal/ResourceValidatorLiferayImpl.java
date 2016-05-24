@@ -47,6 +47,11 @@ public class ResourceValidatorLiferayImpl extends ResourceValidatorWrapper {
 	}
 
 	@Override
+	public ResourceValidator getWrapped() {
+		return wrappedResourceValidator;
+	}
+
+	@Override
 	public boolean isSelfReferencing(FacesContext facesContext, String resourceId) {
 
 		// If the delegation chain indicates that the specified resource is not self-referencing, then
@@ -125,10 +130,5 @@ public class ResourceValidatorLiferayImpl extends ResourceValidatorWrapper {
 		}
 
 		return invokerServletClass;
-	}
-
-	@Override
-	public ResourceValidator getWrapped() {
-		return wrappedResourceValidator;
 	}
 }

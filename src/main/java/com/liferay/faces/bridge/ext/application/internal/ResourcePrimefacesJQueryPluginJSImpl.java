@@ -31,13 +31,13 @@ public class ResourcePrimefacesJQueryPluginJSImpl extends FilteredResourceBase {
 	}
 
 	@Override
-	protected String filter(String string) {
-		return string.replaceAll("typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']", "false&&typeof define=$1'function'")
-			.replaceAll("[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define", "false&&'function'=$1typeof define");
+	public Resource getWrapped() {
+		return wrappedResource;
 	}
 
 	@Override
-	public Resource getWrapped() {
-		return wrappedResource;
+	protected String filter(String string) {
+		return string.replaceAll("typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']", "false&&typeof define=$1'function'")
+			.replaceAll("[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define", "false&&'function'=$1typeof define");
 	}
 }

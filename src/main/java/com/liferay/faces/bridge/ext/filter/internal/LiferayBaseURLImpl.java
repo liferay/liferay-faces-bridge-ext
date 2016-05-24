@@ -42,6 +42,37 @@ public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
 		// no-op
 	}
 
+	public LiferayURLGenerator getLiferayURLGenerator() {
+		return liferayURLGenerator;
+	}
+
+	public Map<String, String[]> getParameterMap() {
+		return parameterMap;
+	}
+
+	public void setParameter(String name, String value) {
+		parameterMap.put(name, new String[] { value });
+		resetToString();
+	}
+
+	public void setParameter(String name, String[] values) {
+		parameterMap.put(name, values);
+		resetToString();
+	}
+
+	public void setParameters(Map<String, String[]> parameters) {
+		parameterMap.putAll(parameters);
+		resetToString();
+	}
+
+	public void setProperty(String key, String value) {
+		// no-op
+	}
+
+	public void setSecure(boolean secure) throws PortletSecurityException {
+		// no-op
+	}
+
 	public void write(Writer writer) throws IOException {
 		writer.write(toString());
 	}
@@ -60,36 +91,5 @@ public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
 	}
 
 	protected abstract void resetToString();
-
-	public LiferayURLGenerator getLiferayURLGenerator() {
-		return liferayURLGenerator;
-	}
-
-	public void setParameter(String name, String value) {
-		parameterMap.put(name, new String[] { value });
-		resetToString();
-	}
-
-	public void setParameter(String name, String[] values) {
-		parameterMap.put(name, values);
-		resetToString();
-	}
-
-	public Map<String, String[]> getParameterMap() {
-		return parameterMap;
-	}
-
-	public void setParameters(Map<String, String[]> parameters) {
-		parameterMap.putAll(parameters);
-		resetToString();
-	}
-
-	public void setProperty(String key, String value) {
-		// no-op
-	}
-
-	public void setSecure(boolean secure) throws PortletSecurityException {
-		// no-op
-	}
 
 }

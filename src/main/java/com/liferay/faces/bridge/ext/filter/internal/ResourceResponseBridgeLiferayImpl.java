@@ -56,18 +56,6 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 		return liferayURLFactory.getLiferayResourceURL(resourceRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
-	protected boolean isFriendlyURLMapperEnabled() {
-
-		if (friendlyURLMapperEnabled == null) {
-			PortletConfig portletConfig = (PortletConfig) resourceRequest.getAttribute(PortletConfig.class.getName());
-			LiferayPortletRequest liferayResourceRequest = new LiferayPortletRequest(resourceRequest,
-					getResponse().getNamespace(), portletConfig);
-			friendlyURLMapperEnabled = (liferayResourceRequest.getPortlet().getFriendlyURLMapperInstance() != null);
-		}
-
-		return friendlyURLMapperEnabled;
-	}
-
 	@Override
 	public String getNamespace() {
 
@@ -91,5 +79,17 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 		}
 
 		return namespaceWSRP;
+	}
+
+	protected boolean isFriendlyURLMapperEnabled() {
+
+		if (friendlyURLMapperEnabled == null) {
+			PortletConfig portletConfig = (PortletConfig) resourceRequest.getAttribute(PortletConfig.class.getName());
+			LiferayPortletRequest liferayResourceRequest = new LiferayPortletRequest(resourceRequest,
+					getResponse().getNamespace(), portletConfig);
+			friendlyURLMapperEnabled = (liferayResourceRequest.getPortlet().getFriendlyURLMapperInstance() != null);
+		}
+
+		return friendlyURLMapperEnabled;
 	}
 }

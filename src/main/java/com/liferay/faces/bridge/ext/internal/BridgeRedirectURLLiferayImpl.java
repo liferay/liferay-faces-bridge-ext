@@ -41,6 +41,11 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLWrapper {
 	}
 
 	@Override
+	public BridgeURL getWrapped() {
+		return wrappedBridgeRedirectURL;
+	}
+
+	@Override
 	public String toString() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -54,6 +59,7 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLWrapper {
 			LiferayPortletResponse liferayPortletResponse = new LiferayPortletResponse(portletResponse);
 			PortletURL renderURL = liferayPortletResponse.createRenderURL();
 			renderURL.setParameter(bridgeConfig.getViewIdRenderParameterName(), wrappedBridgeRedirectURL.getViewId());
+
 			Map<String, String[]> parameterMap = getParameterMap();
 			Set<Map.Entry<String, String[]>> entrySet = parameterMap.entrySet();
 
@@ -70,10 +76,5 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLWrapper {
 		else {
 			return wrappedBridgeRedirectURL.toString();
 		}
-	}
-
-	@Override
-	public BridgeURL getWrapped() {
-		return wrappedBridgeRedirectURL;
 	}
 }

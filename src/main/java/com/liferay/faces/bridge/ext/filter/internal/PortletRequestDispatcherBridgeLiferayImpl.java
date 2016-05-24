@@ -60,6 +60,11 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 	}
 
 	@Override
+	public PortletRequestDispatcher getWrapped() {
+		return wrappedPortletRequestDispatcher;
+	}
+
+	@Override
 	public void include(PortletRequest portletRequest, PortletResponse portletResponse) throws PortletException,
 		IOException {
 
@@ -167,10 +172,5 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 		else {
 			return null;
 		}
-	}
-
-	@Override
-	public PortletRequestDispatcher getWrapped() {
-		return wrappedPortletRequestDispatcher;
 	}
 }

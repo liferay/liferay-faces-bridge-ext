@@ -88,6 +88,16 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 		responseWriter.write(scriptsString);
 	}
 
+	private String getScriptsAsString(FacesContext facesContext, List<Script> scripts) throws IOException {
+
+		ScriptData scriptData = new ScriptData();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		scriptDataAppendScripts(scriptData, requestMap, scripts);
+
+		return scriptDataToString(externalContext, scriptData);
+	}
+
 	private void scriptDataAppendScripts(ScriptData scriptData, Map<String, Object> requestMap, List<Script> scripts)
 		throws IOException {
 
@@ -130,15 +140,5 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 				scriptDataAppendScript(scriptData, portletId, script.getSourceCode(), null);
 			}
 		}
-	}
-
-	private String getScriptsAsString(FacesContext facesContext, List<Script> scripts) throws IOException {
-
-		ScriptData scriptData = new ScriptData();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		Map<String, Object> requestMap = externalContext.getRequestMap();
-		scriptDataAppendScripts(scriptData, requestMap, scripts);
-
-		return scriptDataToString(externalContext, scriptData);
 	}
 }
