@@ -87,6 +87,11 @@ public class LiferayPageTopPhaseListenerCompat implements PhaseListener {
 		}
 	}
 
+	@Override
+	public PhaseId getPhaseId() {
+		return PhaseId.RENDER_RESPONSE;
+	}
+
 	protected StringBundler getPageTop(PortletRequest portletRequest) {
 
 		StringBundler pageTop = null;
@@ -111,10 +116,5 @@ public class LiferayPageTopPhaseListenerCompat implements PhaseListener {
 			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 			httpServletRequest.setAttribute(WebKeys.PAGE_TOP, pageTop);
 		}
-	}
-
-	@Override
-	public PhaseId getPhaseId() {
-		return PhaseId.RENDER_RESPONSE;
 	}
 }

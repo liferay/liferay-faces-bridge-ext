@@ -34,17 +34,17 @@ public class LiferayRenderURLFriendlyImpl extends LiferayPortletURLFriendlyImpl 
 	}
 
 	@Override
+	public PortletURL getWrapped() {
+		return wrappedLiferayPortletURL;
+	}
+
+	@Override
 	protected LiferayURLGenerator getLiferayURLGenerator() {
 
 		PortletURL renderURL = getWrapped();
 
 		return new LiferayURLGeneratorRenderImpl(renderURL.toString(), renderURL.getPortletMode(), responseNamespace,
 				renderURL.getWindowState());
-	}
-
-	@Override
-	public PortletURL getWrapped() {
-		return wrappedLiferayPortletURL;
 	}
 
 }

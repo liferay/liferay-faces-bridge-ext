@@ -13,7 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-
 /**
  * @author  Neil Griffin
  */
@@ -26,6 +25,19 @@ public class LiferayResourceURLImpl extends LiferayBaseURLImpl implements Lifera
 
 	public LiferayResourceURLImpl(LiferayURLGenerator liferayURLGenerator) {
 		super(liferayURLGenerator);
+	}
+
+	public String getCacheability() {
+		return cacheLevel;
+	}
+
+	public void setCacheability(String cacheLevel) {
+		this.cacheLevel = cacheLevel;
+	}
+
+	public void setResourceID(String resourceID) {
+		this.resourceId = resourceID;
+		resetToString();
 	}
 
 	@Override
@@ -41,19 +53,6 @@ public class LiferayResourceURLImpl extends LiferayBaseURLImpl implements Lifera
 	@Override
 	protected void resetToString() {
 		this.toStringValue = null;
-	}
-
-	public String getCacheability() {
-		return cacheLevel;
-	}
-
-	public void setCacheability(String cacheLevel) {
-		this.cacheLevel = cacheLevel;
-	}
-
-	public void setResourceID(String resourceID) {
-		this.resourceId = resourceID;
-		resetToString();
 	}
 
 }

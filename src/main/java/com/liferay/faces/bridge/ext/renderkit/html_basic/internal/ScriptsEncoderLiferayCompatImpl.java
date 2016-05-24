@@ -28,13 +28,11 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
  */
 public abstract class ScriptsEncoderLiferayCompatImpl implements ScriptsEncoder {
 
-	protected void scriptDataAppendScript(ScriptData scriptData, String portletId, String script,
-		String modules) {
+	protected void scriptDataAppendScript(ScriptData scriptData, String portletId, String script, String modules) {
 		scriptData.append(portletId, script, modules, ScriptData.ModulesType.AUI);
 	}
 
-	protected String scriptDataToString(ExternalContext externalContext, ScriptData scriptData)
-		throws IOException {
+	protected String scriptDataToString(ExternalContext externalContext, ScriptData scriptData) throws IOException {
 
 		StringWriter stringWriter = new StringWriter();
 		scriptData.writeTo(stringWriter);

@@ -34,21 +34,21 @@ import com.liferay.faces.util.product.ProductConstants;
 import com.liferay.faces.util.product.ProductMap;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 
 
 /**
- * <p>This abstract class implements the {@link LiferayURLGenerator} contract
- * for generating URLs that are compatible with Liferay Portal. The main reason why this is necessary is because the
- * Liferay Portal's com.liferay.portlet.PortletURLImpl#toString() method returns different values depending on the
- * portlet lifecycle phase during which it is called. Additionally, it sometimes includes the public render parameters
- * in the URL (which are not required for JSF portlets). Another issue is related to ICEfaces, which uses a server-side
- * DOM-diff algorithm within it's {@link RenderKit}. When DOM-diff strategies are used, it is critical that URLs always
- * be the same regardless of which portlet lifecycle phase is executing. For example, a URL generated during the {@link
+ * <p>This abstract class implements the {@link LiferayURLGenerator} contract for generating URLs that are compatible
+ * with Liferay Portal. The main reason why this is necessary is because the Liferay Portal's
+ * com.liferay.portlet.PortletURLImpl#toString() method returns different values depending on the portlet lifecycle
+ * phase during which it is called. Additionally, it sometimes includes the public render parameters in the URL (which
+ * are not required for JSF portlets). Another issue is related to ICEfaces, which uses a server-side DOM-diff algorithm
+ * within it's {@link RenderKit}. When DOM-diff strategies are used, it is critical that URLs always be the same
+ * regardless of which portlet lifecycle phase is executing. For example, a URL generated during the {@link
  * PortletRequest#RENDER_PHASE} of the portlet lifecycle must be identical to the one generated during the {@link
  * PortletRequest#RESOURCE_PHASE}, or else a DOM-diff will be detected.</p>
  *

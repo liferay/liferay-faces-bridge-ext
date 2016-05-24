@@ -52,8 +52,8 @@ public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory {
 	}
 
 	@Override
-	public BridgeURL getBridgeRedirectURL(FacesContext facesContext, String uri,
-		Map<String, List<String>> parameters) throws BridgeException {
+	public BridgeURL getBridgeRedirectURL(FacesContext facesContext, String uri, Map<String, List<String>> parameters)
+		throws BridgeException {
 
 		BridgeURL wrappedBridgeRedirectURL = wrappedBridgeURLFactory.getBridgeRedirectURL(facesContext, uri,
 				parameters);

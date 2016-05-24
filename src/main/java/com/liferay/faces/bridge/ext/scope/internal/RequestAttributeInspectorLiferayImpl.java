@@ -160,6 +160,11 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 		return excluded;
 	}
 
+	@Override
+	public RequestAttributeInspector getWrapped() {
+		return wrappedRequestAttributeInspector;
+	}
+
 	/**
 	 * This is a method-override that provides specific behavior for Liferay Portal. Specifically, since Liferay Portal
 	 * does not implement the POST-REDIRECT-GET design pattern, not all instance types listed in Section 5.1.2 of the
@@ -239,10 +244,5 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 		}
 
 		return match;
-	}
-
-	@Override
-	public RequestAttributeInspector getWrapped() {
-		return wrappedRequestAttributeInspector;
 	}
 }

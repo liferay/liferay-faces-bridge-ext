@@ -152,6 +152,11 @@ public abstract class HeadResponseWriterBase extends HeadResponseWriter {
 	}
 
 	@Override
+	public ResponseWriter getWrapped() {
+		return wrappedResponseWriter;
+	}
+
+	@Override
 	public void startCDATA() throws IOException {
 
 		try {
@@ -429,10 +434,5 @@ public abstract class HeadResponseWriterBase extends HeadResponseWriter {
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	public ResponseWriter getWrapped() {
-		return wrappedResponseWriter;
 	}
 }

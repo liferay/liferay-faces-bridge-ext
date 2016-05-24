@@ -98,14 +98,14 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		return resource;
 	}
 
+	@Override
+	public ResourceHandler getWrapped() {
+		return wrappedResourceHandler;
+	}
+
 	private boolean isPrimeFacesJQueryPluginJSResource(Resource resource, String resourceLibrary, String resourceName) {
 		return (resource != null) && PRIMEFACES_DETECTED &&
 			((resourceLibrary == null) || resourceLibrary.equals("primefaces")) &&
 			PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName);
-	}
-
-	@Override
-	public ResourceHandler getWrapped() {
-		return wrappedResourceHandler;
 	}
 }

@@ -30,6 +30,8 @@ import javax.portlet.RenderResponse;
 public abstract class PortletRequestDispatcherWrapper implements PortletRequestDispatcher,
 	FacesWrapper<PortletRequestDispatcher> {
 
+	public abstract PortletRequestDispatcher getWrapped();
+
 	public void forward(PortletRequest request, PortletResponse response) throws PortletException, IOException {
 		getWrapped().forward(request, response);
 	}
@@ -41,6 +43,4 @@ public abstract class PortletRequestDispatcherWrapper implements PortletRequestD
 	public void include(PortletRequest request, PortletResponse response) throws PortletException, IOException {
 		getWrapped().include(request, response);
 	}
-
-	public abstract PortletRequestDispatcher getWrapped();
 }
