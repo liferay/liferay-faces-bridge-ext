@@ -27,6 +27,11 @@ import javax.portlet.PortletSecurityException;
 public abstract class BaseURLWrapper extends BaseURLWrapperCompat {
 
 	@Override
+	public void addProperty(String key, String value) {
+		getWrapped().addProperty(key, value);
+	}
+
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return getWrapped().getParameterMap();
 	}
@@ -49,11 +54,6 @@ public abstract class BaseURLWrapper extends BaseURLWrapperCompat {
 	@Override
 	public void setSecure(boolean secure) throws PortletSecurityException {
 		getWrapped().setSecure(secure);
-	}
-
-	@Override
-	public void addProperty(String key, String value) {
-		getWrapped().addProperty(key, value);
 	}
 
 	@Override

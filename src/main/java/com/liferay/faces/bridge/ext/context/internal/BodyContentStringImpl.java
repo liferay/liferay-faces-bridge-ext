@@ -56,6 +56,21 @@ public class BodyContentStringImpl extends BodyContent {
 	}
 
 	@Override
+	public Reader getReader() {
+		return new StringReader(getString());
+	}
+
+	@Override
+	public int getRemaining() {
+		return stringJspWriter.getRemaining();
+	}
+
+	@Override
+	public String getString() {
+		return stringJspWriter.toString();
+	}
+
+	@Override
 	public void newLine() throws IOException {
 		stringJspWriter.newLine();
 	}
@@ -163,21 +178,6 @@ public class BodyContentStringImpl extends BodyContent {
 	@Override
 	public void writeOut(Writer out) throws IOException {
 		out.write(getString());
-	}
-
-	@Override
-	public Reader getReader() {
-		return new StringReader(getString());
-	}
-
-	@Override
-	public int getRemaining() {
-		return stringJspWriter.getRemaining();
-	}
-
-	@Override
-	public String getString() {
-		return stringJspWriter.toString();
 	}
 
 }

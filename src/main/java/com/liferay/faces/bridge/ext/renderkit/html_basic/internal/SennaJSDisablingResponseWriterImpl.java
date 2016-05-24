@@ -36,6 +36,11 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 	}
 
 	@Override
+	public ResponseWriter getWrapped() {
+		return wrappedResponseWriter;
+	}
+
+	@Override
 	public void startElement(String name, UIComponent component) throws IOException {
 
 		super.startElement(name, component);
@@ -44,10 +49,5 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 		if ("a".equals(name) || "form".equals(name)) {
 			writeAttribute("data-senna-off", "true", null);
 		}
-	}
-
-	@Override
-	public ResponseWriter getWrapped() {
-		return wrappedResponseWriter;
 	}
 }
