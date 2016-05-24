@@ -38,6 +38,30 @@ public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyC
 	}
 
 	@Override
+	public void setParameter(String name, String[] values) {
+		super.setParameter(name, values);
+		resetToString();
+	}
+
+	@Override
+	public void setParameters(Map<String, String[]> parameters) {
+		super.setParameters(parameters);
+		resetToString();
+	}
+
+	@Override
+	public void setProperty(String key, String value) {
+		super.setProperty(key, value);
+		resetToString();
+	}
+
+	@Override
+	public void setSecure(boolean secure) throws PortletSecurityException {
+		super.setSecure(secure);
+		resetToString();
+	}
+
+	@Override
 	public String toString() {
 
 		if (toStringValue == null) {
@@ -67,33 +91,9 @@ public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyC
 		writer.write(valueAsString);
 	}
 
-	protected void resetToString() {
-		toStringValue = null;
-	}
-
 	protected abstract LiferayURLGenerator getLiferayURLGenerator();
 
-	@Override
-	public void setParameter(String name, String[] values) {
-		super.setParameter(name, values);
-		resetToString();
-	}
-
-	@Override
-	public void setParameters(Map<String, String[]> parameters) {
-		super.setParameters(parameters);
-		resetToString();
-	}
-
-	@Override
-	public void setProperty(String key, String value) {
-		super.setProperty(key, value);
-		resetToString();
-	}
-
-	@Override
-	public void setSecure(boolean secure) throws PortletSecurityException {
-		super.setSecure(secure);
-		resetToString();
+	protected void resetToString() {
+		toStringValue = null;
 	}
 }

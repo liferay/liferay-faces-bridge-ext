@@ -37,6 +37,11 @@ public class WindowStateValidatorLiferayImpl extends WindowStateValidatorWrapper
 	}
 
 	@Override
+	public WindowStateValidator getWrapped() {
+		return wrappedWindowStateValidator;
+	}
+
+	@Override
 	public boolean isValid(String windowState) {
 
 		boolean valid = wrappedWindowStateValidator.isValid(windowState);
@@ -54,10 +59,5 @@ public class WindowStateValidatorLiferayImpl extends WindowStateValidatorWrapper
 		}
 
 		return valid;
-	}
-
-	@Override
-	public WindowStateValidator getWrapped() {
-		return wrappedWindowStateValidator;
 	}
 }

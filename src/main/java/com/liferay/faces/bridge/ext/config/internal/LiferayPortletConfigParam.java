@@ -75,11 +75,6 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	}
 
 	@Override
-	public boolean isConfigured(PortletConfig config) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public boolean getDefaultBooleanValue() {
 		return defaultBooleanValue;
 	}
@@ -116,6 +111,11 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 
 	@Override
 	public String getStringValue(PortletConfig config) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isConfigured(PortletConfig config) {
 		throw new UnsupportedOperationException();
 	}
 }

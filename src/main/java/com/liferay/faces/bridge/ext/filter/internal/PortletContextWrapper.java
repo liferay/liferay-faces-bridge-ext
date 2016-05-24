@@ -29,24 +29,10 @@ import javax.portlet.PortletRequestDispatcher;
  */
 public abstract class PortletContextWrapper implements PortletContext, FacesWrapper<PortletContext> {
 
-	public void log(String msg) {
-		getWrapped().log(msg);
-	}
-
-	public void log(String message, Throwable throwable) {
-		getWrapped().log(message, throwable);
-	}
-
-	public void removeAttribute(String name) {
-		getWrapped().removeAttribute(name);
-	}
+	public abstract PortletContext getWrapped();
 
 	public Object getAttribute(String name) {
 		return getWrapped().getAttribute(name);
-	}
-
-	public void setAttribute(String name, Object object) {
-		getWrapped().setAttribute(name, object);
 	}
 
 	public Enumeration<String> getAttributeNames() {
@@ -109,5 +95,19 @@ public abstract class PortletContextWrapper implements PortletContext, FacesWrap
 		return getWrapped().getServerInfo();
 	}
 
-	public abstract PortletContext getWrapped();
+	public void log(String msg) {
+		getWrapped().log(msg);
+	}
+
+	public void log(String message, Throwable throwable) {
+		getWrapped().log(message, throwable);
+	}
+
+	public void removeAttribute(String name) {
+		getWrapped().removeAttribute(name);
+	}
+
+	public void setAttribute(String name, Object object) {
+		getWrapped().setAttribute(name, object);
+	}
 }

@@ -13,7 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-
 /**
  * @author  Neil Griffin
  */

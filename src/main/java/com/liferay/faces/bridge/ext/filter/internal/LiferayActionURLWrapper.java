@@ -30,25 +30,26 @@ import javax.portlet.WindowStateException;
  */
 public abstract class LiferayActionURLWrapper implements LiferayActionURL, FacesWrapper<LiferayActionURL> {
 
+	public abstract LiferayActionURL getWrapped();
+
 	public void addProperty(String key, String value) {
 		getWrapped().addProperty(key, value);
 	}
 
+	public Map<String, String[]> getParameterMap() {
+		return getWrapped().getParameterMap();
+	}
+
+	public PortletMode getPortletMode() {
+		return getWrapped().getPortletMode();
+	}
+
+	public WindowState getWindowState() {
+		return getWrapped().getWindowState();
+	}
+
 	public void removePublicRenderParameter(String name) {
 		getWrapped().removePublicRenderParameter(name);
-	}
-
-	@Override
-	public String toString() {
-		return getWrapped().toString();
-	}
-
-	public void write(Writer out) throws IOException {
-		getWrapped().write(out);
-	}
-
-	public void write(Writer out, boolean escapeXML) throws IOException {
-		getWrapped().write(out, escapeXML);
 	}
 
 	public void setParameter(String name, String value) {
@@ -59,16 +60,8 @@ public abstract class LiferayActionURLWrapper implements LiferayActionURL, Faces
 		getWrapped().setParameter(name, values);
 	}
 
-	public Map<String, String[]> getParameterMap() {
-		return getWrapped().getParameterMap();
-	}
-
 	public void setParameters(Map<String, String[]> parameters) {
 		getWrapped().setParameters(parameters);
-	}
-
-	public PortletMode getPortletMode() {
-		return getWrapped().getPortletMode();
 	}
 
 	public void setPortletMode(PortletMode portletMode) throws PortletModeException {
@@ -83,13 +76,20 @@ public abstract class LiferayActionURLWrapper implements LiferayActionURL, Faces
 		getWrapped().setSecure(secure);
 	}
 
-	public WindowState getWindowState() {
-		return getWrapped().getWindowState();
-	}
-
 	public void setWindowState(WindowState windowState) throws WindowStateException {
 		getWrapped().setWindowState(windowState);
 	}
 
-	public abstract LiferayActionURL getWrapped();
+	@Override
+	public String toString() {
+		return getWrapped().toString();
+	}
+
+	public void write(Writer out) throws IOException {
+		getWrapped().write(out);
+	}
+
+	public void write(Writer out, boolean escapeXML) throws IOException {
+		getWrapped().write(out, escapeXML);
+	}
 }

@@ -35,8 +35,7 @@ public abstract class ScriptsEncoderLiferayCompatImpl implements ScriptsEncoder 
 		scriptData.append(portletId, script, modules);
 	}
 
-	protected String scriptDataToString(ExternalContext externalContext, ScriptData scriptData)
-		throws IOException {
+	protected String scriptDataToString(ExternalContext externalContext, ScriptData scriptData) throws IOException {
 
 		PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);

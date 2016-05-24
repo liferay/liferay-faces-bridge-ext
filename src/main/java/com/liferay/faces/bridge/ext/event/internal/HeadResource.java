@@ -100,6 +100,38 @@ public class HeadResource {
 		return equal;
 	}
 
+	public String getFacesLibrary() {
+		return facesLibrary;
+	}
+
+	public String getFacesResource() {
+		return facesResource;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public String getURL() {
+		return url;
+	}
+
+	public boolean isDuplicate() {
+		return duplicate;
+	}
+
+	public void setDuplicate(boolean duplicate) {
+		this.duplicate = duplicate;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
 	@Override
 	public String toString() {
 
@@ -161,37 +193,5 @@ public class HeadResource {
 				}
 			}
 		}
-	}
-
-	public void setDuplicate(boolean duplicate) {
-		this.duplicate = duplicate;
-	}
-
-	public boolean isDuplicate() {
-		return duplicate;
-	}
-
-	public String getFacesLibrary() {
-		return facesLibrary;
-	}
-
-	public String getFacesResource() {
-		return facesResource;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public String getURL() {
-		return url;
 	}
 }
