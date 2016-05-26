@@ -15,6 +15,7 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.filter.PortletContextWrapper;
 
 
 /**
@@ -22,11 +23,8 @@ import javax.portlet.PortletRequestDispatcher;
  */
 public class BridgePortletContextLiferayImpl extends PortletContextWrapper {
 
-	// Private Data Members
-	private PortletContext wrappedPortletContext;
-
 	public BridgePortletContextLiferayImpl(PortletContext portletContext) {
-		this.wrappedPortletContext = portletContext;
+		super(portletContext);
 	}
 
 	@Override
@@ -35,10 +33,5 @@ public class BridgePortletContextLiferayImpl extends PortletContextWrapper {
 		PortletRequestDispatcher portletRequestDispatcher = super.getRequestDispatcher(path);
 
 		return new PortletRequestDispatcherBridgeLiferayImpl(portletRequestDispatcher);
-	}
-
-	@Override
-	public PortletContext getWrapped() {
-		return wrappedPortletContext;
 	}
 }

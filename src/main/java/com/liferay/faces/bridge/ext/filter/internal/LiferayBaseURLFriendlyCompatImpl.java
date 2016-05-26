@@ -13,10 +13,17 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import javax.portlet.BaseURL;
+import javax.portlet.filter.BaseURLWrapper;
+
 /**
  * @author  Neil Griffin
  */
 public abstract class LiferayBaseURLFriendlyCompatImpl extends BaseURLWrapper {
+
+	LiferayBaseURLFriendlyCompatImpl(BaseURL baseURL) {
+		super(baseURL);
+	}
 
 	@Override
 	public void setParameter(String name, String value) {

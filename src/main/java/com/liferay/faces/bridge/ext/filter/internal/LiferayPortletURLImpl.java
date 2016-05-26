@@ -13,8 +13,15 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -25,6 +32,7 @@ import javax.portlet.WindowStateException;
 public abstract class LiferayPortletURLImpl extends LiferayBaseURLImpl implements LiferayPortletURL {
 
 	// Private Data Members
+	private MutableRenderParameters mutableRenderParameters;
 	private PortletMode portletMode;
 	private String toStringValue;
 	private WindowState windowState;
@@ -35,6 +43,11 @@ public abstract class LiferayPortletURLImpl extends LiferayBaseURLImpl implement
 
 	public PortletMode getPortletMode() {
 		return portletMode;
+	}
+
+	@Override
+	public MutableRenderParameters getRenderParameters() {
+		return mutableRenderParameters; // TODO: FACES-2695 Return a non-null value
 	}
 
 	public WindowState getWindowState() {
@@ -68,5 +81,4 @@ public abstract class LiferayPortletURLImpl extends LiferayBaseURLImpl implement
 	protected void resetToString() {
 		this.toStringValue = null;
 	}
-
 }

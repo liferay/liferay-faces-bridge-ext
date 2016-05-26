@@ -20,6 +20,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.faces.BridgeWriteBehindResponse;
+import javax.portlet.filter.PortletRequestDispatcherWrapper;
 import javax.portlet.filter.PortletRequestWrapper;
 import javax.portlet.filter.PortletResponseWrapper;
 import javax.servlet.ServletResponse;
@@ -41,11 +42,8 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 	private static final int LIFERAY_PORTAL_MINOR_VERSION = LIFERAY_PORTAL.getMinorVersion();
 	private static final int LIFERAY_PORTAL_REVISION_VERSION = LIFERAY_PORTAL.getRevisionVersion();
 
-	// Private Data Members
-	private PortletRequestDispatcher wrappedPortletRequestDispatcher;
-
 	public PortletRequestDispatcherBridgeLiferayImpl(PortletRequestDispatcher portletRequestDispatcher) {
-		this.wrappedPortletRequestDispatcher = portletRequestDispatcher;
+		super(portletRequestDispatcher);
 	}
 
 	@Override
@@ -57,11 +55,6 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 		// dispatchUsesForwardTest and bridgeSetsContentTypeTest. As a workaround, call
 		// PortletRequestDispatcher.include(PortletRequest,PortletResponse).
 		include(portletRequest, portletResponse);
-	}
-
-	@Override
-	public PortletRequestDispatcher getWrapped() {
-		return wrappedPortletRequestDispatcher;
 	}
 
 	@Override

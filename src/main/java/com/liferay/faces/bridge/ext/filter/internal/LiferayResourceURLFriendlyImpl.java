@@ -13,50 +13,84 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.faces.FacesWrapper;
+import java.io.IOException;
+
+import javax.portlet.MutableResourceParameters;
+import javax.portlet.PortletMode;
+import javax.portlet.RenderParameters;
 import javax.portlet.ResourceURL;
+import javax.portlet.WindowState;
 
 
 /**
  * @author  Kyle Stiemann
  */
-public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl implements LiferayResourceURL,
-	FacesWrapper<ResourceURL> {
+public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl implements LiferayResourceURL {
 
 	// Private Members
 	private String responseNamespace;
-	private ResourceURL wrappedLiferayResourceURL;
 
 	public LiferayResourceURLFriendlyImpl(ResourceURL wrappedLiferayResourceURL, String responseNamespace) {
-		this.wrappedLiferayResourceURL = wrappedLiferayResourceURL;
+		super(wrappedLiferayResourceURL);
 		this.responseNamespace = responseNamespace;
 	}
 
 	@Override
-	public String getCacheability() {
-		return getWrapped().getCacheability();
+	public Appendable append(Appendable out) throws IOException {
+		return getWrapped().append(out);
 	}
 
 	@Override
-	public ResourceURL getWrapped() {
-		return wrappedLiferayResourceURL;
+	public Appendable append(Appendable out, boolean escapeXML) throws IOException {
+		return getWrapped().append(out, escapeXML);
+	}
+
+	@Override
+	public String getCacheability() {
+		return ((ResourceURL) getWrapped()).getCacheability();
+	}
+
+	@Override
+	public PortletMode getPortletMode() {
+		return getWrapped().getPortletMode();
+	}
+
+	@Override
+	public RenderParameters getRenderParameters() {
+		return getWrapped().getRenderParameters();
+	}
+
+	@Override
+	public String getResourceID() {
+		return ((ResourceURL) getWrapped()).getResourceID();
+	}
+
+	@Override
+	public MutableResourceParameters getResourceParameters() {
+		return ((ResourceURL) getWrapped()).getResourceParameters();
+	}
+
+	@Override
+	public WindowState getWindowState() {
+		return getWrapped().getWindowState();
 	}
 
 	@Override
 	public void setCacheability(String cacheLevel) {
-		getWrapped().setCacheability(cacheLevel);
+		((ResourceURL) getWrapped()).setCacheability(cacheLevel);
 		resetToString();
 	}
 
+	@Override
 	public void setResourceID(String resourceID) {
-		getWrapped().setResourceID(resourceID);
+		((ResourceURL) getWrapped()).setResourceID(resourceID);
 		resetToString();
 	}
 
 	@Override
 	protected LiferayURLGenerator getLiferayURLGenerator() {
 
-		ResourceURL resourceURL = getWrapped();
+		ResourceURL resourceURL = (ResourceURL) getWrapped();
 
 		return new LiferayURLGeneratorResourceImpl(resourceURL.toString(), responseNamespace);
 	}

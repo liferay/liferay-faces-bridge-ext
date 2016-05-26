@@ -13,6 +13,9 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import javax.portlet.annotations.PortletSerializable;
+
+
 /**
  * @author  Neil Griffin
  */
@@ -22,4 +25,8 @@ public class LiferayRenderURLImpl extends LiferayPortletURLImpl implements Lifer
 		super(liferayURLGenerator);
 	}
 
+	@Override
+	public void setBeanParameter(PortletSerializable bean) {
+		// no-op
+	}
 }

@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
+import javax.portlet.BaseURL;
 import javax.portlet.PortletSecurityException;
+import javax.portlet.filter.BaseURLWrapper;
 
 import com.liferay.faces.util.render.FacesURLEncoder;
 import com.liferay.faces.util.render.FacesURLEncoderFactory;
@@ -30,6 +32,10 @@ public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyC
 
 	// Private Data Members
 	private String toStringValue;
+
+	public LiferayBaseURLFriendlyImpl(BaseURL baseURL) {
+		super(baseURL);
+	}
 
 	@Override
 	public void addProperty(String key, String value) {
