@@ -34,8 +34,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.liferay.faces.bridge.scope.RequestAttributeInspector;
-import com.liferay.faces.bridge.scope.RequestAttributeInspectorWrapper;
+import com.liferay.faces.bridge.RequestAttributeInspector;
+import com.liferay.faces.bridge.RequestAttributeInspectorWrapper;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
