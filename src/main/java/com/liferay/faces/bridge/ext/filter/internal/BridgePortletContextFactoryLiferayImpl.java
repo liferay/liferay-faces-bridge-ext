@@ -14,7 +14,6 @@
 package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.PortletContext;
-
 import javax.portlet.faces.filter.BridgePortletContextFactory;
 
 
