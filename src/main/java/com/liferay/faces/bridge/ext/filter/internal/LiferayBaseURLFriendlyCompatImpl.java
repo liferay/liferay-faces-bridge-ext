@@ -16,6 +16,7 @@ package com.liferay.faces.bridge.ext.filter.internal;
 import javax.portlet.BaseURL;
 import javax.portlet.filter.BaseURLWrapper;
 
+
 /**
  * @author  Neil Griffin
  */
