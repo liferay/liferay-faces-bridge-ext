@@ -18,8 +18,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 
-import com.liferay.faces.portlet.component.actionurl.ActionURL;
-
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
 
