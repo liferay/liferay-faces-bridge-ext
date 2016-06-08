@@ -18,8 +18,9 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
-import javax.portlet.faces.BridgeFactoryFinder;
 import javax.portlet.filter.RenderResponseWrapper;
+
+import com.liferay.faces.bridge.BridgeFactoryFinder;
 
 
 /**
