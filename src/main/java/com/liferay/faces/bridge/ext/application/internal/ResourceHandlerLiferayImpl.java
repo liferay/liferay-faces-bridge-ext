@@ -21,8 +21,8 @@ import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 
-import com.liferay.faces.util.product.ProductConstants;
-import com.liferay.faces.util.product.ProductMap;
+import com.liferay.faces.util.product.Product;
+import com.liferay.faces.util.product.ProductFactory;
 
 
 /**
@@ -31,8 +31,7 @@ import com.liferay.faces.util.product.ProductMap;
 public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	// Private Constants
-	private static final boolean PRIMEFACES_DETECTED = ProductMap.getInstance().get(ProductConstants.PRIMEFACES)
-		.isDetected();
+	private static final boolean PRIMEFACES_DETECTED = ProductFactory.getProduct(Product.Name.PRIMEFACES).isDetected();
 	private static final Set<String> PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES;
 
 	static {
