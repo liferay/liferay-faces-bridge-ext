@@ -26,8 +26,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.ServletResponseWrapper;
 
 import com.liferay.faces.util.product.Product;
-import com.liferay.faces.util.product.ProductConstants;
-import com.liferay.faces.util.product.ProductMap;
+import com.liferay.faces.util.product.ProductFactory;
 
 
 /**
@@ -36,7 +35,7 @@ import com.liferay.faces.util.product.ProductMap;
 public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDispatcherWrapper {
 
 	// Private Constants
-	private static final Product LIFERAY_PORTAL = ProductMap.getInstance().get(ProductConstants.LIFERAY_PORTAL);
+	private static final Product LIFERAY_PORTAL = ProductFactory.getProduct(Product.Name.LIFERAY_PORTAL);
 	private static final int LIFERAY_PORTAL_MAJOR_VERSION = LIFERAY_PORTAL.getMajorVersion();
 	private static final int LIFERAY_PORTAL_MINOR_VERSION = LIFERAY_PORTAL.getMinorVersion();
 	private static final int LIFERAY_PORTAL_REVISION_VERSION = LIFERAY_PORTAL.getRevisionVersion();
