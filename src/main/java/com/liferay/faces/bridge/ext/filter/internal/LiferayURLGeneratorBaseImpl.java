@@ -30,8 +30,8 @@ import javax.portlet.WindowState;
 import com.liferay.faces.util.helper.StringHelper;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
-import com.liferay.faces.util.product.ProductConstants;
-import com.liferay.faces.util.product.ProductMap;
+import com.liferay.faces.util.product.Product;
+import com.liferay.faces.util.product.ProductFactory;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,8 +68,7 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 	private static final String DO_AS_GROUP_ID = "doAsGroupId";
 	private static final String DO_AS_USER_ID = "doAsUserId";
 	private static final String DO_AS_USER_LANGUAGE_ID = "doAsUserLanguageId";
-	private static final int LIFERAY_BUILD_NUMBER = ProductMap.getInstance().get(ProductConstants.LIFERAY_PORTAL)
-		.getBuildId();
+	private static final int LIFERAY_BUILD_NUMBER = ProductFactory.getProduct(Product.Name.LIFERAY_PORTAL).getBuildId();
 	public static final String P_AUTH = "p_auth";
 	public static final String P_L_ID = "p_l_id";
 	public static final String P_P_AUTH = "p_p_auth";
