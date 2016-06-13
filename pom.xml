@@ -78,7 +78,7 @@
 		<faces.spec.version>2.1</faces.spec.version>
 		<mojarra.version>2.1.29-05</mojarra.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
-		<liferay.version>7.0.0-SNAPSHOT</liferay.version>
+		<liferay.version>7.0.1</liferay.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<surefire.version>2.12</surefire.version>
 	</properties>
