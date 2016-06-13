@@ -39,7 +39,7 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 	private static final Product LIFERAY_PORTAL = ProductFactory.getProduct(Product.Name.LIFERAY_PORTAL);
 	private static final int LIFERAY_PORTAL_MAJOR_VERSION = LIFERAY_PORTAL.getMajorVersion();
 	private static final int LIFERAY_PORTAL_MINOR_VERSION = LIFERAY_PORTAL.getMinorVersion();
-	private static final int LIFERAY_PORTAL_REVISION_VERSION = LIFERAY_PORTAL.getRevisionVersion();
+	private static final int LIFERAY_PORTAL_PATCH_VERSION = LIFERAY_PORTAL.getPatchVersion();
 
 	public PortletRequestDispatcherBridgeLiferayImpl(PortletRequestDispatcher portletRequestDispatcher) {
 		super(portletRequestDispatcher);
@@ -79,13 +79,13 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 			else if (LIFERAY_PORTAL_MINOR_VERSION == 1) {
 
 				// CE
-				if (LIFERAY_PORTAL_REVISION_VERSION < 10) {
+				if (LIFERAY_PORTAL_PATCH_VERSION < 10) {
 
-					unwrapRequest = (LIFERAY_PORTAL_REVISION_VERSION < 2);
+					unwrapRequest = (LIFERAY_PORTAL_PATCH_VERSION < 2);
 				}
 
 				// EE
-				else if (LIFERAY_PORTAL_REVISION_VERSION < 30) {
+				else if (LIFERAY_PORTAL_PATCH_VERSION < 30) {
 					unwrapRequest = true;
 				}
 			}
