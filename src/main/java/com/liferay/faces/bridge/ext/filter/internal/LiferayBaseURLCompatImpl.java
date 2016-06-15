@@ -21,4 +21,5 @@ package com.liferay.faces.bridge.ext.filter.internal;
  */
 public abstract class LiferayBaseURLCompatImpl implements LiferayBaseURL {
 
+	protected abstract String escapeXML(String xml);
 }
