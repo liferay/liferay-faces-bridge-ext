@@ -20,6 +20,8 @@ import java.util.Map;
 
 import javax.portlet.PortletSecurityException;
 
+import com.liferay.portal.kernel.util.HtmlUtil;
+
 
 /**
  * @author  Neil Griffin
@@ -88,29 +90,11 @@ public abstract class LiferayBaseURLImpl extends LiferayBaseURLCompatImpl {
 		String valueAsString = toString();
 
 		if (escapeXML) {
-
-			valueAsString = escapeXML(valueAsString);
+			valueAsString = HtmlUtil.escape(valueAsString);
 		}
 
 		writer.write(valueAsString);
 	}
 
 	protected abstract void resetToString();
-
-	@Override
-	protected String escapeXML(String uri) {
-
-		char[] tokens = new char[] { '<', '>', '&', '"', '\'', '\u00bb', '\u2013', '\u2014' };
-		String[] replacements = new String[] {
-				"&lt;", "&gt;", "&amp;", "&#034;", "&#039;", "&#187;", "&#x2013;", "&#x2014;"
-			};
-
-		for (int i = 0; i < tokens.length; i++) {
-			String token = new String(new char[] { tokens[i] });
-			String replacement = replacements[i];
-			uri = uri.replace(token, replacement);
-		}
-
-		return uri;
-	}
 }
