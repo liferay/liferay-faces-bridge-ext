@@ -19,6 +19,8 @@ import javax.portlet.PortletMode;
 import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 
+import com.liferay.portal.kernel.util.HtmlUtil;
+
 
 /**
  * This class provides a compatibility layer that isolates differences between different versions of the Portlet API.
@@ -36,7 +38,7 @@ public abstract class LiferayBaseURLCompatImpl implements LiferayBaseURL {
 	public Appendable append(Appendable out, boolean escapeXML) throws IOException {
 
 		if (escapeXML) {
-			return out.append(escapeXML(toString()));
+			return out.append(HtmlUtil.escape(toString()));
 		}
 		else {
 			return out.append(toString());
@@ -57,6 +59,4 @@ public abstract class LiferayBaseURLCompatImpl implements LiferayBaseURL {
 	public WindowState getWindowState() {
 		return null; // no-op
 	}
-
-	protected abstract String escapeXML(String xml);
 }
