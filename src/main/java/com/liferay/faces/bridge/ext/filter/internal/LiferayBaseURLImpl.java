@@ -27,7 +27,7 @@ import javax.portlet.WindowState;
 /**
  * @author  Neil Griffin
  */
-public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
+public abstract class LiferayBaseURLImpl extends LiferayBaseURLCompatImpl {
 
 	// Private Data Members
 	private LiferayURLGenerator liferayURLGenerator;
@@ -38,76 +38,54 @@ public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
 		this.parameterMap = new LinkedHashMap<String, String[]>();
 	}
 
+	@Override
 	public void addProperty(String key, String value) {
 		// no-op
-	}
-
-	@Override
-	public Appendable append(Appendable out) throws IOException {
-		return append(out, true);
-	}
-
-	@Override
-	public Appendable append(Appendable out, boolean escapeXML) throws IOException {
-
-		if (escapeXML) {
-			return out.append(escapeXML(toString()));
-		}
-		else {
-			return out.append(toString());
-		}
 	}
 
 	public LiferayURLGenerator getLiferayURLGenerator() {
 		return liferayURLGenerator;
 	}
 
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return parameterMap;
 	}
 
 	@Override
-	public PortletMode getPortletMode() {
-		return null; // no-op
-	}
-
-	@Override
-	public RenderParameters getRenderParameters() {
-		return null; // no-op
-	}
-
-	@Override
-	public WindowState getWindowState() {
-		return null; // no-op
-	}
-
 	public void setParameter(String name, String value) {
 		parameterMap.put(name, new String[] { value });
 		resetToString();
 	}
 
+	@Override
 	public void setParameter(String name, String[] values) {
 		parameterMap.put(name, values);
 		resetToString();
 	}
 
+	@Override
 	public void setParameters(Map<String, String[]> parameters) {
 		parameterMap.putAll(parameters);
 		resetToString();
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		// no-op
 	}
 
+	@Override
 	public void setSecure(boolean secure) throws PortletSecurityException {
 		// no-op
 	}
 
+	@Override
 	public void write(Writer writer) throws IOException {
 		writer.write(toString());
 	}
 
+	@Override
 	public void write(Writer writer, boolean escapeXML) throws IOException {
 
 		String valueAsString = toString();
@@ -122,7 +100,8 @@ public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
 
 	protected abstract void resetToString();
 
-	private String escapeXML(String uri) {
+	@Override
+	protected String escapeXML(String uri) {
 
 		char[] tokens = new char[] { '<', '>', '&', '"', '\'', '\u00bb', '\u2013', '\u2014' };
 		String[] replacements = new String[] {
