@@ -18,16 +18,16 @@ import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
-
-import com.liferay.faces.util.render.FacesURLEncoder;
-import com.liferay.faces.util.render.FacesURLEncoderFactory;
+import javax.portlet.RenderParameters;
+import javax.portlet.WindowState;
 
 
 /**
  * @author  Neil Griffin
  */
-public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
+public abstract class LiferayBaseURLImpl extends LiferayBaseURLCompatImpl {
 
 	// Private Data Members
 	private LiferayURLGenerator liferayURLGenerator;
@@ -38,6 +38,7 @@ public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
 		this.parameterMap = new LinkedHashMap<String, String[]>();
 	}
 
+	@Override
 	public void addProperty(String key, String value) {
 		// no-op
 	}
@@ -46,45 +47,52 @@ public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
 		return liferayURLGenerator;
 	}
 
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return parameterMap;
 	}
 
+	@Override
 	public void setParameter(String name, String value) {
 		parameterMap.put(name, new String[] { value });
 		resetToString();
 	}
 
+	@Override
 	public void setParameter(String name, String[] values) {
 		parameterMap.put(name, values);
 		resetToString();
 	}
 
+	@Override
 	public void setParameters(Map<String, String[]> parameters) {
 		parameterMap.putAll(parameters);
 		resetToString();
 	}
 
+	@Override
 	public void setProperty(String key, String value) {
 		// no-op
 	}
 
+	@Override
 	public void setSecure(boolean secure) throws PortletSecurityException {
 		// no-op
 	}
 
+	@Override
 	public void write(Writer writer) throws IOException {
 		writer.write(toString());
 	}
 
+	@Override
 	public void write(Writer writer, boolean escapeXML) throws IOException {
 
 		String valueAsString = toString();
 
 		if (escapeXML) {
 
-			FacesURLEncoder facesURLEncoder = FacesURLEncoderFactory.getFacesURLEncoderInstance();
-			valueAsString = facesURLEncoder.encode(valueAsString, "UTF-8");
+			valueAsString = escapeXML(valueAsString);
 		}
 
 		writer.write(valueAsString);
@@ -92,4 +100,20 @@ public abstract class LiferayBaseURLImpl implements LiferayBaseURL {
 
 	protected abstract void resetToString();
 
+	@Override
+	protected String escapeXML(String uri) {
+
+		char[] tokens = new char[] { '<', '>', '&', '"', '\'', '\u00bb', '\u2013', '\u2014' };
+		String[] replacements = new String[] {
+				"&lt;", "&gt;", "&amp;", "&#034;", "&#039;", "&#187;", "&#x2013;", "&#x2014;"
+			};
+
+		for (int i = 0; i < tokens.length; i++) {
+			String token = new String(new char[] { tokens[i] });
+			String replacement = replacements[i];
+			uri = uri.replace(token, replacement);
+		}
+
+		return uri;
+	}
 }
