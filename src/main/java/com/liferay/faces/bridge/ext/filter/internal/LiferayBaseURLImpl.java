@@ -18,10 +18,7 @@ import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletSecurityException;
-import javax.portlet.RenderParameters;
-import javax.portlet.WindowState;
 
 
 /**
