@@ -50,7 +50,7 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLWrapper {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-		if (BridgeUtil.getPortletRequestPhase() == Bridge.PortletPhase.ACTION_PHASE) {
+		if (BridgeUtil.getPortletRequestPhase(facesContext) == Bridge.PortletPhase.ACTION_PHASE) {
 
 			ExternalContext externalContext = facesContext.getExternalContext();
 			Map<String, Object> requestMap = externalContext.getRequestMap();
