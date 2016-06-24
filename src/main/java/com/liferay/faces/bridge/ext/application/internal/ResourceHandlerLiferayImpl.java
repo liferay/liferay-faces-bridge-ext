@@ -105,17 +105,19 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	private boolean isJQueryPluginJSResource(Resource resource, String resourceLibrary, String resourceName) {
 
-		boolean primeFacesJQueryPluginJSResource = PRIMEFACES_DETECTED && ((resourceLibrary == null) ||
-			resourceLibrary.equals("primefaces")) &&
+		boolean primeFacesJQueryPluginJSResource = PRIMEFACES_DETECTED &&
+			((resourceLibrary == null) || resourceLibrary.equals("primefaces")) &&
 			PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName);
+
 		boolean richFacesJQueryPluginJSResource = false;
 
 		if (RICHFACES_DETECTED) {
 
 			boolean richfacesResourceLibrary = ("org.richfaces.resource".equals(resourceLibrary) ||
-			"org.richfaces.staticResource".equals(resourceLibrary) || "org.richfaces".equals(resourceLibrary));
+					"org.richfaces.staticResource".equals(resourceLibrary) || "org.richfaces".equals(resourceLibrary));
+
 			richFacesJQueryPluginJSResource = ((resourceLibrary == null) || richfacesResourceLibrary) &&
-			(resourceName.endsWith("packed.js") || resourceName.endsWith("jquery.js"));
+				(resourceName.endsWith("packed.js") || resourceName.endsWith("jquery.js"));
 		}
 
 		return (resource != null) && (primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource);
