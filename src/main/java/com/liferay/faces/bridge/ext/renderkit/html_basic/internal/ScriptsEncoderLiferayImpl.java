@@ -112,9 +112,9 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
 
 		for (Script script : scripts) {
 
-			Script.Type type = script.getType();
+			Script.ModulesType modulesType = script.getModulesType();
 
-			if (Script.Type.ALLOY.equals(type)) {
+			if (Script.ModulesType.ALLOY.equals(modulesType)) {
 
 				StringBuilder modulesStringBuilder = new StringBuilder();
 				String[] modules = script.getModules();
