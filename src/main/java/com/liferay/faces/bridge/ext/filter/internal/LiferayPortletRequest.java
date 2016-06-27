@@ -26,11 +26,11 @@ import javax.portlet.filter.PortletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
 
 import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
-import com.liferay.faces.util.HttpHeaders;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 
 
 /**
