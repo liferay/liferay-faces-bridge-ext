@@ -9,11 +9,11 @@
 	<name>${artifactId}</name>
 	<version>${version}</version>
 	<properties>
-		<faces.api.version>2.2</faces.api.version>
-		<liferay.faces.bridge.ext.version>5.0.0-SNAPSHOT</liferay.faces.bridge.ext.version>
-		<liferay.faces.bridge.version>4.0.0-SNAPSHOT</liferay.faces.bridge.version>
-		<liferay.faces.portal.version>3.0.0-SNAPSHOT</liferay.faces.portal.version>
-		<mojarra.version>2.2.13</mojarra.version>
+		<faces.api.version>2.1</faces.api.version>
+		<liferay.faces.bridge.ext.version>2.0.0-SNAPSHOT</liferay.faces.bridge.ext.version>
+		<liferay.faces.bridge.version>3.0.0-SNAPSHOT</liferay.faces.bridge.version>
+		<liferay.faces.portal.version>2.0.0-SNAPSHOT</liferay.faces.portal.version>
+		<mojarra.version>2.1.29-05</mojarra.version>
 		<project.stage>Development</project.stage>
 	</properties>
 	<build>
@@ -50,8 +50,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>2.3.0</version>
+			<artifactId>portal-service</artifactId>
+			<version>6.2.5</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
