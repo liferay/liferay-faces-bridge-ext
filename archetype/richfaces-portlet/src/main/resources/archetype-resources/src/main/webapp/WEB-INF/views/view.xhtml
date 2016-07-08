@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<f:view
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+>
+	<h:head>
+		<h:outputStylesheet library="css" name="main.css" />
+	</h:head>
+	<h:body>
+		<rich:panel id="panelId">
+			<h:outputText styleClass="${artifactId}-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
+		</rich:panel>
+	</h:body>
+</f:view>
