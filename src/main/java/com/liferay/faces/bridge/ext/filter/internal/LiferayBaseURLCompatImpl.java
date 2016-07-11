@@ -13,7 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-
 /**
  * This class provides a compatibility layer that isolates differences between different versions of the Portlet API.
  *
