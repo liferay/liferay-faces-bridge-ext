@@ -14,6 +14,7 @@
 package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 /**
  * @author  Kyle Stiemann
  */
-public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl {
+public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 6288577469031905027L;
 
 	@Override
 	public void encodeBodyScripts(FacesContext facesContext, List<Script> scripts) throws IOException {

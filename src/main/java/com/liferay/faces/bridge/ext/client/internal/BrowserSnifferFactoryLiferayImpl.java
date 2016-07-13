@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.client.internal;
 
+import java.io.Serializable;
+
 import javax.faces.context.ExternalContext;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +28,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 /**
  * @author  Kyle Stiemann
  */
-public class BrowserSnifferFactoryLiferayImpl extends BrowserSnifferFactory {
+public class BrowserSnifferFactoryLiferayImpl extends BrowserSnifferFactory implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 1618487876717568315L;
 
 	// Private Data Members
 	private BrowserSnifferFactory wrappedBrowserSnifferFactory;
@@ -43,9 +48,10 @@ public class BrowserSnifferFactoryLiferayImpl extends BrowserSnifferFactory {
 
 		// Calling ExternalContext.setRequest(httpServletRequest) adds extra overhead because all of the
 		// underlying maps have to get re-created. Instead, create a simple ExternalContextWrapper.
-		externalContext = new ExternalContextBrowserSnifferImpl(externalContext, httpServletRequest);
+		ExternalContext externalContextBrowserSnifferImpl = new ExternalContextBrowserSnifferImpl(externalContext,
+				httpServletRequest);
 
-		return wrappedBrowserSnifferFactory.getBrowserSniffer(externalContext);
+		return wrappedBrowserSnifferFactory.getBrowserSniffer(externalContextBrowserSnifferImpl);
 	}
 
 	@Override
