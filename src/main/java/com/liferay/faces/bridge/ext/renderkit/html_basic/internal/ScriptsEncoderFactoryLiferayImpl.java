@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
+import java.io.Serializable;
+
 import com.liferay.faces.util.client.ScriptsEncoder;
 import com.liferay.faces.util.client.ScriptsEncoderFactory;
 
@@ -20,9 +22,13 @@ import com.liferay.faces.util.client.ScriptsEncoderFactory;
 /**
  * @author  Neil Griffin
  */
-public class ScriptsEncoderFactoryLiferayImpl extends ScriptsEncoderFactory {
+public class ScriptsEncoderFactoryLiferayImpl extends ScriptsEncoderFactory implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 6500965768943686133L;
 
 	// Private Data Members
+	private ScriptsEncoder scriptsEncoder = new ScriptsEncoderLiferayImpl();
 	private ScriptsEncoderFactory wrappedScriptsEncoderFactory;
 
 	public ScriptsEncoderFactoryLiferayImpl(ScriptsEncoderFactory ScriptsEncoderFactory) {
@@ -31,7 +37,7 @@ public class ScriptsEncoderFactoryLiferayImpl extends ScriptsEncoderFactory {
 
 	@Override
 	public ScriptsEncoder getScriptsEncoder() {
-		return new ScriptsEncoderLiferayImpl();
+		return scriptsEncoder;
 	}
 
 	@Override
