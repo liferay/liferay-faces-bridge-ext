@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.application.internal;
 
+import java.io.Serializable;
+
 import com.liferay.faces.util.application.ResourceValidator;
 import com.liferay.faces.util.application.ResourceValidatorFactory;
 
@@ -20,21 +22,25 @@ import com.liferay.faces.util.application.ResourceValidatorFactory;
 /**
  * @author  Neil Griffin
  */
-public class ResourceValidatorFactoryLiferayImpl extends ResourceValidatorFactory {
+public class ResourceValidatorFactoryLiferayImpl extends ResourceValidatorFactory implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 343158871040962167L;
 
 	// Private Data Members
+	private ResourceValidator resourceValidator;
 	private ResourceValidatorFactory wrappedResourceValidatorFactory;
 
 	public ResourceValidatorFactoryLiferayImpl(ResourceValidatorFactory resourceValidatorFactory) {
+
+		ResourceValidator resourceValidator = resourceValidatorFactory.getResourceValidator();
+		this.resourceValidator = new ResourceValidatorLiferayImpl(resourceValidator);
 		this.wrappedResourceValidatorFactory = resourceValidatorFactory;
 	}
 
 	@Override
 	public ResourceValidator getResourceValidator() {
-
-		ResourceValidator wrappedResourceValidator = wrappedResourceValidatorFactory.getResourceValidator();
-
-		return new ResourceValidatorLiferayImpl(wrappedResourceValidator);
+		return resourceValidator;
 	}
 
 	@Override
