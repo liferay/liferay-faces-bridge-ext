@@ -22,6 +22,7 @@
 			<bridge:liferay-url-factory>com.liferay.faces.bridge.ext.filter.internal.LiferayURLFactoryImpl</bridge:liferay-url-factory>
 			<bridge:request-attribute-inspector-factory>com.liferay.faces.bridge.ext.scope.internal.RequestAttributeInspectorFactoryLiferayImpl</bridge:request-attribute-inspector-factory>
 			<util:browser-sniffer-factory>com.liferay.faces.bridge.ext.client.internal.BrowserSnifferFactoryLiferayImpl</util:browser-sniffer-factory>
+			<util:i18n-factory>com.liferay.faces.bridge.ext.i18n.internal.I18nFactoryLiferayImpl</util:i18n-factory>
 			<util:resource-validator-factory>com.liferay.faces.bridge.ext.application.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
 			<util:scripts-encoder-factory>com.liferay.faces.bridge.ext.renderkit.html_basic.internal.ScriptsEncoderFactoryLiferayImpl</util:scripts-encoder-factory>
 		</factory-extension>
