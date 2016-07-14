@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <archetype>
-	<id>com.liferay.faces.archetype.liferay-faces-alloy.portlet</id>
+	<id>com.liferay.faces.archetype.alloy.portlet</id>
 	<resources>
 		<resource>src/main/webapp/WEB-INF/faces-config.xml</resource>
 		<resource>src/main/webapp/WEB-INF/liferay-plugin-package.properties</resource>
