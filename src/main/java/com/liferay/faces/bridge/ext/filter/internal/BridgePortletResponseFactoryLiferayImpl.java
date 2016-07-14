@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import java.io.Serializable;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -30,7 +32,10 @@ import com.liferay.faces.bridge.filter.BridgePortletResponseFactory;
 /**
  * @author  Neil Griffin
  */
-public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletResponseFactory {
+public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletResponseFactory implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 3840349386331501262L;
 
 	// Private Data Members
 	private BridgePortletResponseFactory wrappedBridgePortletResponseFactory;
