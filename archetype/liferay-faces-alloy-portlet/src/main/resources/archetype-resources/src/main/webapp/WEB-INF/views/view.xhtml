@@ -13,5 +13,11 @@
 		<alloy:panel id="panelId">
 			<h:outputText styleClass="${artifactId}-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
 		</alloy:panel>
+		<ul>
+			<li><em><h:outputText value="#{product.JSF}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_BRIDGE}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_UTIL}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_ALLOY}" /></em></li>
+		</ul>
 	</h:body>
 </f:view>
