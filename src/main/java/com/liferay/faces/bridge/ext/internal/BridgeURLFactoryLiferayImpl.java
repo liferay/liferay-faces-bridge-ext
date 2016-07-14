@@ -13,6 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.internal;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,10 @@ import javax.portlet.faces.BridgeURLFactory;
 /**
  * @author  Neil Griffin
  */
-public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory {
+public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 7863243661979446762L;
 
 	// Private Data Members
 	private BridgeURLFactory wrappedBridgeURLFactory;
