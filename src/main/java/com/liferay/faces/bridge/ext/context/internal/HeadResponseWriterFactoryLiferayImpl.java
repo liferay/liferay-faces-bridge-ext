@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.context.internal;
 
+import java.io.Serializable;
+
 import javax.faces.context.ResponseWriter;
 import javax.portlet.PortletResponse;
 
@@ -22,7 +24,10 @@ import com.liferay.faces.bridge.context.HeadResponseWriterFactory;
 /**
  * @author  Neil Griffin
  */
-public class HeadResponseWriterFactoryLiferayImpl extends HeadResponseWriterFactory {
+public class HeadResponseWriterFactoryLiferayImpl extends HeadResponseWriterFactory implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 2227130669035456473L;
 
 	// Private Data Members
 	private HeadResponseWriterFactory wrappedHeadResponseWriterFactory;

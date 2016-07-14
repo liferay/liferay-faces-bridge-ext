@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import java.io.Serializable;
+
 import javax.portlet.PortletContext;
 
 import com.liferay.faces.bridge.filter.BridgePortletContextFactory;
@@ -21,7 +23,10 @@ import com.liferay.faces.bridge.filter.BridgePortletContextFactory;
 /**
  * @author  Neil Griffin
  */
-public class BridgePortletContextFactoryLiferayImpl extends BridgePortletContextFactory {
+public class BridgePortletContextFactoryLiferayImpl extends BridgePortletContextFactory implements Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 1452826393887411234L;
 
 	// Private Data Members
 	private BridgePortletContextFactory wrappedBridgePortletContextFactory;
