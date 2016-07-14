@@ -92,8 +92,8 @@
 		<!-- END: test -->
 
 		<dependency>
-			<groupId>com.liferay.faces.metal</groupId>
-			<artifactId>liferay-faces-metal</artifactId>
+			<groupId>com.liferay.faces</groupId>
+			<artifactId>com.liferay.faces.metal</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
