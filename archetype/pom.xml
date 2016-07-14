@@ -9,8 +9,12 @@
 	<name>Liferay Faces Bridge Ext Archetypes</name>
 
 	<modules>
+		<module>icefaces-portlet</module>
 		<module>jsf-portlet</module>
+		<module>liferay-faces-alloy-portlet</module>
+		<module>liferay-faces-metal-portlet</module>
 		<module>primefaces-portlet</module>
+		<module>richfaces-portlet</module>
 	</modules>
 
 	<build>
