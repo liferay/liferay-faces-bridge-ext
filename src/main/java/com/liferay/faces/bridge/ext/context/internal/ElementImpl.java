@@ -17,10 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.component.UIComponent;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -31,7 +32,7 @@ import org.w3c.dom.UserDataHandler;
 /**
  * @author  Neil Griffin
  */
-public class ElementImpl implements Element {
+public class ElementImpl extends ElementCompatImpl {
 
 	// Private Data Members
 	private Map<String, String> attributes;
@@ -41,9 +42,9 @@ public class ElementImpl implements Element {
 	private String prefix;
 	private String textContent;
 
-	public ElementImpl(String nodeName) {
+	public ElementImpl(String nodeName, UIComponent uiComponent) {
 		this.nodeName = nodeName;
-		this.attributes = new HashMap<String, String>();
+		this.attributes = getAttributes(uiComponent);
 	}
 
 	public Node appendChild(Node newChild) throws DOMException {
