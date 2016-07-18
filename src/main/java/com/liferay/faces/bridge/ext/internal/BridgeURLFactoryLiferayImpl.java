@@ -36,6 +36,7 @@ public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory implements Ser
 
 	public BridgeURLFactoryLiferayImpl(BridgeURLFactory bridgeURLFactory) {
 		this.wrappedBridgeURLFactory = bridgeURLFactory;
+		BridgeExtDependencyVerifier.verify();
 	}
 
 	@Override
