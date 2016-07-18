@@ -15,10 +15,8 @@ package com.liferay.faces.bridge.ext.context.internal;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.faces.component.UIComponent;
-import javax.faces.render.Renderer;
 
 import org.w3c.dom.Element;
 
@@ -29,35 +27,6 @@ import org.w3c.dom.Element;
 public abstract class ElementCompatImpl implements Element {
 
 	protected Map<String, String> getAttributes(UIComponent uiComponent) {
-
-		HashMap<String, String> attributes = new HashMap<String, String>();
-
-		if (uiComponent != null) {
-
-			Map<String, Object> passThroughAttributes = uiComponent.getPassThroughAttributes(false);
-
-			if ((passThroughAttributes != null) && !passThroughAttributes.isEmpty()) {
-
-				Set<Map.Entry<String, Object>> entrySet = passThroughAttributes.entrySet();
-
-				for (Map.Entry<String, Object> attributeEntry : entrySet) {
-
-					String attributeName = attributeEntry.getKey();
-
-					if (!attributeName.equals(Renderer.PASSTHROUGH_RENDERER_LOCALNAME_KEY)) {
-
-						Object attributeValue = attributeEntry.getValue();
-
-						if (attributeValue == null) {
-							attributeValue = "";
-						}
-
-						attributes.put(attributeName, attributeValue.toString());
-					}
-				}
-			}
-		}
-
-		return attributes;
+		return new HashMap<String, String>();
 	}
 }
