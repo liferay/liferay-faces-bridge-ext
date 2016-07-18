@@ -48,7 +48,7 @@ public abstract class HeadResponseWriterBase extends ResponseWriterWrapper {
 		this.elementWriterStack = new ElementWriterStack();
 	}
 
-	public abstract Element createElement(String name);
+	public abstract Element createElement(String name, UIComponent component);
 
 	@Override
 	public Writer append(CharSequence csq) throws IOException {
@@ -182,7 +182,7 @@ public abstract class HeadResponseWriterBase extends ResponseWriterWrapper {
 			titleElement = true;
 		}
 		else {
-			Element element = createElement(name);
+			Element element = createElement(name, component);
 			ElementWriter elementWriter = new ElementWriter(element);
 			elementWriterStack.push(elementWriter);
 			logger.trace("PUSHED element name=[{0}]", name);

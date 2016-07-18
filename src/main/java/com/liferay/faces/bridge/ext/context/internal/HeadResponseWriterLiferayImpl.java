@@ -16,6 +16,7 @@ package com.liferay.faces.bridge.ext.context.internal;
 import java.io.IOException;
 
 import javax.el.ELContext;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -53,8 +54,8 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
 	}
 
 	@Override
-	public Element createElement(String name) {
-		return new ElementImpl(name);
+	public Element createElement(String name, UIComponent uiComponent) {
+		return new ElementImpl(name, uiComponent);
 	}
 
 	@Override
