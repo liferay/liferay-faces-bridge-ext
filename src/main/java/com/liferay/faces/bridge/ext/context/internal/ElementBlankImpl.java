@@ -22,7 +22,7 @@ package com.liferay.faces.bridge.ext.context.internal;
 public class ElementBlankImpl extends ElementImpl {
 
 	public ElementBlankImpl() {
-		super("");
+		super("", null);
 	}
 
 	@Override
