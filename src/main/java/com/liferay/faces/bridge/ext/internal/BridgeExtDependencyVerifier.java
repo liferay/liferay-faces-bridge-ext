@@ -36,7 +36,7 @@ public class BridgeExtDependencyVerifier {
 		int liferayPortalMajorVersion = liferayPortal.getMajorVersion();
 		int liferayPortalMinorVersion = liferayPortal.getMinorVersion();
 
-		if ((liferayPortalMajorVersion != 6) && (liferayPortalMinorVersion != 2)) {
+		if (!((liferayPortalMajorVersion == 6) && (liferayPortalMinorVersion == 2))) {
 			logger.error("{0} {1} is designed to be used with Liferay Portal 6.2 but detected {2}.{3}",
 				implementationTitle, implementationVersion, liferayPortalMajorVersion, liferayPortalMinorVersion);
 		}
@@ -45,7 +45,7 @@ public class BridgeExtDependencyVerifier {
 		int jsfMajorVersion = jsf.getMajorVersion();
 		int jsfMinorVersion = jsf.getMinorVersion();
 
-		if ((jsfMajorVersion != 2) && (jsfMinorVersion != 1)) {
+		if (!(jsfMajorVersion == 2) && (jsfMinorVersion == 1))) {
 			logger.error("{0} {1} is designed to be used with JSF 2.1 but detected {2}.{3}", implementationTitle,
 				implementationVersion, jsfMajorVersion, jsfMinorVersion);
 		}
