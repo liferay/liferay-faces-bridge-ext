@@ -13,6 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
@@ -31,15 +32,16 @@ import javax.xml.namespace.QName;
  *
  * @author  Neil Griffin
  */
-public class PortletConfigLiferayImpl implements PortletConfig {
+public class PortletConfigLiferayImpl implements PortletConfig, Serializable {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 9101019986430378763L;
 
 	// Private Data Members
-	private EmptyResourceBundle emptyResourceBundle;
 	private PortletConfig wrappedPortletConfig;
 
 	public PortletConfigLiferayImpl(PortletConfig portletConfig) {
 		this.wrappedPortletConfig = portletConfig;
-		this.emptyResourceBundle = new EmptyResourceBundle();
 	}
 
 	@Override
@@ -96,7 +98,7 @@ public class PortletConfigLiferayImpl implements PortletConfig {
 			resourceBundle.containsKey("testNullPointerException");
 		}
 		catch (NullPointerException e) {
-			resourceBundle = emptyResourceBundle;
+			resourceBundle = new EmptyResourceBundle();
 		}
 
 		return resourceBundle;
