@@ -25,9 +25,4 @@
 			<util:resource-validator-factory>com.liferay.faces.bridge.ext.application.internal.ResourceValidatorFactoryLiferayImpl</util:resource-validator-factory>
 		</factory-extension>
 	</factory>
-	<lifecycle>
-		<!-- Add the LiferayPageTopPhaseListener in order to remove duplicate resources from the -->
-		<!-- LIFERAY_SHARED_PAGE_TOP request attribute. -->
-		<phase-listener>com.liferay.faces.bridge.ext.event.internal.LiferayPageTopPhaseListener</phase-listener>
-	</lifecycle>
 </faces-config>
