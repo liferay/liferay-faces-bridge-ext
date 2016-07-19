@@ -45,7 +45,7 @@ public class BridgeExtDependencyVerifier {
 		int jsfMajorVersion = jsf.getMajorVersion();
 		int jsfMinorVersion = jsf.getMinorVersion();
 
-		if (!(jsfMajorVersion == 2) && (jsfMinorVersion == 1))) {
+		if (!((jsfMajorVersion == 2) && (jsfMinorVersion == 1))) {
 			logger.error("{0} {1} is designed to be used with JSF 2.1 but detected {2}.{3}", implementationTitle,
 				implementationVersion, jsfMajorVersion, jsfMinorVersion);
 		}
