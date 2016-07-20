@@ -41,23 +41,23 @@ public class BridgePortletConfigFactoryLiferayImpl extends BridgePortletConfigFa
 	@Override
 	public PortletConfig getPortletConfig(PortletConfig portletConfig) {
 
-		PortletConfig savedPortletConfig = this.portletConfig;
+		PortletConfig threadSafePortletConfig = this.portletConfig;
 
 		// First check without locking (not yet thread-safe)
-		if (savedPortletConfig == null) {
+		if (threadSafePortletConfig == null) {
 
 			synchronized (this) {
 
-				savedPortletConfig = this.portletConfig;
+				threadSafePortletConfig = this.portletConfig;
 
 				// Second check with locking (thread-safe)
-				if (savedPortletConfig == null) {
-					savedPortletConfig = this.portletConfig = new PortletConfigLiferayImpl(portletConfig);
+				if (threadSafePortletConfig == null) {
+					threadSafePortletConfig = this.portletConfig = new PortletConfigLiferayImpl(portletConfig);
 				}
 			}
 		}
 
-		return savedPortletConfig;
+		return threadSafePortletConfig;
 	}
 
 	@Override
