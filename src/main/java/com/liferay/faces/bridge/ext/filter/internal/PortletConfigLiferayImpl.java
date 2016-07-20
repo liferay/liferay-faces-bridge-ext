@@ -13,7 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
@@ -32,10 +31,7 @@ import javax.xml.namespace.QName;
  *
  * @author  Neil Griffin
  */
-public class PortletConfigLiferayImpl implements PortletConfig, Serializable {
-
-	// serialVersionUID
-	private static final long serialVersionUID = 9101019986430378763L;
+public class PortletConfigLiferayImpl implements PortletConfig {
 
 	// Private Data Members
 	private PortletConfig wrappedPortletConfig;
