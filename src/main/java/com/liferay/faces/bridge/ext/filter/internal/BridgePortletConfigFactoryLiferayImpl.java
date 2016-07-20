@@ -32,7 +32,7 @@ public class BridgePortletConfigFactoryLiferayImpl extends BridgePortletConfigFa
 	private BridgePortletConfigFactory wrappedBridgePortletConfigFactory;
 
 	// Instance field must be declared volatile in order for the double-check idiom to work (requires JRE 1.5+)
-	private volatile PortletConfig portletConfig;
+	private transient volatile PortletConfig portletConfig;
 
 	public BridgePortletConfigFactoryLiferayImpl(BridgePortletConfigFactory bridgePortletConfigFactory) {
 		this.wrappedBridgePortletConfigFactory = bridgePortletConfigFactory;
@@ -41,22 +41,23 @@ public class BridgePortletConfigFactoryLiferayImpl extends BridgePortletConfigFa
 	@Override
 	public PortletConfig getPortletConfig(PortletConfig portletConfig) {
 
+		PortletConfig savedPortletConfig = this.portletConfig;
+
 		// First check without locking (not yet thread-safe)
-		if (this.portletConfig == null) {
+		if (savedPortletConfig == null) {
 
 			synchronized (this) {
 
-				if (this.portletConfig == null) {
+				savedPortletConfig = this.portletConfig;
 
-					// Second check with locking (thread-safe)
-					if (this.portletConfig == null) {
-						this.portletConfig = new PortletConfigLiferayImpl(portletConfig);
-					}
+				// Second check with locking (thread-safe)
+				if (savedPortletConfig == null) {
+					savedPortletConfig = this.portletConfig = new PortletConfigLiferayImpl(portletConfig);
 				}
 			}
 		}
 
-		return this.portletConfig;
+		return savedPortletConfig;
 	}
 
 	@Override
