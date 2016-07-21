@@ -31,6 +31,9 @@ public class BridgePortletContextFactoryLiferayImpl extends BridgePortletContext
 	// Private Data Members
 	private BridgePortletContextFactory wrappedBridgePortletContextFactory;
 
+	// Instance field must be declared volatile in order for the double-check idiom to work (requires JRE 1.5+)
+	private transient volatile PortletContext portletContext;
+
 	public BridgePortletContextFactoryLiferayImpl(BridgePortletContextFactory bridgePortletContextFactory) {
 		this.wrappedBridgePortletContextFactory = bridgePortletContextFactory;
 	}
@@ -38,9 +41,27 @@ public class BridgePortletContextFactoryLiferayImpl extends BridgePortletContext
 	@Override
 	public PortletContext getPortletContext(PortletContext portletContext) {
 
-		PortletContext wrappedPortletContext = wrappedBridgePortletContextFactory.getPortletContext(portletContext);
+		PortletContext threadSafePortletContext = this.portletContext;
 
-		return new BridgePortletContextLiferayImpl(wrappedPortletContext);
+		// First check without locking (not yet thread-safe)
+		if (threadSafePortletContext == null) {
+
+			synchronized (this) {
+
+				threadSafePortletContext = this.portletContext;
+
+				// Second check with locking (thread-safe)
+				if (threadSafePortletContext == null) {
+
+					PortletContext wrappedPortletContext = wrappedBridgePortletContextFactory.getPortletContext(
+							portletContext);
+					threadSafePortletContext = this.portletContext = new BridgePortletContextLiferayImpl(
+								wrappedPortletContext);
+				}
+			}
+		}
+
+		return threadSafePortletContext;
 	}
 
 	@Override
