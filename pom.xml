@@ -79,6 +79,7 @@
 		<mojarra.version>2.2.13</mojarra.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
 		<liferay.version>7.0.1</liferay.version>
+		<liferay.version.dtd>7.0</liferay.version.dtd>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<surefire.version>2.12</surefire.version>
 	</properties>
