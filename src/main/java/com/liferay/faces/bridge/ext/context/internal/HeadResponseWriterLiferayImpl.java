@@ -31,6 +31,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.w3c.dom.Element;
 
 import com.liferay.faces.bridge.ext.taglib.internal.HtmlTopTag;
+import com.liferay.faces.util.jsp.BodyContentStringImpl;
 import com.liferay.faces.util.jsp.PageContextFactory;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
