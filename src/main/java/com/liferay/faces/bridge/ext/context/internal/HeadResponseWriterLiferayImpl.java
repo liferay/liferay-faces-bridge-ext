@@ -24,14 +24,12 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import org.w3c.dom.Element;
 
 import com.liferay.faces.bridge.ext.taglib.internal.HtmlTopTag;
-import com.liferay.faces.util.jsp.BodyContentStringImpl;
 import com.liferay.faces.util.jsp.PageContextFactory;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -79,8 +77,7 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
 		htmlTopTag.doStartTag();
 
 		String elementAsString = element.toString();
-		JspWriter jspWriter = stringPageContext.getOut();
-		BodyContent stringBodyContent = new BodyContentStringImpl(jspWriter);
+		BodyContent stringBodyContent = stringPageContext.pushBody();
 		stringBodyContent.print(elementAsString);
 		htmlTopTag.setBodyContent(stringBodyContent);
 
