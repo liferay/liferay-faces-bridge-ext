@@ -29,8 +29,8 @@ import javax.servlet.jsp.tagext.BodyContent;
 
 import org.w3c.dom.Element;
 
+import com.liferay.faces.bridge.ext.jsp.internal.PageContextStringImpl;
 import com.liferay.faces.bridge.ext.taglib.internal.HtmlTopTag;
-import com.liferay.faces.util.jsp.PageContextFactory;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
@@ -71,8 +71,7 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
 
 		// Invoke the Liferay HtmlTopTag class directly (rather than using liferay-util:html-top from a JSP).
 		HtmlTopTag htmlTopTag = new HtmlTopTag();
-		PageContext stringPageContext = PageContextFactory.getStringPageContextInstance(httpServletRequest,
-				httpServletResponse, elContext);
+		PageContext stringPageContext = new PageContextStringImpl(httpServletRequest, httpServletResponse, elContext);
 		htmlTopTag.setPageContext(stringPageContext);
 		htmlTopTag.doStartTag();
 
