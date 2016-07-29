@@ -19,12 +19,12 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
-import javax.portlet.faces.BridgeWriteBehindResponse;
 import javax.portlet.filter.PortletRequestDispatcherWrapper;
 import javax.portlet.filter.PortletRequestWrapper;
 import javax.portlet.filter.PortletResponseWrapper;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletResponseWrapper;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import com.liferay.faces.util.product.Product;
 import com.liferay.faces.util.product.ProductFactory;
@@ -95,14 +95,14 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 			portletRequest = unwrapPortletRequest(portletRequest);
 		}
 
-		// If the specified portletResponse implements BridgeWriteBehindResponse then the bridge implementation might be
-		// trying to overcome a Servlet API dependency in the JSF implementation by wrapping the portletResponse with
+		// If the specified portletResponse implements HttpServletResponseWrapper then the bridge implementation might
+		// be trying to overcome a Servlet API dependency in the JSF implementation by wrapping the portletResponse with
 		// HttpServletResponseRenderAdapter or HttpServletResponseResourceAdapter. If that's the case then Liferay
 		// Portal's PortletRequestDispatcher.include(PortletRequest,PortletResponse) method will be unable to unwrap the
 		// portletResponse since those classes do not extend PortletResponseWrapper. As a workaround, unwrap the
 		// portletResponse to a point such that Liferay's PortletResponseImpl is decorated only by instances of
 		// PortletResponseWrapper.
-		if ((portletResponse instanceof BridgeWriteBehindResponse) &&
+		if ((portletResponse instanceof HttpServletResponseWrapper) &&
 				(portletResponse instanceof PortletResponseWrapper)) {
 			portletResponse = unwrapPortletResponse(portletResponse);
 		}
