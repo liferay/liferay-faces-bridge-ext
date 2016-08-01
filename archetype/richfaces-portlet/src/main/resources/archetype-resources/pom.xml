@@ -12,7 +12,7 @@
 		<faces.api.version>2.1</faces.api.version>
 		<liferay.faces.bridge.ext.version>2.0.0-SNAPSHOT</liferay.faces.bridge.ext.version>
 		<liferay.faces.bridge.version>3.0.0-SNAPSHOT</liferay.faces.bridge.version>
-		<mojarra.version>2.1.29-05</mojarra.version>
+		<mojarra.version>2.1.29-08</mojarra.version>
 		<project.stage>Development</project.stage>
 	</properties>
 	<build>
