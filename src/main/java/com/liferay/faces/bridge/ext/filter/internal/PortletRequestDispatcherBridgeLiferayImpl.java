@@ -102,7 +102,7 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 		// portletResponse since those classes do not extend PortletResponseWrapper. As a workaround, unwrap the
 		// portletResponse to a point such that Liferay's PortletResponseImpl is decorated only by instances of
 		// PortletResponseWrapper.
-		if ((portletResponse instanceof HttpServletResponseWrapper) &&
+		if ((portletResponse instanceof HttpServletResponseWrapper) ||
 				(portletResponse instanceof PortletResponseWrapper)) {
 			portletResponse = unwrapPortletResponse(portletResponse);
 		}
