@@ -3,15 +3,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
 	xmlns:bridge="http://www.liferay.com/xml/ns/liferay-faces-bridge-2.0-extension"
 	xmlns:util="http://www.liferay.com/xml/ns/liferay-faces-util-extension">
-	<name>LiferayFacesBridgeExt</name>
-	<ordering>
-		<after>
-			<name>LiferayFacesBridge</name>
-		</after>
-		<before>
-			<others/>
-		</before>
-	</ordering>
+	<faces-config-extension>
+		<name>LiferayFacesBridgeExt</name>
+		<ordering>
+			<after>
+				<name>LiferayFacesBridge</name>
+			</after>
+			<before>
+				<others/>
+			</before>
+		</ordering>
+	</faces-config-extension>
 	<factory>
 		<factory-extension>
 			<bridge:bridge-portlet-config-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletConfigFactoryLiferayImpl</bridge:bridge-portlet-config-factory>
