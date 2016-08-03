@@ -17,6 +17,7 @@
 		<fileSet filtered="false">
 			<directory>src/main/webapp</directory>
 			<includes>
+				<include>resources/css/*</include>
 				<include>resources/images/*</include>
 			</includes>
 		</fileSet>
