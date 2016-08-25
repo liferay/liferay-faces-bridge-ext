@@ -10,7 +10,6 @@
 	<version>${version}</version>
 	<properties>
 		<faces.api.version>2.2</faces.api.version>
-		<icefaces.version>4.1.1</icefaces.version>
 		<liferay.faces.bridge.ext.version>5.0.0-SNAPSHOT</liferay.faces.bridge.ext.version>
 		<liferay.faces.bridge.version>4.0.0-SNAPSHOT</liferay.faces.bridge.version>
 		<mojarra.version>2.2.13</mojarra.version>
@@ -90,7 +89,7 @@
 			<dependency>
 				<groupId>org.icefaces</groupId>
 				<artifactId>icefaces</artifactId>
-				<version>${icefaces.version}</version>
+				<version>4.1.1</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.glassfish</groupId>
@@ -109,12 +108,12 @@
 			<dependency>
 				<groupId>org.icefaces</groupId>
 				<artifactId>icefaces-ace</artifactId>
-				<version>${icefaces.version}</version>
+				<version>4.1.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.icepush</groupId>
 				<artifactId>icepush</artifactId>
-				<version>${icefaces.version}</version>
+				<version>4.1.1</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>jsp-api</artifactId>
