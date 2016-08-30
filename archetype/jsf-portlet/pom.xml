@@ -13,6 +13,12 @@
 	<name>jsf-portlet</name>
 	<version>2.0.0-SNAPSHOT</version>
 	<description>Maven archetype for a Liferay JSF portlet</description>
+	<scm>
+		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
+		<developerConnection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</developerConnection>
+		<url>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</url>
+		<tag>HEAD</tag>
+	</scm>
 	<build>
 		<extensions>
 			<extension>
@@ -28,5 +34,15 @@
 				<extensions>true</extensions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.scm</groupId>
+					<artifactId>maven-scm-providers-git</artifactId>
+					<!-- http://jira.codehaus.org/browse/SCM-444 -->
+					<version>(,1.4]</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
