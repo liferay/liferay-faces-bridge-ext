@@ -11,7 +11,7 @@
 	<artifactId>com.liferay.faces.archetype.jsf.portlet</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>jsf-portlet</name>
-	<version>5.0.0</version>
+	<version>5.0.1-SNAPSHOT</version>
 	<description>Maven archetype for a Liferay JSF portlet</description>
 	<scm>
 		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
