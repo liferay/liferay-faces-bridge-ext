@@ -10,8 +10,8 @@
 	<version>${version}</version>
 	<properties>
 		<faces.api.version>2.1</faces.api.version>
-		<liferay.faces.bridge.ext.version>4.0.0-SNAPSHOT</liferay.faces.bridge.ext.version>
-		<liferay.faces.bridge.version>3.0.0-SNAPSHOT</liferay.faces.bridge.version>
+		<liferay.faces.bridge.ext.version>4.0.0</liferay.faces.bridge.ext.version>
+		<liferay.faces.bridge.version>3.0.0</liferay.faces.bridge.version>
 		<mojarra.version>2.1.29-08</mojarra.version>
 		<project.stage>Development</project.stage>
 	</properties>
@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.alloy</artifactId>
-			<version>3.0.0-SNAPSHOT</version>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 </project>
