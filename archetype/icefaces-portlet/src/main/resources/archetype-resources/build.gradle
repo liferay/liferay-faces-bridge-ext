@@ -1,0 +1,29 @@
+apply plugin: 'war'
+
+repositories {
+     maven { url "http://anonsvn.icefaces.org/repo/maven2/releases/" }
+     maven { url "https://repository.liferay.com/nexus/content/groups/public" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile('org.icefaces:icefaces:3.3.0') {
+        exclude group: 'org.glassfish', module: 'javax.faces'
+        exclude group: 'javax.mail', module: 'mail'
+        exclude group: 'javax.activation', module: 'javax.activation'
+    }
+    compile group: 'org.icefaces', name: 'icefaces-ace', version:'3.3.0'
+    compile group: 'org.icefaces', name: 'icefaces-compat', version:'3.3.0'
+    compile('org.icepush:icefaces:3.3.0') {
+        exclude group: 'javax.servlet', module: 'jsp-api'
+    }
+
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version:'1.3.1'
+    compile group: 'commons-io', name: 'commons-io', version:'2.4'
+    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version:'2.0.0'
+    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version:'3.0.0'
+    compile group: 'log4j', name: 'log4j', version:'1.2.14'
+    runtime group: 'org.glassfish', name: 'javax.faces', version:'2.1.29-08'
+    providedCompile group: 'javax.faces', name: 'javax.faces-api', version:'2.1'
+}
+
