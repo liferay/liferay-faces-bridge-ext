@@ -24,5 +24,11 @@
 		<fileSet filtered="true">
 			<directory>src/test/java</directory>
 		</fileSet>
+		<fileSet filtered="true">
+			<directory></directory>
+			<includes>
+				<include>build.gradle</include>
+			</includes>
+		</fileSet>
 	</fileSets>
 </archetype-descriptor>
