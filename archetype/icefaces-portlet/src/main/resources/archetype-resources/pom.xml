@@ -13,7 +13,6 @@
 		<liferay.faces.bridge.ext.version>3.0.0</liferay.faces.bridge.ext.version>
 		<liferay.faces.bridge.version>4.0.0</liferay.faces.bridge.version>
 		<mojarra.version>2.2.13</mojarra.version>
-		<project.stage>Development</project.stage>
 	</properties>
 	<build>
 		<plugins>
