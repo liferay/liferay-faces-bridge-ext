@@ -15,26 +15,28 @@ package com.liferay.faces.bridge.ext.context.internal;
 
 import java.io.IOException;
 
-import javax.el.ELContext;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import org.w3c.dom.Element;
 
-import com.liferay.faces.bridge.ext.jsp.internal.PageContextStringImpl;
-import com.liferay.faces.bridge.ext.taglib.internal.HtmlTopTag;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
+import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import com.liferay.taglib.util.HtmlTopTag;
 
 
 /**
@@ -67,18 +69,21 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
 		HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 		PortletResponse portletResponse = (PortletResponse) externalContext.getResponse();
 		HttpServletResponse httpServletResponse = PortalUtil.getHttpServletResponse(portletResponse);
-		ELContext elContext = facesContext.getELContext();
 
 		// Invoke the Liferay HtmlTopTag class directly (rather than using liferay-util:html-top from a JSP).
 		HtmlTopTag htmlTopTag = new HtmlTopTag();
-		PageContext stringPageContext = new PageContextStringImpl(httpServletRequest, httpServletResponse, elContext);
-		htmlTopTag.setPageContext(stringPageContext);
+		JspFactory jspFactory = JspFactory.getDefaultFactory();
+		ServletContext servletContext = httpServletRequest.getServletContext();
+		JSPSupportServlet jspSupportServlet = new JSPSupportServlet(servletContext);
+		PageContext pageContext = jspFactory.getPageContext(jspSupportServlet, httpServletRequest, httpServletResponse,
+				null, false, 0, false);
+		htmlTopTag.setPageContext(pageContext);
 		htmlTopTag.doStartTag();
 
 		String elementAsString = element.toString();
-		BodyContent stringBodyContent = stringPageContext.pushBody();
-		stringBodyContent.print(elementAsString);
-		htmlTopTag.setBodyContent(stringBodyContent);
+		BodyContent bodyContent = pageContext.pushBody();
+		bodyContent.print(elementAsString);
+		htmlTopTag.setBodyContent(bodyContent);
 
 		try {
 			htmlTopTag.doEndTag();
@@ -87,6 +92,7 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
 			throw new IOException(e.getMessage());
 		}
 
+		jspFactory.releasePageContext(pageContext);
 		logger.debug(ADDED_RESOURCE_TO_HEAD, "Liferay", nodeName);
 	}
 }
