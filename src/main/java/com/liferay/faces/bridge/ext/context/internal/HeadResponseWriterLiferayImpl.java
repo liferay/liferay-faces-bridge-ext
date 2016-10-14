@@ -24,6 +24,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
@@ -44,7 +45,7 @@ import com.liferay.taglib.util.HtmlTopTag;
  *
  * @author  Neil Griffin
  */
-public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
+public class HeadResponseWriterLiferayImpl extends HeadResponseWriterLiferayCompatImpl {
 
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(HeadResponseWriterLiferayImpl.class);
@@ -72,7 +73,7 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterBase {
 		// Invoke the Liferay HtmlTopTag class directly (rather than using liferay-util:html-top from a JSP).
 		HtmlTopTag htmlTopTag = new HtmlTopTag();
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
-		ServletContext servletContext = httpServletRequest.getServletContext();
+		ServletContext servletContext = getServletContext(httpServletRequest);
 		JSPSupportServlet jspSupportServlet = new JSPSupportServlet(servletContext);
 		PageContext pageContext = jspFactory.getPageContext(jspSupportServlet, httpServletRequest, httpServletResponse,
 				null, false, 0, false);
