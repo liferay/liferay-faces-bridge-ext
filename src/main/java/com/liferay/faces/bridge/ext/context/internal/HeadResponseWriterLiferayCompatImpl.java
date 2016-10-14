@@ -16,6 +16,7 @@ package com.liferay.faces.bridge.ext.context.internal;
 import javax.faces.context.ResponseWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -28,6 +29,9 @@ public abstract class HeadResponseWriterLiferayCompatImpl extends HeadResponseWr
 	}
 
 	public ServletContext getServletContext(HttpServletRequest httpServletRequest) {
-		return httpServletRequest.getServletContext();
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		return httpSession.getServletContext();
 	}
 }
