@@ -13,30 +13,18 @@
  */
 package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.Writer;
 
-import javax.faces.component.UICommand;
-import javax.faces.component.UIForm;
-import javax.faces.component.UIOutput;
+import javax.faces.context.ResponseWriter;
+import javax.faces.context.ResponseWriterWrapper;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitWrapper;
-import javax.faces.render.Renderer;
-
-import com.liferay.faces.util.product.Product;
-import com.liferay.faces.util.product.ProductFactory;
 
 
 /**
  * @author  Kyle Stiemann
  */
 public class RenderKitLiferayImpl extends RenderKitWrapper {
-
-	// Private Constants
-	private static final boolean ICEFACES_DETECTED = ProductFactory.getProduct(Product.Name.ICEFACES).isDetected();
-	private static final boolean PRIMEFACES_DETECTED = ProductFactory.getProduct(Product.Name.PRIMEFACES).isDetected();
-	private static final boolean RICHFACES_DETECTED = ProductFactory.getProduct(Product.Name.RICHFACES).isDetected();
 
 	// Private Data Members
 	private RenderKit wrappedRenderKit;
@@ -45,21 +33,39 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 		this.wrappedRenderKit = wrappedRenderKit;
 	}
 
-	@Override
-	public Renderer getRenderer(String componentFamily, String rendererType) {
+	public static ResponseWriter createSennaJSDisablingResponseWriter(ResponseWriter responseWriter) {
 
-		Renderer renderer = super.getRenderer(componentFamily, rendererType);
+		ResponseWriter responseWriterToReturn = responseWriter;
 
-		// FACES-2585 and FACES-2629 Turn off Single Page Application (SennaJS) features for command links and forms.
-		if ((PRIMEFACES_DETECTED && "org.primefaces.component.CommandLinkRenderer".equals(rendererType)) ||
-				(RICHFACES_DETECTED && "org.richfaces.CommandLinkRenderer".equals(rendererType)) ||
-				(UICommand.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Link".equals(rendererType)) ||
-				(ICEFACES_DETECTED && "com.icesoft.faces.Form".equals(rendererType)) ||
-				(UIForm.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Form".equals(rendererType))) {
-			renderer = new SennaJSDisablingRenderer(renderer);
+		if (!isSennaJSDisablingResponseWriter(responseWriterToReturn)) {
+			responseWriterToReturn = new SennaJSDisablingResponseWriterImpl(responseWriter);
 		}
 
-		return renderer;
+		return responseWriterToReturn;
+	}
+
+	private static boolean isSennaJSDisablingResponseWriter(ResponseWriter responseWriter) {
+
+		if (responseWriter instanceof SennaJSDisablingResponseWriterImpl) {
+			return true;
+		}
+		else if (responseWriter instanceof ResponseWriterWrapper) {
+
+			ResponseWriterWrapper responseWriterWrapper = (ResponseWriterWrapper) responseWriter;
+
+			return isSennaJSDisablingResponseWriter(responseWriterWrapper.getWrapped());
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public ResponseWriter createResponseWriter(Writer writer, String contentTypeList, String characterEncoding) {
+
+		ResponseWriter responseWriter = super.createResponseWriter(writer, contentTypeList, characterEncoding);
+
+		return createSennaJSDisablingResponseWriter(responseWriter);
 	}
 
 	@Override
