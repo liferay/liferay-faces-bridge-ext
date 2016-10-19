@@ -14,10 +14,16 @@
 package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.IOException;
+import java.io.Writer;
+import java.util.Map;
 
+import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
+
+import com.liferay.faces.util.product.Product;
+import com.liferay.faces.util.product.ProductFactory;
 
 
 /**
@@ -28,6 +34,10 @@ import javax.faces.context.ResponseWriterWrapper;
  */
 public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 
+	// Private Constants
+	private static final boolean PRIMEFACES_DETECTED = ProductFactory.getProduct(Product.Name.PRIMEFACES).isDetected();
+	private static final boolean RICHFACES_DETECTED = ProductFactory.getProduct(Product.Name.RICHFACES).isDetected();
+
 	// Private Data Members
 	private ResponseWriter wrappedResponseWriter;
 
@@ -36,18 +46,60 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 	}
 
 	@Override
+	public ResponseWriter cloneWithWriter(Writer writer) {
+
+		ResponseWriter responseWriter = super.cloneWithWriter(writer);
+
+		return RenderKitLiferayImpl.createSennaJSDisablingResponseWriter(responseWriter);
+	}
+
+	@Override
 	public ResponseWriter getWrapped() {
 		return wrappedResponseWriter;
 	}
 
 	@Override
-	public void startElement(String name, UIComponent component) throws IOException {
+	public void startElement(String name, UIComponent uiComponent) throws IOException {
 
-		super.startElement(name, component);
+		super.startElement(name, uiComponent);
 
-		// FACES-2585 and FACES-2629 Turn off Single Page Application (SennaJS) features for command links and forms.
-		if ("a".equals(name) || "form".equals(name)) {
+		// FACES-2585 Turn off Single Page Application (SennaJS) features for forms and commandLinks.
+		if (("form".equals(name) || isCommandLink(name, uiComponent)) && !isSennaOffAttrSet(uiComponent)) {
 			writeAttribute("data-senna-off", "true", null);
 		}
+	}
+
+	private boolean isCommandLink(String elementName, UIComponent uiComponent) {
+
+		boolean commandLink = false;
+
+		if ("a".equals(elementName) && (uiComponent != null)) {
+
+			String componentFamily = uiComponent.getFamily();
+			String rendererType = uiComponent.getRendererType();
+
+			commandLink = ((PRIMEFACES_DETECTED &&
+						"org.primefaces.component.CommandLinkRenderer".equals(rendererType)) ||
+					(RICHFACES_DETECTED && "org.richfaces.CommandLinkRenderer".equals(rendererType)) ||
+					(UICommand.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Link".equals(rendererType)));
+		}
+
+		return commandLink;
+	}
+
+	private boolean isSennaOffAttrSet(UIComponent uiComponent) {
+
+		boolean sennaOffAttrSet = false;
+
+		if (uiComponent != null) {
+
+			Map<String, Object> passThroughAttributes = uiComponent.getPassThroughAttributes();
+
+			if ((passThroughAttributes != null) && !passThroughAttributes.isEmpty()) {
+				sennaOffAttrSet = passThroughAttributes.containsKey("data-senna-off");
+			}
+		}
+
+		return sennaOffAttrSet;
 	}
 }

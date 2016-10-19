@@ -16,6 +16,7 @@ package com.liferay.faces.bridge.ext.container;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.liferay.faces.bridge.ext.event.internal.LiferaySharedPageTop;
@@ -23,8 +24,6 @@ import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
 import com.liferay.portal.kernel.util.StringBundler;
-
-import junit.framework.Assert;
 
 
 /**
