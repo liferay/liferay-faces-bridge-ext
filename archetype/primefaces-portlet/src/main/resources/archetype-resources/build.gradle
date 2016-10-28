@@ -1,7 +1,6 @@
 apply plugin: 'war'
 
 repositories {
-     maven { url "http://repository.primefaces.org" }
      mavenCentral()
 }
 

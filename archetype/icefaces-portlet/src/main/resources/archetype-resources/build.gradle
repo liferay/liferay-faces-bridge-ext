@@ -1,7 +1,6 @@
 apply plugin: 'war'
 
 repositories {
-     maven { url "http://anonsvn.icefaces.org/repo/maven2/releases/" }
      mavenCentral()
 }
 
