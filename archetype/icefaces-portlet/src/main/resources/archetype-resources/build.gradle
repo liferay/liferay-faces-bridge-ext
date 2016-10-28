@@ -2,8 +2,7 @@ apply plugin: 'war'
 
 repositories {
      maven { url "http://anonsvn.icefaces.org/repo/maven2/releases/" }
-     maven { url "https://repository.liferay.com/nexus/content/groups/public" }
-     maven { url "http://repo.maven.apache.org/maven2" }
+     mavenCentral()
 }
 
 dependencies {
