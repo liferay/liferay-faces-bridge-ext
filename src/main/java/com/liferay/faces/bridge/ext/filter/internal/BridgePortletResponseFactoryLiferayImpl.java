@@ -19,6 +19,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -61,6 +63,16 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 				bridgeConfig);
 
 		return new EventResponseBridgeLiferayImpl(wrappedEventResponse);
+	}
+
+	@Override
+	public HeaderResponse getHeaderResponse(HeaderRequest headerRequest, HeaderResponse headerResponse,
+		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
+
+		HeaderResponse wrappedHeaderResponse = getWrapped().getHeaderResponse(headerRequest, headerResponse,
+				portletConfig, bridgeConfig);
+
+		return new HeaderResponseBridgeLiferayImpl(headerRequest, wrappedHeaderResponse);
 	}
 
 	@Override
