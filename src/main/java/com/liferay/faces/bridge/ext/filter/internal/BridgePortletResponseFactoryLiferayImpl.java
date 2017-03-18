@@ -22,6 +22,7 @@ import javax.portlet.EventResponse;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -72,7 +73,8 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 		HeaderResponse wrappedHeaderResponse = getWrapped().getHeaderResponse(headerRequest, headerResponse,
 				portletConfig, bridgeConfig);
 
-		return new HeaderResponseBridgeLiferayImpl(headerRequest, wrappedHeaderResponse);
+		PortletContext portletContext = portletConfig.getPortletContext();
+		return new HeaderResponseBridgeLiferayImpl(portletContext, headerRequest, wrappedHeaderResponse);
 	}
 
 	@Override
@@ -82,7 +84,8 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 		RenderResponse wrappedRenderResponse = getWrapped().getRenderResponse(renderRequest, renderResponse,
 				portletConfig, bridgeConfig);
 
-		return new RenderResponseBridgeLiferayImpl(renderRequest, wrappedRenderResponse);
+		PortletContext portletContext = portletConfig.getPortletContext();
+		return new RenderResponseBridgeLiferayImpl(portletContext, renderRequest, wrappedRenderResponse);
 	}
 
 	@Override
@@ -92,7 +95,8 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 		ResourceResponse wrappedResourceResponse = getWrapped().getResourceResponse(resourceRequest, resourceResponse,
 				portletConfig, bridgeConfig);
 
-		return new ResourceResponseBridgeLiferayImpl(resourceRequest, wrappedResourceResponse);
+		PortletContext portletContext = portletConfig.getPortletContext();
+		return new ResourceResponseBridgeLiferayImpl(portletContext, resourceRequest, wrappedResourceResponse);
 	}
 
 	@Override
