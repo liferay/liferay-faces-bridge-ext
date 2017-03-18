@@ -16,6 +16,7 @@ package com.liferay.faces.bridge.ext.filter.internal;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.faces.BridgeFactoryFinder;
@@ -34,10 +35,12 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 	private String namespaceWSRP;
 	private HeaderRequest headerRequest;
 
-	public HeaderResponseBridgeLiferayImpl(HeaderRequest headerRequest, HeaderResponse renderResponse) {
+	public HeaderResponseBridgeLiferayImpl(PortletContext portletContext, HeaderRequest headerRequest,
+		HeaderResponse renderResponse) {
 		super(renderResponse);
 		this.headerRequest = headerRequest;
-		this.liferayURLFactory = (LiferayURLFactory) BridgeFactoryFinder.getFactory(LiferayURLFactory.class);
+		this.liferayURLFactory = (LiferayURLFactory) BridgeFactoryFinder.getFactory(portletContext,
+				LiferayURLFactory.class);
 	}
 
 	@Override
