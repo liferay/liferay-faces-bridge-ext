@@ -51,11 +51,24 @@ public class BrowserSnifferFactoryLiferayImpl extends BrowserSnifferFactory impl
 		ExternalContext externalContextBrowserSnifferImpl = new ExternalContextBrowserSnifferImpl(externalContext,
 				httpServletRequest);
 
-		return wrappedBrowserSnifferFactory.getBrowserSniffer(externalContextBrowserSnifferImpl);
+		BrowserSnifferFactory firstNonBridgeBrowserSnifferFactory = getFirstNonBridgeBrowserSnifferFactory();
+
+		return firstNonBridgeBrowserSnifferFactory.getBrowserSniffer(externalContextBrowserSnifferImpl);
 	}
 
 	@Override
 	public BrowserSnifferFactory getWrapped() {
 		return wrappedBrowserSnifferFactory;
+	}
+
+	private BrowserSnifferFactory getFirstNonBridgeBrowserSnifferFactory() {
+
+		BrowserSnifferFactory firstNonBridgeBrowserSnifferFactory = wrappedBrowserSnifferFactory;
+
+		while (firstNonBridgeBrowserSnifferFactory.getClass().getName().startsWith("com.liferay.faces.bridge")) {
+			firstNonBridgeBrowserSnifferFactory = firstNonBridgeBrowserSnifferFactory.getWrapped();
+		}
+
+		return firstNonBridgeBrowserSnifferFactory;
 	}
 }
