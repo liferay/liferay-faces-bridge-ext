@@ -15,8 +15,6 @@ package com.liferay.faces.bridge.ext.context.internal;
 
 import java.util.Enumeration;
 
-import javax.faces.context.FacesContext;
-import javax.faces.context.PartialViewContext;
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -37,7 +35,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 /**
  * @author  Neil Griffin
  */
-public class PortalContextBridgeLiferayImpl implements PortalContext {
+public class PortalContextBridgeLiferayImpl extends PortalContextBridgeLiferayCompatImpl {
 
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(PortalContextBridgeLiferayImpl.class);
@@ -66,7 +64,7 @@ public class PortalContextBridgeLiferayImpl implements PortalContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		boolean stateExclusive = themeDisplay.isStateExclusive();
 
-		if (!(runtimePortlet || wsrpPortlet || stateExclusive)) {
+		if (!(isAjaxRequest(portletRequest) || runtimePortlet || wsrpPortlet || stateExclusive)) {
 			this.addToHeadSupport = "true";
 		}
 
@@ -88,17 +86,7 @@ public class PortalContextBridgeLiferayImpl implements PortalContext {
 				BridgePortalContext.ADD_SCRIPT_TEXT_TO_HEAD_SUPPORT.equals(name) ||
 				BridgePortalContext.ADD_STYLE_SHEET_RESOURCE_TO_HEAD_SUPPORT.equals(name) ||
 				BridgePortalContext.ADD_STYLE_SHEET_TEXT_TO_HEAD_SUPPORT.equals(name)) {
-
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			PartialViewContext partialViewContext = facesContext.getPartialViewContext();
-			boolean ajaxRequest = ((partialViewContext != null) && partialViewContext.isAjaxRequest());
-
-			if (!ajaxRequest) {
-				return addToHeadSupport;
-			}
-			else {
-				return null;
-			}
+			return addToHeadSupport;
 		}
 		else if (BridgePortalContext.CREATE_RENDER_URL_DURING_ACTION_PHASE_SUPPORT.equals(name)) {
 			return "true";
