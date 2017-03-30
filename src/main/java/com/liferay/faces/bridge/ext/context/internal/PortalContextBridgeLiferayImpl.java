@@ -64,7 +64,7 @@ public class PortalContextBridgeLiferayImpl extends PortalContextBridgeLiferayCo
 		ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		boolean stateExclusive = themeDisplay.isStateExclusive();
 
-		if (!(runtimePortlet || wsrpPortlet || stateExclusive)) {
+		if (!(isAjaxRequest(portletRequest) || runtimePortlet || wsrpPortlet || stateExclusive)) {
 			this.addToHeadSupport = "true";
 		}
 
@@ -86,13 +86,7 @@ public class PortalContextBridgeLiferayImpl extends PortalContextBridgeLiferayCo
 				BridgePortalContext.ADD_SCRIPT_TEXT_TO_HEAD_SUPPORT.equals(name) ||
 				BridgePortalContext.ADD_STYLE_SHEET_RESOURCE_TO_HEAD_SUPPORT.equals(name) ||
 				BridgePortalContext.ADD_STYLE_SHEET_TEXT_TO_HEAD_SUPPORT.equals(name)) {
-
-			if (!isAjaxRequest()) {
-				return addToHeadSupport;
-			}
-			else {
-				return null;
-			}
+			return addToHeadSupport;
 		}
 		else if (BridgePortalContext.CREATE_RENDER_URL_DURING_ACTION_PHASE_SUPPORT.equals(name)) {
 			return "true";

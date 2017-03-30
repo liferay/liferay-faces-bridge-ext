@@ -14,6 +14,7 @@
 package com.liferay.faces.bridge.ext.context.internal;
 
 import javax.portlet.PortalContext;
+import javax.portlet.PortletRequest;
 
 
 /**
@@ -21,7 +22,7 @@ import javax.portlet.PortalContext;
  */
 public abstract class PortalContextBridgeLiferayCompatImpl implements PortalContext {
 
-	protected boolean isAjaxRequest() {
+	protected boolean isAjaxRequest(PortletRequest portletRequest) {
 		return false;
 	}
 }
