@@ -75,8 +75,8 @@
 
 	<properties>
 		<faces.api.version>${faces.spec.version}</faces.api.version>
-		<faces.spec.version>2.2</faces.spec.version>
-		<mojarra.version>2.3.0-m10-SNAPSHOT</mojarra.version>
+		<faces.spec.version>2.3</faces.spec.version>
+		<mojarra.version>2.3.0</mojarra.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
 		<liferay.version>7.0.2</liferay.version>
 		<liferay.version.dtd>7.0</liferay.version.dtd>
