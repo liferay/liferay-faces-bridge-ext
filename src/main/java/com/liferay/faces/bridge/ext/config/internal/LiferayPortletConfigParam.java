@@ -27,7 +27,10 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	 * Flag indicating whether or not JSF {@link javax.faces.bean.ManagedBean} classes annotated with {@link
 	 * javax.faces.bean.RequestScoped} should be distinct for each portlet. Default value is false.
 	 */
-	DistinctRequestScopedManagedBeans("com.liferay.faces.bridge.distinctRequestScopedManagedBeans", false);
+	DistinctRequestScopedManagedBeans("com.liferay.faces.bridge.distinctRequestScopedManagedBeans", false),
+
+	// Default value for Liferay Portal 6.2 is false, default value for 7.0 (and above) is true.
+	RequestDispatcherForwardEnabled("com.liferay.faces.bridge.requestDispatcherForwardEnabled", true);
 
 	// Private Data Members
 	private String alternateName;
