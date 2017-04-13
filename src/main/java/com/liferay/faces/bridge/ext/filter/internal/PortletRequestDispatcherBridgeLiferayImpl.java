@@ -15,6 +15,7 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.IOException;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
@@ -26,6 +27,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
+import com.liferay.faces.util.logging.Logger;
+import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.faces.util.product.Product;
 import com.liferay.faces.util.product.ProductFactory;
 
@@ -35,14 +39,54 @@ import com.liferay.faces.util.product.ProductFactory;
  */
 public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDispatcherWrapper {
 
+	// Logger
+	private static final Logger logger = LoggerFactory.getLogger(PortletRequestDispatcherBridgeLiferayImpl.class);
+
 	// Private Constants
 	private static final Product LIFERAY_PORTAL = ProductFactory.getProduct(Product.Name.LIFERAY_PORTAL);
 	private static final int LIFERAY_PORTAL_MAJOR_VERSION = LIFERAY_PORTAL.getMajorVersion();
 	private static final int LIFERAY_PORTAL_MINOR_VERSION = LIFERAY_PORTAL.getMinorVersion();
 	private static final int LIFERAY_PORTAL_PATCH_VERSION = LIFERAY_PORTAL.getPatchVersion();
 
-	public PortletRequestDispatcherBridgeLiferayImpl(PortletRequestDispatcher portletRequestDispatcher) {
+	// Private Data Members
+	private String path;
+
+	public PortletRequestDispatcherBridgeLiferayImpl(PortletRequestDispatcher portletRequestDispatcher, String path) {
 		super(portletRequestDispatcher);
+		this.path = path;
+	}
+
+	@Override
+	public void forward(PortletRequest portletRequest, PortletResponse portletResponse) throws PortletException,
+		IOException {
+
+		PortletConfig portletConfig = (PortletConfig) portletRequest.getAttribute(PortletConfig.class.getName());
+
+		if (LiferayPortletConfigParam.RequestDispatcherForwardEnabled.getBooleanValue(portletConfig)) {
+
+			if ((path != null) && path.endsWith(".jspx")) {
+
+				// Workaround https://issues.liferay.com/browse/LPS-71904
+				logger.debug("Diverting JSPX=[{0}] to PortletRequestDispatcher.include(PortletRequest,PortletResponse)",
+					path);
+				include(portletRequest, portletResponse);
+			}
+			else {
+				logger.debug("Delegating JSP=[{0}] to PortletRequestDispatcher.forward(PortletRequest,PortletResponse)",
+					path);
+				super.forward(portletRequest, portletResponse);
+			}
+		}
+		else {
+
+			// Liferay Portal's implementation of PortletRequestDispatcher.forward(PortletRequest,PortletResponse) is
+			// not compatible with the requirements of the JSF Portlet Bridge and causes failures in the Bridge TCK
+			// dispatchUsesForwardTest and bridgeSetsContentTypeTest. As a workaround, call
+			// PortletRequestDispatcher.include(PortletRequest,PortletResponse).
+			logger.debug("Diverting JSP/JSPX=[{0}] to PortletRequestDispatcher.include(PortletRequest,PortletResponse)",
+				path);
+			include(portletRequest, portletResponse);
+		}
 	}
 
 	@Override
