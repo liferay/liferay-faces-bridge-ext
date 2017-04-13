@@ -32,6 +32,6 @@ public class BridgePortletContextLiferayImpl extends PortletContextWrapper {
 
 		PortletRequestDispatcher portletRequestDispatcher = super.getRequestDispatcher(path);
 
-		return new PortletRequestDispatcherBridgeLiferayImpl(portletRequestDispatcher);
+		return new PortletRequestDispatcherBridgeLiferayImpl(portletRequestDispatcher, path);
 	}
 }
