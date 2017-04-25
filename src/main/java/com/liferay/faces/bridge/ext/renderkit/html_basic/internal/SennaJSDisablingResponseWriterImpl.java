@@ -22,9 +22,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
 
-import com.liferay.faces.util.product.Product;
-import com.liferay.faces.util.product.ProductFactory;
-
 
 /**
  * The purpose of this class is to turn off Single Page Application (SennaJS) features for certain components. See
@@ -34,11 +31,9 @@ import com.liferay.faces.util.product.ProductFactory;
  */
 public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 
-	// Private Constants
-	private static final boolean PRIMEFACES_DETECTED = ProductFactory.getProduct(Product.Name.PRIMEFACES).isDetected();
-	private static final boolean RICHFACES_DETECTED = ProductFactory.getProduct(Product.Name.RICHFACES).isDetected();
-
 	// Private Data Members
+	private UIComponent currentCommandComponent;
+	private int elementsOfCurrentCommandComponent = 0;
 	private ResponseWriter wrappedResponseWriter;
 
 	public SennaJSDisablingResponseWriterImpl(ResponseWriter wrappedResponseWriter) {
@@ -54,6 +49,20 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 	}
 
 	@Override
+	public void endElement(String name) throws IOException {
+
+		elementsOfCurrentCommandComponent--;
+
+		if (elementsOfCurrentCommandComponent <= 0) {
+
+			currentCommandComponent = null;
+			elementsOfCurrentCommandComponent = 0;
+		}
+
+		super.endElement(name);
+	}
+
+	@Override
 	public ResponseWriter getWrapped() {
 		return wrappedResponseWriter;
 	}
@@ -63,28 +72,26 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 
 		super.startElement(name, uiComponent);
 
+		if (isCommandComponent(uiComponent)) {
+
+			currentCommandComponent = uiComponent;
+			elementsOfCurrentCommandComponent = 0;
+		}
+
+		if (currentCommandComponent != null) {
+			elementsOfCurrentCommandComponent++;
+		}
+
 		// FACES-2585 Turn off Single Page Application (SennaJS) features for forms and commandLinks.
-		if (("form".equals(name) || isCommandLink(name, uiComponent)) && !isSennaOffAttrSet(uiComponent)) {
+		if (("a".equals(name) && (currentCommandComponent != null) && !isSennaOffAttrSet(currentCommandComponent)) ||
+				("form".equals(name) && !isSennaOffAttrSet(uiComponent))) {
 			writeAttribute("data-senna-off", "true", null);
 		}
 	}
 
-	private boolean isCommandLink(String elementName, UIComponent uiComponent) {
-
-		boolean commandLink = false;
-
-		if ("a".equals(elementName) && (uiComponent != null)) {
-
-			String componentFamily = uiComponent.getFamily();
-			String rendererType = uiComponent.getRendererType();
-
-			commandLink = ((PRIMEFACES_DETECTED &&
-						"org.primefaces.component.CommandLinkRenderer".equals(rendererType)) ||
-					(RICHFACES_DETECTED && "org.richfaces.CommandLinkRenderer".equals(rendererType)) ||
-					(UICommand.COMPONENT_FAMILY.equals(componentFamily) && "javax.faces.Link".equals(rendererType)));
-		}
-
-		return commandLink;
+	private boolean isCommandComponent(UIComponent uiComponent) {
+		return (uiComponent != null) &&
+			((uiComponent instanceof UICommand) || UICommand.COMPONENT_FAMILY.equals(uiComponent.getFamily()));
 	}
 
 	private boolean isSennaOffAttrSet(UIComponent uiComponent) {

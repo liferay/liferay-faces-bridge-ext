@@ -50,7 +50,7 @@ public class ResponseWriterMockImpl extends ResponseWriter {
 
 	@Override
 	public void endElement(String name) throws IOException {
-		throw new UnsupportedOperationException("");
+		// no-op
 	}
 
 	@Override
@@ -68,6 +68,10 @@ public class ResponseWriterMockImpl extends ResponseWriter {
 		throw new UnsupportedOperationException("");
 	}
 
+	public void resetStringWriter() {
+		stringWriter.getBuffer().setLength(0);
+	}
+
 	@Override
 	public void startDocument() throws IOException {
 		throw new UnsupportedOperationException("");
@@ -78,6 +82,11 @@ public class ResponseWriterMockImpl extends ResponseWriter {
 
 		stringWriter.append("<");
 		stringWriter.append(name);
+	}
+
+	@Override
+	public String toString() {
+		return stringWriter.toString();
 	}
 
 	@Override
