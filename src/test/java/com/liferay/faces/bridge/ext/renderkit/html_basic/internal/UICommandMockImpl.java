@@ -16,26 +16,26 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.UICommand;
 
 
 /**
  * @author  Kyle Stiemann
  */
-public class UIComponentMockImpl extends UIComponentBase {
+public class UICommandMockImpl extends UICommand {
 
 	// Private Data Members
 	private String componentFamily;
 	private Map<String, Object> passThroughAttrs;
 	private String rendererType;
 
-	public UIComponentMockImpl(String componentFamily, String rendererType) {
+	public UICommandMockImpl(String componentFamily, String rendererType) {
 
 		this.rendererType = rendererType;
 		this.componentFamily = componentFamily;
 	}
 
-	public UIComponentMockImpl(String componentFamily, String rendererType, String dataSennaOff) {
+	public UICommandMockImpl(String componentFamily, String rendererType, String dataSennaOff) {
 
 		this(rendererType, componentFamily);
 		passThroughAttrs = new HashMap<String, Object>();
