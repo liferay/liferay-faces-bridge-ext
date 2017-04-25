@@ -14,7 +14,10 @@
 package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.IOException;
+import java.io.Writer;
+import java.util.Map;
 
+import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
@@ -29,10 +32,34 @@ import javax.faces.context.ResponseWriterWrapper;
 public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 
 	// Private Data Members
+	private UIComponent currentCommandComponent;
+	private int elementsOfCurrentCommandComponent = 0;
 	private ResponseWriter wrappedResponseWriter;
 
 	public SennaJSDisablingResponseWriterImpl(ResponseWriter wrappedResponseWriter) {
 		this.wrappedResponseWriter = wrappedResponseWriter;
+	}
+
+	@Override
+	public ResponseWriter cloneWithWriter(Writer writer) {
+
+		ResponseWriter responseWriter = super.cloneWithWriter(writer);
+
+		return RenderKitLiferayImpl.createSennaJSDisablingResponseWriter(responseWriter);
+	}
+
+	@Override
+	public void endElement(String name) throws IOException {
+
+		elementsOfCurrentCommandComponent--;
+
+		if (elementsOfCurrentCommandComponent <= 0) {
+
+			currentCommandComponent = null;
+			elementsOfCurrentCommandComponent = 0;
+		}
+
+		super.endElement(name);
 	}
 
 	@Override
@@ -41,13 +68,45 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 	}
 
 	@Override
-	public void startElement(String name, UIComponent component) throws IOException {
+	public void startElement(String name, UIComponent uiComponent) throws IOException {
 
-		super.startElement(name, component);
+		super.startElement(name, uiComponent);
 
-		// FACES-2585 and FACES-2629 Turn off Single Page Application (SennaJS) features for command links and forms.
-		if ("a".equals(name) || "form".equals(name)) {
+		if (isCommandComponent(uiComponent)) {
+
+			currentCommandComponent = uiComponent;
+			elementsOfCurrentCommandComponent = 0;
+		}
+
+		if (currentCommandComponent != null) {
+			elementsOfCurrentCommandComponent++;
+		}
+
+		// FACES-2585 Turn off Single Page Application (SennaJS) features for forms and commandLinks.
+		if (("a".equals(name) && (currentCommandComponent != null) && !isSennaOffAttrSet(currentCommandComponent)) ||
+				("form".equals(name) && !isSennaOffAttrSet(uiComponent))) {
 			writeAttribute("data-senna-off", "true", null);
 		}
+	}
+
+	private boolean isCommandComponent(UIComponent uiComponent) {
+		return (uiComponent != null) &&
+			((uiComponent instanceof UICommand) || UICommand.COMPONENT_FAMILY.equals(uiComponent.getFamily()));
+	}
+
+	private boolean isSennaOffAttrSet(UIComponent uiComponent) {
+
+		boolean sennaOffAttrSet = false;
+
+		if (uiComponent != null) {
+
+			Map<String, Object> passThroughAttributes = uiComponent.getPassThroughAttributes();
+
+			if ((passThroughAttributes != null) && !passThroughAttributes.isEmpty()) {
+				sennaOffAttrSet = passThroughAttributes.containsKey("data-senna-off");
+			}
+		}
+
+		return sennaOffAttrSet;
 	}
 }
