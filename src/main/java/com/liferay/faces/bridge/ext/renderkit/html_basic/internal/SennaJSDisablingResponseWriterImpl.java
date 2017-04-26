@@ -82,7 +82,7 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 			elementsOfCurrentCommandComponent++;
 		}
 
-		// FACES-2585 Turn off Single Page Application (SennaJS) features for forms and commandLinks.
+		// FACES-2585 and FACES-2696 Turn off Single Page Application (SennaJS) features for forms and commandLinks.
 		if (("a".equals(name) && (currentCommandComponent != null) && !isSennaOffAttrSet(currentCommandComponent)) ||
 				("form".equals(name) && !isSennaOffAttrSet(uiComponent))) {
 			writeAttribute("data-senna-off", "true", null);
