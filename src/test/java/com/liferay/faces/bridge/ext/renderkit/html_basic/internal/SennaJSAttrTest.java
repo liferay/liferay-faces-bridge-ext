@@ -76,6 +76,8 @@ public class SennaJSAttrTest {
 		StringWriter stringWriter = new StringWriter();
 		ResponseWriter responseWriter = renderKit.createResponseWriter(stringWriter, null, null);
 
+		// <example:form										pt:data-data-senna-off-true-expected="true" />
+		testWriteElement(responseWriter, "form", new UIComponentMockImpl("example", "example"), true);
 
 		// <alloy:form											pt:data-data-senna-off-true-expected="true" />
 		testWriteElement(responseWriter, "form",
@@ -87,9 +89,6 @@ public class SennaJSAttrTest {
 		testWriteElement(responseWriter, "form",
 				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, UIForm.COMPONENT_FAMILY, "false"),
 				false);
-
-		// <example:form										pt:data-data-senna-off-true-expected="true" />
-		testWriteElement(responseWriter, "form", new UIComponentMockImpl("example", "example"), true);
 
 		// <h:form												pt:data-data-senna-off-true-expected="true">
 		testWriteElement(responseWriter, "form",
