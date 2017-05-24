@@ -38,8 +38,9 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 	static {
 
 		// This list of resources was obtained by building Primefaces and searching the target/ directory for js files
-		// containg "amd".
+		// containg "typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']|[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define".
 		Set<String> primefacesJQueryPluginResources = new HashSet<String>();
+		primefacesJQueryPluginResources.add("diagram/diagram.js");
 		primefacesJQueryPluginResources.add("fileupload/fileupload.js");
 		primefacesJQueryPluginResources.add("inputnumber/0-autoNumeric.js");
 		primefacesJQueryPluginResources.add("inputnumber/inputnumber.js");
@@ -49,8 +50,12 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		primefacesJQueryPluginResources.add("knob/knob.js");
 		primefacesJQueryPluginResources.add("mobile/jquery-mobile.js");
 		primefacesJQueryPluginResources.add("moment/moment.js");
+		primefacesJQueryPluginResources.add("mousewheel/jquery.mousewheel.min.js");
+		primefacesJQueryPluginResources.add("photocam/photocam.js");
 		primefacesJQueryPluginResources.add("push/push.js");
+		primefacesJQueryPluginResources.add("raphael/raphael.js");
 		primefacesJQueryPluginResources.add("schedule/schedule.js");
+		primefacesJQueryPluginResources.add("texteditor/texteditor.js");
 		primefacesJQueryPluginResources.add("touch/touchswipe.js");
 		PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(primefacesJQueryPluginResources);
 	}
