@@ -20,6 +20,8 @@ import java.util.Set;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import com.liferay.faces.util.product.Product;
 import com.liferay.faces.util.product.ProductFactory;
@@ -60,11 +62,54 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(primefacesJQueryPluginResources);
 	}
 
-	// Private Members
+	// Private Data Members
 	private ResourceHandler wrappedResourceHandler;
 
+	// Final Data Members
+	private final Set<String> resourcesWithDisabledAMDLoader;
+
 	public ResourceHandlerLiferayImpl(ResourceHandler wrappedResourceHandler) {
+
 		this.wrappedResourceHandler = wrappedResourceHandler;
+
+		Set<String> resourcesWithDisabledAMDLoader = Collections.emptySet();
+		FacesContext startupFacesContext = FacesContext.getCurrentInstance();
+
+		if (startupFacesContext != null) {
+
+			ExternalContext externalContext = startupFacesContext.getExternalContext();
+			String resourcesWithDisabledAMDLoaderString = externalContext.getInitParameter(
+					"com.liferay.faces.bridge.ext.application.disableAMDLoaderForResources");
+
+			if (resourcesWithDisabledAMDLoaderString != null) {
+
+				resourcesWithDisabledAMDLoaderString = resourcesWithDisabledAMDLoaderString.trim();
+
+				String[] resourceIds = resourcesWithDisabledAMDLoaderString.split(",");
+				boolean first = true;
+
+				for (String resourceId : resourceIds) {
+
+					if ((resourceId != null) && !"".equals(resourceId)) {
+
+						if (first) {
+
+							resourcesWithDisabledAMDLoader = new HashSet<String>();
+							first = false;
+						}
+
+						resourceId = resourceId.trim();
+						resourcesWithDisabledAMDLoader.add(resourceId);
+					}
+				}
+
+				if (!resourcesWithDisabledAMDLoader.isEmpty()) {
+					resourcesWithDisabledAMDLoader = Collections.unmodifiableSet(resourcesWithDisabledAMDLoader);
+				}
+			}
+		}
+
+		this.resourcesWithDisabledAMDLoader = resourcesWithDisabledAMDLoader;
 	}
 
 	@Override
@@ -72,8 +117,9 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 		Resource resource = super.createResource(resourceName);
 
-		if (isJQueryPluginJSResource(resource, null, resourceName)) {
-			resource = new ResourceJQueryPluginJSImpl(resource);
+		if (isJavaScriptResource(resource) && !(resource instanceof JSResourceWithDisabledAMDLoaderImpl) &&
+				(isJQueryPluginJSResource(null, resourceName) || !isAMDLoaderEnabledForResource(null, resourceName))) {
+			resource = new JSResourceWithDisabledAMDLoaderImpl(resource);
 		}
 
 		return resource;
@@ -84,8 +130,10 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 		Resource resource = super.createResource(resourceName, libraryName);
 
-		if (isJQueryPluginJSResource(resource, libraryName, resourceName)) {
-			resource = new ResourceJQueryPluginJSImpl(resource);
+		if (isJavaScriptResource(resource) && !(resource instanceof JSResourceWithDisabledAMDLoaderImpl) &&
+				(isJQueryPluginJSResource(libraryName, resourceName) ||
+					!isAMDLoaderEnabledForResource(libraryName, resourceName))) {
+			resource = new JSResourceWithDisabledAMDLoaderImpl(resource);
 		}
 
 		return resource;
@@ -96,8 +144,10 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 		Resource resource = super.createResource(resourceName, libraryName, contentType);
 
-		if (isJQueryPluginJSResource(resource, libraryName, resourceName)) {
-			resource = new ResourceJQueryPluginJSImpl(resource);
+		if (isJavaScriptResource(resource) && !(resource instanceof JSResourceWithDisabledAMDLoaderImpl) &&
+				(isJQueryPluginJSResource(libraryName, resourceName) ||
+					!isAMDLoaderEnabledForResource(libraryName, resourceName))) {
+			resource = new JSResourceWithDisabledAMDLoaderImpl(resource);
 		}
 
 		return resource;
@@ -108,7 +158,33 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		return wrappedResourceHandler;
 	}
 
-	private boolean isJQueryPluginJSResource(Resource resource, String resourceLibrary, String resourceName) {
+	public boolean isAMDLoaderEnabledForResource(String libraryName, String resourceName) {
+
+		String resourceId = resourceName;
+
+		if ((libraryName != null) && !"".equals(libraryName)) {
+			resourceId = libraryName + ":" + resourceName;
+		}
+
+		return !resourcesWithDisabledAMDLoader.contains(resourceId);
+	}
+
+	private boolean isJavaScriptResource(Resource resource) {
+
+		if (resource != null) {
+
+			String resourceName = resource.getResourceName();
+			String contentType = resource.getContentType();
+
+			return (resourceName.endsWith(".js") || "application/javascript".equals(contentType) ||
+					"text/javascript".equals(contentType));
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean isJQueryPluginJSResource(String resourceLibrary, String resourceName) {
 
 		boolean primeFacesJQueryPluginJSResource = PRIMEFACES_DETECTED &&
 			((resourceLibrary == null) || resourceLibrary.equals("primefaces")) &&
@@ -125,6 +201,6 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 				(resourceName.endsWith("packed.js") || resourceName.endsWith("jquery.js"));
 		}
 
-		return (resource != null) && (primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource);
+		return (primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource);
 	}
 }
