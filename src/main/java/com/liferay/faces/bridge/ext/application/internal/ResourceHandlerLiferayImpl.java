@@ -23,6 +23,7 @@ import javax.faces.application.ResourceHandlerWrapper;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.product.Product;
 import com.liferay.faces.util.product.ProductFactory;
 
@@ -66,50 +67,50 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 	private ResourceHandler wrappedResourceHandler;
 
 	// Final Data Members
-	private final Set<String> resourcesWithDisabledAMDLoader;
+	private final Set<String> disabledAMDLoaderResources;
 
 	public ResourceHandlerLiferayImpl(ResourceHandler wrappedResourceHandler) {
 
 		this.wrappedResourceHandler = wrappedResourceHandler;
 
-		Set<String> resourcesWithDisabledAMDLoader = Collections.emptySet();
+		Set<String> disabledAMDLoaderResources = Collections.emptySet();
 		FacesContext startupFacesContext = FacesContext.getCurrentInstance();
 
 		if (startupFacesContext != null) {
 
 			ExternalContext externalContext = startupFacesContext.getExternalContext();
-			String resourcesWithDisabledAMDLoaderString = externalContext.getInitParameter(
-					"com.liferay.faces.bridge.ext.application.disableAMDLoaderForResources");
+			String configuredValue = LiferayPortletConfigParam.DisabledAMDLoaderResources.getStringValue(
+					externalContext);
 
-			if (resourcesWithDisabledAMDLoaderString != null) {
+			if (configuredValue != null) {
 
-				resourcesWithDisabledAMDLoaderString = resourcesWithDisabledAMDLoaderString.trim();
+				configuredValue = configuredValue.trim();
 
-				String[] resourceIds = resourcesWithDisabledAMDLoaderString.split(",");
+				String[] resourceIds = configuredValue.split(",");
 				boolean first = true;
 
 				for (String resourceId : resourceIds) {
 
-					if ((resourceId != null) && !"".equals(resourceId)) {
+					if ((resourceId != null) && (resourceId.length() > 0)) {
 
 						if (first) {
 
-							resourcesWithDisabledAMDLoader = new HashSet<String>();
+							disabledAMDLoaderResources = new HashSet<String>();
 							first = false;
 						}
 
 						resourceId = resourceId.trim();
-						resourcesWithDisabledAMDLoader.add(resourceId);
+						disabledAMDLoaderResources.add(resourceId);
 					}
 				}
 
-				if (!resourcesWithDisabledAMDLoader.isEmpty()) {
-					resourcesWithDisabledAMDLoader = Collections.unmodifiableSet(resourcesWithDisabledAMDLoader);
+				if (!disabledAMDLoaderResources.isEmpty()) {
+					disabledAMDLoaderResources = Collections.unmodifiableSet(disabledAMDLoaderResources);
 				}
 			}
 		}
 
-		this.resourcesWithDisabledAMDLoader = resourcesWithDisabledAMDLoader;
+		this.disabledAMDLoaderResources = disabledAMDLoaderResources;
 	}
 
 	@Override
@@ -158,15 +159,15 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		return wrappedResourceHandler;
 	}
 
-	public boolean isAMDLoaderEnabledForResource(String libraryName, String resourceName) {
+	private boolean isAMDLoaderEnabledForResource(String libraryName, String resourceName) {
 
 		String resourceId = resourceName;
 
-		if ((libraryName != null) && !"".equals(libraryName)) {
+		if ((libraryName != null) && (libraryName.length() > 0)) {
 			resourceId = libraryName + ":" + resourceName;
 		}
 
-		return !resourcesWithDisabledAMDLoader.contains(resourceId);
+		return !disabledAMDLoaderResources.contains(resourceId);
 	}
 
 	private boolean isJavaScriptResource(Resource resource) {
