@@ -21,12 +21,12 @@ import com.liferay.faces.util.application.FilteredResourceBase;
 /**
  * @author  Kyle Stiemann
  */
-public class ResourceJQueryPluginJSImpl extends FilteredResourceBase {
+public class JSResourceWithDisabledAMDLoaderImpl extends FilteredResourceBase {
 
 	// Private Members
 	private Resource wrappedResource;
 
-	public ResourceJQueryPluginJSImpl(Resource wrappedResource) {
+	public JSResourceWithDisabledAMDLoaderImpl(Resource wrappedResource) {
 		this.wrappedResource = wrappedResource;
 	}
 
