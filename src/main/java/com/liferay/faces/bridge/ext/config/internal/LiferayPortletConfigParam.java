@@ -13,9 +13,11 @@
  */
 package com.liferay.faces.bridge.ext.config.internal;
 
+import javax.faces.context.ExternalContext;
 import javax.portlet.PortletConfig;
 
 import com.liferay.faces.util.config.ConfigParam;
+import com.liferay.faces.util.helper.BooleanHelper;
 
 
 /**
@@ -30,7 +32,10 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	DistinctRequestScopedManagedBeans("com.liferay.faces.bridge.distinctRequestScopedManagedBeans", false),
 
 	// Default value for Liferay Portal 6.2 is false, default value for 7.0 (and above) is true.
-	RequestDispatcherForwardEnabled("com.liferay.faces.bridge.requestDispatcherForwardEnabled", false);
+	RequestDispatcherForwardEnabled("com.liferay.faces.bridge.requestDispatcherForwardEnabled", false),
+
+	/** Comma-delimited list of [library:resource] values for which the AMD loader should be disabled. */
+	DisabledAMDLoaderResources("com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources", "");
 
 	// Private Data Members
 	private String alternateName;
@@ -40,8 +45,30 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	private long defaultLongValue;
 	private String name;
 
+	private LiferayPortletConfigParam(String name, String defaultStringValue) {
+		this(name, null, defaultStringValue);
+	}
+
 	private LiferayPortletConfigParam(String name, boolean defaultBooleanValue) {
 		this(name, null, defaultBooleanValue);
+	}
+
+	private LiferayPortletConfigParam(String name, String alternateName, String defaultStringValue) {
+		this.name = name;
+		this.alternateName = alternateName;
+
+		if (BooleanHelper.isTrueToken(defaultStringValue)) {
+			this.defaultBooleanValue = true;
+			this.defaultIntegerValue = 1;
+			this.defaultLongValue = 1L;
+		}
+		else {
+			this.defaultBooleanValue = false;
+			this.defaultIntegerValue = 0;
+			this.defaultLongValue = 0L;
+		}
+
+		this.defaultStringValue = defaultStringValue;
 	}
 
 	private LiferayPortletConfigParam(String name, String alternateName, boolean defaultBooleanValue) {
@@ -115,6 +142,11 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	@Override
 	public String getStringValue(PortletConfig config) {
 		throw new UnsupportedOperationException();
+	}
+
+	public String getStringValue(ExternalContext externalContext) {
+		return LiferayPortletConfigParamUtil.getConfiguredValue(externalContext, name, alternateName,
+				defaultStringValue);
 	}
 
 	@Override
