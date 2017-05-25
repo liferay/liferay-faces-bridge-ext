@@ -13,6 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.config.internal;
 
+import javax.faces.context.ExternalContext;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 
@@ -66,6 +67,22 @@ public class LiferayPortletConfigParamUtil {
 			if (configuredValue == null) {
 				configuredValue = portletContext.getInitParameter(alternateName);
 			}
+		}
+
+		return configuredValue;
+	}
+
+	public static String getConfiguredValue(ExternalContext externalContext, String name, String alternateName,
+		String defaultStringValue) {
+
+		String configuredValue = externalContext.getInitParameter(name);
+
+		if ((configuredValue == null) && (alternateName != null)) {
+			configuredValue = externalContext.getInitParameter(alternateName);
+		}
+
+		if (configuredValue == null) {
+			configuredValue = defaultStringValue;
 		}
 
 		return configuredValue;
