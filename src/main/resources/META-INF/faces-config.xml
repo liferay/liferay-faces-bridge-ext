@@ -15,7 +15,6 @@
 	<factory>
 		<client-window-factory>com.liferay.faces.bridge.ext.lifecycle.internal.ClientWindowFactoryLiferayImpl</client-window-factory>
 		<factory-extension>
-			<bridge:bridge-portlet-config-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletConfigFactoryLiferayImpl</bridge:bridge-portlet-config-factory>
 			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
 			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
 			<bridge:head-response-writer-factory>com.liferay.faces.bridge.ext.context.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
