@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.faces.FacesWrapper;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.xml.namespace.QName;
@@ -28,7 +29,7 @@ import javax.xml.namespace.QName;
 /**
  * @author  Neil Griffin
  */
-public class BridgePortletConfigLiferayImpl implements PortletConfig {
+public class BridgePortletConfigLiferayImpl implements PortletConfig, FacesWrapper<PortletConfig> {
 
 	// Private Data Members
 	private PortletConfig wrappedPortletConfig;
@@ -93,5 +94,10 @@ public class BridgePortletConfigLiferayImpl implements PortletConfig {
 	@Override
 	public Enumeration<Locale> getSupportedLocales() {
 		return wrappedPortletConfig.getSupportedLocales();
+	}
+
+	@Override
+	public PortletConfig getWrapped() {
+		return wrappedPortletConfig;
 	}
 }
