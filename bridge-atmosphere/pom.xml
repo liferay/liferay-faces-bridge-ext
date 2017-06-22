@@ -9,10 +9,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay.faces</groupId>
-	<artifactId>com.liferay.faces.bridge.ext</artifactId>
-	<version>6.0.0-SNAPSHOT</version>
-	<name>Liferay Faces Bridge Ext</name>
-	<description>Liferay Faces Bridge Extenstions for Liferay Portal</description>
+	<artifactId>com.liferay.faces.bridge.atmosphere</artifactId>
+	<version>7.0.0-SNAPSHOT</version>
+	<name>Liferay Faces Atmosphere Bridge</name>
+	<description>Liferay Faces Atmosphere Bridge for Liferay Portal</description>
 
 	<organization>
 		<name>Liferay, Inc.</name>
@@ -74,9 +74,6 @@
 	</scm>
 
 	<properties>
-		<faces.api.version>${faces.spec.version}</faces.api.version>
-		<faces.spec.version>2.2</faces.spec.version>
-		<mojarra.version>2.2.13</mojarra.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
 		<liferay.version>7.0.3</liferay.version>
 		<liferay.version.dtd>7.0</liferay.version.dtd>
@@ -234,70 +231,22 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.liferay.faces</groupId>
-			<artifactId>com.liferay.faces.bridge.api</artifactId>
-			<version>5.0.0-SNAPSHOT</version>
-			<scope>compile</scope>
+			<groupId>org.atmosphere</groupId>
+			<artifactId>atmosphere-runtime</artifactId>
+			<version>2.4.12</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.util</artifactId>
-			<version>3.1.0-SNAPSHOT</version>
+			<version>4.0.0-SNAPSHOT</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>2.3.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.util.taglib</artifactId>
-			<version>2.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>2.2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.faces</groupId>
-			<artifactId>javax.faces-api</artifactId>
-			<version>${faces.api.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.faces</artifactId>
-			<version>${mojarra.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.portlet</groupId>
-			<artifactId>portlet-api</artifactId>
-			<version>3.0-SNAPSHOT</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
