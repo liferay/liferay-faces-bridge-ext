@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.atmosphere.internal;
+package com.liferay.faces.bridge.atmosphere;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,10 +45,10 @@ import com.liferay.faces.util.logging.LoggerFactory;
 /**
  * @author  Kyle Stiemann
  */
-public class AnnotationProcessorLiferayImpl implements AnnotationProcessor {
+public class LiferayAnnotationProcessor implements AnnotationProcessor {
 
 	// Logger
-	private static final Logger logger = LoggerFactory.getLogger(AnnotationProcessorLiferayImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(LiferayAnnotationProcessor.class);
 
 	// Private Constants
 	private static final Set<Class<?>> ANNOTATIONS_HANDLED_BY_ATMOPSHERE;
@@ -82,16 +82,10 @@ public class AnnotationProcessorLiferayImpl implements AnnotationProcessor {
 	}
 
 	// Private Data
-	private AnnotationHandler annotationHandler;
+	private AnnotationHandler annotationHandler = new AnnotationHandler();
 	private AtmosphereFramework atmosphereFramework;
-	Set<Class<?>> customAtmosphereAnnotationClasses;
+	Set<Class<?>> customAtmosphereAnnotationClasses = new HashSet<Class<?>>();
 	private boolean firstScan = true;
-
-	public AnnotationProcessorLiferayImpl() {
-
-		this.annotationHandler = new AnnotationHandler();
-		customAtmosphereAnnotationClasses = new HashSet<Class<?>>();
-	}
 
 	@Override
 	public void configure(AtmosphereConfig atmosphereConfig) {
@@ -111,17 +105,8 @@ public class AnnotationProcessorLiferayImpl implements AnnotationProcessor {
 	@Override
 	public AnnotationProcessor scan(File file) throws IOException {
 
-		// Find all Atmosphere built-in annotations before scanning for other annotations.
-		if (firstScan) {
-
-			String orgAtmospherePackageDirectory = getPackageDirectory("org.atmosphere");
-			scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, orgAtmospherePackageDirectory, true);
-			firstScan = false;
-		}
-
 		String directoryToScan = file.getPath();
-		scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, directoryToScan, customAtmosphereAnnotationClasses);
-		scanDirectory(customAtmosphereAnnotationClasses, directoryToScan);
+		scanDirectory(directoryToScan, false);
 
 		return this;
 	}
@@ -129,17 +114,8 @@ public class AnnotationProcessorLiferayImpl implements AnnotationProcessor {
 	@Override
 	public AnnotationProcessor scan(String packageToScan) throws IOException {
 
-		// Find all Atmosphere built-in annotations before scanning for other annotations.
-		if (firstScan) {
-
-			String orgAtmospherePackageDirectory = getPackageDirectory("org.atmosphere");
-			scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, orgAtmospherePackageDirectory, true);
-			firstScan = false;
-		}
-
 		String directoryToScan = getPackageDirectory(packageToScan);
-		scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, directoryToScan, customAtmosphereAnnotationClasses);
-		scanDirectory(customAtmosphereAnnotationClasses, directoryToScan);
+		scanDirectory(directoryToScan, false);
 
 		return this;
 	}
@@ -147,16 +123,7 @@ public class AnnotationProcessorLiferayImpl implements AnnotationProcessor {
 	@Override
 	public AnnotationProcessor scanAll() throws IOException {
 
-		// Find all Atmosphere built-in annotations before scanning for other annotations.
-		if (firstScan) {
-
-			String orgAtmospherePackageDirectory = getPackageDirectory("org.atmosphere");
-			scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, orgAtmospherePackageDirectory, true);
-			firstScan = false;
-		}
-
-		scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, "/", true, customAtmosphereAnnotationClasses);
-		scanDirectory(customAtmosphereAnnotationClasses, "/", true);
+		scanDirectory("/", true);
 
 		return this;
 	}
@@ -205,8 +172,19 @@ public class AnnotationProcessorLiferayImpl implements AnnotationProcessor {
 		}
 	}
 
-	private void scanDirectory(Set<Class<?>> annotationsToScanFor, String directoryToScan) throws IOException {
-		scanDirectory(annotationsToScanFor, directoryToScan, false, null);
+	private void scanDirectory(String directoryToScan, boolean recurseIntoSubdirectories) throws IOException {
+
+		// Find all Atmosphere built-in annotations before scanning for other annotations.
+		if (firstScan) {
+
+			String orgAtmospherePackageDirectory = getPackageDirectory("org.atmosphere");
+			scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, orgAtmospherePackageDirectory, true);
+			firstScan = false;
+		}
+
+		scanDirectory(ANNOTATIONS_HANDLED_BY_ATMOPSHERE, directoryToScan, recurseIntoSubdirectories,
+			customAtmosphereAnnotationClasses);
+		scanDirectory(customAtmosphereAnnotationClasses, directoryToScan, recurseIntoSubdirectories);
 	}
 
 	private void scanDirectory(Set<Class<?>> annotationsToScanFor, String directoryToScan,
@@ -215,14 +193,9 @@ public class AnnotationProcessorLiferayImpl implements AnnotationProcessor {
 	}
 
 	private void scanDirectory(Set<Class<?>> annotationsToScanFor, String directoryToScan,
-		Set<Class<?>> customAtmosphereAnnotationClasses) throws IOException {
-		scanDirectory(annotationsToScanFor, directoryToScan, false, customAtmosphereAnnotationClasses);
-	}
-
-	private void scanDirectory(Set<Class<?>> annotationsToScanFor, String directoryToScan,
 		boolean recurseIntoSubdirectories, Set<Class<?>> customAtmosphereAnnotationClasses) throws IOException {
 
-		Bundle portletBundle = FrameworkUtil.getBundle(AnnotationProcessorLiferayImpl.class);
+		Bundle portletBundle = FrameworkUtil.getBundle(LiferayAnnotationProcessor.class);
 		BundleWiring bundleWiring = portletBundle.adapt(BundleWiring.class);
 
 		int bundleWiringListResourcesOption = BundleWiring.LISTRESOURCES_LOCAL;
