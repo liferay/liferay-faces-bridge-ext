@@ -34,6 +34,11 @@ import com.liferay.faces.util.product.ProductFactory;
 public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	// Private Constants
+	private static final boolean BUTTERFACES_DETECTED = ProductFactory.getProduct(Product.Name.BUTTERFACES)
+		.isDetected();
+	private static final Set<String> BUTTERFACES_DIST_BOWER_JQUERY_PLUGIN_JS_RESOURCES;
+	private static final Set<String> BUTTERFACES_DIST_BUNDLE_JS_JQUERY_PLUGIN_JS_RESOURCES;
+	private static final Set<String> BUTTERFACES_EXTERNAL_JQUERY_PLUGIN_JS_RESOURCES;
 	private static final boolean PRIMEFACES_DETECTED = ProductFactory.getProduct(Product.Name.PRIMEFACES).isDetected();
 	private static final Set<String> PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES;
 	private static final boolean RICHFACES_DETECTED = ProductFactory.getProduct(Product.Name.RICHFACES).isDetected();
@@ -61,6 +66,30 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		primefacesJQueryPluginResources.add("texteditor/texteditor.js");
 		primefacesJQueryPluginResources.add("touch/touchswipe.js");
 		PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(primefacesJQueryPluginResources);
+
+		// This list of resources was obtained by building ButterFaces and searching the target/ directory for js files
+		// containg "typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']|[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define".
+		Set<String> butterFacesJQueryPluginResources = new HashSet<String>();
+		butterFacesJQueryPluginResources.add("prettify.js");
+		butterFacesJQueryPluginResources.add("jquery.min.js");
+		butterFacesJQueryPluginResources.add("jquery.js");
+		BUTTERFACES_DIST_BOWER_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(
+				butterFacesJQueryPluginResources);
+		butterFacesJQueryPluginResources = new HashSet<String>();
+		butterFacesJQueryPluginResources.add("butterfaces-all-with-bootstrap-bundle.min.js");
+		butterFacesJQueryPluginResources.add("butterfaces-all-with-jquery-bundle.min.js");
+		butterFacesJQueryPluginResources.add("butterfaces-all-bundle.min.js");
+		butterFacesJQueryPluginResources.add("butterfaces-all-with-jquery-and-bootstrap-bundle.min.js");
+		BUTTERFACES_DIST_BUNDLE_JS_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(
+				butterFacesJQueryPluginResources);
+		butterFacesJQueryPluginResources = new HashSet<String>();
+		butterFacesJQueryPluginResources.add("mustache.min.js");
+		butterFacesJQueryPluginResources.add("jquery.position.min.js");
+		butterFacesJQueryPluginResources.add("to-markdown.js");
+		butterFacesJQueryPluginResources.add("bootstrap-datetimepicker.min.js");
+		butterFacesJQueryPluginResources.add("01-moment-with-locales.min.js");
+		butterFacesJQueryPluginResources.add("trivial-components.min.js");
+		BUTTERFACES_EXTERNAL_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(butterFacesJQueryPluginResources);
 	}
 
 	// Private Data Members
@@ -202,6 +231,20 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 				(resourceName.endsWith("packed.js") || resourceName.endsWith("jquery.js"));
 		}
 
-		return (primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource);
+		boolean butterFacesJQueryPluginJSResource = false;
+
+		if (BUTTERFACES_DETECTED && (resourceLibrary != null)) {
+
+			butterFacesJQueryPluginJSResource = (resourceLibrary.equals("butterfaces-dist-bower") &&
+					BUTTERFACES_DIST_BOWER_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName)) ||
+				(resourceLibrary.equals("butterfaces-dist-bundle-js") &&
+					BUTTERFACES_DIST_BUNDLE_JS_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName)) ||
+				(resourceLibrary.equals("butterfaces-external") &&
+					BUTTERFACES_EXTERNAL_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName));
+
+		}
+
+		return (primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource ||
+				butterFacesJQueryPluginJSResource);
 	}
 }
