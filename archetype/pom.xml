@@ -10,6 +10,7 @@
 
 	<modules>
 		<module>alloy-portlet</module>
+		<module>butterfaces-portlet</module>
 		<module>icefaces-portlet</module>
 		<module>jsf-portlet</module>
 		<module>metal-portlet</module>
