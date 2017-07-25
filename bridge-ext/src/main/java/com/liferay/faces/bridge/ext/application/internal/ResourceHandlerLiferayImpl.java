@@ -34,6 +34,8 @@ import com.liferay.faces.util.product.ProductFactory;
 public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	// Private Constants
+	private static final boolean BOOTSFACES_DETECTED = ProductFactory.getProduct(Product.Name.BOOTSFACES).isDetected();
+	private static final Set<String> BOOTSFACES_JQUERY_PLUGIN_JS_RESOURCES;
 	private static final boolean BUTTERFACES_DETECTED = ProductFactory.getProduct(Product.Name.BUTTERFACES)
 		.isDetected();
 	private static final Set<String> BUTTERFACES_DIST_BOWER_JQUERY_PLUGIN_JS_RESOURCES;
@@ -45,27 +47,37 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	static {
 
-		// This list of resources was obtained by building Primefaces and searching the target/ directory for js files
+		// This list of resources was obtained by building BootsFaces and searching the target/ directory for js files
 		// containg "typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']|[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define".
-		Set<String> primefacesJQueryPluginResources = new HashSet<String>();
-		primefacesJQueryPluginResources.add("diagram/diagram.js");
-		primefacesJQueryPluginResources.add("fileupload/fileupload.js");
-		primefacesJQueryPluginResources.add("inputnumber/0-autoNumeric.js");
-		primefacesJQueryPluginResources.add("inputnumber/inputnumber.js");
-		primefacesJQueryPluginResources.add("jquery/jquery-plugins.js");
-		primefacesJQueryPluginResources.add("jquery/jquery.js");
-		primefacesJQueryPluginResources.add("knob/1-jquery.knob.js");
-		primefacesJQueryPluginResources.add("knob/knob.js");
-		primefacesJQueryPluginResources.add("mobile/jquery-mobile.js");
-		primefacesJQueryPluginResources.add("moment/moment.js");
-		primefacesJQueryPluginResources.add("mousewheel/jquery.mousewheel.min.js");
-		primefacesJQueryPluginResources.add("photocam/photocam.js");
-		primefacesJQueryPluginResources.add("push/push.js");
-		primefacesJQueryPluginResources.add("raphael/raphael.js");
-		primefacesJQueryPluginResources.add("schedule/schedule.js");
-		primefacesJQueryPluginResources.add("texteditor/texteditor.js");
-		primefacesJQueryPluginResources.add("touch/touchswipe.js");
-		PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(primefacesJQueryPluginResources);
+		Set<String> bootsFacesJQueryPluginResources = new HashSet<String>();
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-pt.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-es.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-hu.js");
+		bootsFacesJQueryPluginResources.add("jq/jquery.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/mouse.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/slider.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/widget.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-nl.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-it.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-pl.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-de.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-ru.js");
+		bootsFacesJQueryPluginResources.add("jq/mobile/shake.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/core.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-fr.js");
+		bootsFacesJQueryPluginResources.add("jq/ui/datepicker.js");
+		bootsFacesJQueryPluginResources.add("js/bootstrap-notify.min.js");
+		bootsFacesJQueryPluginResources.add("js/jquery.blockUI.js");
+		bootsFacesJQueryPluginResources.add("js/moment.min.js");
+		bootsFacesJQueryPluginResources.add("js/typeahead.js");
+		bootsFacesJQueryPluginResources.add("js/bootstrap-slider.min.js");
+		bootsFacesJQueryPluginResources.add("js/fullcalendar-lang-all.js");
+		bootsFacesJQueryPluginResources.add("js/jquery.minicolors.min.js");
+		bootsFacesJQueryPluginResources.add("js/bootstrap-datetimepicker.min.js");
+		bootsFacesJQueryPluginResources.add("js/fullcalendar.min.js");
+		bootsFacesJQueryPluginResources.add("js/moment-with-locales.min.js");
+		bootsFacesJQueryPluginResources.add("js/datatables.min.js");
+		BOOTSFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(bootsFacesJQueryPluginResources);
 
 		// This list of resources was obtained by building ButterFaces and searching the target/ directory for js files
 		// containg "typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']|[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define".
@@ -90,6 +102,28 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		butterFacesJQueryPluginResources.add("01-moment-with-locales.min.js");
 		butterFacesJQueryPluginResources.add("trivial-components.min.js");
 		BUTTERFACES_EXTERNAL_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(butterFacesJQueryPluginResources);
+
+		// This list of resources was obtained by building Primefaces and searching the target/ directory for js files
+		// containg "typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']|[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define".
+		Set<String> primefacesJQueryPluginResources = new HashSet<String>();
+		primefacesJQueryPluginResources.add("diagram/diagram.js");
+		primefacesJQueryPluginResources.add("fileupload/fileupload.js");
+		primefacesJQueryPluginResources.add("inputnumber/0-autoNumeric.js");
+		primefacesJQueryPluginResources.add("inputnumber/inputnumber.js");
+		primefacesJQueryPluginResources.add("jquery/jquery-plugins.js");
+		primefacesJQueryPluginResources.add("jquery/jquery.js");
+		primefacesJQueryPluginResources.add("knob/1-jquery.knob.js");
+		primefacesJQueryPluginResources.add("knob/knob.js");
+		primefacesJQueryPluginResources.add("mobile/jquery-mobile.js");
+		primefacesJQueryPluginResources.add("moment/moment.js");
+		primefacesJQueryPluginResources.add("mousewheel/jquery.mousewheel.min.js");
+		primefacesJQueryPluginResources.add("photocam/photocam.js");
+		primefacesJQueryPluginResources.add("push/push.js");
+		primefacesJQueryPluginResources.add("raphael/raphael.js");
+		primefacesJQueryPluginResources.add("schedule/schedule.js");
+		primefacesJQueryPluginResources.add("texteditor/texteditor.js");
+		primefacesJQueryPluginResources.add("touch/touchswipe.js");
+		PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(primefacesJQueryPluginResources);
 	}
 
 	// Private Data Members
@@ -216,6 +250,22 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	private boolean isJQueryPluginJSResource(String resourceLibrary, String resourceName) {
 
+		boolean bootsFacesJQueryPluginJSResource = BOOTSFACES_DETECTED && "bsf".equals(resourceLibrary) &&
+			BOOTSFACES_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName);
+
+		boolean butterFacesJQueryPluginJSResource = false;
+
+		if (BUTTERFACES_DETECTED && (resourceLibrary != null)) {
+
+			butterFacesJQueryPluginJSResource = (resourceLibrary.equals("butterfaces-dist-bower") &&
+					BUTTERFACES_DIST_BOWER_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName)) ||
+				(resourceLibrary.equals("butterfaces-dist-bundle-js") &&
+					BUTTERFACES_DIST_BUNDLE_JS_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName)) ||
+				(resourceLibrary.equals("butterfaces-external") &&
+					BUTTERFACES_EXTERNAL_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName));
+
+		}
+
 		boolean primeFacesJQueryPluginJSResource = PRIMEFACES_DETECTED &&
 			((resourceLibrary == null) || resourceLibrary.equals("primefaces")) &&
 			PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName);
@@ -231,20 +281,7 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 				(resourceName.endsWith("packed.js") || resourceName.endsWith("jquery.js"));
 		}
 
-		boolean butterFacesJQueryPluginJSResource = false;
-
-		if (BUTTERFACES_DETECTED && (resourceLibrary != null)) {
-
-			butterFacesJQueryPluginJSResource = (resourceLibrary.equals("butterfaces-dist-bower") &&
-					BUTTERFACES_DIST_BOWER_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName)) ||
-				(resourceLibrary.equals("butterfaces-dist-bundle-js") &&
-					BUTTERFACES_DIST_BUNDLE_JS_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName)) ||
-				(resourceLibrary.equals("butterfaces-external") &&
-					BUTTERFACES_EXTERNAL_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName));
-
-		}
-
-		return (primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource ||
-				butterFacesJQueryPluginJSResource);
+		return (bootsFacesJQueryPluginJSResource || butterFacesJQueryPluginJSResource ||
+				primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource);
 	}
 }
