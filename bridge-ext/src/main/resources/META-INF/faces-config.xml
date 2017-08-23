@@ -14,6 +14,10 @@
 	</ordering>
 	<application>
 		<resource-handler>com.liferay.faces.bridge.ext.application.internal.ResourceHandlerLiferayImpl</resource-handler>
+		<system-event-listener>
+			<system-event-listener-class>com.liferay.faces.bridge.ext.application.internal.DisabledAMDLoaderResourcesCacheInitializer</system-event-listener-class>
+			<system-event-class>com.liferay.faces.util.event.PostConstructApplicationConfigEvent</system-event-class>
+		</system-event-listener>
 	</application>
 	<factory>
 		<render-kit-factory>com.liferay.faces.bridge.ext.renderkit.html_basic.internal.RenderKitFactoryLiferayImpl</render-kit-factory>
