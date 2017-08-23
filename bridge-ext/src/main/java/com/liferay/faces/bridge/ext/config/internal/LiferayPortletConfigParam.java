@@ -31,11 +31,20 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	 */
 	DistinctRequestScopedManagedBeans("com.liferay.faces.bridge.distinctRequestScopedManagedBeans", false),
 
-	// Default value for Liferay Portal 6.2 is false, default value for 7.0 (and above) is true.
+	/** Default value for Liferay Portal 6.2 is false, default value for 7.0+ is true. */
 	RequestDispatcherForwardEnabled("com.liferay.faces.bridge.requestDispatcherForwardEnabled", true),
 
-	/** Comma-delimited list of [library:resource] values for which the AMD loader should be disabled. */
-	DisabledAMDLoaderResources("com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources", "");
+	/**
+	 * Comma-delimited list of [library:resource] values for which the AMD loader should be disabled in addition to the
+	 * resources listed in {@link ResourceHandlerLiferayImpl}.
+	 */
+	DisabledAMDLoaderResources("com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources", ""),
+
+	DisabledAMDLoaderResourcesInitialCacheCapacity(
+		"com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources.INITIAL_CACHE_CAPACITY", 16),
+
+	DisabledAMDLoaderResourcesMaxCacheCapacity(
+		"com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources.MAX_CACHE_CAPACITY", -1);
 
 	// Private Data Members
 	private String alternateName;
@@ -51,6 +60,14 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 
 	private LiferayPortletConfigParam(String name, boolean defaultBooleanValue) {
 		this(name, null, defaultBooleanValue);
+	}
+
+	private LiferayPortletConfigParam(String name, int defaultIntegerValue) {
+		this.name = name;
+		this.defaultBooleanValue = (defaultIntegerValue != 0);
+		this.defaultIntegerValue = defaultIntegerValue;
+		this.defaultLongValue = defaultIntegerValue;
+		this.defaultStringValue = Integer.toString(defaultIntegerValue);
 	}
 
 	private LiferayPortletConfigParam(String name, String alternateName, String defaultStringValue) {
@@ -127,6 +144,10 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	@Override
 	public int getIntegerValue(PortletConfig config) {
 		throw new UnsupportedOperationException();
+	}
+
+	public int getIntegerValue(ExternalContext externalContext) {
+		return LiferayPortletConfigParamUtil.getIntegerValue(externalContext, name, alternateName, defaultIntegerValue);
 	}
 
 	@Override
