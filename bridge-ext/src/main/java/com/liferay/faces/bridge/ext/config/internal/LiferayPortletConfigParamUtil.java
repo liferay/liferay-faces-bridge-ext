@@ -18,6 +18,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 
 import com.liferay.faces.util.helper.BooleanHelper;
+import com.liferay.faces.util.helper.IntegerHelper;
 
 
 /**
@@ -86,5 +87,22 @@ public class LiferayPortletConfigParamUtil {
 		}
 
 		return configuredValue;
+	}
+
+	public static int getIntegerValue(ExternalContext externalContext, String name, String alternateName,
+		int defaultIntegerValue) {
+
+		int integerValue = defaultIntegerValue;
+		String configuredValue = externalContext.getInitParameter(name);
+
+		if ((configuredValue == null) && (alternateName != null)) {
+			configuredValue = externalContext.getInitParameter(alternateName);
+		}
+
+		if (configuredValue != null) {
+			integerValue = IntegerHelper.toInteger(configuredValue);
+		}
+
+		return integerValue;
 	}
 }
