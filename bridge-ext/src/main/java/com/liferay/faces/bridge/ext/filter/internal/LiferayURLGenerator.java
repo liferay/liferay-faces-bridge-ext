@@ -53,7 +53,7 @@ public interface LiferayURLGenerator {
 	 * @param   portletMode             The portlet mode.
 	 * @param   windowState             The window state.
 	 *
-	 * @return
+	 * @return  The Liferay-compatible URL.
 	 */
 	public String generateURL(Map<String, String[]> additionalParameterMap, PortletMode portletMode,
 		WindowState windowState);
