@@ -33,8 +33,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 /**
  * This class provides the ability to parse the {@link StringBundler} value of the LIFERAY_SHARED_PAGE_TOP request
- * attribute and remove duplicate CSS and/or JavaScript resources that are meant to be rendered in the <head>...</head>
- * section of the Liferay Portal page.
+ * attribute and remove duplicate CSS and/or JavaScript resources that are meant to be rendered in the
+ * &lt;head&gt;...&lt;/head&gt; section of the Liferay Portal page.
  *
  * @author  Neil Griffin
  */

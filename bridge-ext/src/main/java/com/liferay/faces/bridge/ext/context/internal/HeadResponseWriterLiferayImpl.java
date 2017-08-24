@@ -39,8 +39,8 @@ import com.liferay.taglib.util.HtmlTopTag;
 
 
 /**
- * Custom {@link ResponseWriter} that has the ability to write to the <head>...</head> section of the portal page via
- * the Liferay vendor-specific mechanism.
+ * Custom {@link ResponseWriter} that has the ability to write to the &lt;head&gt;...&lt;/head&gt; section of the portal
+ * page via the Liferay vendor-specific mechanism.
  *
  * @author  Neil Griffin
  */
