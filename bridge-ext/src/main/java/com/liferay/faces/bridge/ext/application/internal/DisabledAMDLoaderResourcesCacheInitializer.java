@@ -31,8 +31,8 @@ import com.liferay.faces.util.config.ApplicationConfig;
 
 /**
  * This class initializes the filtered resource cache for {@link ResourceHandlerLiferayImpl}. The initialization cannot
- * be performed in the ResourceHandlerLiferayImpl constructor since this {@link ResourceHandlers} are initialized before
- * the {@link CacheFactory} has been created.
+ * be performed in the ResourceHandlerLiferayImpl constructor since this {@link javax.faces.application.ResourceHandler}
+ * are initialized before the {@link CacheFactory} has been created.
  *
  * @author  Kyle Stiemann
  */
@@ -55,7 +55,8 @@ public class DisabledAMDLoaderResourcesCacheInitializer implements SystemEventLi
 			Cache<String, Resource> filteredResourceCache;
 			int initialCacheCapacity = LiferayPortletConfigParam.DisabledAMDLoaderResourcesInitialCacheCapacity
 				.getIntegerValue(externalContext);
-			int maxCacheCapacity = LiferayPortletConfigParam.DisabledAMDLoaderResourcesMaxCacheCapacity.getIntegerValue(externalContext);
+			int maxCacheCapacity = LiferayPortletConfigParam.DisabledAMDLoaderResourcesMaxCacheCapacity.getIntegerValue(
+					externalContext);
 
 			if (maxCacheCapacity > -1) {
 				filteredResourceCache = CacheFactory.getConcurrentLRUCacheInstance(externalContext,
