@@ -53,13 +53,11 @@ public class DisabledAMDLoaderResourcesCacheInitializer implements SystemEventLi
 			ExternalContext externalContext = startupFacesContext.getExternalContext();
 			Map<String, Object> applicationMap = externalContext.getApplicationMap();
 			Cache<String, Resource> filteredResourceCache;
-			LiferayPortletConfigParam DisabledAMDLoaderResourcesMaxCacheCapacity =
-				LiferayPortletConfigParam.DisabledAMDLoaderResourcesMaxCacheCapacity;
 			int initialCacheCapacity = LiferayPortletConfigParam.DisabledAMDLoaderResourcesInitialCacheCapacity
 				.getIntegerValue(externalContext);
-			int maxCacheCapacity = DisabledAMDLoaderResourcesMaxCacheCapacity.getIntegerValue(externalContext);
+			int maxCacheCapacity = LiferayPortletConfigParam.DisabledAMDLoaderResourcesMaxCacheCapacity.getIntegerValue(externalContext);
 
-			if (maxCacheCapacity != DisabledAMDLoaderResourcesMaxCacheCapacity.getDefaultIntegerValue()) {
+			if (maxCacheCapacity > -1) {
 				filteredResourceCache = CacheFactory.getConcurrentLRUCacheInstance(externalContext,
 						initialCacheCapacity, maxCacheCapacity);
 			}
