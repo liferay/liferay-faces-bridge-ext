@@ -36,7 +36,7 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 
 	/**
 	 * Comma-delimited list of [library:resource] values for which the AMD loader should be disabled in addition to the
-	 * resources listed in {@link ResourceHandlerLiferayImpl}.
+	 * resources listed in {@link com.liferay.faces.bridge.ext.application.internal.ResourceHandlerLiferayImpl}.
 	 */
 	DisabledAMDLoaderResources("com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources", ""),
 
