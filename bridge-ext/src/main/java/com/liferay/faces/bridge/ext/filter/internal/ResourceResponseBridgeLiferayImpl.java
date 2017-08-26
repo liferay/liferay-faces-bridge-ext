@@ -60,18 +60,6 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 	}
 
 	@Override
-	public String getContentType() {
-
-		String contentType = super.getContentType();
-
-		if (contentType == null) {
-			contentType = resourceRequest.getResponseContentType();
-		}
-
-		return contentType;
-	}
-
-	@Override
 	public String getNamespace() {
 
 		if (namespace == null) {
