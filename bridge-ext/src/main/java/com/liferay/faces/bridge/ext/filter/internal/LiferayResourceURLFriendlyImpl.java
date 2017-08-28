@@ -33,7 +33,7 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 		this.responseNamespace = responseNamespace;
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public String getCacheability() {
 		return getWrapped().getCacheability();
 	}
@@ -43,7 +43,7 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 		return wrappedLiferayResourceURL;
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public void setCacheability(String cacheLevel) {
 		getWrapped().setCacheability(cacheLevel);
 		resetToString();
