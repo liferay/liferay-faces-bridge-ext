@@ -39,27 +39,27 @@ public class BridgePortletConfigLiferayImpl implements PortletConfig, Wrapper<Po
 		this.wrappedPortletConfig = portletConfig;
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public Map<String, String[]> getContainerRuntimeOptions() {
 		return wrappedPortletConfig.getContainerRuntimeOptions();
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public String getDefaultNamespace() {
 		return wrappedPortletConfig.getDefaultNamespace();
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public String getInitParameter(String name) {
 		return wrappedPortletConfig.getInitParameter(name);
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public Enumeration<String> getInitParameterNames() {
 		return wrappedPortletConfig.getInitParameterNames();
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public PortletContext getPortletContext() {
 
 		PortletContext wrappedPortletContext = wrappedPortletConfig.getPortletContext();
@@ -67,32 +67,32 @@ public class BridgePortletConfigLiferayImpl implements PortletConfig, Wrapper<Po
 		return new BridgePortletContextLiferayImpl(wrappedPortletContext);
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public String getPortletName() {
 		return wrappedPortletConfig.getPortletName();
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public Enumeration<QName> getProcessingEventQNames() {
 		return wrappedPortletConfig.getProcessingEventQNames();
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public Enumeration<String> getPublicRenderParameterNames() {
 		return wrappedPortletConfig.getPublicRenderParameterNames();
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public Enumeration<QName> getPublishingEventQNames() {
 		return wrappedPortletConfig.getPublishingEventQNames();
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return wrappedPortletConfig.getResourceBundle(locale);
 	}
 
-	// Java 1.6+ @Override
+	@Override
 	public Enumeration<Locale> getSupportedLocales() {
 		return wrappedPortletConfig.getSupportedLocales();
 	}
