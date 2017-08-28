@@ -31,8 +31,8 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	 */
 	DistinctRequestScopedManagedBeans("com.liferay.faces.bridge.distinctRequestScopedManagedBeans", false),
 
-	/** Default value for Liferay Portal 6.2 is false, default value for 7.0+ is true. */
-	RequestDispatcherForwardEnabled("com.liferay.faces.bridge.requestDispatcherForwardEnabled", true),
+	// Default value for Liferay Portal 6.2 is false, default value for 7.0 (and above) is true.
+	RequestDispatcherForwardEnabled("com.liferay.faces.bridge.requestDispatcherForwardEnabled", false),
 
 	/**
 	 * Comma-delimited list of [library:resource] values for which the AMD loader should be disabled in addition to the
