@@ -15,6 +15,7 @@
 		<module>metal-portlet</module>
 		<module>primefaces-portlet</module>
 		<module>richfaces-portlet</module>
+		<module>test</module>
 	</modules>
 
 	<build>
