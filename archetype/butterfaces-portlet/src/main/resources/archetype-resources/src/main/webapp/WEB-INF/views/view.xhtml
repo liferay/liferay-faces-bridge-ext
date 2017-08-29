@@ -11,9 +11,9 @@
 		<h:outputScript library="butterfaces-dist-bower" name="bootstrap.js" />
 	</h:head>
 	<h:body>
-		<b:panel id="panelId">
+		<b:labeledContainer id="panelId">
 			<h:outputText styleClass="bold-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
-		</b:panel>
+		</b:labeledContainer>
 		<ul>
 			<li><em><h:outputText value="#{product.JSF}" /></em></li>
 			<li><em><h:outputText value="#{product.LIFERAY_FACES_BRIDGE}" /></em></li>
