@@ -73,6 +73,7 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 				portletConfig, bridgeConfig);
 
 		PortletContext portletContext = portletConfig.getPortletContext();
+
 		return new RenderResponseBridgeLiferayImpl(portletContext, renderRequest, wrappedRenderResponse);
 	}
 
@@ -84,6 +85,7 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 				portletConfig, bridgeConfig);
 
 		PortletContext portletContext = portletConfig.getPortletContext();
+
 		return new ResourceResponseBridgeLiferayImpl(portletContext, resourceRequest, wrappedResourceResponse);
 	}
 
