@@ -13,10 +13,10 @@
  */
 package com.liferay.faces.bridge.ext.i18n.internal;
 
+import java.io.Serializable;
+
 import com.liferay.faces.util.i18n.I18n;
 import com.liferay.faces.util.i18n.I18nFactory;
-
-import java.io.Serializable;
 
 
 /**
