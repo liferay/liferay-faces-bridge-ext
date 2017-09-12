@@ -10,8 +10,8 @@
 	<version>${version}</version>
 	<properties>
 		<faces.api.version>2.1</faces.api.version>
-		<liferay.faces.bridge.ext.version>2.0.1-SNAPSHOT</liferay.faces.bridge.ext.version>
-		<liferay.faces.bridge.impl.version>3.1.0-SNAPSHOT</liferay.faces.bridge.impl.version>
+		<liferay.faces.bridge.ext.version>2.0.1</liferay.faces.bridge.ext.version>
+		<liferay.faces.bridge.impl.version>3.1.0</liferay.faces.bridge.impl.version>
 		<mojarra.version>2.1.29-09</mojarra.version>
 	</properties>
 	<build>
