@@ -12,13 +12,13 @@
 	<artifactId>com.liferay.faces.archetype.icefaces.portlet</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>icefaces-portlet</name>
-	<version>3.0.2-SNAPSHOT</version>
+	<version>3.0.2</version>
 	<description>Maven archetype for a Liferay ICEFaces portlet</description>
 	<scm>
 		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
 		<developerConnection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</developerConnection>
 		<url>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</url>
-		<tag>HEAD</tag>
+		<tag>com.liferay.faces.archetype.icefaces.portlet-3.0.2</tag>
 	</scm>
 	<build>
 		<extensions>
