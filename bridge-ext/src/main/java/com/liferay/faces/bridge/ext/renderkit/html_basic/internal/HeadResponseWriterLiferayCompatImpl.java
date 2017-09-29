@@ -11,22 +11,27 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.context.internal;
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.faces.component.UIComponent;
-
-import org.w3c.dom.Element;
+import javax.faces.context.ResponseWriter;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 /**
  * @author  Kyle Stiemann
  */
-public abstract class ElementCompatImpl implements Element {
+public abstract class HeadResponseWriterLiferayCompatImpl extends HeadResponseWriterBase {
 
-	protected Map<String, String> getAttributes(UIComponent uiComponent) {
-		return new HashMap<String, String>();
+	public HeadResponseWriterLiferayCompatImpl(ResponseWriter wrappedResponseWriter) {
+		super(wrappedResponseWriter);
+	}
+
+	public ServletContext getServletContext(HttpServletRequest httpServletRequest) {
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		return httpSession.getServletContext();
 	}
 }

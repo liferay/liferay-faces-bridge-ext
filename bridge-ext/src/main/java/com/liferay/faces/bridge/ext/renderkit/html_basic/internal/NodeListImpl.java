@@ -11,23 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.context.internal;
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
+
+import java.util.ArrayList;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 
 /**
- * This implementation is a special case that is meant to be used when JSF component renderers do not properly call
- * startElement() first. It represents a pseudo-element that has has a blank (empty string) node name.
- *
- * @author  Neil Griffin
+ * @author  Kyle Stiemann
  */
-public class ElementBlankImpl extends ElementImpl {
+public class NodeListImpl extends ArrayList<Node> implements NodeList {
 
-	public ElementBlankImpl() {
-		super("", null);
+	// serialVersionUID
+	private static final long serialVersionUID = 5559419753981665137L;
+
+	@Override
+	public int getLength() {
+		return size();
 	}
 
 	@Override
-	public String toString() {
-		return getTextContent();
+	public Node item(int index) {
+		return get(index);
 	}
-
 }

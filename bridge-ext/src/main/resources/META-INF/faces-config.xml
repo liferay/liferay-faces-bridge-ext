@@ -16,7 +16,7 @@
 		<factory-extension>
 			<bridge:bridge-portlet-request-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletRequestFactoryLiferayImpl</bridge:bridge-portlet-request-factory>
 			<bridge:bridge-portlet-response-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletResponseFactoryLiferayImpl</bridge:bridge-portlet-response-factory>
-			<bridge:head-response-writer-factory>com.liferay.faces.bridge.ext.context.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
+			<bridge:head-response-writer-factory>com.liferay.faces.bridge.ext.renderkit.html_basic.internal.HeadResponseWriterFactoryLiferayImpl</bridge:head-response-writer-factory>
 			<bridge:bridge-portlet-config-factory>com.liferay.faces.bridge.ext.filter.internal.BridgePortletConfigFactoryLiferayImpl</bridge:bridge-portlet-config-factory>
 			<bridge:bridge-url-factory>com.liferay.faces.bridge.ext.internal.BridgeURLFactoryLiferayImpl</bridge:bridge-url-factory>
 			<bridge:liferay-url-factory>com.liferay.faces.bridge.ext.filter.internal.LiferayURLFactoryImpl</bridge:liferay-url-factory>
