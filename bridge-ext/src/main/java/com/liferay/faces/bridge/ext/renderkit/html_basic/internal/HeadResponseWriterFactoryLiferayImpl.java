@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.context.internal;
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.Serializable;
 
@@ -32,8 +32,8 @@ public class HeadResponseWriterFactoryLiferayImpl extends HeadResponseWriterFact
 	// Private Data Members
 	private HeadResponseWriterFactory wrappedHeadResponseWriterFactory;
 
-	public HeadResponseWriterFactoryLiferayImpl(HeadResponseWriterFactory headResponseWriterFactory) {
-		this.wrappedHeadResponseWriterFactory = headResponseWriterFactory;
+	public HeadResponseWriterFactoryLiferayImpl(HeadResponseWriterFactory wrappedHeadResponseWriterFactory) {
+		this.wrappedHeadResponseWriterFactory = wrappedHeadResponseWriterFactory;
 	}
 
 	@Override

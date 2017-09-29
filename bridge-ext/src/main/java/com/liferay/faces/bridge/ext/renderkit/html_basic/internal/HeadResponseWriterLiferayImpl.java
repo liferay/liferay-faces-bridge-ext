@@ -11,9 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.context.internal;
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.IOException;
+import java.io.Writer;
+import java.util.Locale;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -28,8 +30,9 @@ import javax.servlet.jsp.JspFactory;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 
-import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
+import com.liferay.faces.bridge.ext.util.internal.XMLUtil;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
@@ -40,8 +43,8 @@ import com.liferay.taglib.util.HtmlTopTag;
 
 
 /**
- * Custom {@link ResponseWriter} that has the ability to write to the &lt;head&gt;...&lt;/head&gt; section of the portal
- * page via the Liferay vendor-specific mechanism.
+ * Custom {@link ResponseWriter} that has the ability to write to the &lt;head&gt;...&lt;/head&gt; section of the
+ * liferay portal page.
  *
  * @author  Neil Griffin
  */
@@ -55,12 +58,80 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterLiferayComp
 	}
 
 	@Override
-	public Element createElement(String name, UIComponent uiComponent) {
-		return new ElementImpl(name, uiComponent);
+	public Writer append(CharSequence csq) throws IOException {
+
+		if (csq != null) {
+
+			String text = csq.toString();
+
+			if ("<![CDATA[".equalsIgnoreCase(text.toUpperCase(Locale.ENGLISH))) {
+				startCDATA();
+			}
+			else if ("]]>".equalsIgnoreCase(text)) {
+				endCDATA();
+			}
+			else {
+				addNodeToHeadSection(Node.TEXT_NODE, csq);
+			}
+		}
+
+		return this;
 	}
 
 	@Override
-	protected void addResourceToHeadSection(Element element, String nodeName) throws IOException {
+	public void endCDATA() throws IOException {
+
+		Node currentNode = getCurrentNode();
+
+		if (currentNode.getNodeType() != Node.CDATA_SECTION_NODE) {
+			throw new IllegalArgumentException("ResponseWriter.endCDATA() called before startCDATA().");
+		}
+
+		Node parentNode = currentNode.getParentNode();
+
+		if (parentNode != null) {
+			setCurrentNode(parentNode);
+		}
+		else {
+
+			writeNodeToHeadSection(currentNode, null);
+			setCurrentNode(null);
+		}
+	}
+
+	@Override
+	public void startCDATA() throws IOException {
+
+		Node currentNode = getCurrentNode();
+		Node cdataNode = new NodeImpl(Node.CDATA_SECTION_NODE, currentNode);
+
+		if (currentNode != null) {
+
+			if (Node.CDATA_SECTION_NODE == currentNode.getNodeType()) {
+				throw new IllegalStateException("CDATA cannot be nested.");
+			}
+
+			currentNode.appendChild(cdataNode);
+		}
+
+		setCurrentNode(cdataNode);
+	}
+
+	@Override
+	public void writeComment(Object comment) throws IOException {
+
+		if (comment != null) {
+			addNodeToHeadSection(Node.COMMENT_NODE, XMLUtil.escapeXML(comment.toString()));
+		}
+	}
+
+	@Override
+	protected Node createElement(String nodeName) {
+		return new ElementImpl(nodeName, getCurrentNode());
+	}
+
+	@Override
+	protected void writeNodeToHeadSection(Node node, UIComponent componentResource) throws IOException {
 
 		// Get the underlying HttpServletRequest and HttpServletResponse
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -80,19 +151,42 @@ public class HeadResponseWriterLiferayImpl extends HeadResponseWriterLiferayComp
 		htmlTopTag.setPageContext(pageContext);
 		htmlTopTag.doStartTag();
 
-		String elementAsString = element.toString();
+		String nodeAsString;
+
+		if (isElement(node)) {
+			nodeAsString = XMLUtil.elementToString(node, true);
+		}
+		else {
+			nodeAsString = XMLUtil.nodeToString(node);
+		}
+
 		BodyContent bodyContent = pageContext.pushBody();
-		bodyContent.print(elementAsString);
+		bodyContent.print(nodeAsString);
 		htmlTopTag.setBodyContent(bodyContent);
 
 		try {
 			htmlTopTag.doEndTag();
 		}
 		catch (Exception e) {
-			throw new IOException(e.getMessage());
+			throw new IOException(e);
 		}
 
 		jspFactory.releasePageContext(pageContext);
-		logger.debug(ADDED_RESOURCE_TO_HEAD, "Liferay", nodeName);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("Added resource to Liferay's <head>...</head> section, node=[{0}]", getNodeInfo(node));
+		}
+	}
+
+	private void addNodeToHeadSection(short nodeType, Object text) throws IOException {
+
+		Node currentNode = getCurrentNode();
+
+		if (currentNode != null) {
+			currentNode.appendChild(new NodeImpl(nodeType, text.toString(), currentNode));
+		}
+		else {
+			writeNodeToHeadSection(new NodeImpl(nodeType, text.toString(), null), null);
+		}
 	}
 }

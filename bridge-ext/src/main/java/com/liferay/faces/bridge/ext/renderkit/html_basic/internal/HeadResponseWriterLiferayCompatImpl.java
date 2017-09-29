@@ -11,7 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.context.internal;
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import javax.faces.context.ResponseWriter;
 import javax.servlet.ServletContext;
