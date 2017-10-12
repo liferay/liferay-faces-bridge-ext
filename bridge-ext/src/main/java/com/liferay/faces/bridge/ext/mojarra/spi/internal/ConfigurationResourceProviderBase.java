@@ -19,6 +19,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -42,53 +43,87 @@ public abstract class ConfigurationResourceProviderBase implements Configuration
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(ConfigurationResourceProviderBase.class);
 
+	// Private Constants
+	private static final boolean FRAMEWORK_UTIL_DETECTED;
+
+	static {
+
+		boolean frameworkUtilDetected = false;
+
+		try {
+
+			Class.forName("org.osgi.framework.FrameworkUtil");
+			frameworkUtilDetected = true;
+		}
+		catch (Throwable t) {
+
+			if (!((t instanceof NoClassDefFoundError) || (t instanceof ClassNotFoundException))) {
+
+				logger.error("An unexpected error occurred when attempting to detect OSGi:");
+				logger.error(t);
+			}
+		}
+
+		FRAMEWORK_UTIL_DETECTED = frameworkUtilDetected;
+	}
+
 	@Override
 	public abstract Collection<URI> getResources(ServletContext context);
 
 	protected Collection<URI> getResourcesPattern(String resourceFilePattern) {
 
-		Bundle portletBundle = FrameworkUtil.getBundle(ConfigurationResourceProviderBase.class);
-		BundleWiring bundleWiring = portletBundle.adapt(BundleWiring.class);
-		Collection<String> resourceFilePaths = bundleWiring.listResources("META-INF/", resourceFilePattern,
-				BundleWiring.LISTRESOURCES_RECURSE);
-		List<URI> resourceURIs = new ArrayList<URI>();
+		List<URI> resourceURIs;
 
-		for (String resourceFilePath : resourceFilePaths) {
+		if (FRAMEWORK_UTIL_DETECTED) {
 
-			Enumeration<URL> resourceURLs = null;
+			Bundle portletBundle = FrameworkUtil.getBundle(ConfigurationResourceProviderBase.class);
+			BundleWiring bundleWiring = portletBundle.adapt(BundleWiring.class);
+			Collection<String> resourceFilePaths = bundleWiring.listResources("META-INF/", resourceFilePattern,
+					BundleWiring.LISTRESOURCES_RECURSE);
+			resourceURIs = new ArrayList<URI>();
 
-			try {
+			for (String resourceFilePath : resourceFilePaths) {
 
-				// FACES-2650 Because there may be multiple jars in our bundle, some resources may have exactly the same
-				// reourceFilePath. We need to find all the resources with this resourceFilePath in all jars.
-				resourceURLs = portletBundle.getResources(resourceFilePath);
-			}
-			catch (IOException ioe) {
-				logger.error(ioe);
-			}
+				Enumeration<URL> resourceURLs = null;
 
-			if (resourceURLs != null) {
+				try {
 
-				while (resourceURLs.hasMoreElements()) {
+					// FACES-2650 Because there may be multiple jars in our bundle, some resources may have exactly the
+					// same reourceFilePath. We need to find all the resources with this resourceFilePath in all jars.
+					resourceURLs = portletBundle.getResources(resourceFilePath);
+				}
+				catch (IOException ioe) {
+					logger.error(ioe);
+				}
 
-					try {
+				if (resourceURLs != null) {
 
-						URL resourceURL = resourceURLs.nextElement();
+					while (resourceURLs.hasMoreElements()) {
 
-						if (resourceURL != null) {
+						try {
 
-							URI resourceURI = resourceURL.toURI();
-							resourceURIs.add(resourceURI);
+							URL resourceURL = resourceURLs.nextElement();
+
+							if (resourceURL != null) {
+
+								URI resourceURI = resourceURL.toURI();
+								resourceURIs.add(resourceURI);
+							}
+							else {
+								logger.warn("URL for resourceFilePath=[{0}] is null.", resourceFilePath);
+							}
 						}
-						else {
-							logger.warn("URL for resourceFilePath=[{0}] is null.", resourceFilePath);
+						catch (URISyntaxException e) {
+							logger.error(e);
 						}
-					}
-					catch (URISyntaxException e) {
-						logger.error(e);
 					}
 				}
 			}
+		}
+		else {
+
+			// FACES-3233 Bridge Ext not working outside OSGI context
+			resourceURIs = Collections.<URI>emptyList();
 		}
 
 		return resourceURIs;
