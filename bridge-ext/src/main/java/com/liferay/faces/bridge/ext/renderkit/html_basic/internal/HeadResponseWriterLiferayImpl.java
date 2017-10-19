@@ -32,6 +32,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 
 import org.w3c.dom.Node;
 
+import com.liferay.faces.bridge.ext.context.internal.JSPSupportServlet;
 import com.liferay.faces.bridge.ext.util.internal.XMLUtil;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
