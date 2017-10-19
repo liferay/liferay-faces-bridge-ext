@@ -32,8 +32,8 @@ public class HeadResponseWriterFactoryLiferayImpl extends HeadResponseWriterFact
 	// Private Data Members
 	private HeadResponseWriterFactory wrappedHeadResponseWriterFactory;
 
-	public HeadResponseWriterFactoryLiferayImpl(HeadResponseWriterFactory wrappedHeadResponseWriterFactory) {
-		this.wrappedHeadResponseWriterFactory = wrappedHeadResponseWriterFactory;
+	public HeadResponseWriterFactoryLiferayImpl(HeadResponseWriterFactory headResponseWriterFactory) {
+		this.wrappedHeadResponseWriterFactory = headResponseWriterFactory;
 	}
 
 	@Override
