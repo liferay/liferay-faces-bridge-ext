@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -33,11 +33,10 @@ public class BridgeURLFactoryLiferayImpl extends BridgeURLFactoryLiferayCompatIm
 	private static final long serialVersionUID = 7863243661979446762L;
 
 	// Private Data Members
-	private BridgeURLFactory wrappedBridgeURLFactory;
+	private final BridgeURLFactory wrappedBridgeURLFactory;
 
 	public BridgeURLFactoryLiferayImpl(BridgeURLFactory bridgeURLFactory) {
 		this.wrappedBridgeURLFactory = bridgeURLFactory;
-		BridgeExtDependencyVerifier.verify();
 	}
 
 	@Override

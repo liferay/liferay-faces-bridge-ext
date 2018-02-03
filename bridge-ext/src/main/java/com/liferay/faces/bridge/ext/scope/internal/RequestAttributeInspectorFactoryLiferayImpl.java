@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -32,8 +32,8 @@ public class RequestAttributeInspectorFactoryLiferayImpl extends RequestAttribut
 	// serialVersionUID
 	private static final long serialVersionUID = 7464890712727594643L;
 
-	// Private Data Members
-	private RequestAttributeInspectorFactory wrappedRequestAttributeInspectorFactory;
+	// Private Final Data Members
+	private final RequestAttributeInspectorFactory wrappedRequestAttributeInspectorFactory;
 
 	public RequestAttributeInspectorFactoryLiferayImpl(
 		RequestAttributeInspectorFactory requestAttributeInspectorFactory) {

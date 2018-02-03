@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -27,9 +27,9 @@ public class ScriptsEncoderFactoryLiferayImpl extends ScriptsEncoderFactory impl
 	// serialVersionUID
 	private static final long serialVersionUID = 6500965768943686133L;
 
-	// Private Data Members
-	private ScriptsEncoder scriptsEncoder = new ScriptsEncoderLiferayImpl();
-	private ScriptsEncoderFactory wrappedScriptsEncoderFactory;
+	// Private Final Data Members
+	private final ScriptsEncoder scriptsEncoder = new ScriptsEncoderLiferayImpl();
+	private final ScriptsEncoderFactory wrappedScriptsEncoderFactory;
 
 	public ScriptsEncoderFactoryLiferayImpl(ScriptsEncoderFactory ScriptsEncoderFactory) {
 		this.wrappedScriptsEncoderFactory = ScriptsEncoderFactory;

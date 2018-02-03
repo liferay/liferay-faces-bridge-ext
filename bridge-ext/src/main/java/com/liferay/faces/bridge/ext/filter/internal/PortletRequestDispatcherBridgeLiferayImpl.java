@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,16 +16,19 @@ package com.liferay.faces.bridge.ext.filter.internal;
 import java.io.IOException;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletSession;
 import javax.portlet.filter.PortletRequestWrapper;
 import javax.portlet.filter.PortletResponseWrapper;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import com.liferay.faces.bridge.BridgeFactoryFinder;
 import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -41,15 +44,9 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(PortletRequestDispatcherBridgeLiferayImpl.class);
 
-	// Private Constants
-	private static final Product LIFERAY_PORTAL = ProductFactory.getProduct(Product.Name.LIFERAY_PORTAL);
-	private static final int LIFERAY_PORTAL_MAJOR_VERSION = LIFERAY_PORTAL.getMajorVersion();
-	private static final int LIFERAY_PORTAL_MINOR_VERSION = LIFERAY_PORTAL.getMinorVersion();
-	private static final int LIFERAY_PORTAL_PATCH_VERSION = LIFERAY_PORTAL.getPatchVersion();
-
 	// Private Data Members
-	private String path;
-	private PortletRequestDispatcher wrappedPortletRequestDispatcher;
+	private final String path;
+	private final PortletRequestDispatcher wrappedPortletRequestDispatcher;
 
 	public PortletRequestDispatcherBridgeLiferayImpl(PortletRequestDispatcher portletRequestDispatcher, String path) {
 		this.path = path;
@@ -99,6 +96,12 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 		IOException {
 
 		boolean unwrapRequest = false;
+		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletContext portletContext = portletSession.getPortletContext();
+		ProductFactory productFactory = (ProductFactory) BridgeFactoryFinder.getFactory(portletContext,
+				ProductFactory.class);
+		final Product LIFERAY_PORTAL = productFactory.getProductInfo(Product.Name.LIFERAY_PORTAL);
+		final int LIFERAY_PORTAL_MAJOR_VERSION = LIFERAY_PORTAL.getMajorVersion();
 
 		// Versions of Liferay Portal older than 6.0.0 throw a ClassCastException when RenderRequestWrapper is used.
 		// For more info, see https://issues.liferay.com/browse/LPS-3311
@@ -111,10 +114,14 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 		// https://github.com/liferay/liferay-portal/commit/093dabbb252e2bba5404cddbcb600d787ef0b010
 		else if (LIFERAY_PORTAL_MAJOR_VERSION == 6) {
 
+			final int LIFERAY_PORTAL_MINOR_VERSION = LIFERAY_PORTAL.getMinorVersion();
+
 			if (LIFERAY_PORTAL_MINOR_VERSION == 0) {
 				unwrapRequest = true;
 			}
 			else if (LIFERAY_PORTAL_MINOR_VERSION == 1) {
+
+				final int LIFERAY_PORTAL_PATCH_VERSION = LIFERAY_PORTAL.getPatchVersion();
 
 				// CE
 				if (LIFERAY_PORTAL_PATCH_VERSION < 10) {

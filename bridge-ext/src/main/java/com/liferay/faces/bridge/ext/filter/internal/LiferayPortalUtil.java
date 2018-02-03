@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -25,10 +25,14 @@ import com.liferay.portal.kernel.util.PortalUtil;
  * This class provides access to the com.liferay.portal.util.PortalUtil static utility class via reflection in order to
  * avoid a compile-time dependency.
  */
-public class LiferayPortalUtil {
+public final class LiferayPortalUtil {
 
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(LiferayPortalUtil.class);
+
+	private LiferayPortalUtil() {
+		throw new AssertionError();
+	}
 
 	public static String getPortletId(PortletRequest portletRequest) {
 		String portletId = null;

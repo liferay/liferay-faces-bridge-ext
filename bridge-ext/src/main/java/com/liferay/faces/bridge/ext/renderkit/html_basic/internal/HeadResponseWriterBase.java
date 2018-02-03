@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -39,8 +39,10 @@ public abstract class HeadResponseWriterBase extends ResponseWriterWrapper {
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(HeadResponseWriterBase.class);
 
+	// Private Fanal Data Members
+	private final ResponseWriter wrappedResponseWriter;
+
 	// Private Data Members
-	private ResponseWriter wrappedResponseWriter;
 	private Node currentNode;
 	private Stack<UIComponent> componentResourceStack;
 	private boolean titleElement = false;

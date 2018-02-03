@@ -15,7 +15,7 @@
 	<application>
 		<resource-handler>com.liferay.faces.bridge.ext.application.internal.ResourceHandlerLiferayImpl</resource-handler>
 		<system-event-listener>
-			<system-event-listener-class>com.liferay.faces.bridge.ext.application.internal.DisabledAMDLoaderResourcesCacheInitializer</system-event-listener-class>
+			<system-event-listener-class>com.liferay.faces.bridge.ext.event.internal.PostConstructApplicationConfigEventListener</system-event-listener-class>
 			<system-event-class>com.liferay.faces.util.event.PostConstructApplicationConfigEvent</system-event-class>
 		</system-event-listener>
 	</application>
@@ -39,6 +39,6 @@
 	<lifecycle>
 		<!-- Add the LiferayPageTopPhaseListener in order to remove duplicate resources from the -->
 		<!-- LIFERAY_SHARED_PAGE_TOP request attribute. -->
-		<phase-listener>com.liferay.faces.bridge.ext.event.internal.LiferayPageTopPhaseListener</phase-listener>
+		<phase-listener>com.liferay.faces.bridge.ext.event.internal.LiferayPageTopPhaseListenerCompat</phase-listener>
 	</lifecycle>
 </faces-config>
