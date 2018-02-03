@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,6 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 	private static final String DO_AS_GROUP_ID = "doAsGroupId";
 	private static final String DO_AS_USER_ID = "doAsUserId";
 	private static final String DO_AS_USER_LANGUAGE_ID = "doAsUserLanguageId";
-	private static final int LIFERAY_BUILD_NUMBER = ProductFactory.getProduct(Product.Name.LIFERAY_PORTAL).getBuildId();
 	private static final String P_AUTH = "p_auth";
 	private static final String P_L_ID = "p_l_id";
 	private static final String P_P_AUTH = "p_p_auth";
@@ -89,28 +89,30 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 	private static final String P_P_STATE_RCV = "p_p_state_rcv";
 	private static final String REFERER_GROUP_ID = "refererGroupId";
 	private static final String REFERER_PLID = "refererPlid";
+	private static final List<String> LIFERAY_NON_NAMESPACED_PARAMS;
 
 	// Protected Constants
 	protected static final String LIFECYCLE_RESOURCE_PHASE_ID = "2";
 
-	private static final ArrayList<String> LIFERAY_NON_NAMESPACED_PARAMS = new ArrayList<String>(5);
-
 	static {
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_AUTH);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_L_ID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_P_AUTH);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_P_ID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_P_STATE);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_P_STATE_RCV);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_P_MODE);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_P_CACHEABILITY);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(P_O_P_ID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(DO_AS_USER_ID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(DO_AS_USER_LANGUAGE_ID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(DO_AS_GROUP_ID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(REFERER_GROUP_ID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(REFERER_PLID);
-		LIFERAY_NON_NAMESPACED_PARAMS.add(CONTROL_PANEL_CATEGORY);
+
+		List<String> liferayNonNamespaceParams = new ArrayList<>();
+		liferayNonNamespaceParams.add(P_AUTH);
+		liferayNonNamespaceParams.add(P_L_ID);
+		liferayNonNamespaceParams.add(P_P_AUTH);
+		liferayNonNamespaceParams.add(P_P_ID);
+		liferayNonNamespaceParams.add(P_P_STATE);
+		liferayNonNamespaceParams.add(P_P_STATE_RCV);
+		liferayNonNamespaceParams.add(P_P_MODE);
+		liferayNonNamespaceParams.add(P_P_CACHEABILITY);
+		liferayNonNamespaceParams.add(P_O_P_ID);
+		liferayNonNamespaceParams.add(DO_AS_USER_ID);
+		liferayNonNamespaceParams.add(DO_AS_USER_LANGUAGE_ID);
+		liferayNonNamespaceParams.add(DO_AS_GROUP_ID);
+		liferayNonNamespaceParams.add(REFERER_GROUP_ID);
+		liferayNonNamespaceParams.add(REFERER_PLID);
+		liferayNonNamespaceParams.add(CONTROL_PANEL_CATEGORY);
+		LIFERAY_NON_NAMESPACED_PARAMS = Collections.unmodifiableList(liferayNonNamespaceParams);
 	}
 
 	// Private Final Data Members
@@ -230,6 +232,9 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 			if (portletAuthToken != null) {
 
 				boolean addPortletAuthToken = true;
+				final Product LIFERAY_PORTAL = ProductFactory.getProductInstance(externalContext,
+						Product.Name.LIFERAY_PORTAL);
+				final int LIFERAY_BUILD_NUMBER = LIFERAY_PORTAL.getBuildId();
 
 				if ((LIFERAY_BUILD_NUMBER < 6102) || ((LIFERAY_BUILD_NUMBER > 6102) && (LIFERAY_BUILD_NUMBER < 6130))) {
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -43,8 +43,8 @@ public class ResourceValidatorLiferayImpl extends ResourceValidatorWrapper imple
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(ResourceValidatorLiferayImpl.class);
 
-	// Private Data Members
-	private ResourceValidator wrappedResourceValidator;
+	// Private Final Data Members
+	private final ResourceValidator wrappedResourceValidator;
 
 	public ResourceValidatorLiferayImpl(ResourceValidator resourceValidator) {
 		this.wrappedResourceValidator = resourceValidator;

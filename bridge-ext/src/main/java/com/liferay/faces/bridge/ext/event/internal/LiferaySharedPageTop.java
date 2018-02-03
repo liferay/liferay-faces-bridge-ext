@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -48,7 +48,7 @@ public class LiferaySharedPageTop {
 
 	// FACES-1442: The SAXParserFactory.newSAXParser() method that comes with the JRE suffers from a
 	// performance problem. Use the Liferay factory intead.
-	private static final javax.xml.parsers.SAXParserFactory saxParserFactory =
+	private static final javax.xml.parsers.SAXParserFactory CONCURRENT_SAX_PARSER_FACTORY =
 		com.liferay.faces.util.xml.ConcurrentSAXParserFactory.newInstance();
 
 	// Private Data Members
@@ -74,7 +74,7 @@ public class LiferaySharedPageTop {
 
 			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(xmlDocumentAsString.getBytes());
 
-			SAXParser saxParser = saxParserFactory.newSAXParser();
+			SAXParser saxParser = CONCURRENT_SAX_PARSER_FACTORY.newSAXParser();
 			saxParser.parse(byteArrayInputStream, sharedPageTopHandler);
 
 			byteArrayInputStream.close();

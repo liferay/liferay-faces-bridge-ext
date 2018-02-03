@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -27,9 +27,9 @@ public class I18nFactoryLiferayImpl extends I18nFactory implements Serializable 
 	// serialVersionUID
 	private static final long serialVersionUID = 5417001486618299444L;
 
-	// Private Data Members
-	private I18n i18n;
-	private I18nFactory wrappedI18nFactory;
+	// Private Final Data Members
+	private final I18n i18n;
+	private final I18nFactory wrappedI18nFactory;
 
 	public I18nFactoryLiferayImpl(I18nFactory i18nFactory) {
 		I18n wrappedI18n = i18nFactory.getI18n();
