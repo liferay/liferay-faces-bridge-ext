@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -33,8 +33,8 @@ public class BrowserSnifferFactoryLiferayImpl extends BrowserSnifferFactory impl
 	// serialVersionUID
 	private static final long serialVersionUID = 1618487876717568315L;
 
-	// Private Data Members
-	private BrowserSnifferFactory wrappedBrowserSnifferFactory;
+	// Private Final Data Members
+	private final BrowserSnifferFactory wrappedBrowserSnifferFactory;
 
 	public BrowserSnifferFactoryLiferayImpl(BrowserSnifferFactory browserSnifferFactory) {
 		this.wrappedBrowserSnifferFactory = browserSnifferFactory;

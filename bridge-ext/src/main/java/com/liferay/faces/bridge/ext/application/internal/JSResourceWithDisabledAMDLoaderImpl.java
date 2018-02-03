@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,13 +17,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.application.FilteredResourceBase;
 import com.liferay.faces.util.application.ResourceUtil;
 import com.liferay.faces.util.cache.Cache;
+import com.liferay.faces.util.cache.CacheFactory;
 
 
 /**
@@ -31,18 +34,61 @@ import com.liferay.faces.util.cache.Cache;
  */
 public class JSResourceWithDisabledAMDLoaderImpl extends FilteredResourceBase {
 
-	// Private Members
-	private Resource wrappedResource;
+	// Private Final Data Members
+	private final Resource wrappedResource;
 
 	public JSResourceWithDisabledAMDLoaderImpl(Resource wrappedResource) {
 		this.wrappedResource = wrappedResource;
+	}
+
+	/**
+	 * This method initializes the filtered resource cache for JSResourceWithDisabledAMDLoaderImpl. The initialization
+	 * cannot be performed in the constructor of {@link
+	 * com.liferay.faces.bridge.ext.application.internal.ResourceHandlerLiferayImpl} since that class is created before
+	 * the {@link CacheFactory} has been created. This method is called in {@link
+	 * com.liferay.faces.bridge.ext.event.internal.PostConstructApplicationConfigEventListener#processEvent(javax.faces.event.SystemEvent)
+	 * } to ensure that the CacheFactory has been created.
+	 *
+	 * @param  initFacesContext
+	 */
+	public static void initFilteredResourceCache(FacesContext initFacesContext) {
+
+		if (!initFacesContext.isProjectStage(ProjectStage.Development)) {
+
+			ExternalContext externalContext = initFacesContext.getExternalContext();
+			Cache<String, Resource> filteredResourceCache;
+			int initialCacheCapacity = LiferayPortletConfigParam.DisabledAMDLoaderResourcesInitialCacheCapacity
+				.getIntegerValue(externalContext);
+			int maxCacheCapacity = LiferayPortletConfigParam.DisabledAMDLoaderResourcesMaxCacheCapacity.getIntegerValue(
+					externalContext);
+
+			if (maxCacheCapacity > -1) {
+				filteredResourceCache = CacheFactory.getConcurrentLRUCacheInstance(externalContext,
+						initialCacheCapacity, maxCacheCapacity);
+			}
+			else {
+				filteredResourceCache = CacheFactory.getConcurrentCacheInstance(externalContext, initialCacheCapacity);
+			}
+
+			Map<String, Object> applicationMap = externalContext.getApplicationMap();
+			applicationMap.put(JSResourceWithDisabledAMDLoaderImpl.class.getName(), filteredResourceCache);
+		}
+	}
+
+	private static Cache<String, String> getFilteredResourceCache(FacesContext facesContext) {
+
+		ExternalContext externalContext = facesContext.getExternalContext();
+		Map<String, Object> applicationMap = externalContext.getApplicationMap();
+
+		return (Cache<String, String>) applicationMap.get(JSResourceWithDisabledAMDLoaderImpl.class.getName());
 	}
 
 	@Override
 	public InputStream getInputStream() throws IOException {
 
 		InputStream inputStream = null;
-		Cache<String, String> filteredResourceCache = getFilteredResourceCache();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Cache<String, String> filteredResourceCache = getFilteredResourceCache(facesContext);
 
 		if (filteredResourceCache != null) {
 
@@ -72,8 +118,8 @@ public class JSResourceWithDisabledAMDLoaderImpl extends FilteredResourceBase {
 	protected String filter(String string) {
 
 		String filteredResourceString = null;
-
-		Cache<String, String> filteredResourceCache = getFilteredResourceCache();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Cache<String, String> filteredResourceCache = getFilteredResourceCache(facesContext);
 		String resourceId = getResourceId();
 
 		if (filteredResourceCache != null) {
@@ -92,15 +138,6 @@ public class JSResourceWithDisabledAMDLoaderImpl extends FilteredResourceBase {
 		}
 
 		return filteredResourceString;
-	}
-
-	private Cache<String, String> getFilteredResourceCache() {
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		Map<String, Object> applicationMap = externalContext.getApplicationMap();
-
-		return (Cache<String, String>) applicationMap.get(JSResourceWithDisabledAMDLoaderImpl.class.getName());
 	}
 
 	private String getResourceId() {

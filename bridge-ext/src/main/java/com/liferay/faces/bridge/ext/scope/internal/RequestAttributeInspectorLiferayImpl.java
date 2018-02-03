@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,6 +16,8 @@ package com.liferay.faces.bridge.ext.scope.internal;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.context.ExternalContext;
@@ -61,18 +63,25 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 	private static final String EXCLUCED_NAMESPACE_JAVAX_SERVLET_INCLUDE = "javax.servlet.include";
 
 	// Private Constants
-	private static final String[] LIFERAY_ATTRIBUTE_NAMES;
-	private static final String[] PORTLET_REQUEST_ATTRIBUTE_NAMES = new String[] {
-			PortletRequest.CCPP_PROFILE, PortletRequest.LIFECYCLE_PHASE, PortletRequest.RENDER_HEADERS,
-			PortletRequest.RENDER_MARKUP, PortletRequest.RENDER_PART, PortletRequest.USER_INFO
-		};
+	private static final List<String> LIFERAY_ATTRIBUTE_NAMES;
+
+	//J-
+	private static final List<String> PORTLET_REQUEST_ATTRIBUTE_NAMES = Collections.unmodifiableList(Arrays.asList(
+		PortletRequest.CCPP_PROFILE,
+		PortletRequest.LIFECYCLE_PHASE,
+		PortletRequest.RENDER_HEADERS,
+		PortletRequest.RENDER_MARKUP,
+		PortletRequest.RENDER_PART,
+		PortletRequest.USER_INFO
+	));
+	//J+
 
 	static {
 
 		// Set the value of the LIFERAY_ATTRIBUTE_NAMES constant. Need to use reflection in order to determine all of
 		// the public constants because different versions of the portal source have different sets of constants. This
 		// approach minimizes diffs in the different source branches for the bridge.
-		List<String> fieldList = new ArrayList<String>();
+		List<String> liferayAttributeNames = new ArrayList<String>();
 		Field[] fields = JavaConstants.class.getFields();
 
 		for (Field field : fields) {
@@ -85,7 +94,7 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 					Object value = field.get(null);
 
 					if ((value != null) && (value instanceof String)) {
-						fieldList.add((String) value);
+						liferayAttributeNames.add((String) value);
 					}
 				}
 				catch (Exception e) {
@@ -94,11 +103,11 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 			}
 		}
 
-		LIFERAY_ATTRIBUTE_NAMES = fieldList.toArray(new String[fieldList.size()]);
+		LIFERAY_ATTRIBUTE_NAMES = Collections.unmodifiableList(liferayAttributeNames);
 	}
 
-	// Private Data Members
-	private RequestAttributeInspector wrappedRequestAttributeInspector;
+	// Private Final Data Members
+	private final RequestAttributeInspector wrappedRequestAttributeInspector;
 
 	public RequestAttributeInspectorLiferayImpl(RequestAttributeInspector requestAttributeInspector) {
 		this.wrappedRequestAttributeInspector = requestAttributeInspector;
@@ -120,41 +129,19 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 			// Always safe to exclude when running under Liferay Portal.
 			excluded = true;
 		}
-		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAVAX_PORTLET_FACES)) {
+		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAVAX_PORTLET_FACES) &&
+				!Bridge.PORTLET_LIFECYCLE_PHASE.equals(name)) {
 
-			if (!Bridge.PORTLET_LIFECYCLE_PHASE.equals(name)) {
-
-				// The "javax.portlet.faces.phase" request attribute must never be excluded, as it is required by {@link
-				// BridgeUtil#getPortletRequestPhase()}.
-				excluded = true;
-			}
+			// The "javax.portlet.faces.phase" request attribute must never be excluded, as it is required by {@link
+			// BridgeUtil#getPortletRequestPhase()}.
+			excluded = true;
 		}
 		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAVAX_PORTLET)) {
 			excluded = true;
 		}
 
-		if (excluded) {
-
-			for (String liferayAttributeName : LIFERAY_ATTRIBUTE_NAMES) {
-
-				if (liferayAttributeName.equals(name)) {
-					excluded = false;
-
-					break;
-				}
-			}
-		}
-
-		if (excluded) {
-
-			for (String portletRequestAttributeName : PORTLET_REQUEST_ATTRIBUTE_NAMES) {
-
-				if (portletRequestAttributeName.equals(name)) {
-					excluded = false;
-
-					break;
-				}
-			}
+		if (excluded && (LIFERAY_ATTRIBUTE_NAMES.contains(name) || PORTLET_REQUEST_ATTRIBUTE_NAMES.contains(name))) {
+			excluded = false;
 		}
 
 		return excluded;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -34,8 +34,8 @@ public class LiferayPortletResponse {
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(LiferayPortletResponse.class);
 
-	// Private Data Members
-	private PortletResponse wrappedPortletResponse;
+	// Private Final Data Members
+	private final PortletResponse wrappedPortletResponse;
 
 	public LiferayPortletResponse(PortletResponse portletResponse) {
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -41,9 +41,11 @@ public class ClientWindowLiferayImpl extends ClientWindowWrapper {
 	private static final String CLIENT_WINDOW_COUNTER_KEY =
 		"com.liferay.faces.bridge.lifecycle.CLIENT_WINDOW_COUNTER_KEY";
 
+	// Private Final Data Members
+	private final ClientWindow wrappedClientWindow;
+
 	// Private Data Members
 	private String id;
-	private ClientWindow wrappedClientWindow;
 
 	public ClientWindowLiferayImpl(ClientWindow clientWindow) {
 		wrappedClientWindow = clientWindow;
