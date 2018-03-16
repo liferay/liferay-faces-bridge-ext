@@ -11,27 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter.internal;
+package com.liferay.faces.bridge.ext.util.internal;
 
-import javax.portlet.PortletURL;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 
 /**
- * See class-level JavaDoc for {@link LiferayURLGeneratorBaseImpl}.
- *
- * @author  Neil Griffin
+ * @author  Kyle Stiemann
  */
-public class LiferayURLGeneratorActionImpl extends LiferayURLGeneratorBaseImpl {
+public final class XMLUtil {
 
-	// Private Constants
-	public static final String LIFECYCLE_ACTION_PHASE_ID = "1";
-
-	public LiferayURLGeneratorActionImpl(PortletURL portletURL, String responseNamespace, String encoding) {
-		super(portletURL, responseNamespace, encoding);
+	private XMLUtil() {
+		throw new AssertionError();
 	}
 
-	public String getPortletLifecycleId() {
-		return LIFECYCLE_ACTION_PHASE_ID;
+	public static String escapeXML(String text) {
+		return HtmlUtil.escape(text);
 	}
-
 }

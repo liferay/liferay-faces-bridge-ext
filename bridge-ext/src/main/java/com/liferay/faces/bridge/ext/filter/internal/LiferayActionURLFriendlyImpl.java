@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -25,8 +25,9 @@ public class LiferayActionURLFriendlyImpl extends LiferayPortletURLFriendlyImpl 
 	// Private Members
 	private String responseNamespace;
 
-	public LiferayActionURLFriendlyImpl(PortletURL wrappedLiferayPortletURL, String responseNamespace) {
-		super(wrappedLiferayPortletURL);
+	public LiferayActionURLFriendlyImpl(PortletURL wrappedLiferayPortletURL, String responseNamespace,
+		String encoding) {
+		super(wrappedLiferayPortletURL, encoding);
 		this.responseNamespace = responseNamespace;
 	}
 
@@ -40,7 +41,6 @@ public class LiferayActionURLFriendlyImpl extends LiferayPortletURLFriendlyImpl 
 
 		PortletURL actionURL = (PortletURL) getWrapped();
 
-		return new LiferayURLGeneratorActionImpl(actionURL.toString(), actionURL.getPortletMode(), responseNamespace,
-				actionURL.getWindowState());
+		return new LiferayURLGeneratorActionImpl(actionURL, responseNamespace, encoding);
 	}
 }
