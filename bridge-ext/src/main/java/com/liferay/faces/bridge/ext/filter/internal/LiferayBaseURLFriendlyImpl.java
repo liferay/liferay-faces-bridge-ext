@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,10 +19,8 @@ import java.util.Map;
 
 import javax.portlet.BaseURL;
 import javax.portlet.PortletSecurityException;
-import javax.portlet.filter.BaseURLWrapper;
 
-import com.liferay.faces.util.render.FacesURLEncoder;
-import com.liferay.faces.util.render.FacesURLEncoderFactory;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 
 /**
@@ -30,11 +28,15 @@ import com.liferay.faces.util.render.FacesURLEncoderFactory;
  */
 public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyCompatImpl implements LiferayBaseURL {
 
+	// Protected Final Data Members
+	protected final String encoding;
+
 	// Private Data Members
 	private String toStringValue;
 
-	public LiferayBaseURLFriendlyImpl(BaseURL baseURL) {
+	protected LiferayBaseURLFriendlyImpl(BaseURL baseURL, String encoding) {
 		super(baseURL);
+		this.encoding = encoding;
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyC
 
 	@Override
 	public void write(Writer writer) throws IOException {
-		writer.write(toString());
+		write(writer, true);
 	}
 
 	@Override
@@ -89,9 +91,7 @@ public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyC
 		String valueAsString = toString();
 
 		if (escapeXML) {
-
-			FacesURLEncoder facesURLEncoder = FacesURLEncoderFactory.getFacesURLEncoderInstance();
-			valueAsString = facesURLEncoder.encode(valueAsString, "UTF-8");
+			valueAsString = HtmlUtil.escape(valueAsString);
 		}
 
 		writer.write(valueAsString);

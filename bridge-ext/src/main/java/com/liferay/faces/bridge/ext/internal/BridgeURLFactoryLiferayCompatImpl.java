@@ -11,27 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter.internal;
+package com.liferay.faces.bridge.ext.internal;
 
-import javax.portlet.PortletURL;
+import javax.portlet.faces.Bridge;
+import javax.portlet.faces.BridgeURLFactory;
 
 
 /**
- * See class-level JavaDoc for {@link LiferayURLGeneratorBaseImpl}.
- *
- * @author  Neil Griffin
+ * @author  Kyle Stiemann
  */
-public class LiferayURLGeneratorActionImpl extends LiferayURLGeneratorBaseImpl {
+public abstract class BridgeURLFactoryLiferayCompatImpl extends BridgeURLFactory {
 
-	// Private Constants
-	public static final String LIFECYCLE_ACTION_PHASE_ID = "1";
-
-	public LiferayURLGeneratorActionImpl(PortletURL portletURL, String responseNamespace, String encoding) {
-		super(portletURL, responseNamespace, encoding);
+	public static boolean isHeaderOrRenderOrResourcePhase(Bridge.PortletPhase portletPhase) {
+		return (Bridge.PortletPhase.HEADER_PHASE.equals(portletPhase) ||
+				Bridge.PortletPhase.RENDER_PHASE.equals(portletPhase) ||
+				Bridge.PortletPhase.RESOURCE_PHASE.equals(portletPhase));
 	}
-
-	public String getPortletLifecycleId() {
-		return LIFECYCLE_ACTION_PHASE_ID;
-	}
-
 }
