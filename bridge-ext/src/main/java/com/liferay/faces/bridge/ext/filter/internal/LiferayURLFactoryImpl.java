@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -42,14 +43,15 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 		"com.liferay.faces.bridge.container.liferay.RESOURCE_URL_GENERATOR";
 
 	@Override
-	public LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse,
-		boolean friendlyURLMapperEnabled) {
+	public LiferayActionURL getLiferayActionURL(PortletContext portletContext, PortletRequest portletRequest,
+		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled) {
 
 		if (friendlyURLMapperEnabled) {
 
 			PortletURL actionURL = mimeResponse.createActionURL();
 
-			return new LiferayActionURLFriendlyImpl(actionURL, mimeResponse.getNamespace());
+			return new LiferayActionURLFriendlyImpl(actionURL, mimeResponse.getNamespace(),
+					mimeResponse.getCharacterEncoding());
 		}
 		else {
 
@@ -59,8 +61,8 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 			if (liferayURLGenerator == null) {
 
 				PortletURL actionURL = mimeResponse.createActionURL();
-				liferayURLGenerator = new LiferayURLGeneratorActionImpl(actionURL.toString(),
-						actionURL.getPortletMode(), mimeResponse.getNamespace(), actionURL.getWindowState());
+				liferayURLGenerator = new LiferayURLGeneratorActionImpl(actionURL, mimeResponse.getNamespace(),
+						mimeResponse.getCharacterEncoding());
 				portletRequest.setAttribute(ACTION_URL_GENERATOR, liferayURLGenerator);
 			}
 
@@ -69,14 +71,15 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 	}
 
 	@Override
-	public LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
-		boolean friendlyURLMapperEnabled) {
+	public LiferayRenderURL getLiferayRenderURL(PortletContext portletContext, PortletRequest portletRequest,
+		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled) {
 
 		if (friendlyURLMapperEnabled) {
 
 			PortletURL renderURL = mimeResponse.createRenderURL();
 
-			return new LiferayRenderURLFriendlyImpl(renderURL, mimeResponse.getNamespace());
+			return new LiferayRenderURLFriendlyImpl(renderURL, mimeResponse.getNamespace(),
+					mimeResponse.getCharacterEncoding());
 		}
 		else {
 
@@ -86,8 +89,8 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 			if (liferayURLGenerator == null) {
 
 				PortletURL renderURL = mimeResponse.createRenderURL();
-				liferayURLGenerator = new LiferayURLGeneratorRenderImpl(renderURL.toString(),
-						renderURL.getPortletMode(), mimeResponse.getNamespace(), renderURL.getWindowState());
+				liferayURLGenerator = new LiferayURLGeneratorRenderImpl(renderURL, mimeResponse.getNamespace(),
+						mimeResponse.getCharacterEncoding());
 				portletRequest.setAttribute(RENDER_URL_GENERATOR, liferayURLGenerator);
 			}
 
@@ -97,14 +100,15 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 	}
 
 	@Override
-	public LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse,
-		boolean friendlyURLMapperEnabled) {
+	public LiferayResourceURL getLiferayResourceURL(PortletContext portletContext, PortletRequest portletRequest,
+		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled) {
 
 		if (friendlyURLMapperEnabled) {
 
 			ResourceURL resourceURL = mimeResponse.createResourceURL();
 
-			return new LiferayResourceURLFriendlyImpl(resourceURL, mimeResponse.getNamespace());
+			return new LiferayResourceURLFriendlyImpl(resourceURL, mimeResponse.getNamespace(),
+					mimeResponse.getCharacterEncoding());
 		}
 		else {
 
@@ -115,7 +119,7 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 
 				ResourceURL resourceURL = mimeResponse.createResourceURL();
 				liferayURLGenerator = new LiferayURLGeneratorResourceImpl(resourceURL.toString(),
-						mimeResponse.getNamespace());
+						mimeResponse.getNamespace(), mimeResponse.getCharacterEncoding());
 				portletRequest.setAttribute(RESOURCE_URL_GENERATOR, liferayURLGenerator);
 			}
 

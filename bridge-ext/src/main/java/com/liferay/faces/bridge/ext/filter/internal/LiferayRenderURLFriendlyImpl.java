@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,6 +16,8 @@ package com.liferay.faces.bridge.ext.filter.internal;
 import javax.faces.FacesWrapper;
 import javax.portlet.PortletURL;
 
+import com.liferay.faces.util.render.FacesURLEncoder;
+
 
 /**
  * @author  Neil Griffin
@@ -27,8 +29,8 @@ public class LiferayRenderURLFriendlyImpl extends LiferayPortletURLFriendlyImpl 
 	private String responseNamespace;
 	private PortletURL wrappedLiferayPortletURL;
 
-	public LiferayRenderURLFriendlyImpl(PortletURL liferayPortletURL, String responseNamespace) {
-
+	public LiferayRenderURLFriendlyImpl(PortletURL liferayPortletURL, String responseNamespace, String encoding) {
+		super(encoding);
 		this.wrappedLiferayPortletURL = liferayPortletURL;
 		this.responseNamespace = responseNamespace;
 	}
@@ -43,8 +45,7 @@ public class LiferayRenderURLFriendlyImpl extends LiferayPortletURLFriendlyImpl 
 
 		PortletURL renderURL = getWrapped();
 
-		return new LiferayURLGeneratorRenderImpl(renderURL.toString(), renderURL.getPortletMode(), responseNamespace,
-				renderURL.getWindowState());
+		return new LiferayURLGeneratorRenderImpl(renderURL, responseNamespace, encoding);
 	}
 
 }
