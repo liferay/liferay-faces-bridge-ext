@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,8 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
+import javax.portlet.PortletURL;
 
 
 /**
@@ -27,9 +26,8 @@ public class LiferayURLGeneratorRenderImpl extends LiferayURLGeneratorBaseImpl {
 	// Private Constants
 	public static final String LIFECYCLE_RENDER_PHASE_ID = "0";
 
-	public LiferayURLGeneratorRenderImpl(String renderURL, PortletMode portletMode, String responseNamespace,
-		WindowState windowState) {
-		super(renderURL, portletMode, responseNamespace, windowState);
+	public LiferayURLGeneratorRenderImpl(PortletURL portletURL, String responseNamespace, String encoding) {
+		super(portletURL, responseNamespace, encoding);
 	}
 
 	public String getPortletLifecycleId() {
