@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 
 import com.liferay.faces.util.helper.Wrapper;
@@ -24,12 +25,12 @@ import com.liferay.faces.util.helper.Wrapper;
  */
 public abstract class LiferayURLFactory implements Wrapper<LiferayURLFactory> {
 
-	public abstract LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse,
-		boolean friendlyURLMapperEnabled);
+	public abstract LiferayActionURL getLiferayActionURL(PortletContext portletContext, PortletRequest portletRequest,
+		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled);
 
-	public abstract LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
-		boolean friendlyURLMapperEnabled);
+	public abstract LiferayRenderURL getLiferayRenderURL(PortletContext portletContext, PortletRequest portletRequest,
+		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled);
 
-	public abstract LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse,
-		boolean friendlyURLMapperEnabled);
+	public abstract LiferayResourceURL getLiferayResourceURL(PortletContext portletContext,
+		PortletRequest portletRequest, MimeResponse mimeResponse, boolean friendlyURLMapperEnabled);
 }

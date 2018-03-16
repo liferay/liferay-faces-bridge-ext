@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -28,7 +28,9 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 	private String responseNamespace;
 	private ResourceURL wrappedLiferayResourceURL;
 
-	public LiferayResourceURLFriendlyImpl(ResourceURL wrappedLiferayResourceURL, String responseNamespace) {
+	public LiferayResourceURLFriendlyImpl(ResourceURL wrappedLiferayResourceURL, String responseNamespace,
+		String encoding) {
+		super(encoding);
 		this.wrappedLiferayResourceURL = wrappedLiferayResourceURL;
 		this.responseNamespace = responseNamespace;
 	}
@@ -59,6 +61,6 @@ public class LiferayResourceURLFriendlyImpl extends LiferayBaseURLFriendlyImpl i
 
 		ResourceURL resourceURL = getWrapped();
 
-		return new LiferayURLGeneratorResourceImpl(resourceURL.toString(), responseNamespace);
+		return new LiferayURLGeneratorResourceImpl(resourceURL.toString(), responseNamespace, encoding);
 	}
 }
