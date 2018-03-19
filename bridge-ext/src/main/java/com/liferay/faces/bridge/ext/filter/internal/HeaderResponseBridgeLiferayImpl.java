@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -33,11 +33,13 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 	private LiferayURLFactory liferayURLFactory;
 	private String namespace;
 	private String namespaceWSRP;
+	private PortletContext portletContext;
 	private HeaderRequest headerRequest;
 
 	public HeaderResponseBridgeLiferayImpl(PortletContext portletContext, HeaderRequest headerRequest,
-		HeaderResponse renderResponse) {
-		super(renderResponse);
+		HeaderResponse headerResponse) {
+		super(headerResponse);
+		this.portletContext = portletContext;
 		this.headerRequest = headerRequest;
 		this.liferayURLFactory = (LiferayURLFactory) BridgeFactoryFinder.getFactory(portletContext,
 				LiferayURLFactory.class);
@@ -45,17 +47,20 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 
 	@Override
 	public PortletURL createActionURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayActionURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayActionURL(portletContext, headerRequest, getResponse(),
+				isFriendlyURLMapperEnabled());
 	}
 
 	@Override
 	public PortletURL createRenderURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayRenderURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayRenderURL(portletContext, headerRequest, getResponse(),
+				isFriendlyURLMapperEnabled());
 	}
 
 	@Override
 	public ResourceURL createResourceURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayResourceURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayResourceURL(portletContext, headerRequest, getResponse(),
+				isFriendlyURLMapperEnabled());
 	}
 
 	@Override

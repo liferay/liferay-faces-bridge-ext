@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,6 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.internal;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,17 +28,57 @@ import javax.portlet.faces.BridgeURL;
 import javax.portlet.faces.BridgeURLWrapper;
 import javax.portlet.faces.BridgeUtil;
 
+import com.liferay.faces.util.logging.Logger;
+import com.liferay.faces.util.logging.LoggerFactory;
+
 
 /**
  * @author  Neil Griffin
  */
 public class BridgeRedirectURLLiferayImpl extends BridgeURLWrapper {
 
+	// Logger
+	private static final Logger logger = LoggerFactory.getLogger(BridgeRedirectURLLiferayImpl.class);
+
+	// Private Final Data Members
+	private final String encoding;
+
 	// Private Data Members
 	private BridgeURL wrappedBridgeRedirectURL;
 
-	public BridgeRedirectURLLiferayImpl(BridgeURL bridgeURL) {
+	public BridgeRedirectURLLiferayImpl(BridgeURL bridgeURL, String encoding) {
+
 		this.wrappedBridgeRedirectURL = bridgeURL;
+		this.encoding = encoding;
+	}
+
+	public static String decodeParameterName(String name, String encoding) throws UnsupportedEncodingException {
+
+		String decodedName = name;
+
+		if (name != null) {
+
+			decodedName = URLDecoder.decode(name, encoding);
+			decodedName = decodedName.replace("+", " ");
+		}
+
+		return decodedName;
+	}
+
+	public static String[] decodeParameterValues(String[] values, String encoding) throws UnsupportedEncodingException {
+
+		String[] encodedValues = values;
+
+		if (values != null) {
+
+			encodedValues = new String[values.length];
+
+			for (int i = 0; i < values.length; i++) {
+				encodedValues[i] = decodeParameterName(values[i], encoding);
+			}
+		}
+
+		return encodedValues;
 	}
 
 	@Override
@@ -67,7 +109,19 @@ public class BridgeRedirectURLLiferayImpl extends BridgeURLWrapper {
 				String parameterName = mapEntry.getKey();
 				String[] parameterValues = mapEntry.getValue();
 
-				renderURL.setParameter(parameterName, parameterValues);
+				try {
+
+					parameterName = decodeParameterName(parameterName, encoding);
+					parameterValues = decodeParameterValues(parameterValues, encoding);
+					renderURL.setParameter(parameterName, parameterValues);
+				}
+				catch (UnsupportedEncodingException e) {
+
+					logger.error(
+						"Unable to decode and append parameter name=\"{0}\" and value=\"{1}\" with encoding \"{2}\".",
+						parameterName, parameterValues, encoding);
+					logger.error(e);
+				}
 			}
 
 			return renderURL.toString();

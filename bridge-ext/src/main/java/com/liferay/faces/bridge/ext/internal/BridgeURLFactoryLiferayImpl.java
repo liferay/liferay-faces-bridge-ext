@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,7 +17,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.portlet.faces.Bridge;
 import javax.portlet.faces.BridgeException;
 import javax.portlet.faces.BridgeURL;
 import javax.portlet.faces.BridgeURLFactory;
@@ -26,7 +29,7 @@ import javax.portlet.faces.BridgeURLFactory;
 /**
  * @author  Neil Griffin
  */
-public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory implements Serializable {
+public class BridgeURLFactoryLiferayImpl extends BridgeURLFactoryLiferayCompatImpl implements Serializable {
 
 	// serialVersionUID
 	private static final long serialVersionUID = 7863243661979446762L;
@@ -37,6 +40,27 @@ public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory implements Ser
 	public BridgeURLFactoryLiferayImpl(BridgeURLFactory bridgeURLFactory) {
 		this.wrappedBridgeURLFactory = bridgeURLFactory;
 		BridgeExtDependencyVerifier.verify();
+	}
+
+	private static String getURLCharacterEncoding(FacesContext facesContext, String defaultEncoding) {
+
+		ExternalContext externalContext = facesContext.getExternalContext();
+		ResponseWriter responseWriter = facesContext.getResponseWriter();
+		Map<String, Object> requestMap = externalContext.getRequestMap();
+		Bridge.PortletPhase portletPhase = (Bridge.PortletPhase) requestMap.get(Bridge.PORTLET_LIFECYCLE_PHASE);
+		String encoding = defaultEncoding;
+
+		if (isHeaderOrRenderOrResourcePhase(portletPhase)) {
+			encoding = externalContext.getResponseCharacterEncoding();
+		}
+		else {
+
+			if (responseWriter != null) {
+				encoding = responseWriter.getCharacterEncoding();
+			}
+		}
+
+		return encoding;
 	}
 
 	@Override
@@ -62,7 +86,9 @@ public class BridgeURLFactoryLiferayImpl extends BridgeURLFactory implements Ser
 		BridgeURL wrappedBridgeRedirectURL = wrappedBridgeURLFactory.getBridgeRedirectURL(facesContext, uri,
 				parameters);
 
-		return new BridgeRedirectURLLiferayImpl(wrappedBridgeRedirectURL);
+		String encoding = getURLCharacterEncoding(facesContext, "UTF-8");
+
+		return new BridgeRedirectURLLiferayImpl(wrappedBridgeRedirectURL, encoding);
 	}
 
 	@Override

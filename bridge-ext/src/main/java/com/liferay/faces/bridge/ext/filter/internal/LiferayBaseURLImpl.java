@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -20,7 +20,7 @@ import java.util.Map;
 
 import javax.portlet.PortletSecurityException;
 
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.faces.bridge.ext.util.internal.XMLUtil;
 
 
 /**
@@ -81,7 +81,7 @@ public abstract class LiferayBaseURLImpl extends LiferayBaseURLCompatImpl {
 
 	@Override
 	public void write(Writer writer) throws IOException {
-		writer.write(toString());
+		write(writer, true);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public abstract class LiferayBaseURLImpl extends LiferayBaseURLCompatImpl {
 		String valueAsString = toString();
 
 		if (escapeXML) {
-			valueAsString = HtmlUtil.escape(valueAsString);
+			valueAsString = XMLUtil.escapeXML(valueAsString);
 		}
 
 		writer.write(valueAsString);
