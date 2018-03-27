@@ -14,7 +14,6 @@
 package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.MimeResponse;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -43,8 +42,8 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 		"com.liferay.faces.bridge.container.liferay.RESOURCE_URL_GENERATOR";
 
 	@Override
-	public LiferayActionURL getLiferayActionURL(PortletContext portletContext, PortletRequest portletRequest,
-		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled) {
+	public LiferayActionURL getLiferayActionURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled) {
 
 		if (friendlyURLMapperEnabled) {
 
@@ -71,8 +70,8 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 	}
 
 	@Override
-	public LiferayRenderURL getLiferayRenderURL(PortletContext portletContext, PortletRequest portletRequest,
-		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled) {
+	public LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled) {
 
 		if (friendlyURLMapperEnabled) {
 
@@ -100,8 +99,8 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 	}
 
 	@Override
-	public LiferayResourceURL getLiferayResourceURL(PortletContext portletContext, PortletRequest portletRequest,
-		MimeResponse mimeResponse, boolean friendlyURLMapperEnabled) {
+	public LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled) {
 
 		if (friendlyURLMapperEnabled) {
 
