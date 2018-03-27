@@ -34,13 +34,11 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 	private LiferayURLFactory liferayURLFactory;
 	private String namespace;
 	private String namespaceWSRP;
-	private PortletContext portletContext;
 	private ResourceRequest resourceRequest;
 
 	public ResourceResponseBridgeLiferayImpl(PortletContext portletContext, ResourceRequest resourceRequest,
 		ResourceResponse resourceResponse) {
 		super(resourceResponse);
-		this.portletContext = portletContext;
 		this.resourceRequest = resourceRequest;
 		this.liferayURLFactory = (LiferayURLFactory) BridgeFactoryFinder.getFactory(portletContext,
 				LiferayURLFactory.class);
@@ -48,20 +46,17 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 
 	@Override
 	public PortletURL createActionURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayActionURL(portletContext, resourceRequest, getResponse(),
-				isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayActionURL(resourceRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
 	public PortletURL createRenderURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayRenderURL(portletContext, resourceRequest, getResponse(),
-				isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayRenderURL(resourceRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
 	public ResourceURL createResourceURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayResourceURL(portletContext, resourceRequest, getResponse(),
-				isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayResourceURL(resourceRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
