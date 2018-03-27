@@ -156,15 +156,15 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 		parse();
 	}
 
-	public static String encodeParameterNameOrValue(String name, String encoding) throws UnsupportedEncodingException {
+	public static String encodeParameterNameOrValue(String nameOrValue, String encoding) throws UnsupportedEncodingException {
 
-		String encodedName = name;
+		String encodedNameOrValue = nameOrValue;
 
-		if (name != null) {
-			encodedName = URLEncoder.encode(name, encoding);
+		if (nameOrValue != null) {
+			encodedNameOrValue = URLEncoder.encode(nameOrValue, encoding);
 		}
 
-		return encodedName;
+		return encodedNameOrValue;
 	}
 
 	public String generateURL(Map<String, String[]> additionalParameterMap) {
