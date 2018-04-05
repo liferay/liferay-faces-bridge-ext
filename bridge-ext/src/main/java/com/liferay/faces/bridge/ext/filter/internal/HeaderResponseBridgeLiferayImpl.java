@@ -47,20 +47,17 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 
 	@Override
 	public PortletURL createActionURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayActionURL(portletContext, headerRequest, getResponse(),
-				isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayActionURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
 	public PortletURL createRenderURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayRenderURL(portletContext, headerRequest, getResponse(),
-				isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayRenderURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
 	public ResourceURL createResourceURL() throws IllegalStateException {
-		return liferayURLFactory.getLiferayResourceURL(portletContext, headerRequest, getResponse(),
-				isFriendlyURLMapperEnabled());
+		return liferayURLFactory.getLiferayResourceURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
 
 	@Override
