@@ -1,5 +1,13 @@
 # Liferay Faces Bridge Extension for Liferay Portal
 
+---
+
+## Notice:
+
+** This branch is reserved for future use. This branch stopped receiving backports after 3/27/2018. The last commit backported to this branch was [081ae36deb08966ddd0aadd5aa06245564b96d2b](https://github.com/liferay/liferay-faces-bridge-impl/commit/081ae36deb08966ddd0aadd5aa06245564b96d2b). The last tested commit on this branch was [8c2c382348f852a3f2f3b3c1370436a039c96cc7](https://github.com/liferay/liferay-faces-bridge-impl/commit/8c2c382348f852a3f2f3b3c1370436a039c96cc7).**
+
+---
+
 This is a library that extends
 [Liferay Faces Bridge](http://www.liferay.com/community/liferay-projects/liferay-faces/overview) to support
 [Liferay Portal](http://www.liferay.com/community/liferay-projects/liferay-portal/overview).
