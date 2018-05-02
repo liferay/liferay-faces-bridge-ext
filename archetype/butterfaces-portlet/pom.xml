@@ -12,13 +12,13 @@
 	<artifactId>com.liferay.faces.archetype.butterfaces.portlet</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>butterfaces-portlet</name>
-	<version>5.0.1</version>
+	<version>5.0.2-SNAPSHOT</version>
 	<description>Maven archetype for a Liferay ButterFaces portlet</description>
 	<scm>
 		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
 		<developerConnection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</developerConnection>
 		<url>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</url>
-		<tag>com.liferay.faces.archetype.butterfaces.portlet-5.0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<build>
 		<extensions>
