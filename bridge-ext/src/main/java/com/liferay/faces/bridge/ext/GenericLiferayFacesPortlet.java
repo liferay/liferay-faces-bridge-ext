@@ -21,6 +21,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.faces.GenericFacesPortlet;
 
+import org.osgi.annotation.versioning.ConsumerType;
+
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 
 
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletMode;
  *
  * @author  Neil Griffin
  */
+@ConsumerType
 public class GenericLiferayFacesPortlet extends GenericFacesPortlet {
 
 	@Override
