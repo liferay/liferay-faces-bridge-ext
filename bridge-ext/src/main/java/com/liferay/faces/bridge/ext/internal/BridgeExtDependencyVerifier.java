@@ -36,8 +36,8 @@ public class BridgeExtDependencyVerifier {
 		int liferayPortalMajorVersion = liferayPortal.getMajorVersion();
 		int liferayPortalMinorVersion = liferayPortal.getMinorVersion();
 
-		if (!((liferayPortalMajorVersion == 7) && (liferayPortalMinorVersion == 0))) {
-			logger.error("{0} {1} is designed to be used with Liferay Portal 7.0 but detected {2}.{3}",
+		if (!((liferayPortalMajorVersion == 7) && (liferayPortalMinorVersion == 1))) {
+			logger.error("{0} {1} is designed to be used with Liferay Portal 7.1 but detected {2}.{3}",
 				implementationTitle, implementationVersion, liferayPortalMajorVersion, liferayPortalMinorVersion);
 		}
 
