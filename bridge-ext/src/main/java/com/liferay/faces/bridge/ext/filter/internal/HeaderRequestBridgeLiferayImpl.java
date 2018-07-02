@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2017 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,11 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import com.liferay.faces.util.logging.Logger;
-import com.liferay.faces.util.logging.LoggerFactory;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import java.util.Enumeration;
 
 import javax.portlet.HeaderRequest;
 import javax.portlet.PortalContext;
@@ -26,7 +22,13 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.portlet.filter.HeaderRequestWrapper;
-import java.util.Enumeration;
+
+import com.liferay.faces.util.logging.Logger;
+import com.liferay.faces.util.logging.LoggerFactory;
+
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 
 /**
@@ -42,7 +44,7 @@ public class HeaderRequestBridgeLiferayImpl extends HeaderRequestWrapper {
 	private LiferayPortletRequest liferayPortletRequest;
 
 	public HeaderRequestBridgeLiferayImpl(HeaderRequest headerRequest, String responseNamespace,
-										  PortletConfig portletConfig, PortalContext portalContext) {
+		PortletConfig portletConfig, PortalContext portalContext) {
 		super(headerRequest);
 		this.liferayPortletRequest = new LiferayPortletRequest(headerRequest, responseNamespace, portletConfig);
 		this.portalContext = portalContext;
