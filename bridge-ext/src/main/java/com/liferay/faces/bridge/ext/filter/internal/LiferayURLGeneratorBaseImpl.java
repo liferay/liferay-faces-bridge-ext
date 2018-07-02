@@ -156,7 +156,8 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 		parse();
 	}
 
-	public static String encodeParameterNameOrValue(String nameOrValue, String encoding) throws UnsupportedEncodingException {
+	public static String encodeParameterNameOrValue(String nameOrValue, String encoding)
+		throws UnsupportedEncodingException {
 
 		String encodedNameOrValue = nameOrValue;
 
