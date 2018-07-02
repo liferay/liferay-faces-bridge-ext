@@ -20,6 +20,30 @@
 		<module>test</module>
 	</modules>
 
+	<!-- The following properties are necessary for fix-versions.pl -->
+	<properties>
+		<faces.api.version>${faces.spec.version}</faces.api.version>
+		<faces.spec.version>2.2</faces.spec.version>
+		<liferay.version>7.0.6</liferay.version>
+		<liferay.version.dtd>7.0</liferay.version.dtd>
+	</properties>
+
+	<!-- The following dependencies are necessary for fix-versions.pl -->
+	<dependencyManagement>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencyManagement>
+
 	<build>
 		<plugins>
 			<plugin>
