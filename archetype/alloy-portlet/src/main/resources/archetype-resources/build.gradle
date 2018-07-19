@@ -5,11 +5,11 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.liferay.faces', name: 'com.liferay.faces.alloy', version:'3.0.1'
-    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version:'5.0.1'
-    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version:'4.1.0'
-    compile group: 'log4j', name: 'log4j', version:'1.2.14'
-    runtime group: 'org.glassfish', name: 'javax.faces', version:'2.2.14'
-    providedCompile group: 'javax.faces', name: 'javax.faces-api', version:'2.2'
+    compile group: 'com.liferay.faces', name: 'com.liferay.faces.alloy', version: '@liferay-faces-alloy-version@'
+    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
+    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
+    compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
+    runtime group: 'org.glassfish', name: 'javax.faces', version: '@mojarra-version@'
+    providedCompile group: 'javax.faces', name: 'javax.faces-api', version: '@faces-api-version@'
 }
 
