@@ -72,7 +72,7 @@
 			<dependency>
 				<groupId>org.icefaces</groupId>
 				<artifactId>icefaces</artifactId>
-				<version>4.2.0</version>
+				<version>@icefaces-version@</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.glassfish</groupId>
@@ -91,12 +91,12 @@
 			<dependency>
 				<groupId>org.icefaces</groupId>
 				<artifactId>icefaces-ace</artifactId>
-				<version>4.2.0</version>
+				<version>@icefaces-version@</version>
 			</dependency>
 			<dependency>
 				<groupId>org.icepush</groupId>
 				<artifactId>icepush</artifactId>
-				<version>4.2.0</version>
+				<version>@icefaces-version@</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>jsp-api</artifactId>
