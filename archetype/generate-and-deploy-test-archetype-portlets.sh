@@ -6,18 +6,26 @@ buildArchetypeAndGenerateAndDeployTestArchetypePortlet() {
 	LIFERAY_VERSION=$2
 	JSF_VERSION=$3
 	BUILD_TOOL=$4
+	USE_RELEASE_ARCHETYPE_VERSIONS=$5
 
-	echo "Building $ARCHETYPE archetype:"
 	cd $ARCHETYPE
 	ARCHETYPE_VERSION=$(mvn org.codehaus.mojo:exec-maven-plugin:1.2.1:exec -Dexec.executable="echo" \
 		-q --non-recursive \
 		-Dexec.args='${project.version}')
-	mvn clean install
+
+	if [ "$USE_RELEASE_ARCHETYPE_VERSIONS" = true ]; then
+		ARCHETYPE_MINOR_VERSION=$(echo "$ARCHETYPE_VERSION" | sed -e 's/^\(\([0-9][0-9]*\.\)*\)\([0-9]*\).*$/\3/')
+		ARCHETYPE_VERSION=${ARCHETYPE_VERSION//$ARCHETYPE_MINOR_VERSION-SNAPSHOT/$((ARCHETYPE_MINOR_VERSION-1))}
+	else
+		echo "Building $ARCHETYPE archetype:"
+		mvn clean install
+	fi
+
 	cd ../target/
 	ARCHETYPE_LIBRARY=${ARCHETYPE//[^[:alpha:]]}
 	ARCHETYPE_LIBRARY=${ARCHETYPE_LIBRARY//portlet}
 
-	echo "Generating test $ARCHETYPE:"
+	echo "Generating test $ARCHETYPE with archetype version $ARCHETYPE_VERSION:"
 	mvn archetype:generate \
 		-DgroupId=com.mycompany \
 		-DartifactId=com.mycompany.my.$ARCHETYPE_LIBRARY.portlet \
@@ -49,8 +57,14 @@ mkdir -p ./target/
 
 BUILD_TOOL="maven"
 
-if [[ "$1" == "gradle" ]]; then
+if [[ "$@" == *"gradle"* ]]; then
 	BUILD_TOOL="gradle"
+fi
+
+USE_RELEASE_ARCHETYPE_VERSIONS=false
+
+if [[ "$@" == *"release"* ]]; then
+	USE_RELEASE_ARCHETYPE_VERSIONS=true
 fi
 
 LIFERAY_VERSION=$(mvn org.codehaus.mojo:exec-maven-plugin:1.2.1:exec -Dexec.executable="echo" \
@@ -65,10 +79,11 @@ JSF_VERSION=$(mvn org.codehaus.mojo:exec-maven-plugin:1.2.1:exec -Dexec.executab
 if hash parallel 2>/dev/null; then
 	export -f buildArchetypeAndGenerateAndDeployTestArchetypePortlet
 	parallel --no-notice --max-args=1 \
-		buildArchetypeAndGenerateAndDeployTestArchetypePortlet {} $LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL ::: \
-			./*-portlet
+		buildArchetypeAndGenerateAndDeployTestArchetypePortlet {} \
+			$LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS ::: ./*-portlet
 else
 	for ARCHETYPE in ./*-portlet; do
-		(buildArchetypeAndGenerateAndDeployTestArchetypePortlet $ARCHETYPE $LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL)
+		(buildArchetypeAndGenerateAndDeployTestArchetypePortlet \
+			$ARCHETYPE $LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS)
 	done
 fi
