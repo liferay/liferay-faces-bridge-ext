@@ -12,13 +12,13 @@
 	<artifactId>com.liferay.faces.archetype.bootsfaces.portlet</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>bootsfaces-portlet</name>
-	<version>5.0.2-SNAPSHOT</version>
+	<version>5.0.2</version>
 	<description>Maven archetype for a Liferay BootsFaces portlet</description>
 	<scm>
 		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
 		<developerConnection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</developerConnection>
 		<url>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</url>
-		<tag>HEAD</tag>
+		<tag>com.liferay.faces.archetype.bootsfaces.portlet-5.0.2</tag>
 	</scm>
 	<build>
 		<extensions>
@@ -47,9 +47,7 @@
 						</goals>
 						<configuration>
 							<target>
-								<replace dir="${project.build.outputDirectory}/archetype-resources"
-									includes="build.gradle,pom.xml"
-									replacefilterfile="${project.basedir}/../archetype-build-file.properties" />
+								<replace dir="${project.build.outputDirectory}/archetype-resources" includes="build.gradle,pom.xml" replacefilterfile="${project.basedir}/../archetype-build-file.properties" />
 							</target>
 						</configuration>
 					</execution>
