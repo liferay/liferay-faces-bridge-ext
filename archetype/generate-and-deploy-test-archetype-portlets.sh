@@ -9,6 +9,12 @@ buildArchetypeAndGenerateAndDeployTestArchetypePortlet() {
 	USE_RELEASE_ARCHETYPE_VERSIONS=$5
 
 	cd $ARCHETYPE
+
+	if [ ! -f pom.xml ]; then
+		echo "Skipping $ARCHETYPE because no pom.xml file was found."
+		return;
+	fi
+
 	ARCHETYPE_VERSION=$(mvn org.codehaus.mojo:exec-maven-plugin:1.2.1:exec -Dexec.executable="echo" \
 		-q --non-recursive \
 		-Dexec.args='${project.version}')
@@ -26,7 +32,7 @@ buildArchetypeAndGenerateAndDeployTestArchetypePortlet() {
 	ARCHETYPE_LIBRARY=${ARCHETYPE_LIBRARY//portlet}
 
 	echo "Generating test $ARCHETYPE with archetype version $ARCHETYPE_VERSION:"
-	mvn archetype:generate \
+	mvn --batch-mode archetype:generate \
 		-DgroupId=com.mycompany \
 		-DartifactId=com.mycompany.my.$ARCHETYPE_LIBRARY.portlet \
 		-DarchetypeGroupId=com.liferay.faces.archetype \
