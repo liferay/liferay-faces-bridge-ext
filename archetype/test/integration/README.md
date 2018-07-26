@@ -1,8 +1,44 @@
 # Running the Liferay Faces Archetype Integration Tests
 
-The Liferay Faces Archetype integration tests can be run from an IDE (such as Eclipse) or the command line. The test
-framework expects that the test portlets have already been deployed to a running portal instance and have already been
-added to the appropriate pages.
+The Liferay Faces Archetypes can be run from the command-line.
+
+To run the integration tests on the latest SNAPSHOT archetypes:
+
+1. Navigate to the `archetype` directory:
+
+		cd archetype
+
+2. Build the project:
+
+		mvn clean install
+
+The integration tests can also be run against specific versions.
+
+To run the tests against a specific version:
+
+1. Navigate to the `archetype/test/integration` directory:
+
+		cd archetype/test/integration
+
+2. Build the tests with the `it.archetype.version` property:
+
+		mvn clean install -Dit.archetype.version=5.0.2
+
+To use different versions for specific archetypes, use one or more of the `it.*.archetype.version` properties:
+
+	mvn clean install -Dit.archetype.version=5.0.4 \
+		-Dit.bootsfaces.archetype.version=5.0.2 -Dit.butterfaces.archetype.version=5.0.2
+
+To skip testing certain archetypes, use one or more of the `it.skip.*.archetype` properties:
+
+	mvn clean install -Dit.archetype.version=3.0.4 \
+		-Dit.skip.bootsfaces.archetype=true -Dit.skip.butterfaces.archetype=true
+
+## Running the Liferay Faces Archetype Selenium Integration Tests
+
+The Liferay Faces Archetype Selenium integration tests can be run from an IDE (such as Eclipse) or the command line. The
+test framework expects that the test portlets have already been deployed to a running portal instance and have already
+been added to the appropriate pages.
 
 ### Generating and Deploying the Test Portlets
 
