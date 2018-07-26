@@ -134,6 +134,22 @@ public class MavenGradleGenerationDiffIT {
 		return contents;
 	}
 
+	private static final String getTestArchetypeVersion(String defaultVersion, String archetypeType) {
+
+		String version = System.getProperty("it." + archetypeType + ".archetype.version");
+
+		if ((version == null) || "".equals(version)) {
+
+			version = System.getProperty("it.archetype.version");
+
+			if ((version == null) || "".equals(version)) {
+				version = defaultVersion;
+			}
+		}
+
+		return version;
+	}
+
 	private static Map<String, ZipEntry> getZipEntriesFromWar(ZipFile war) {
 
 		Enumeration<? extends ZipEntry> warZipEntriesEnumeration = war.entries();
@@ -249,8 +265,21 @@ public class MavenGradleGenerationDiffIT {
 				File archetypePom = new File(archetypeProjectDirectory, "pom.xml");
 
 				if (!archetypePom.exists()) {
+
 					logger.info("Skipping tests for {} since no pom.xml was found for that project.",
 						archetypeProjectDirectory.getName());
+
+					continue;
+				}
+
+				String archetypeProjectDirectoryName = archetypeProjectDirectory.getName();
+				String archetypeType = archetypeProjectDirectoryName.replace("-portlet", "");
+				boolean skip = "true".equalsIgnoreCase(System.getProperty("it.skip." + archetypeType + ".archetype"));
+
+				if (skip) {
+
+					logger.info("Skipping tests for {} since -Dit.skip.{}.archetype=true was set.", archetypeType,
+						archetypeType);
 
 					continue;
 				}
@@ -275,14 +304,16 @@ public class MavenGradleGenerationDiffIT {
 
 				Properties properties = new Properties();
 				properties.setProperty("interactiveMode", "false");
-				properties.setProperty("archetypeVersion", model.getVersion());
+
+				String version = model.getVersion();
+				version = getTestArchetypeVersion(version, archetypeType);
+				properties.setProperty("archetypeVersion", version);
 				properties.setProperty("archetypeGroupId", model.getGroupId());
 
 				String archetypeArtifactId = model.getArtifactId();
 				properties.setProperty("archetypeArtifactId", archetypeArtifactId);
 				properties.setProperty("groupId", "com.mycompany");
 
-				String archetypeProjectDirectoryName = archetypeProjectDirectory.getName();
 				String generatedProjectName = "com.mycompany.my." + archetypeProjectDirectoryName.replace("-", ".");
 				properties.setProperty("artifactId", generatedProjectName);
 				generateProjectInvocationRequest.setProperties(properties);
