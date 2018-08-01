@@ -15,10 +15,12 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.util.Iterator;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitFactory;
 
+import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.application.ApplicationUtil;
 
 
@@ -47,7 +49,11 @@ public class RenderKitFactoryLiferayImpl extends RenderKitFactory {
 		// FACES-2615 Only Add the RenderKit to the delegation chain when the application is not starting up or
 		// shutting down.
 		if ("HTML_BASIC".equals(renderKitId) && !ApplicationUtil.isStartupOrShutdown(facesContext)) {
-			renderKit = new RenderKitLiferayImpl(renderKit);
+
+			ExternalContext externalContext = facesContext.getExternalContext();
+			boolean renderHeadResourceIds = LiferayPortletConfigParam.RenderHeadResourceIds.getBooleanValue(
+					externalContext);
+			renderKit = new RenderKitLiferayImpl(renderKit, renderHeadResourceIds);
 		}
 
 		return renderKit;

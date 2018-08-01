@@ -15,10 +15,12 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.Writer;
 
+import javax.faces.component.UIOutput;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
 import javax.faces.render.RenderKit;
 import javax.faces.render.RenderKitWrapper;
+import javax.faces.render.Renderer;
 
 
 /**
@@ -26,11 +28,18 @@ import javax.faces.render.RenderKitWrapper;
  */
 public class RenderKitLiferayImpl extends RenderKitWrapper {
 
-	// Private Data Members
-	private RenderKit wrappedRenderKit;
+	// Private Constants
+	private static final String SCRIPT_RENDERER_TYPE = "javax.faces.resource.Script";
+	private static final String STYLESHEET_RENDERER_TYPE = "javax.faces.resource.Stylesheet";
 
-	public RenderKitLiferayImpl(RenderKit wrappedRenderKit) {
+	// Private Final Data Members
+	private final RenderKit wrappedRenderKit;
+	private final boolean renderHeadResourceIds;
+
+	public RenderKitLiferayImpl(RenderKit wrappedRenderKit, boolean renderHeadResourceIds) {
+
 		this.wrappedRenderKit = wrappedRenderKit;
+		this.renderHeadResourceIds = renderHeadResourceIds;
 	}
 
 	public static ResponseWriter createSennaJSDisablingResponseWriter(ResponseWriter responseWriter) {
@@ -66,6 +75,24 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 		ResponseWriter responseWriter = super.createResponseWriter(writer, contentTypeList, characterEncoding);
 
 		return createSennaJSDisablingResponseWriter(responseWriter);
+	}
+
+	@Override
+	public Renderer getRenderer(String family, String rendererType) {
+
+		Renderer renderer = super.getRenderer(family, rendererType);
+
+		if (UIOutput.COMPONENT_FAMILY.equals(family)) {
+
+			if ("javax.faces.Head".equals(rendererType)) {
+				renderer = new HeadRendererLiferayImpl(renderer);
+			}
+			else if (SCRIPT_RENDERER_TYPE.equals(rendererType) || STYLESHEET_RENDERER_TYPE.equals(rendererType)) {
+				renderer = new ResourceRendererLiferayImpl(renderer, family, rendererType, renderHeadResourceIds);
+			}
+		}
+
+		return renderer;
 	}
 
 	@Override
