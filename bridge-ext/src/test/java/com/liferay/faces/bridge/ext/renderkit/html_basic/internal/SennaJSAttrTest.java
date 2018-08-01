@@ -72,7 +72,7 @@ public class SennaJSAttrTest {
 		<h:link value="h:link"								pt:data-data-senna-off-true-expected="false" /><br />
 		*/
 
-		RenderKit renderKit = new RenderKitLiferayImpl(new RenderKitMockImpl());
+		RenderKit renderKit = new RenderKitLiferayImpl(new RenderKitMockImpl(), false);
 		StringWriter stringWriter = new StringWriter();
 		ResponseWriter responseWriter = renderKit.createResponseWriter(stringWriter, null, null);
 

@@ -51,6 +51,23 @@ public class LiferayPortletConfigParamUtil {
 		return booleanValue;
 	}
 
+	public static boolean getBooleanValue(ExternalContext externalContext, String name, String alternateName,
+		boolean defaultBooleanValue) {
+
+		boolean booleanValue = defaultBooleanValue;
+		String configuredValue = externalContext.getInitParameter(name);
+
+		if ((configuredValue == null) && (alternateName != null)) {
+			configuredValue = externalContext.getInitParameter(alternateName);
+		}
+
+		if (configuredValue != null) {
+			booleanValue = BooleanHelper.toBoolean(configuredValue);
+		}
+
+		return booleanValue;
+	}
+
 	public static String getConfiguredValue(PortletConfig portletConfig, String name, String alternateName) {
 
 		String configuredValue = portletConfig.getInitParameter(name);
