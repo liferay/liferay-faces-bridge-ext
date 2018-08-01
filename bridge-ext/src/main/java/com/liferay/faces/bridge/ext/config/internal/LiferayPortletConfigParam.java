@@ -44,7 +44,17 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 		"com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources.INITIAL_CACHE_CAPACITY", 16),
 
 	DisabledAMDLoaderResourcesMaxCacheCapacity(
-		"com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources.MAX_CACHE_CAPACITY", -1);
+		"com.liferay.faces.bridge.ext.application.disabledAMDLoaderResources.MAX_CACHE_CAPACITY", -1),
+
+	/**
+	 * Flag indicating whether an id should be rendered for head resources such as scripts and style sheets in order to
+	 * allow single page application engines (SPAs) such as Liferay's SennaJS to deduplicate resources between portlets.
+	 * If the same resource is rendered by two different portlets, it will have different URLs in each case, and SPAs
+	 * will not be able to tell that the resources are the same. Setting this flag to true causes an id attribute to be
+	 * rendered for each resource which has a name. The id includes the name and the library (if it exists) of the
+	 * resource in order to uniquely identify the resource. The default value is true.
+	 */
+	RenderHeadResourceIds("com.liferay.faces.bridge.ext.renderHeadResourceIds", true);
 
 	// Private Data Members
 	private String alternateName;
@@ -109,6 +119,10 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	@Override
 	public String getAlternateName() {
 		return alternateName;
+	}
+
+	public boolean getBooleanValue(ExternalContext externalContext) {
+		return LiferayPortletConfigParamUtil.getBooleanValue(externalContext, name, alternateName, defaultBooleanValue);
 	}
 
 	@Override
