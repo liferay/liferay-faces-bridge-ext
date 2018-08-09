@@ -1,0 +1,215 @@
+/**
+ * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
+
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.faces.component.StateHolder;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ComponentSystemEvent;
+import javax.faces.event.ComponentSystemEventListener;
+import javax.faces.event.ListenerFor;
+import javax.faces.event.PostAddToViewEvent;
+import javax.faces.render.RenderKit;
+import javax.faces.render.RenderKitWrapper;
+import javax.faces.render.Renderer;
+import javax.faces.render.RendererWrapper;
+
+import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
+import com.liferay.faces.util.logging.Logger;
+import com.liferay.faces.util.logging.LoggerFactory;
+
+
+/**
+ * @author  Kyle Stiemann
+ */
+@ListenerFor(systemEventClass = PostAddToViewEvent.class)
+public class ResourceRendererLiferayImpl extends RendererWrapper implements ComponentSystemEventListener, StateHolder {
+
+	// Logger
+	private static final Logger logger = LoggerFactory.getLogger(ResourceRendererLiferayImpl.class);
+
+	// Private Data Members
+	private boolean transientFlag;
+	private Renderer wrappedRenderer;
+	private String[] rendererIdParts;
+	private boolean renderHeadResourceIds;
+
+	/**
+	 * This zero-arg constructor is required by the {@link javax.faces.component.StateHolderSaver} class during the
+	 * RESTORE_VIEW phase of the JSF lifecycle. The reason why this class is involved in restoring state is because the
+	 * {@link javax.faces.component.UIComponent.ComponentSystemEventListenerAdapter} implements {@link
+	 * javax.faces.component.StateHolder} and will attempt to restore the state of any class in the restored view that
+	 * implements {@link ComponentSystemEventListener}. It does this first by instantiating the class with a zero-arg
+	 * constructor, and then calls the {@link #restoreState(FacesContext, Object)} method.
+	 */
+	public ResourceRendererLiferayImpl() {
+		// Defer initialization of wrappedRenderer until restoreState(FacesContext, Object) is called.
+	}
+
+	public ResourceRendererLiferayImpl(Renderer renderer, String family, String rendererType,
+		boolean renderHeadResourceIds) {
+
+		this.wrappedRenderer = renderer;
+		this.rendererIdParts = new String[] { family, rendererType };
+		this.renderHeadResourceIds = renderHeadResourceIds;
+	}
+
+	private static boolean isLiferayFacesBridgeInlineScript(UIComponent componentResource, String resourceId) {
+
+		boolean liferayBridgeInlineScript = false;
+
+		if ((resourceId != null) && resourceId.toLowerCase(Locale.ENGLISH).contains("inlinescript")) {
+
+			Class<? extends UIComponent> clazz = componentResource.getClass();
+			String className = clazz.getName();
+			liferayBridgeInlineScript = className.startsWith("com.liferay.faces.bridge");
+		}
+
+		return liferayBridgeInlineScript;
+	}
+
+	private static boolean isResource(UIComponent componentResource, String resourceName, String resourceLibrary) {
+		return (isScriptResource(resourceName, resourceLibrary) || isStyleSheetResource(resourceName)) &&
+			!isLiferayFacesBridgeInlineScript(componentResource, resourceName);
+	}
+
+	private static boolean isRichFacesReslibResource(String resourceName, String resourceLibrary) {
+		return ((resourceName != null) && resourceName.endsWith("reslib")) &&
+			((resourceLibrary != null) && resourceLibrary.startsWith("org.richfaces"));
+	}
+
+	private static boolean isScriptResource(String resourceName, String resourceLibrary) {
+		return ((resourceName != null) && (resourceName.endsWith("js") || resourceName.contains(".js?"))) ||
+			isRichFacesReslibResource(resourceName, resourceLibrary);
+	}
+
+	private static boolean isStyleSheetResource(String resourceName) {
+		return (resourceName != null) && (resourceName.endsWith("css") || resourceName.contains(".css?"));
+	}
+
+	@Override
+	public void encodeEnd(FacesContext facesContext, UIComponent uiComponentResource) throws IOException {
+
+		ResponseWriter responseWriter = null;
+
+		if (renderHeadResourceIds(facesContext)) {
+
+			Map<String, Object> componentResourceAttributes = uiComponentResource.getAttributes();
+			String resourceName = (String) componentResourceAttributes.get("name");
+			String resourceLibrary = (String) componentResourceAttributes.get("library");
+
+			if (isResource(uiComponentResource, resourceName, resourceLibrary)) {
+
+				responseWriter = facesContext.getResponseWriter();
+				facesContext.setResponseWriter(new ResponseWriterHeadResourceLiferayImpl(responseWriter, resourceName,
+						resourceLibrary));
+			}
+		}
+
+		// Ask the wrapped renderer to encode the resource.
+		super.encodeEnd(facesContext, uiComponentResource);
+
+		if (responseWriter != null) {
+
+			// Restore the original response writer.
+			facesContext.setResponseWriter(responseWriter);
+		}
+	}
+
+	@Override
+	public Renderer getWrapped() {
+		return wrappedRenderer;
+	}
+
+	@Override
+	public boolean isTransient() {
+		return transientFlag;
+	}
+
+	/**
+	 * Since the Mojarra {@link com.sun.faces.renderkit.html_basic.ScriptStyleBaseRenderer} class implements {@link
+	 * ComponentSystemEventListener}, this class must implement that interface too, since this is a wrapper type of
+	 * class. Mojarra uses this method to intercept {@link PostAddToViewEvent} in order to add script and link resources
+	 * to the head (if the target attribute has a value of "head").
+	 */
+	@Override
+	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+
+		// If the wrapped renderer has the ability to listen to component system events, then invoke the event
+		// processing on the wrapped renderer. This is necessary when wrapping the Mojarra ScriptRenderer or
+		// StylesheetRenderer because they extend ScriptStyleBaseRenderer which attempts to add the component
+		// associated with the specified event as a resource on the view root.
+		if (wrappedRenderer instanceof ComponentSystemEventListener) {
+
+			ComponentSystemEventListener wrappedListener = (ComponentSystemEventListener) wrappedRenderer;
+			wrappedListener.processEvent(event);
+		}
+		else {
+			logger.debug("Wrapped renderer=[{0}] does not implement ComponentSystemEventListener", wrappedRenderer);
+		}
+	}
+
+	@Override
+	public void restoreState(FacesContext facesContext, Object state) {
+
+		if (wrappedRenderer == null) {
+
+			this.rendererIdParts = (String[]) state;
+
+			RenderKit renderKit = facesContext.getRenderKit();
+
+			while ((renderKit != null) && (renderKit instanceof RenderKitWrapper)) {
+
+				RenderKitWrapper renderKitWrapper = (RenderKitWrapper) renderKit;
+				renderKit = renderKitWrapper.getWrapped();
+
+				if (renderKit instanceof RenderKitLiferayImpl) {
+
+					renderKitWrapper = (RenderKitLiferayImpl) renderKit;
+					renderKit = renderKitWrapper.getWrapped();
+
+					break;
+				}
+			}
+
+			if (renderKit != null) {
+				this.wrappedRenderer = renderKit.getRenderer(rendererIdParts[0], rendererIdParts[1]);
+			}
+			else {
+				logger.debug("Unable to restore wrapped renderer.");
+			}
+		}
+	}
+
+	@Override
+	public Object saveState(FacesContext facesContext) {
+		return rendererIdParts;
+	}
+
+	@Override
+	public void setTransient(boolean newTransientValue) {
+		this.transientFlag = newTransientValue;
+	}
+
+	private boolean renderHeadResourceIds(FacesContext facesContext) {
+		return renderHeadResourceIds && HeadRendererLiferayImpl.isRenderingHeadSection(facesContext);
+	}
+}
