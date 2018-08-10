@@ -18,6 +18,8 @@ import java.io.IOException;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
 
+import com.liferay.faces.util.lang.NameValuePair;
+
 
 /**
  * @author  Kyle Stiemann
@@ -26,16 +28,19 @@ public class ResponseWriterHeadResourceLiferayImpl extends ResponseWriterWrapper
 
 	// Private Final Data Members
 	private final ResponseWriter wrappedResponseWriter;
+	private final NameValuePair<String, Object> dataSennaTrack;
 	private final String resourceName;
 	private final String resourceLibrary;
 
 	// Private Data Members
 	private boolean idAttributeWritten;
+	private boolean dataSennaTrackAttributeWritten;
 
-	public ResponseWriterHeadResourceLiferayImpl(ResponseWriter wrappedResponseWriter, String resourceName,
-		String resourceLibrary) {
+	public ResponseWriterHeadResourceLiferayImpl(ResponseWriter wrappedResponseWriter,
+		NameValuePair<String, Object> dataSennaTrack, String resourceName, String resourceLibrary) {
 
 		this.wrappedResponseWriter = wrappedResponseWriter;
+		this.dataSennaTrack = dataSennaTrack;
 		this.resourceName = resourceName;
 		this.resourceLibrary = resourceLibrary;
 	}
@@ -56,6 +61,10 @@ public class ResponseWriterHeadResourceLiferayImpl extends ResponseWriterWrapper
 			}
 		}
 
+		if (!dataSennaTrackAttributeWritten && (dataSennaTrack != null)) {
+			writeAttribute(dataSennaTrack.getName(), dataSennaTrack.getValue(), null);
+		}
+
 		super.endElement(name);
 	}
 
@@ -71,6 +80,10 @@ public class ResponseWriterHeadResourceLiferayImpl extends ResponseWriterWrapper
 
 		if (!idAttributeWritten && "id".equals(name)) {
 			idAttributeWritten = true;
+		}
+
+		if (!dataSennaTrackAttributeWritten && ResourceRendererLiferayImpl.DATA_SENNA_TRACK.equals(name)) {
+			dataSennaTrackAttributeWritten = true;
 		}
 	}
 }

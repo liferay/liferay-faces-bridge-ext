@@ -72,22 +72,49 @@ public class SennaJSAttrTest {
 		<h:link value="h:link"								pt:data-data-senna-off-true-expected="false" /><br />
 		*/
 
-		RenderKit renderKit = new RenderKitLiferayImpl(new RenderKitMockImpl(), false);
+		RenderKit renderKit = new RenderKitLiferayImpl(new RenderKitMockImpl(), false, null);
 		StringWriter stringWriter = new StringWriter();
 		ResponseWriter responseWriter = renderKit.createResponseWriter(stringWriter, null, null);
 
 		// <example:form										pt:data-data-senna-off-true-expected="true" />
 		testWriteElement(responseWriter, "form", new UIComponentMockImpl("example", "example"), true);
 
-		// <alloy:form											pt:data-data-senna-off-true-expected="true" />
+		// <alloy:form pt:data-senna-off="#{null}"				pt:data-data-senna-off-true-expected="false" />
 		testWriteElement(responseWriter, "form",
 				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, "com.liferay.faces.alloy.component.form.FormRenderer",
-						"false"),
+						"data-senna-off", null),
+				false);
+
+		// <alloy:form pt:data-senna-off=""						pt:data-data-senna-off-true-expected="false" />
+		testWriteElement(responseWriter, "form",
+				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, "com.liferay.faces.alloy.component.form.FormRenderer",
+						"data-senna-off", ""),
+				false);
+
+		// <alloy:form pt:data-senna-off="false"				pt:data-data-senna-off-true-expected="false" />
+		testWriteElement(responseWriter, "form",
+				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, "com.liferay.faces.alloy.component.form.FormRenderer",
+						"data-senna-off", "false"),
+				false);
+
+		// <alloy:form											pt:data-data-senna-off-true-expected="true" />
+		testWriteElement(responseWriter, "form",
+				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, "com.liferay.faces.alloy.component.form.FormRenderer"),
+				true);
+
+		// <h:form pt:data-senna-off="#{null}"					pt:data-data-senna-off-true-expected="false" />
+		testWriteElement(responseWriter, "form",
+				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, UIForm.COMPONENT_FAMILY, "data-senna-off", null),
+				false);
+
+		// <h:form pt:data-senna-off=""					pt:data-data-senna-off-true-expected="false" />
+		testWriteElement(responseWriter, "form",
+				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, UIForm.COMPONENT_FAMILY, "data-senna-off", ""),
 				false);
 
 		// <h:form pt:data-senna-off="false"					pt:data-data-senna-off-true-expected="false" />
 		testWriteElement(responseWriter, "form",
-				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, UIForm.COMPONENT_FAMILY, "false"),
+				new UIComponentMockImpl(UIForm.COMPONENT_FAMILY, UIForm.COMPONENT_FAMILY, "data-senna-off", "false"),
 				false);
 
 		// <h:form												pt:data-data-senna-off-true-expected="true">
@@ -133,10 +160,22 @@ public class SennaJSAttrTest {
 		testWriteElement(responseWriter, "a", new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link"),
 				true);
 
+		//	<h:commandLink value="h:commandLink data-senna-off=&quot;false&quot;" pt:data-senna-off="#{null}"
+		//													pt:data-data-senna-off-true-expected="false" /><br />
+		testWriteElement(responseWriter, "a",
+				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link", "data-senna-off", null),
+				false);
+
+		//	<h:commandLink value="h:commandLink data-senna-off=&quot;false&quot;" pt:data-senna-off=""
+		//													pt:data-data-senna-off-true-expected="false" /><br />
+		testWriteElement(responseWriter, "a",
+				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link", "data-senna-off", ""),
+				false);
+
 		//	<h:commandLink value="h:commandLink data-senna-off=&quot;false&quot;" pt:data-senna-off="false"
 		//													pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "a",
-				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link", "false"),
+				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link", "data-senna-off", "false"),
 				false);
 
 		//	<h:commandButton value="h:commandButton"		pt:data-data-senna-off-true-expected="false" /><br />

@@ -54,7 +54,23 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	 * rendered for each resource which has a name. The id includes the name and the library (if it exists) of the
 	 * resource in order to uniquely identify the resource. The default value is true.
 	 */
-	RenderHeadResourceIds("com.liferay.faces.bridge.ext.renderHeadResourceIds", true);
+	RenderHeadResourceIds("com.liferay.faces.bridge.ext.renderHeadResourceIds", true),
+
+	/**
+	 * The default value of the data-senna-track attribute for PrimeFaces CSS resources. Defaults to "permanent" in
+	 * order to ensure that PrimeFaces CSS remains on the page after SennaJS navigation (in order to hide PrimeFaces
+	 * elements that may not have been cleaned up). This value can be overridden on a per-component basis by setting the
+	 * data-senna-track attribute as a JSF pass-through attribute in your view or via {@link
+	 * javax.faces.component.UIComponent#getPassThroughAttributes()}. Setting this value to the special case value of
+	 * {@link #NO_DEFAULT_VALUE} causes the data-senna-track attribute not to be rendered (unless data-senna-track was
+	 * set as a pass-through attribute on the component).
+	 */
+	PrimeFacesCSSDefaultDataSennaTrackValue("com.liferay.faces.bridge.ext.primeFacesCSSDefaultDataSennaTrackValue",
+		"permanent");
+
+	// Public Constants
+	public static final String NO_DEFAULT_VALUE =
+		"com.liferay.faces.bridge.ext.primeFacesCSSDefaultDataSennaTrackValue.noDefaultValue";
 
 	// Private Data Members
 	private String alternateName;
