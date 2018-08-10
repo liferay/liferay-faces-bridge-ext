@@ -25,21 +25,31 @@ import javax.faces.component.UICommand;
 public class UICommandMockImpl extends UICommand {
 
 	// Private Data Members
-	private String componentFamily;
-	private Map<String, Object> passThroughAttrs;
-	private String rendererType;
+	private final String componentFamily;
+	private final Map<String, Object> passThroughAttrs;
+	private final String rendererType;
 
 	public UICommandMockImpl(String componentFamily, String rendererType) {
 
 		this.rendererType = rendererType;
 		this.componentFamily = componentFamily;
+		this.passThroughAttrs = null;
 	}
 
-	public UICommandMockImpl(String componentFamily, String rendererType, String dataSennaOff) {
+	public UICommandMockImpl(String componentFamily, String rendererType, String dataSennaOffName,
+		String dataSennaOffValue) {
 
-		this(rendererType, componentFamily);
-		passThroughAttrs = new HashMap<String, Object>();
-		passThroughAttrs.put("data-senna-off", dataSennaOff);
+		this.rendererType = rendererType;
+		this.componentFamily = componentFamily;
+
+		if (dataSennaOffName != null) {
+
+			passThroughAttrs = new HashMap<String, Object>();
+			passThroughAttrs.put(dataSennaOffName, dataSennaOffValue);
+		}
+		else {
+			passThroughAttrs = null;
+		}
 	}
 
 	@Override
@@ -49,6 +59,11 @@ public class UICommandMockImpl extends UICommand {
 
 	@Override
 	public Map<String, Object> getPassThroughAttributes(boolean create) {
+
+		if (create) {
+			throw new UnsupportedOperationException();
+		}
+
 		return passThroughAttrs;
 	}
 

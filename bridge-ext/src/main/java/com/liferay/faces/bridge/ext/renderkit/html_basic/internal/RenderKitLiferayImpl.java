@@ -16,6 +16,8 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 import java.io.Writer;
 
 import javax.faces.component.UIOutput;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
 import javax.faces.render.RenderKit;
@@ -33,13 +35,16 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 	private static final String STYLESHEET_RENDERER_TYPE = "javax.faces.resource.Stylesheet";
 
 	// Private Final Data Members
-	private final RenderKit wrappedRenderKit;
+	private final String primeFacesCSSDefaultDataSennaTrackValue;
 	private final boolean renderHeadResourceIds;
+	private final RenderKit wrappedRenderKit;
 
-	public RenderKitLiferayImpl(RenderKit wrappedRenderKit, boolean renderHeadResourceIds) {
+	public RenderKitLiferayImpl(RenderKit wrappedRenderKit, boolean renderHeadResourceIds,
+		String primeFacesCSSDefaultDataSennaTrackValue) {
 
 		this.wrappedRenderKit = wrappedRenderKit;
 		this.renderHeadResourceIds = renderHeadResourceIds;
+		this.primeFacesCSSDefaultDataSennaTrackValue = primeFacesCSSDefaultDataSennaTrackValue;
 	}
 
 	public static ResponseWriter createSennaJSDisablingResponseWriter(ResponseWriter responseWriter) {
@@ -88,7 +93,8 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 				renderer = new HeadRendererLiferayImpl(renderer);
 			}
 			else if (SCRIPT_RENDERER_TYPE.equals(rendererType) || STYLESHEET_RENDERER_TYPE.equals(rendererType)) {
-				renderer = new ResourceRendererLiferayImpl(renderer, family, rendererType, renderHeadResourceIds);
+				renderer = new ResourceRendererLiferayImpl(renderer, family, rendererType, renderHeadResourceIds,
+						primeFacesCSSDefaultDataSennaTrackValue);
 			}
 		}
 

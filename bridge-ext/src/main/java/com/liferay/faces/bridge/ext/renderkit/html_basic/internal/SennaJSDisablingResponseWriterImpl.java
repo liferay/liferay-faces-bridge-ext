@@ -100,7 +100,7 @@ public class SennaJSDisablingResponseWriterImpl extends ResponseWriterWrapper {
 
 		if (uiComponent != null) {
 
-			Map<String, Object> passThroughAttributes = uiComponent.getPassThroughAttributes();
+			Map<String, Object> passThroughAttributes = uiComponent.getPassThroughAttributes(false);
 
 			if ((passThroughAttributes != null) && !passThroughAttributes.isEmpty()) {
 				sennaOffAttrSet = passThroughAttributes.containsKey("data-senna-off");
