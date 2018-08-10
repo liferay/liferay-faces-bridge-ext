@@ -33,13 +33,23 @@ public class UIComponentMockImpl extends UIComponentBase {
 
 		this.rendererType = rendererType;
 		this.componentFamily = componentFamily;
+		this.passThroughAttrs = null;
 	}
 
-	public UIComponentMockImpl(String componentFamily, String rendererType, String dataSennaOff) {
+	public UIComponentMockImpl(String componentFamily, String rendererType, String dataSennaName,
+		String dataSennaValue) {
 
-		this(rendererType, componentFamily);
-		passThroughAttrs = new HashMap<String, Object>();
-		passThroughAttrs.put("data-senna-off", dataSennaOff);
+		this.rendererType = rendererType;
+		this.componentFamily = componentFamily;
+
+		if (dataSennaName != null) {
+
+			passThroughAttrs = new HashMap<String, Object>();
+			passThroughAttrs.put(dataSennaName, dataSennaValue);
+		}
+		else {
+			passThroughAttrs = null;
+		}
 	}
 
 	@Override
@@ -49,6 +59,11 @@ public class UIComponentMockImpl extends UIComponentBase {
 
 	@Override
 	public Map<String, Object> getPassThroughAttributes(boolean create) {
+
+		if (create) {
+			throw new UnsupportedOperationException();
+		}
+
 		return passThroughAttrs;
 	}
 

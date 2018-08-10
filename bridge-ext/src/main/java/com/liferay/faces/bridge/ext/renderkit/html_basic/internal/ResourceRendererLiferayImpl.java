@@ -32,6 +32,8 @@ import javax.faces.render.RenderKitWrapper;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererWrapper;
 
+import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
+import com.liferay.faces.util.lang.NameValuePair;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
@@ -45,8 +47,12 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(ResourceRendererLiferayImpl.class);
 
+	// Package-Private Constants
+	/* package-private */ static final String DATA_SENNA_TRACK = "data-senna-track";
+
 	// Private Data Members
 	private String componentFamily;
+	private String primeFacesCSSDefaultDataSennaTrackValue;
 	private String rendererType;
 	private boolean renderHeadResourceIds;
 	private boolean transientFlag;
@@ -64,13 +70,35 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		// Defer initialization of wrappedRenderer until restoreState(FacesContext, Object) is called.
 	}
 
-	public ResourceRendererLiferayImpl(Renderer renderer, String componentFamily, String rendererType,
-		boolean renderHeadResourceIds) {
+	public ResourceRendererLiferayImpl(Renderer wrappedRenderer, String componentFamily, String rendererType,
+		boolean renderHeadResourceIds, String primeFacesCSSDefaultDataSennaTrackValue) {
 
-		this.wrappedRenderer = renderer;
+		this.wrappedRenderer = wrappedRenderer;
 		this.componentFamily = componentFamily;
+		this.primeFacesCSSDefaultDataSennaTrackValue = primeFacesCSSDefaultDataSennaTrackValue;
 		this.rendererType = rendererType;
 		this.renderHeadResourceIds = renderHeadResourceIds;
+	}
+
+	/* package-private */ static NameValuePair<String, Object> getDataSennaTrack(UIComponent componentResource, boolean isCSS,
+		String resourceLibrary, String primeFacesCSSDefaultDataSennaTrackValue) {
+
+		NameValuePair<String, Object> dataSennaTrack = null;
+
+		Map<String, Object> passThroughAttributes = componentResource.getPassThroughAttributes(false);
+
+		if ((passThroughAttributes != null) && passThroughAttributes.containsKey(DATA_SENNA_TRACK)) {
+
+			Object dataSennaTrackValue = passThroughAttributes.get(DATA_SENNA_TRACK);
+			dataSennaTrack = new NameValuePair<String, Object>(DATA_SENNA_TRACK, dataSennaTrackValue);
+		}
+		else if (isCSS && (resourceLibrary != null) && resourceLibrary.startsWith("primefaces") &&
+				!LiferayPortletConfigParam.NO_DEFAULT_VALUE.equals(primeFacesCSSDefaultDataSennaTrackValue)) {
+			dataSennaTrack = new NameValuePair<String, Object>(DATA_SENNA_TRACK,
+					primeFacesCSSDefaultDataSennaTrackValue);
+		}
+
+		return dataSennaTrack;
 	}
 
 	private static boolean isLiferayFacesBridgeInlineScript(UIComponent componentResource, String resourceId) {
@@ -85,11 +113,6 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		}
 
 		return liferayBridgeInlineScript;
-	}
-
-	private static boolean isResource(UIComponent componentResource, String resourceName, String resourceLibrary) {
-		return (isScriptResource(resourceName, resourceLibrary) || isStyleSheetResource(resourceName)) &&
-			!isLiferayFacesBridgeInlineScript(componentResource, resourceName);
 	}
 
 	private static boolean isRichFacesReslibResource(String resourceName, String resourceLibrary) {
@@ -111,17 +134,32 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 
 		ResponseWriter responseWriter = null;
 
-		if (renderHeadResourceIds(facesContext)) {
+		if (HeadRendererLiferayImpl.isRenderingHeadSection(facesContext)) {
 
 			Map<String, Object> componentResourceAttributes = uiComponentResource.getAttributes();
 			String resourceName = (String) componentResourceAttributes.get("name");
 			String resourceLibrary = (String) componentResourceAttributes.get("library");
+			boolean cssResource = isStyleSheetResource(resourceName);
+			NameValuePair<String, Object> dataSennaTrack = null;
 
-			if (isResource(uiComponentResource, resourceName, resourceLibrary)) {
+			if ((cssResource || isScriptResource(resourceName, resourceLibrary)) &&
+					!isLiferayFacesBridgeInlineScript(uiComponentResource, resourceName)) {
+
+				dataSennaTrack = getDataSennaTrack(uiComponentResource, cssResource, resourceLibrary,
+						primeFacesCSSDefaultDataSennaTrackValue);
+
+				if (!renderHeadResourceIds) {
+
+					resourceName = null;
+					resourceLibrary = null;
+				}
+			}
+
+			if ((resourceName != null) || (dataSennaTrack != null)) {
 
 				responseWriter = facesContext.getResponseWriter();
-				facesContext.setResponseWriter(new ResponseWriterHeadResourceLiferayImpl(responseWriter, resourceName,
-						resourceLibrary));
+				facesContext.setResponseWriter(new ResponseWriterHeadResourceLiferayImpl(responseWriter, dataSennaTrack,
+						resourceName, resourceLibrary));
 			}
 		}
 
@@ -173,6 +211,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 
 		RendererInfo rendererInfo = (RendererInfo) state;
 		this.renderHeadResourceIds = rendererInfo.renderHeadResourceIds;
+		this.primeFacesCSSDefaultDataSennaTrackValue = rendererInfo.primeFacesCSSDefaultDataSennaTrackValue;
 
 		if (wrappedRenderer == null) {
 
@@ -203,16 +242,13 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 
 	@Override
 	public Object saveState(FacesContext facesContext) {
-		return new RendererInfo(componentFamily, rendererType, renderHeadResourceIds);
+		return new RendererInfo(componentFamily, rendererType, renderHeadResourceIds,
+				primeFacesCSSDefaultDataSennaTrackValue);
 	}
 
 	@Override
 	public void setTransient(boolean newTransientValue) {
 		this.transientFlag = newTransientValue;
-	}
-
-	private boolean renderHeadResourceIds(FacesContext facesContext) {
-		return renderHeadResourceIds && HeadRendererLiferayImpl.isRenderingHeadSection(facesContext);
 	}
 
 	private static final class RendererInfo implements Serializable {
@@ -221,11 +257,14 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 
 		// Private Final Data Members
 		private final String componentFamily;
+		private final String primeFacesCSSDefaultDataSennaTrackValue;
 		private final String rendererType;
 		private final boolean renderHeadResourceIds;
 
-		public RendererInfo(String componentFamily, String rendererType, boolean renderHeadResourceIds) {
+		public RendererInfo(String componentFamily, String rendererType, boolean renderHeadResourceIds,
+			String primeFacesCSSDefaultDataSennaTrackValue) {
 			this.componentFamily = componentFamily;
+			this.primeFacesCSSDefaultDataSennaTrackValue = primeFacesCSSDefaultDataSennaTrackValue;
 			this.rendererType = rendererType;
 			this.renderHeadResourceIds = renderHeadResourceIds;
 		}
