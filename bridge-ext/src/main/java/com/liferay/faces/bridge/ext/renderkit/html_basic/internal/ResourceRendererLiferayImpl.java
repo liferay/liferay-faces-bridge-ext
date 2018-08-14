@@ -51,10 +51,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 	/* package-private */ static final String DATA_SENNA_TRACK = "data-senna-track";
 
 	// Private Data Members
-	private String componentFamily;
-	private String primeFacesCSSDefaultDataSennaTrackValue;
-	private String rendererType;
-	private boolean renderHeadResourceIds;
+	private RendererState rendererState;
 	private boolean transientFlag;
 	private Renderer wrappedRenderer;
 
@@ -74,10 +71,8 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		boolean renderHeadResourceIds, String primeFacesCSSDefaultDataSennaTrackValue) {
 
 		this.wrappedRenderer = wrappedRenderer;
-		this.componentFamily = componentFamily;
-		this.primeFacesCSSDefaultDataSennaTrackValue = primeFacesCSSDefaultDataSennaTrackValue;
-		this.rendererType = rendererType;
-		this.renderHeadResourceIds = renderHeadResourceIds;
+		this.rendererState = new RendererState(componentFamily, rendererType, renderHeadResourceIds,
+				primeFacesCSSDefaultDataSennaTrackValue);
 	}
 
 	/* package-private */ static NameValuePair<String, Object> getDataSennaTrack(UIComponent componentResource, boolean isCSS,
@@ -146,9 +141,9 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 					!isLiferayFacesBridgeInlineScript(uiComponentResource, resourceName)) {
 
 				dataSennaTrack = getDataSennaTrack(uiComponentResource, cssResource, resourceLibrary,
-						primeFacesCSSDefaultDataSennaTrackValue);
+						rendererState.primeFacesCSSDefaultDataSennaTrackValue);
 
-				if (!renderHeadResourceIds) {
+				if (!rendererState.renderHeadResourceIds) {
 
 					resourceName = null;
 					resourceLibrary = null;
@@ -209,9 +204,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 	@Override
 	public void restoreState(FacesContext facesContext, Object state) {
 
-		RendererInfo rendererInfo = (RendererInfo) state;
-		this.renderHeadResourceIds = rendererInfo.renderHeadResourceIds;
-		this.primeFacesCSSDefaultDataSennaTrackValue = rendererInfo.primeFacesCSSDefaultDataSennaTrackValue;
+		this.rendererState = (RendererState) state;
 
 		if (wrappedRenderer == null) {
 
@@ -232,7 +225,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 			}
 
 			if (renderKit != null) {
-				this.wrappedRenderer = renderKit.getRenderer(rendererInfo.componentFamily, rendererInfo.rendererType);
+				this.wrappedRenderer = renderKit.getRenderer(rendererState.componentFamily, rendererState.rendererType);
 			}
 			else {
 				logger.debug("Unable to restore wrapped renderer.");
@@ -242,8 +235,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 
 	@Override
 	public Object saveState(FacesContext facesContext) {
-		return new RendererInfo(componentFamily, rendererType, renderHeadResourceIds,
-				primeFacesCSSDefaultDataSennaTrackValue);
+		return rendererState;
 	}
 
 	@Override
@@ -251,7 +243,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		this.transientFlag = newTransientValue;
 	}
 
-	private static final class RendererInfo implements Serializable {
+	private static final class RendererState implements Serializable {
 
 		private static final long serialVersionUID = 689219045319172269L;
 
@@ -261,7 +253,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		private final String rendererType;
 		private final boolean renderHeadResourceIds;
 
-		public RendererInfo(String componentFamily, String rendererType, boolean renderHeadResourceIds,
+		public RendererState(String componentFamily, String rendererType, boolean renderHeadResourceIds,
 			String primeFacesCSSDefaultDataSennaTrackValue) {
 			this.componentFamily = componentFamily;
 			this.primeFacesCSSDefaultDataSennaTrackValue = primeFacesCSSDefaultDataSennaTrackValue;
