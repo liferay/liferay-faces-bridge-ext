@@ -18,6 +18,7 @@ import java.io.IOException;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
 
+import com.liferay.faces.util.application.ResourceUtil;
 import com.liferay.faces.util.lang.NameValuePair;
 
 
@@ -50,11 +51,7 @@ public class ResponseWriterHeadResourceLiferayImpl extends ResponseWriterWrapper
 
 		if (!idAttributeWritten) {
 
-			String resourceId = resourceName;
-
-			if (resourceLibrary != null) {
-				resourceId = resourceLibrary + ":" + resourceId;
-			}
+			String resourceId = ResourceUtil.getResourceId(resourceLibrary, resourceName);
 
 			if (resourceId != null) {
 				writeAttribute("id", resourceId, null);
