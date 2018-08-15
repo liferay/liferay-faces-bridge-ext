@@ -57,18 +57,18 @@ public class HeadRendererLiferayImpl extends RendererWrapper {
 	@Override
 	public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
 
-		super.encodeBegin(facesContext, component);
-
 		Map<Object, Object> attributes = facesContext.getAttributes();
 		attributes.put(RENDERING_HEAD_SECTION_KEY, true);
+		super.encodeBegin(facesContext, component);
 	}
 
 	@Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 
+		super.encodeEnd(facesContext, component);
+
 		Map<Object, Object> attributes = facesContext.getAttributes();
 		attributes.remove(RENDERING_HEAD_SECTION_KEY);
-		super.encodeEnd(facesContext, component);
 	}
 
 	@Override
