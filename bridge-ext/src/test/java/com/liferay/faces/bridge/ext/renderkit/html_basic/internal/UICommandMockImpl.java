@@ -13,6 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,16 +37,16 @@ public class UICommandMockImpl extends UICommand {
 		this.passThroughAttrs = null;
 	}
 
-	public UICommandMockImpl(String componentFamily, String rendererType, String dataSennaOffName,
-		String dataSennaOffValue) {
+	public UICommandMockImpl(String componentFamily, String rendererType, String dataSennaName, String dataSennaValue) {
 
 		this.rendererType = rendererType;
 		this.componentFamily = componentFamily;
 
-		if (dataSennaOffName != null) {
+		if (dataSennaName != null) {
 
-			passThroughAttrs = new HashMap<String, Object>();
-			passThroughAttrs.put(dataSennaOffName, dataSennaOffValue);
+			Map<String, Object> passThroughAttrs = new HashMap<String, Object>();
+			passThroughAttrs.put(dataSennaName, dataSennaValue);
+			this.passThroughAttrs = Collections.unmodifiableMap(passThroughAttrs);
 		}
 		else {
 			passThroughAttrs = null;
