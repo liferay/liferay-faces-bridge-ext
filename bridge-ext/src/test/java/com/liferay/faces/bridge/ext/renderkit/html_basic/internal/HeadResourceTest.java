@@ -49,23 +49,23 @@ public class HeadResourceTest {
 		Assert.assertTrue(elementString + " does not match regex: " + regex, elementString.matches(regex));
 	}
 
-	private static void testGetDataSennaTrack(String componentDataSennaTrackValue, boolean isCSS, String libraryName,
-		String primeFacesCSSDefaultDataSennaTrackValue) {
+	private static void testGetDataSennaTrack(String componentDataSennaTrackValue, boolean styleSheet,
+		String libraryName, String primeFacesCSSDefaultDataSennaTrackValue) {
 
 		UIComponent uiComponent = new UIComponentMockImpl(null, null, ResourceRendererLiferayImpl.DATA_SENNA_TRACK,
 				componentDataSennaTrackValue);
-		NameValuePair<String, Object> dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, isCSS,
-				libraryName, primeFacesCSSDefaultDataSennaTrackValue);
+		NameValuePair<String, Object> dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent,
+				styleSheet, libraryName, primeFacesCSSDefaultDataSennaTrackValue);
 		Assert.assertEquals(ResourceRendererLiferayImpl.DATA_SENNA_TRACK, dataSennaTrack.getName());
 		Assert.assertEquals(componentDataSennaTrackValue, dataSennaTrack.getValue());
 	}
 
 	private static void testGetDataSennaTrackWithNoPassThrougAttributes(String expectedDataSennaTrackValue,
-		boolean isCSS, String libraryName, String primeFacesCSSDefaultDataSennaTrackValue) {
+		boolean styleSheet, String libraryName, String primeFacesCSSDefaultDataSennaTrackValue) {
 
 		UIComponent uiComponent = new UIComponentMockImpl(null, null);
-		NameValuePair<String, Object> dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, isCSS,
-				libraryName, primeFacesCSSDefaultDataSennaTrackValue);
+		NameValuePair<String, Object> dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent,
+				styleSheet, libraryName, primeFacesCSSDefaultDataSennaTrackValue);
 		Assert.assertEquals(ResourceRendererLiferayImpl.DATA_SENNA_TRACK, dataSennaTrack.getName());
 		Assert.assertEquals(expectedDataSennaTrackValue, dataSennaTrack.getValue());
 	}
@@ -99,15 +99,13 @@ public class HeadResourceTest {
 		Assert.assertNull(dataSennaTrack);
 
 		// PrimeFaces
-		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "primefaces",
-				LiferayPortletConfigParam.NO_DEFAULT_VALUE);
+		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "primefaces", null);
 		Assert.assertNull(dataSennaTrack);
 
 		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, "primefaces", "permanent");
 		Assert.assertNull(dataSennaTrack);
 
-		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "primefaces-theme",
-				LiferayPortletConfigParam.NO_DEFAULT_VALUE);
+		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "primefaces-theme", null);
 		Assert.assertNull(dataSennaTrack);
 
 		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, "primefaces-theme",

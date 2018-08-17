@@ -16,8 +16,6 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 import java.io.Writer;
 
 import javax.faces.component.UIOutput;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.context.ResponseWriterWrapper;
 import javax.faces.render.RenderKit;
