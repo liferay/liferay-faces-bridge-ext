@@ -61,16 +61,14 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	 * order to ensure that PrimeFaces CSS remains on the page after SennaJS navigation (in order to hide PrimeFaces
 	 * elements that may not have been cleaned up). This value can be overridden on a per-component basis by setting the
 	 * data-senna-track attribute as a JSF pass-through attribute in your view or via {@link
-	 * javax.faces.component.UIComponent#getPassThroughAttributes()}. Setting this value to the special case value of
-	 * {@link #NO_DEFAULT_VALUE} causes the data-senna-track attribute not to be rendered (unless data-senna-track was
-	 * set as a pass-through attribute on the component).
+	 * javax.faces.component.UIComponent#getPassThroughAttributes()}. This value will be ignored if {@link
+	 * #PrimeFacesCSSRenderDefaultDataSennaTrack} is set to false.
 	 */
 	PrimeFacesCSSDefaultDataSennaTrackValue("com.liferay.faces.bridge.ext.primeFacesCSSDefaultDataSennaTrackValue",
-		"permanent");
+		"permanent"),
 
-	// Public Constants
-	public static final String NO_DEFAULT_VALUE =
-		"com.liferay.faces.bridge.ext.primeFacesCSSDefaultDataSennaTrackValue.noDefaultValue";
+	PrimeFacesCSSRenderDefaultDataSennaTrack("com.liferay.faces.bridge.ext.primeFacesCSSRenderDefaultDataSennaTrack",
+		true);
 
 	// Private Data Members
 	private String alternateName;

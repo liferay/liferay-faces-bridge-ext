@@ -75,7 +75,7 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 				primeFacesCSSDefaultDataSennaTrackValue);
 	}
 
-	/* package-private */ static NameValuePair<String, Object> getDataSennaTrack(UIComponent componentResource, boolean isCSS,
+	/* package-private */ static NameValuePair<String, Object> getDataSennaTrack(UIComponent componentResource, boolean styleSheet,
 		String resourceLibrary, String primeFacesCSSDefaultDataSennaTrackValue) {
 
 		NameValuePair<String, Object> dataSennaTrack = null;
@@ -87,8 +87,8 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 			Object dataSennaTrackValue = passThroughAttributes.get(DATA_SENNA_TRACK);
 			dataSennaTrack = new NameValuePair<String, Object>(DATA_SENNA_TRACK, dataSennaTrackValue);
 		}
-		else if (isCSS && (resourceLibrary != null) && resourceLibrary.startsWith("primefaces") &&
-				!LiferayPortletConfigParam.NO_DEFAULT_VALUE.equals(primeFacesCSSDefaultDataSennaTrackValue)) {
+		else if (styleSheet && (resourceLibrary != null) && (primeFacesCSSDefaultDataSennaTrackValue != null) &&
+				resourceLibrary.startsWith("primefaces")) {
 			dataSennaTrack = new NameValuePair<String, Object>(DATA_SENNA_TRACK,
 					primeFacesCSSDefaultDataSennaTrackValue);
 		}

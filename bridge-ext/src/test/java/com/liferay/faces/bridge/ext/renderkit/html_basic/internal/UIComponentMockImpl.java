@@ -13,6 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +26,9 @@ import javax.faces.component.UIComponentBase;
 public class UIComponentMockImpl extends UIComponentBase {
 
 	// Private Data Members
-	private String componentFamily;
-	private Map<String, Object> passThroughAttrs;
-	private String rendererType;
+	private final String componentFamily;
+	private final Map<String, Object> passThroughAttrs;
+	private final String rendererType;
 
 	public UIComponentMockImpl(String componentFamily, String rendererType) {
 
@@ -44,8 +45,9 @@ public class UIComponentMockImpl extends UIComponentBase {
 
 		if (dataSennaName != null) {
 
-			passThroughAttrs = new HashMap<String, Object>();
+			Map<String, Object> passThroughAttrs = new HashMap<String, Object>();
 			passThroughAttrs.put(dataSennaName, dataSennaValue);
+			this.passThroughAttrs = Collections.unmodifiableMap(passThroughAttrs);
 		}
 		else {
 			passThroughAttrs = null;

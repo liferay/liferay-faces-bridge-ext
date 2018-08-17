@@ -53,8 +53,15 @@ public class RenderKitFactoryLiferayImpl extends RenderKitFactory {
 			ExternalContext externalContext = facesContext.getExternalContext();
 			boolean renderHeadResourceIds = LiferayPortletConfigParam.RenderHeadResourceIds.getBooleanValue(
 					externalContext);
-			String primeFacesCSSDefaultDataSennaTrackValue =
-				LiferayPortletConfigParam.PrimeFacesCSSDefaultDataSennaTrackValue.getStringValue(externalContext);
+			boolean primeFacesCSSRenderDataSennaTrack =
+				LiferayPortletConfigParam.PrimeFacesCSSRenderDefaultDataSennaTrack.getBooleanValue(externalContext);
+			String primeFacesCSSDefaultDataSennaTrackValue = null;
+
+			if (primeFacesCSSRenderDataSennaTrack) {
+				primeFacesCSSDefaultDataSennaTrackValue =
+					LiferayPortletConfigParam.PrimeFacesCSSDefaultDataSennaTrackValue.getStringValue(externalContext);
+			}
+
 			renderKit = new RenderKitLiferayImpl(renderKit, renderHeadResourceIds,
 					primeFacesCSSDefaultDataSennaTrackValue);
 		}
