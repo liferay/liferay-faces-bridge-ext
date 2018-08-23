@@ -66,10 +66,10 @@ import org.slf4j.LoggerFactory;
 /**
  * @author  Kyle Stiemann
  */
-public class MavenGradleGenerationDiffIT {
+public class MavenGradleBuildWarIT {
 
 	// Logger
-	private static final Logger logger = LoggerFactory.getLogger(MavenGradleGenerationDiffIT.class);
+	private static final Logger logger = LoggerFactory.getLogger(MavenGradleBuildWarIT.class);
 
 	// Private Constants
 	private static final Set<String> IGNORED_MAVEN_WAR_ENTRY_NAMES = Collections.unmodifiableSet(new HashSet<String>(
