@@ -10,7 +10,7 @@ To run the integration tests on the latest SNAPSHOT archetypes:
 
 2. Build the project:
 
-		mvn clean install
+		mvn clean install -P test-archetype-generate
 
 The integration tests can also be run against specific versions.
 
@@ -22,16 +22,16 @@ To run the tests against a specific version:
 
 2. Build the tests with the `it.archetype.version` property:
 
-		mvn clean install -Dit.archetype.version=5.0.2
+		mvn clean install -P test-archetype-generate -Dit.archetype.version=5.0.2
 
 To use different versions for specific archetypes, use one or more of the `it.*.archetype.version` properties:
 
-	mvn clean install -Dit.archetype.version=5.0.4 \
+	mvn clean install -P test-archetype-generate -Dit.archetype.version=5.0.4 \
 		-Dit.bootsfaces.archetype.version=5.0.2 -Dit.butterfaces.archetype.version=5.0.2
 
 To skip testing certain archetypes, use one or more of the `it.skip.*.archetype` properties:
 
-	mvn clean install -Dit.archetype.version=3.0.4 \
+	mvn clean install -P test-archetype-generate -Dit.archetype.version=3.0.4 \
 		-Dit.skip.bootsfaces.archetype=true -Dit.skip.butterfaces.archetype=true
 
 ## Running the Liferay Faces Archetype Selenium Integration Tests
