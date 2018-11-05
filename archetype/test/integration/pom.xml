@@ -40,6 +40,7 @@
 								<configuration>
 									<systemPropertyVariables>
 										<it.archetype.version>${it.archetype.version}</it.archetype.version>
+										<it.archetype.whitelist>${it.archetype.whitelist}</it.archetype.whitelist>
 										<it.bootsfaces.archetype.version>${it.bootsfaces.archetype.version}</it.bootsfaces.archetype.version>
 										<it.butterfaces.archetype.version>${it.butterfaces.archetype.version}</it.butterfaces.archetype.version>
 										<it.liferay.faces.alloy.archetype.version>${it.liferay.faces.alloy.archetype.version}</it.liferay.faces.alloy.archetype.version>
@@ -47,13 +48,7 @@
 										<it.jsf.archetype.version>${it.jsf.archetype.version}</it.jsf.archetype.version>
 										<it.primefaces.archetype.version>${it.primefaces.archetype.version}</it.primefaces.archetype.version>
 										<it.richfaces.archetype.version>${it.richfaces.archetype.version}</it.richfaces.archetype.version>
-										<it.skip.bootsfaces.archetype>${it.skip.bootsfaces.archetype}</it.skip.bootsfaces.archetype>
-										<it.skip.butterfaces.archetype>${it.skip.butterfaces.archetype}</it.skip.butterfaces.archetype>
 										<it.liferay.faces.alloy.archetype.version>${it.liferay.faces.alloy.archetype.version}</it.liferay.faces.alloy.archetype.version>
-										<it.skip.icefaces.archetype>${it.skip.icefaces.archetype}</it.skip.icefaces.archetype>
-										<it.skip.jsf.archetype>${it.skip.jsf.archetype}</it.skip.jsf.archetype>
-										<it.skip.primefaces.archetype>${it.skip.primefaces.archetype}</it.skip.primefaces.archetype>
-										<it.skip.richfaces.archetype>${it.skip.richfaces.archetype}</it.skip.richfaces.archetype>
 										<maven.home>${env.MAVEN_HOME}</maven.home>
 									</systemPropertyVariables>
 									<includes>

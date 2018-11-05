@@ -29,10 +29,10 @@ To use different versions for specific archetypes, use one or more of the `it.*.
 	mvn clean install -P test-archetype-generate -Dit.archetype.version=5.0.4 \
 		-Dit.bootsfaces.archetype.version=5.0.2 -Dit.butterfaces.archetype.version=5.0.2
 
-To skip testing certain archetypes, use one or more of the `it.skip.*.archetype` properties:
+To test only some archetypes, use a comma separated whitelist with the `it.archetype.whitelist` properties:
 
-	mvn clean install -P test-archetype-generate -Dit.archetype.version=3.0.4 \
-		-Dit.skip.bootsfaces.archetype=true -Dit.skip.butterfaces.archetype=true
+	mvn clean install -Dit.archetype.version=5.0.4 \
+		-Dit.archetype.whitelist=alloy,icefaces,jsf,primefaces,richfaces
 
 ## Running the Liferay Faces Archetype Selenium Integration Tests
 
