@@ -25,12 +25,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -224,7 +227,8 @@ public class MavenGradleGenerationDiffIT {
 		return stringBuilder.toString();
 	}
 
-	private static void verifyNoExtraFilesInWar(String warType, Set<String> minuend, Set<String> subtrahend) {
+	private static void verifyNoExtraFilesInWar(String warType, Set<String> minuend, Set<String> subtrahend,
+		String archetypeProjectDirectoryName) {
 
 		boolean mavenWar = warType.equals("maven");
 		boolean gradleWar = warType.equals("gradle");
@@ -247,8 +251,8 @@ public class MavenGradleGenerationDiffIT {
 		}
 
 		if (!mutableWarZipEntryNames.isEmpty()) {
-			throw new AssertionError("The following file(s) were found only in the " + warType + " war: " +
-				toString(mutableWarZipEntryNames));
+			throw new AssertionError("The following file(s) were found only in the " + archetypeProjectDirectoryName +
+				" " + warType + " war: " + toString(mutableWarZipEntryNames));
 		}
 	}
 
@@ -284,18 +288,6 @@ public class MavenGradleGenerationDiffIT {
 				continue;
 			}
 
-			String archetypeProjectDirectoryName = archetypeProjectDirectory.getName();
-			String archetypeType = archetypeProjectDirectoryName.replace("-portlet", "");
-			boolean skip = "true".equalsIgnoreCase(System.getProperty("it.skip." + archetypeType + ".archetype"));
-
-			if (skip) {
-
-				logger.info("Skipping tests for {} since -Dit.skip.{}.archetype=true was set.", archetypeType,
-					archetypeType);
-
-				continue;
-			}
-
 			// Programmatically run the following command:
 
 			//J-
@@ -318,6 +310,8 @@ public class MavenGradleGenerationDiffIT {
 			properties.setProperty("interactiveMode", "false");
 
 			String version = model.getVersion();
+			String archetypeProjectDirectoryName = archetypeProjectDirectory.getName();
+			String archetypeType = archetypeProjectDirectoryName.replace("-portlet", "");
 			version = getTestArchetypeVersion(version, archetypeType);
 			properties.setProperty("archetypeVersion", version);
 			properties.setProperty("archetypeGroupId", model.getGroupId());
@@ -395,8 +389,10 @@ public class MavenGradleGenerationDiffIT {
 
 			if (numberOfFilesInMavenWar != numberOfFilesInGradleWar) {
 
-				verifyNoExtraFilesInWar("maven", mavenWarZipEntryNames, gradleWarZipEntryNames);
-				verifyNoExtraFilesInWar("gradle", gradleWarZipEntryNames, mavenWarZipEntryNames);
+				verifyNoExtraFilesInWar("maven", mavenWarZipEntryNames, gradleWarZipEntryNames,
+					archetypeProjectDirectoryName);
+				verifyNoExtraFilesInWar("gradle", gradleWarZipEntryNames, mavenWarZipEntryNames,
+					archetypeProjectDirectoryName);
 			}
 
 			Set<String> unequalWarZipEntryNames = new HashSet<String>();
@@ -461,9 +457,8 @@ public class MavenGradleGenerationDiffIT {
 			Files.walkFileTree(generatedProjectDirectory.toPath(), new FileVisitorDeleteImpl());
 
 			if (!unequalWarZipEntryNames.isEmpty()) {
-				throw new AssertionError(
-					"The following file(s) were different between the maven and gradle wars: " +
-					toString(unequalWarZipEntryNames));
+				throw new AssertionError("The following file(s) were different between the " +
+					archetypeProjectDirectoryName + " maven and gradle wars: " + toString(unequalWarZipEntryNames));
 			}
 		}
 	}
@@ -522,8 +517,46 @@ public class MavenGradleGenerationDiffIT {
 
 	private static final class FilenameFilterArchetypeProjectImpl implements FilenameFilter {
 
+		// Private Final Data Members
+		private final List<String> archetypeWhitelist;
+
+		private FilenameFilterArchetypeProjectImpl() {
+
+			String archetypeWhitelistString = System.getProperty("it.archetype.whitelist");
+			List<String> archetypeWhitelist = new LinkedList<String>();
+
+			if ((archetypeWhitelistString != null) && !"".equals(archetypeWhitelistString)) {
+
+				for (String archetypeString : archetypeWhitelistString.split("[,]")) {
+
+					String trimmedValue = archetypeString.trim();
+					archetypeWhitelist.add(trimmedValue);
+				}
+			}
+
+			this.archetypeWhitelist = Collections.unmodifiableList(archetypeWhitelist);
+		}
+
+		@Override
 		public boolean accept(File dir, String name) {
-			return name.endsWith("-portlet");
+			return name.endsWith("-portlet") && isWhitelisted(name);
+		}
+
+		private boolean isWhitelisted(String name) {
+
+			boolean whitelisted = archetypeWhitelist.isEmpty();
+
+			for (String archetypeString : archetypeWhitelist) {
+
+				if (name.contains(archetypeString)) {
+
+					whitelisted = true;
+
+					break;
+				}
+			}
+
+			return whitelisted;
 		}
 	}
 
