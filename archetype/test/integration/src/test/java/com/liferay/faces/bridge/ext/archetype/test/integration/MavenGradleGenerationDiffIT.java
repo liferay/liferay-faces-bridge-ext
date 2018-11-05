@@ -91,11 +91,11 @@ public class MavenGradleGenerationDiffIT {
 		Runtime runtime = Runtime.getRuntime();
 		runtime.addShutdownHook(new Thread() {
 
-			@Override
-			public void run() {
-				cleanUpHook.cleanUp();
-			}
-		});
+				@Override
+				public void run() {
+					cleanUpHook.cleanUp();
+				}
+			});
 	}
 
 	private static boolean areZipEntriesEqual(String zipEntryName, ZipEntry zipEntry1, ZipEntry zipEntry2) {
@@ -267,12 +267,12 @@ public class MavenGradleGenerationDiffIT {
 		temporaryDirectoryReference.set(Files.createTempDirectory("lfta"));
 		addCleanUpHook(new CleanUpHook(projectConnectionReference, mavenWarReference, gradleWarReference,
 				temporaryDirectoryReference));
+
 		File temporaryDirectory = temporaryDirectoryReference.get().toFile();
 		temporaryDirectory.deleteOnExit();
 
 		File projectParentDirectory = new File("../../");
-		File[] archetypeProjectDirectories = projectParentDirectory.listFiles(
-				new FilenameFilterArchetypeProjectImpl());
+		File[] archetypeProjectDirectories = projectParentDirectory.listFiles(new FilenameFilterArchetypeProjectImpl());
 		MavenXpp3Reader mavenXpp3Reader = new MavenXpp3Reader();
 		Invoker invoker = new DefaultInvoker();
 
@@ -358,6 +358,7 @@ public class MavenGradleGenerationDiffIT {
 			}
 
 			mavenWarReference.set(getZipFileFromWar(generatedProjectName, generatedProjectDirectory, "target"));
+
 			ZipFile mavenWar = mavenWarReference.get();
 
 			Map<String, ZipEntry> mavenWarZipEntries = getZipEntriesFromWar(mavenWar);
@@ -367,6 +368,7 @@ public class MavenGradleGenerationDiffIT {
 			gradleConnector.forProjectDirectory(generatedProjectDirectory);
 
 			projectConnectionReference.set(gradleConnector.connect());
+
 			ProjectConnection projectConnection = projectConnectionReference.get();
 
 			BuildLauncher buildLauncher = projectConnection.newBuild();
@@ -377,8 +379,8 @@ public class MavenGradleGenerationDiffIT {
 			projectConnection.close();
 			projectConnectionReference.clear();
 
-			gradleWarReference.set(
-					getZipFileFromWar(generatedProjectName, generatedProjectDirectory, "build", "libs"));
+			gradleWarReference.set(getZipFileFromWar(generatedProjectName, generatedProjectDirectory, "build", "libs"));
+
 			ZipFile gradleWar = gradleWarReference.get();
 
 			Map<String, ZipEntry> gradleWarZipEntries = getZipEntriesFromWar(gradleWar);
@@ -471,7 +473,7 @@ public class MavenGradleGenerationDiffIT {
 		private final Reference<Path> temporaryDirectory;
 
 		public CleanUpHook(Reference<ProjectConnection> projectConnection, Reference<ZipFile> mavenWar,
-				Reference<ZipFile> gradleWar, Reference<Path> directory) {
+			Reference<ZipFile> gradleWar, Reference<Path> directory) {
 			this.projectConnection = projectConnection;
 			this.gradleWar = gradleWar;
 			this.mavenWar = mavenWar;
@@ -495,23 +497,6 @@ public class MavenGradleGenerationDiffIT {
 			catch (IOException e) {
 				logger.error("Failed to delete temporary test file: " + temporaryDirectory.get().toString(), e);
 			}
-		}
-	}
-
-	private static final class Reference<T> {
-
-		private T t;
-
-		public void set(T t) {
-			this.t = t;
-		}
-
-		public T get() {
-			return t;
-		}
-
-		public void clear() {
-			set(null);
 		}
 	}
 
@@ -595,6 +580,23 @@ public class MavenGradleGenerationDiffIT {
 		@Override
 		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 			return visitToDelete(file);
+		}
+	}
+
+	private static final class Reference<T> {
+
+		private T t;
+
+		public void clear() {
+			set(null);
+		}
+
+		public T get() {
+			return t;
+		}
+
+		public void set(T t) {
+			this.t = t;
 		}
 	}
 }
