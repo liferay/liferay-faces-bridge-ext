@@ -27,12 +27,9 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostAddToViewEvent;
-import javax.faces.render.RenderKit;
-import javax.faces.render.RenderKitWrapper;
 import javax.faces.render.Renderer;
 import javax.faces.render.RendererWrapper;
 
-import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.lang.NameValuePair;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -67,11 +64,11 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		// Defer initialization of wrappedRenderer until restoreState(FacesContext, Object) is called.
 	}
 
-	public ResourceRendererLiferayImpl(Renderer wrappedRenderer, String componentFamily, String rendererType,
-		boolean renderHeadResourceIds, String primeFacesCSSDefaultDataSennaTrackValue) {
+	public ResourceRendererLiferayImpl(Renderer wrappedRenderer, boolean renderHeadResourceIds,
+		String primeFacesCSSDefaultDataSennaTrackValue) {
 
 		this.wrappedRenderer = wrappedRenderer;
-		this.rendererState = new RendererState(componentFamily, rendererType, renderHeadResourceIds,
+		this.rendererState = new RendererState(wrappedRenderer.getClass(), renderHeadResourceIds,
 				primeFacesCSSDefaultDataSennaTrackValue);
 	}
 
@@ -208,27 +205,11 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 
 		if (wrappedRenderer == null) {
 
-			RenderKit renderKit = facesContext.getRenderKit();
-
-			while ((renderKit != null) && (renderKit instanceof RenderKitWrapper)) {
-
-				RenderKitWrapper renderKitWrapper = (RenderKitWrapper) renderKit;
-				renderKit = renderKitWrapper.getWrapped();
-
-				if (renderKit instanceof RenderKitLiferayImpl) {
-
-					renderKitWrapper = (RenderKitLiferayImpl) renderKit;
-					renderKit = renderKitWrapper.getWrapped();
-
-					break;
-				}
+			try {
+				wrappedRenderer = (Renderer) rendererState.wrappedRendererClass.newInstance();
 			}
-
-			if (renderKit != null) {
-				this.wrappedRenderer = renderKit.getRenderer(rendererState.componentFamily, rendererState.rendererType);
-			}
-			else {
-				logger.debug("Unable to restore wrapped renderer.");
+			catch (Exception e) {
+				logger.error(e);
 			}
 		}
 	}
@@ -248,16 +229,15 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		private static final long serialVersionUID = 689219045319172269L;
 
 		// Private Final Data Members
-		private final String componentFamily;
+		private final Class<?> wrappedRendererClass;
 		private final String primeFacesCSSDefaultDataSennaTrackValue;
-		private final String rendererType;
 		private final boolean renderHeadResourceIds;
 
-		public RendererState(String componentFamily, String rendererType, boolean renderHeadResourceIds,
+		public RendererState(Class<?> wrappedRendererClass, boolean renderHeadResourceIds,
 			String primeFacesCSSDefaultDataSennaTrackValue) {
-			this.componentFamily = componentFamily;
+
+			this.wrappedRendererClass = wrappedRendererClass;
 			this.primeFacesCSSDefaultDataSennaTrackValue = primeFacesCSSDefaultDataSennaTrackValue;
-			this.rendererType = rendererType;
 			this.renderHeadResourceIds = renderHeadResourceIds;
 		}
 	}
