@@ -91,7 +91,7 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 				renderer = new HeadRendererLiferayImpl(renderer);
 			}
 			else if (SCRIPT_RENDERER_TYPE.equals(rendererType) || STYLESHEET_RENDERER_TYPE.equals(rendererType)) {
-				renderer = new ResourceRendererLiferayImpl(renderer, family, rendererType, renderHeadResourceIds,
+				renderer = new ResourceRendererLiferayImpl(renderer, renderHeadResourceIds,
 						primeFacesCSSDefaultDataSennaTrackValue);
 			}
 		}
