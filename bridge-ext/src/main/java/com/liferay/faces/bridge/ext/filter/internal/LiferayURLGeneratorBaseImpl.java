@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2018 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,12 +22,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.RenderKit;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+import javax.portlet.faces.BridgeException;
 
 import com.liferay.faces.util.helper.StringHelper;
 import com.liferay.faces.util.logging.Logger;
@@ -221,6 +224,8 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 			// Possibly add the p_p_auth parameter.
 			String portletAuthToken = StringHelper.toString(additionalParameterMap.get(P_P_AUTH),
 					parameterMap.get(P_P_AUTH));
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
 
 			if (portletAuthToken != null) {
 
@@ -232,8 +237,7 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 					// PortletURLImpl.addPortletAuthToken(StringBundle, Key) method to add the p_p_auth parameter to
 					// URLs for portlets when add-default-resource=false. It is therefore necessary to check that
 					// add-default-resource=true before adding the p_p_auth parameter to the URL.
-					FacesContext facesContext = FacesContext.getCurrentInstance();
-					PortletRequest portletRequest = (PortletRequest) facesContext.getExternalContext().getRequest();
+					PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
 					String portletId = (String) portletRequest.getAttribute(WebKeys.PORTLET_ID);
 					ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -273,8 +277,7 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 			appendParameterToURL(P_P_LIFECYCLE, portletLifecycleId, url);
 
 			// Add the p_p_state parameter.
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			Map<String, Object> applicationMap = facesContext.getExternalContext().getApplicationMap();
+			Map<String, Object> applicationMap = externalContext.getApplicationMap();
 
 			WindowState urlWindowState = initialWindowState;
 
@@ -526,7 +529,7 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 		}
 	}
 
-	protected void parse() {
+	private void parse() {
 
 		parameterMap = new HashMap<String, String>();
 		wsrpParameters = new ArrayList<LiferayURLParameter>();
@@ -549,15 +552,25 @@ public abstract class LiferayURLGeneratorBaseImpl implements LiferayURLGenerator
 
 				if (equalsPos > 0) {
 
-					String name = nameValuePair.substring(0, equalsPos);
-					String value = nameValuePair.substring(equalsPos + 1);
+					try {
 
-					if (nameValuePair.startsWith("wsrp")) {
-						LiferayURLParameter liferayUrlParameter = new LiferayURLParameter(name, value);
-						wsrpParameters.add(liferayUrlParameter);
+						String name = nameValuePair.substring(0, equalsPos);
+						name = URLDecoder.decode(name, encoding);
+
+						String value = nameValuePair.substring(equalsPos + 1);
+						value = URLDecoder.decode(value, encoding);
+
+						if (nameValuePair.startsWith("wsrp")) {
+
+							LiferayURLParameter liferayUrlParameter = new LiferayURLParameter(name, value);
+							wsrpParameters.add(liferayUrlParameter);
+						}
+						else {
+							parameterMap.put(name, value);
+						}
 					}
-					else {
-						parameterMap.put(name, value);
+					catch (UnsupportedEncodingException e) {
+						throw new BridgeException(e);
 					}
 				}
 			}
