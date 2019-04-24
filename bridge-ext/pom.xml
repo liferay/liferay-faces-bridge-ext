@@ -74,8 +74,12 @@
 	</scm>
 
 	<properties>
+		<bnd.version>4.1.0</bnd.version>
 		<faces.api.version>${faces.spec.version}</faces.api.version>
 		<faces.spec.version>2.2</faces.spec.version>
+		<!--
+		<mojarra.version>2.2.20</mojarra.version>
+		-->
 		<full.version>${project.version} (${timestamp} AD)</full.version>
 		<liferay.version>7.2.1</liferay.version>
 		<liferay.version.dtd>7.2</liferay.version.dtd>
@@ -106,7 +110,9 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.4</version>
 					<configuration>
+						<useDefaultManifestFile>true</useDefaultManifestFile>
 						<archive>
+							<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 							<manifestEntries>
 								<Built-By>Release Manager</Built-By>
 								<Implementation-Title>${project.name}</Implementation-Title>
@@ -190,6 +196,76 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-maven-plugin</artifactId>
+				<version>${bnd.version}</version>
+				<configuration>
+					<bnd>
+						<![CDATA[
+							# Consult individual package-info.java files to determine Export-Packages and versions.
+							-exportcontents: ${packages;VERSIONED}
+							# javax.el is automatically imported with the following versions:
+							# javax.el;version="[2.2.0,3.0.0)", but versions 3.0.0+ are also valid.
+							Import-Package: \
+								!com.liferay.faces.bridge.ext,\
+								!com.liferay.faces.bridge.ext.*,\
+								javax.el;version="[2.2.0,4.0.0)",\
+								javax.enterprise.inject.spi;version="[1.1.0,2.1.0)",\
+								com.liferay.faces.util.*;version="[1.0.0,2.0.0)",\
+								com.liferay.faces.bridge.*;version="[1.0.0,2.0.0)",\
+								com.liferay.faces.portlet.*;version="[1.0.0,2.0.0)",\
+								com.liferay.portal.kernel.exception;version="[7.0.0,9.0.0)",\
+								com.liferay.portal.kernel.model;version="[1.0.0,4.0.0)",\
+								com.liferay.portal.kernel.service;version="[1.0.0,4.0.0)",\
+								com.liferay.portal.kernel.theme;version="[1.0.0,4.0.0)",\
+								com.liferay.portal.kernel.portlet;version="[7.0.0,10.0.0)",\
+								com.liferay.portal.kernel.servlet;version="[7.0.0,9.0.0)",\
+								com.liferay.portal.kernel.servlet.taglib.aui;version="[7.0.0,9.0.0)",\
+								com.liferay.portal.kernel.util;version="[7.0.0,10.0.0)",\
+								com.liferay.taglib.util;version="[7.0.0,9.0.0)",\
+								javax.portlet.faces.*;version="[1.0.0,2.0.0)",\
+								*
+							# The following configuration enables the Bridge API bundle to obtain necessary SPI
+							# implementations.
+							Require-Capability: \
+								osgi.serviceloader;filter:="(osgi.serviceloader=javax.portlet.faces.Bridge)";\
+								cardinality:=multiple,\
+								osgi.serviceloader;filter:="(osgi.serviceloader=com.liferay.faces.bridge.BridgeFactoryFinder)";\
+								cardinality:=multiple,\
+								osgi.extender; filter:="(osgi.extender=osgi.serviceloader.processor)"
+						]]>
+					</bnd>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>bnd-process</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-baseline-maven-plugin</artifactId>
+				<version>${bnd.version}</version>
+				<configuration>
+					<base>
+						<groupId>${project.groupId}</groupId>
+						<artifactId>${project.artifactId}</artifactId>
+						<version>(,5.0.3]</version>
+					</base>
+					<includeDistributionManagement>false</includeDistributionManagement>
+				</configuration>
+				<executions>
+					<execution>
+						<id>baseline</id>
+						<goals>
+							<goal>baseline</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -298,11 +374,27 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>javax.faces-api</artifactId>
 			<version>${faces.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>${mojarra.version}</version>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+		-->
 		<dependency>
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>
@@ -329,8 +421,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<version>5.0.0</version>
+			<artifactId>osgi.annotation</artifactId>
+			<version>6.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
