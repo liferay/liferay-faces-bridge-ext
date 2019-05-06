@@ -59,7 +59,7 @@
 			<version>@log4j-version@</version>
 		</dependency>
 		<dependency>
-			<groupId>org.richfaces</groupId>
+			<groupId>com.github.albfernandez.richfaces</groupId>
 			<artifactId>richfaces</artifactId>
 			<version>@richfaces-version@</version>
 		</dependency>

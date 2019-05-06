@@ -10,6 +10,8 @@ dependencies {
     runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
     runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
     compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
-    compile group: 'org.richfaces', name: 'richfaces', version: '@richfaces-version@'
+    compile(group: 'com.github.albfernandez.richfaces', name: 'richfaces', version: '@richfaces-version@') {
+        exclude group: 'log4j', module: 'log4j'
+    }
 }
 
