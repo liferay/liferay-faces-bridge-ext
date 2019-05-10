@@ -5,10 +5,13 @@ repositories {
 }
 
 dependencies {
+    configurations {
+        compile.exclude group: 'javax.servlet.jsp', module: 'jsp-api'
+        compile.exclude group: 'javax.mail', module: 'mail'
+        compile.exclude group: 'javax.activation', module: 'javax.activation'
+    }
     compile('org.icefaces:icefaces:@icefaces-version@') {
         exclude group: 'org.glassfish', module: 'javax.faces'
-        exclude group: 'javax.mail', module: 'mail'
-        exclude group: 'javax.activation', module: 'javax.activation'
     }
     compile group: 'org.icefaces', name: 'icefaces-ace', version: '@icefaces-version@'
     compile group: 'org.icefaces', name: 'icefaces-compat', version: '@icefaces-version@'
