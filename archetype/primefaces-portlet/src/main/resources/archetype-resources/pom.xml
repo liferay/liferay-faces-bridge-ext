@@ -29,18 +29,23 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<!-- Begin File Upload Dependencies -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>@commons-fileupload-version@</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>@commons-io-version@</version>
-			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>com.liferay.faces.patches</groupId>
+			<artifactId>com.liferay.faces.lsv.485.patch</artifactId>
+			<version>@lsv-485-patch-version@</version>
+		</dependency>
+		<!-- End File Upload Dependencies -->
 		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>javax.faces-api</artifactId>
