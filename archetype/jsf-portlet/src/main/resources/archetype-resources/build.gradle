@@ -7,6 +7,7 @@ repositories {
 dependencies {
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '@commons-fileupload-version@'
     compile group: 'commons-io', name: 'commons-io', version: '@commons-io-version@'
+    compile group: 'com.liferay.faces.patches', name: 'com.liferay.faces.lsv.485.patch', version: '@lsv-485-patch-version@'
     compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
     compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
     compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
