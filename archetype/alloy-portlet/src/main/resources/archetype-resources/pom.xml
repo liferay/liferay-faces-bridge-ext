@@ -63,5 +63,13 @@
 			<artifactId>com.liferay.faces.alloy</artifactId>
 			<version>@liferay-faces-alloy-version@</version>
 		</dependency>
+		<!-- Uncomment to use Liferay Faces Portal: -->
+		<!--
+		<dependency>
+			<groupId>com.liferay.faces</groupId>
+			<artifactId>com.liferay.faces.portal</artifactId>
+			<version>@liferay-faces-portal-version@</version>
+		</dependency>
+		-->
 	</dependencies>
 </project>

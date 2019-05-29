@@ -11,5 +11,7 @@ dependencies {
     runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
     compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
     compile group: 'com.liferay.faces', name: 'com.liferay.faces.alloy', version: '@liferay-faces-alloy-version@'
+    // Uncomment to use Liferay Faces Portal:
+    // compile group: 'com.liferay.faces', name: 'com.liferay.faces.portal', version: '@liferay-faces-portal-version@'
 }
 
