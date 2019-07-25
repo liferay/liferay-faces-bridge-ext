@@ -1,0 +1,27 @@
+apply plugin: 'war'
+
+repositories {
+     mavenCentral()
+}
+
+dependencies {
+    providedCompile group: 'javax.faces', name: 'javax.faces-api', version: '@faces-api-version@'
+    runtime group: 'org.glassfish', name: 'javax.faces', version: '@mojarra-version@'
+    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.adf', version: '@liferay-faces-adf-version@'
+    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
+    // runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
+    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '4.1.4-SNAPSHOT'
+    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.util', version: '3.3.0-alpha1'
+    compile group: 'com.oracle.fmwshare', name: 'adf-richclient-api-11', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'adf-richclient-impl-11', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'adf-share-base', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'adf-share-ca', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'adflogginghandler', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'xmlparserv2', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'trinidad-api', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'trinidad-impl', version: '@adf-version@'
+    compile group: 'com.oracle.nlsoramapping.jrf', name: 'orai18n-mapping', version: '@gdk-version@'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '@httpclient-version@'
+    compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
+}
+
