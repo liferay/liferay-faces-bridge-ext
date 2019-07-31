@@ -22,6 +22,7 @@ import java.util.Set;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import com.liferay.faces.bridge.ext.util.internal.TCCLUtil;
 import com.liferay.faces.util.application.ResourceValidator;
 import com.liferay.faces.util.application.ResourceValidatorWrapper;
 import com.liferay.faces.util.config.ApplicationConfig;
@@ -117,10 +118,11 @@ public class ResourceValidatorLiferayImpl extends ResourceValidatorWrapper imple
 		else {
 
 			try {
-				Class<?> invokerServletClazz = Class.forName(invokerServletFQCN);
+				ClassLoader classLoader = TCCLUtil.getThreadContextClassLoaderOrDefault(getClass());
+				Class<?> invokerServletClazz = classLoader.loadClass(invokerServletFQCN);
 
 				try {
-					Class<?> servletClazz = Class.forName(servletClassFQCN);
+					Class<?> servletClazz = classLoader.loadClass(servletClassFQCN);
 					invokerServletClass = invokerServletClazz.isAssignableFrom(servletClazz);
 				}
 				catch (Throwable t) {
