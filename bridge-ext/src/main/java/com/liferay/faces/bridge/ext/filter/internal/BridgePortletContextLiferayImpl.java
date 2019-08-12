@@ -34,4 +34,11 @@ public class BridgePortletContextLiferayImpl extends PortletContextWrapper {
 
 		return new PortletRequestDispatcherBridgeLiferayImpl(portletRequestDispatcher, path);
 	}
+
+	@Override
+	public URL getResource(String path) throws MalformedURLException {
+
+		// https://issues.liferay.com/browse/FACES-3473
+		return super.getResource(path);
+	}
 }
