@@ -15,6 +15,8 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -35,6 +37,13 @@ public class BridgePortletContextLiferayImpl extends PortletContextWrapper {
 		PortletRequestDispatcher portletRequestDispatcher = super.getRequestDispatcher(path);
 
 		return new PortletRequestDispatcherBridgeLiferayImpl(portletRequestDispatcher, path);
+	}
+
+	@Override
+	public URL getResource(String path) throws MalformedURLException {
+
+		// https://issues.liferay.com/browse/FACES-3473
+		return super.getResource(path);
 	}
 
 	@Override
