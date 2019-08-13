@@ -17,11 +17,14 @@ dependencies {
     compile group: 'com.oracle.fmwshare', name: 'adf-share-base', version: '@adf-version@'
     compile group: 'com.oracle.fmwshare', name: 'adf-share-ca', version: '@adf-version@'
     compile group: 'com.oracle.fmwshare', name: 'adflogginghandler', version: '@adf-version@'
-    compile group: 'com.oracle.fmwshare', name: 'xmlparserv2', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'adfmportlet', version: '@adf-version@'
     compile group: 'com.oracle.fmwshare', name: 'trinidad-api', version: '@adf-version@'
     compile group: 'com.oracle.fmwshare', name: 'trinidad-impl', version: '@adf-version@'
+    compile group: 'com.oracle.fmwshare', name: 'xmlparserv2', version: '@adf-version@'
     compile group: 'com.oracle.nlsoramapping.jrf', name: 'orai18n-mapping', version: '@gdk-version@'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '@httpclient-version@'
-    compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
+    compile(group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.27') {
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
 }
 
