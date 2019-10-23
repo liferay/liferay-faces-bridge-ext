@@ -19,16 +19,15 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
-import javax.portlet.HeaderRequest;
-import javax.portlet.HeaderResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.faces.BridgeConfig;
-import javax.portlet.faces.filter.BridgePortletResponseFactory;
+
+import com.liferay.faces.bridge.BridgeConfig;
+import com.liferay.faces.bridge.filter.BridgePortletResponseFactory;
 
 
 /**
@@ -64,18 +63,6 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 				bridgeConfig);
 
 		return new EventResponseBridgeLiferayImpl(wrappedEventResponse);
-	}
-
-	@Override
-	public HeaderResponse getHeaderResponse(HeaderRequest headerRequest, HeaderResponse headerResponse,
-		PortletConfig portletConfig, BridgeConfig bridgeConfig) {
-
-		HeaderResponse wrappedHeaderResponse = getWrapped().getHeaderResponse(headerRequest, headerResponse,
-				portletConfig, bridgeConfig);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		return new HeaderResponseBridgeLiferayImpl(portletContext, headerRequest, wrappedHeaderResponse);
 	}
 
 	@Override

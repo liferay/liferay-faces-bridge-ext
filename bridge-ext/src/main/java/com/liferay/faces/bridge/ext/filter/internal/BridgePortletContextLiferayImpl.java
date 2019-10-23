@@ -13,12 +13,10 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import java.net.URL;
-import java.net.MalformedURLException;
-
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.filter.PortletContextWrapper;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -26,8 +24,11 @@ import javax.portlet.filter.PortletContextWrapper;
  */
 public class BridgePortletContextLiferayImpl extends PortletContextWrapper {
 
+	// Private Data Members
+	private PortletContext wrappedPortletContext;
+
 	public BridgePortletContextLiferayImpl(PortletContext portletContext) {
-		super(portletContext);
+		this.wrappedPortletContext = portletContext;
 	}
 
 	@Override
@@ -43,5 +44,10 @@ public class BridgePortletContextLiferayImpl extends PortletContextWrapper {
 
 		// https://issues.liferay.com/browse/FACES-3473
 		return super.getResource(path);
+	}
+
+	@Override
+	public PortletContext getWrapped() {
+		return wrappedPortletContext;
 	}
 }

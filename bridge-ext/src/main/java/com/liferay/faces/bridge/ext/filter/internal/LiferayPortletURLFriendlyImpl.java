@@ -13,7 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletURL;
@@ -26,39 +25,32 @@ import javax.portlet.WindowStateException;
  */
 public abstract class LiferayPortletURLFriendlyImpl extends LiferayBaseURLFriendlyImpl implements LiferayPortletURL {
 
-	protected LiferayPortletURLFriendlyImpl(PortletURL portletURL, String encoding) {
-		super(portletURL, encoding);
+	protected LiferayPortletURLFriendlyImpl(String encoding) {
+		super(encoding);
 	}
 
 	@Override
+	public abstract PortletURL getWrapped();
+
 	public PortletMode getPortletMode() {
 		return getWrapped().getPortletMode();
 	}
 
-	@Override
-	public MutableRenderParameters getRenderParameters() {
-		return ((PortletURL) getWrapped()).getRenderParameters();
-	}
-
-	@Override
 	public WindowState getWindowState() {
 		return getWrapped().getWindowState();
 	}
 
-	@Override
 	public void removePublicRenderParameter(String name) {
-		((PortletURL) getWrapped()).removePublicRenderParameter(name);
+		getWrapped().removePublicRenderParameter(name);
 	}
 
-	@Override
 	public void setPortletMode(PortletMode portletMode) throws PortletModeException {
-		((PortletURL) getWrapped()).setPortletMode(portletMode);
+		getWrapped().setPortletMode(portletMode);
 		resetToString();
 	}
 
-	@Override
 	public void setWindowState(WindowState windowState) throws WindowStateException {
-		((PortletURL) getWrapped()).setWindowState(windowState);
+		getWrapped().setWindowState(windowState);
 		resetToString();
 	}
 }

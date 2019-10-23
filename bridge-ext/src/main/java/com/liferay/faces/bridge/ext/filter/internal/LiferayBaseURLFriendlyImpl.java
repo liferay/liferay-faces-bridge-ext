@@ -17,10 +17,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
-import javax.portlet.BaseURL;
 import javax.portlet.PortletSecurityException;
 
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.faces.bridge.ext.util.internal.XMLUtil;
 
 
 /**
@@ -34,8 +33,7 @@ public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyC
 	// Private Data Members
 	private String toStringValue;
 
-	protected LiferayBaseURLFriendlyImpl(BaseURL baseURL, String encoding) {
-		super(baseURL);
+	protected LiferayBaseURLFriendlyImpl(String encoding) {
 		this.encoding = encoding;
 	}
 
@@ -91,7 +89,7 @@ public abstract class LiferayBaseURLFriendlyImpl extends LiferayBaseURLFriendlyC
 		String valueAsString = toString();
 
 		if (escapeXML) {
-			valueAsString = HtmlUtil.escape(valueAsString);
+			valueAsString = XMLUtil.escapeXML(valueAsString);
 		}
 
 		writer.write(valueAsString);

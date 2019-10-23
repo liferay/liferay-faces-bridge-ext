@@ -13,9 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.MutableResourceParameters;
-
-
 /**
  * @author  Neil Griffin
  */
@@ -30,27 +27,14 @@ public class LiferayResourceURLImpl extends LiferayBaseURLImpl implements Lifera
 		super(liferayURLGenerator);
 	}
 
-	@Override
 	public String getCacheability() {
 		return cacheLevel;
 	}
 
-	@Override
-	public String getResourceID() {
-		return resourceId;
-	}
-
-	@Override
-	public MutableResourceParameters getResourceParameters() {
-		return null; // no-op
-	}
-
-	@Override
 	public void setCacheability(String cacheLevel) {
 		this.cacheLevel = cacheLevel;
 	}
 
-	@Override
 	public void setResourceID(String resourceID) {
 		this.resourceId = resourceID;
 		resetToString();
@@ -70,4 +54,5 @@ public class LiferayResourceURLImpl extends LiferayBaseURLImpl implements Lifera
 	protected void resetToString() {
 		this.toStringValue = null;
 	}
+
 }

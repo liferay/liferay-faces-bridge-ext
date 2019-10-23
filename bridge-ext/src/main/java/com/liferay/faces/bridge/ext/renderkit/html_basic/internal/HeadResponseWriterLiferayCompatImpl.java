@@ -11,19 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter.internal;
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
+
+import javax.faces.context.ResponseWriter;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
- * @author  Neil Griffin
+ * @author  Kyle Stiemann
  */
-public abstract class LiferayBaseURLFriendlyCompatImpl extends BaseURLWrapper {
+public abstract class HeadResponseWriterLiferayCompatImpl extends HeadResponseWriterBase {
 
-	@Override
-	public void setParameter(String name, String value) {
-
-		super.setParameter(name, value);
-		resetToString();
+	public HeadResponseWriterLiferayCompatImpl(ResponseWriter wrappedResponseWriter) {
+		super(wrappedResponseWriter);
 	}
 
-	protected abstract void resetToString();
+	public ServletContext getServletContext(HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getServletContext();
+	}
 }

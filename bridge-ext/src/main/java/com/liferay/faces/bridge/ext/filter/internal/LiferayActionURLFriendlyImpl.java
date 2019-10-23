@@ -13,33 +13,36 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import javax.faces.FacesWrapper;
 import javax.portlet.PortletURL;
-import javax.portlet.annotations.PortletSerializable;
 
 
 /**
  * @author  Kyle Stiemann
  */
-public class LiferayActionURLFriendlyImpl extends LiferayPortletURLFriendlyImpl implements LiferayActionURL {
+public class LiferayActionURLFriendlyImpl extends LiferayPortletURLFriendlyImpl implements LiferayActionURL,
+	FacesWrapper<PortletURL> {
 
 	// Private Members
 	private String responseNamespace;
+	private PortletURL wrappedLiferayPortletURL;
 
 	public LiferayActionURLFriendlyImpl(PortletURL wrappedLiferayPortletURL, String responseNamespace,
 		String encoding) {
-		super(wrappedLiferayPortletURL, encoding);
+		super(encoding);
+		this.wrappedLiferayPortletURL = wrappedLiferayPortletURL;
 		this.responseNamespace = responseNamespace;
 	}
 
 	@Override
-	public void setBeanParameter(PortletSerializable bean) {
-		((PortletURL) getWrapped()).setBeanParameter(bean);
+	public PortletURL getWrapped() {
+		return wrappedLiferayPortletURL;
 	}
 
 	@Override
 	protected LiferayURLGenerator getLiferayURLGenerator() {
 
-		PortletURL actionURL = (PortletURL) getWrapped();
+		PortletURL actionURL = getWrapped();
 
 		return new LiferayURLGeneratorActionImpl(actionURL, responseNamespace, encoding);
 	}

@@ -30,14 +30,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.faces.Bridge;
-import javax.portlet.faces.RequestAttributeInspector;
-import javax.portlet.faces.RequestAttributeInspectorWrapper;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.liferay.faces.bridge.RequestAttributeInspector;
+import com.liferay.faces.bridge.RequestAttributeInspectorWrapper;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 

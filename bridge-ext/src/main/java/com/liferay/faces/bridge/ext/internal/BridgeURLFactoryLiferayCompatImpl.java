@@ -14,7 +14,8 @@
 package com.liferay.faces.bridge.ext.internal;
 
 import javax.portlet.faces.Bridge;
-import javax.portlet.faces.BridgeURLFactory;
+
+import com.liferay.faces.bridge.BridgeURLFactory;
 
 
 /**
@@ -23,8 +24,7 @@ import javax.portlet.faces.BridgeURLFactory;
 public abstract class BridgeURLFactoryLiferayCompatImpl extends BridgeURLFactory {
 
 	public static boolean isHeaderOrRenderOrResourcePhase(Bridge.PortletPhase portletPhase) {
-		return (Bridge.PortletPhase.HEADER_PHASE.equals(portletPhase) ||
-				Bridge.PortletPhase.RENDER_PHASE.equals(portletPhase) ||
+		return (Bridge.PortletPhase.RENDER_PHASE.equals(portletPhase) ||
 				Bridge.PortletPhase.RESOURCE_PHASE.equals(portletPhase));
 	}
 }

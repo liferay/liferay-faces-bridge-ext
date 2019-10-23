@@ -13,17 +13,21 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import javax.portlet.BaseURL;
+
+
 /**
+ * This class serves as a compatibility layer for different versions of Liferay Portal in order to minimize diffs across
+ * branches.
+ *
  * @author  Neil Griffin
  */
-public abstract class LiferayBaseURLFriendlyCompatImpl extends BaseURLWrapper {
+public abstract class BaseURLWrapperCompat implements BaseURL {
+
+	public abstract BaseURL getWrapped();
 
 	@Override
 	public void setParameter(String name, String value) {
-
-		super.setParameter(name, value);
-		resetToString();
+		getWrapped().setParameter(name, value);
 	}
-
-	protected abstract void resetToString();
 }

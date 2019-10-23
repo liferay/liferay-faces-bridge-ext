@@ -11,19 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.faces.bridge.ext.filter.internal;
+package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
+
+import java.util.ArrayList;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 
 /**
- * @author  Neil Griffin
+ * @author  Kyle Stiemann
  */
-public abstract class LiferayBaseURLFriendlyCompatImpl extends BaseURLWrapper {
+/* package-private */ class NodeListImpl extends ArrayList<Node> implements NodeList {
+
+	// serialVersionUID
+	private static final long serialVersionUID = 5559419753981665137L;
 
 	@Override
-	public void setParameter(String name, String value) {
-
-		super.setParameter(name, value);
-		resetToString();
+	public int getLength() {
+		return size();
 	}
 
-	protected abstract void resetToString();
+	@Override
+	public Node item(int index) {
+		return get(index);
+	}
 }

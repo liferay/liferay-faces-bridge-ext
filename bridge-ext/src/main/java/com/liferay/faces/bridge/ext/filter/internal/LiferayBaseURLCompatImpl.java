@@ -13,15 +13,6 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import java.io.IOException;
-
-import javax.portlet.PortletMode;
-import javax.portlet.RenderParameters;
-import javax.portlet.WindowState;
-
-import com.liferay.portal.kernel.util.HtmlUtil;
-
-
 /**
  * This class provides a compatibility layer that isolates differences between different versions of the Portlet API.
  *
@@ -29,34 +20,4 @@ import com.liferay.portal.kernel.util.HtmlUtil;
  */
 public abstract class LiferayBaseURLCompatImpl implements LiferayBaseURL {
 
-	@Override
-	public Appendable append(Appendable out) throws IOException {
-		return append(out, true);
-	}
-
-	@Override
-	public Appendable append(Appendable out, boolean escapeXML) throws IOException {
-
-		if (escapeXML) {
-			return out.append(HtmlUtil.escape(toString()));
-		}
-		else {
-			return out.append(toString());
-		}
-	}
-
-	@Override
-	public PortletMode getPortletMode() {
-		return null; // no-op
-	}
-
-	@Override
-	public RenderParameters getRenderParameters() {
-		return null; // no-op
-	}
-
-	@Override
-	public WindowState getWindowState() {
-		return null; // no-op
-	}
 }

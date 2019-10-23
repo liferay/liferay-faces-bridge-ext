@@ -22,14 +22,13 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
-import javax.portlet.faces.BridgeFactoryFinder;
-import javax.portlet.filter.PortletRequestDispatcherWrapper;
 import javax.portlet.filter.PortletRequestWrapper;
 import javax.portlet.filter.PortletResponseWrapper;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletResponseWrapper;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import com.liferay.faces.bridge.BridgeFactoryFinder;
 import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -47,10 +46,11 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 
 	// Private Data Members
 	private final String path;
+	private final PortletRequestDispatcher wrappedPortletRequestDispatcher;
 
 	public PortletRequestDispatcherBridgeLiferayImpl(PortletRequestDispatcher portletRequestDispatcher, String path) {
-		super(portletRequestDispatcher);
 		this.path = path;
+		this.wrappedPortletRequestDispatcher = portletRequestDispatcher;
 	}
 
 	@Override
@@ -84,6 +84,11 @@ public class PortletRequestDispatcherBridgeLiferayImpl extends PortletRequestDis
 				path);
 			include(portletRequest, portletResponse);
 		}
+	}
+
+	@Override
+	public PortletRequestDispatcher getWrapped() {
+		return wrappedPortletRequestDispatcher;
 	}
 
 	@Override

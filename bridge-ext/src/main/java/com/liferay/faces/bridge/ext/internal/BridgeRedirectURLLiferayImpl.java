@@ -21,10 +21,11 @@ import javax.faces.context.FacesContext;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.faces.Bridge;
-import javax.portlet.faces.BridgeConfig;
-import javax.portlet.faces.BridgeURL;
-import javax.portlet.faces.BridgeURLWrapper;
 import javax.portlet.faces.BridgeUtil;
+
+import com.liferay.faces.bridge.BridgeConfig;
+import com.liferay.faces.bridge.BridgeURL;
+import com.liferay.faces.bridge.BridgeURLWrapper;
 
 
 /**
