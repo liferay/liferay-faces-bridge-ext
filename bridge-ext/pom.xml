@@ -268,6 +268,18 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.petra.lang</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.petra.string</artifactId>
+			<version>1.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.bridge.api</artifactId>
 			<version>4.1.0</version>
@@ -282,7 +294,7 @@
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>2.3.0</version>
+			<version>3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

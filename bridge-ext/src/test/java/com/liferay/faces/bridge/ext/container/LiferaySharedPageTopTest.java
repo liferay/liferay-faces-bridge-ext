@@ -23,7 +23,7 @@ import com.liferay.faces.bridge.ext.event.internal.LiferaySharedPageTop;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 
 /**

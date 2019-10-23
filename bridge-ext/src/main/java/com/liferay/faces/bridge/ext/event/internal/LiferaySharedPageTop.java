@@ -27,7 +27,8 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.util.WebKeys;
 
 
