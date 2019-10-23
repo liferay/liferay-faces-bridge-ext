@@ -21,9 +21,10 @@ import javax.faces.event.PhaseListener;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 
@@ -100,7 +101,7 @@ public class LiferayPageTopPhaseListenerCompat implements PhaseListener {
 
 		if (outputData != null) {
 
-			pageTop = outputData.getData(null, WebKeys.PAGE_TOP);
+			pageTop = outputData.getDataSB(null, WebKeys.PAGE_TOP);
 		}
 
 		return pageTop;
@@ -111,7 +112,7 @@ public class LiferayPageTopPhaseListenerCompat implements PhaseListener {
 		OutputData outputData = (OutputData) portletRequest.getAttribute(WebKeys.OUTPUT_DATA);
 
 		if (outputData != null) {
-			outputData.setData(null, WebKeys.PAGE_TOP, pageTop);
+			outputData.setDataSB(null, WebKeys.PAGE_TOP, pageTop);
 
 			HttpServletRequest httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 			httpServletRequest.setAttribute(WebKeys.PAGE_TOP, pageTop);
