@@ -58,16 +58,13 @@
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.bridge.impl</artifactId>
-			<!--
 			<version>@liferay-faces-bridge-impl-version@</version>
-			-->
-			<version>4.1.4-SNAPSHOT</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.util</artifactId>
-			<version>3.3.0-alpha1</version>
+			<version>3.3.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
