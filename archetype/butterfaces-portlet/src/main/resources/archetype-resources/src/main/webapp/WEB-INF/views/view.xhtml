@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<f:view
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://butterfaces.org/components"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+	<h:head>
+		<h:outputStylesheet library="css" name="main.css" />
+		<h:outputScript library="butterfaces-dist-bower" name="bootstrap.js" />
+	</h:head>
+	<h:body>
+		<b:labeledContainer id="panelId">
+			<h:outputText styleClass="bold-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
+		</b:labeledContainer>
+		<ul>
+			<li><em><h:outputText value="#{product.JSF}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_BRIDGE}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_BRIDGE_EXT}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_UTIL}" /></em></li>
+			<li><em><h:outputText value="#{product.BUTTERFACES}" /></em></li>
+		</ul>
+	</h:body>
+</f:view>
