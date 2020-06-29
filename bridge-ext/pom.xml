@@ -205,6 +205,15 @@
 							-exportcontents: ${packages;VERSIONED}
 							# javax.el is automatically imported with the following versions:
 							# javax.el;version="[2.2.0,3.0.0)", but versions 3.0.0+ are also valid.
+							# com.liferay.* is automatically imported according to the package
+							# versions specified in the com.liferay.portal.kernel-3.0.0.jar
+							# dependency, but the package versions are not stable enough to specify
+							# an upper bound. In other words, if an upper bound were specified,
+							# then the jar might deploy in Liferay Portal 7.3.2 CE GA3 but
+							# possibly not Liferay Portal 7.3.3 CE GA4. This presents a risky
+							# assumption that packages will not be pruned and will remain binary
+							# backward compatible into the future, but it is a risk that must be
+							# accepted given the restraints of the Liferay Faces version scheme.
 							Import-Package: \
 								!com.liferay.faces.bridge.ext,\
 								!com.liferay.faces.bridge.ext.*,\
@@ -213,15 +222,17 @@
 								com.liferay.faces.util.*;version="[1.0.0,2.0.0)",\
 								com.liferay.faces.bridge.*;version="[1.0.0,2.0.0)",\
 								com.liferay.faces.portlet.*;version="[1.0.0,2.0.0)",\
-								com.liferay.portal.kernel.exception;version="[7.0.0,9.0.0)",\
-								com.liferay.portal.kernel.model;version="[1.0.0,4.0.0)",\
-								com.liferay.portal.kernel.service;version="[1.0.0,4.0.0)",\
-								com.liferay.portal.kernel.theme;version="[1.0.0,4.0.0)",\
-								com.liferay.portal.kernel.portlet;version="[7.0.0,10.0.0)",\
-								com.liferay.portal.kernel.servlet;version="[7.0.0,9.0.0)",\
-								com.liferay.portal.kernel.servlet.taglib.aui;version="[7.0.0,9.0.0)",\
-								com.liferay.portal.kernel.util;version="[7.0.0,10.0.0)",\
-								com.liferay.taglib.util;version="[7.0.0,9.0.0)",\
+								com.liferay.portal.kernel.exception;version="7.0.0",\
+								com.liferay.portal.kernel.language;version="7.0.0",\
+								com.liferay.portal.kernel.model;version="2.0.0",\
+								com.liferay.portal.kernel.portlet;version="8.0.0",\
+								com.liferay.portal.kernel.service;version="1.27.0",\
+								com.liferay.portal.kernel.servlet;version="7.11.0",\
+								com.liferay.portal.kernel.servlet.taglib.aui;version="7.0.0",\
+								com.liferay.portal.kernel.servlet.taglib.util;version="6.4.0",\
+								com.liferay.portal.kernel.theme;version="1.6.0",\
+								com.liferay.portal.kernel.util;version="8.0.0",\
+								com.liferay.taglib.util;version="7.0.0",\
 								javax.portlet.faces.*;version="[1.0.0,2.0.0)",\
 								*
 							# The following configuration enables the Bridge API bundle to obtain necessary SPI
