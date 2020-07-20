@@ -202,6 +202,16 @@
 						<![CDATA[
 							# Consult individual package-info.java files to determine Export-Packages and versions.
 							-exportcontents: ${packages;VERSIONED}
+							Export-Package:\
+								com.liferay.faces.bridge.ext.application.internal,\
+								com.liferay.faces.bridge.ext.client.internal,\
+								com.liferay.faces.bridge.ext.event.internal,\
+								com.liferay.faces.bridge.ext.filter.internal,\
+								com.liferay.faces.bridge.ext.i18n.internal,\
+								com.liferay.faces.bridge.ext.internal,\
+								com.liferay.faces.bridge.ext.lifecycle.internal,\
+								com.liferay.faces.bridge.ext.renderkit.html_basic.internal,\
+								com.liferay.faces.bridge.ext.scope.internal
 							# javax.el is automatically imported with the following versions:
 							# javax.el;version="[2.2.0,3.0.0)", but versions 3.0.0+ are also valid.
 							# com.liferay.* is automatically imported according to the package
