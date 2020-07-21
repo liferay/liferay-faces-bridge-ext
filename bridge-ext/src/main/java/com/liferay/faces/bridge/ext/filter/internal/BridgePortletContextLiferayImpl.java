@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2019 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2020 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -13,8 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequestDispatcher;
