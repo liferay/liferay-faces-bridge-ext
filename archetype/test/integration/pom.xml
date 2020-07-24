@@ -241,7 +241,7 @@
 		<dependency>
 			<groupId>com.liferay.faces.test</groupId>
 			<artifactId>com.liferay.faces.test.selenium</artifactId>
-			<version>0.5.4</version>
+			<version>0.5.5</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
