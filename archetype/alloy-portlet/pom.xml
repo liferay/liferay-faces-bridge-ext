@@ -12,7 +12,7 @@
 	<artifactId>com.liferay.faces.archetype.alloy.portlet</artifactId>
 	<packaging>maven-archetype</packaging>
 	<name>alloy-portlet</name>
-	<version>6.0.1-SNAPSHOT</version>
+	<version>6.1.0-SNAPSHOT</version>
 	<description>Maven archetype for a Liferay Faces Alloy portlet</description>
 	<scm>
 		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
