@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.liferay.faces.archetype</groupId>
+		<artifactId>com.liferay.faces.archetype.bridge.ext.parent</artifactId>
+		<version>6.1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>com.liferay.faces.archetype.bom</artifactId>
+	<packaging>pom</packaging>
+	<name>Liferay Faces Archetypes Bill of Materials (BOM)</name>
+
+	<profiles>
+		<profile>
+			<id>thin</id>
+			<properties>
+				<aries.cdi.options />
+				<osgi.dynamic.import.package>
+					DynamicImport-Package: \
+						${osgi.dynamic.import.package.liferay.faces.bridge}
+				</osgi.dynamic.import.package>
+				<faces.impl.scope>provided</faces.impl.scope>
+				<osgi.import.package>
+					Import-Package: \
+						${osgi.import.package.liferay.faces.bridge}
+				</osgi.import.package>
+				<skip.thin.war.setup>false</skip.thin.war.setup>
+				<thick.or.thin>thin</thick.or.thin>
+				<war.dependency.scope>provided</war.dependency.scope>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>thin-war-setup</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<skip>${skip.thin.war.setup}</skip>
+									<target>
+										<mkdir dir="${project.build.outputDirectory}/META-INF/services" />
+										<echo file="${project.build.outputDirectory}/META-INF/services/javax.servlet.ServletContainerInitializer">com.sun.faces.config.FacesInitializer
+											com.liferay.faces.util.osgi.internal.FacesThinWabInitializer
+											com.liferay.faces.bridge.servlet.BridgeServletContainerInitializer
+										</echo>
+										<echo file="${project.build.outputDirectory}/META-INF/services/com.sun.faces.spi.annotationprovider">com.liferay.faces.util.osgi.mojarra.spi.internal.AnnotationProviderOSGiImpl
+										</echo>
+										<echo file="${project.build.outputDirectory}/META-INF/services/com.sun.faces.spi.FaceletConfigResourceProvider">com.liferay.faces.util.osgi.mojarra.spi.internal.FaceletConfigResourceProviderOSGiImpl
+										</echo>
+										<echo file="${project.build.outputDirectory}/META-INF/services/com.sun.faces.spi.FacesConfigResourceProvider">com.liferay.faces.util.osgi.mojarra.spi.internal.FacesConfigResourceProviderOSGiImpl
+										</echo>
+										<echo file="${project.build.outputDirectory}/META-INF/services/com.sun.faces.util.cdi11.CDIUtil">com.sun.faces.util.cdi11.CDIUtilImpl
+										</echo>
+										<mkdir dir="${project.build.outputDirectory}/WEB-INF" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>ant-contrib</groupId>
+								<artifactId>ant-contrib</artifactId>
+								<version>1.0b3</version>
+								<scope>runtime</scope>
+								<exclusions>
+									<exclusion>
+										<groupId>ant</groupId>
+										<artifactId>ant</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+							<dependency>
+								<groupId>org.apache.ant</groupId>
+								<artifactId>ant-nodeps</artifactId>
+								<version>1.8.1</version>
+								<scope>runtime</scope>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<properties>
+		<aries.cdi.options>-cdiannotations:</aries.cdi.options>
+		<!-- Specifies the DynamicImport-Package directive for use with the "thin" Maven profile. -->
+		<osgi.dynamic.import.package />
+		<!-- Ensures that the Liferay Faces Alloy component/renderer classes can be loaded dynamically via -->
+		<!-- Class.forName(String) -->
+		<osgi.dynamic.import.package.liferay.faces.alloy>
+			com.liferay.faces.alloy.*
+		</osgi.dynamic.import.package.liferay.faces.alloy>
+		<!-- Ensures that the Liferay Faces Bridge and JSF runtime (Mojarra) component/renderer classes can be -->
+		<!-- loaded dynamically via Class.forName(String) -->
+		<osgi.dynamic.import.package.liferay.faces.bridge>
+			com.liferay.faces.bridge.*,\
+			com.liferay.faces.portlet.*,\
+			com.liferay.faces.util.*,\
+			com.sun.faces.*,\
+			javax.faces.*,\
+			javax.portlet.faces.*
+		</osgi.dynamic.import.package.liferay.faces.bridge>
+		<!-- Specifies the Import-Package directive for use with the "thin" Maven profile. -->
+		<osgi.import.package />
+		<!-- Specifies that $LIFERAY_HOME/osgi/modules/com.liferay.faces.alloy.jar is required for a WAB to resolve, -->
+		<!-- and ensures that it will be included for scanning of descriptors like META-INF/faces-config.xml. -->
+		<osgi.import.package.liferay.faces.alloy>
+			com.liferay.faces.alloy
+		</osgi.import.package.liferay.faces.alloy>
+		<!-- Specifies that $LIFERAY_HOME/osgi/modules/com.liferay.faces.bridge.api.jar, -->
+		<!-- $LIFERAY_HOME/osgi/modules/com.liferay.faces.bridge.impl.jar, -->
+		<!-- $LIFERAY_HOME/osgi/modules/com.liferay.faces.bridge.ext.jar, -->
+		<!-- and javax.faces.jar (the JSF runtime) are required for a WAB to resolve, and ensures that each JAR -->
+		<!-- will be included for scanning of descriptors like META-INF/faces-config.xml. The optional imports are -->
+		<!-- unused transitive package dependencies. They are added automatically by the Liferay WAB generator at -->
+		<!-- deploy time, but must be marked as optional since they are not present in the runtime classpath. -->
+		<osgi.import.package.liferay.faces.bridge>
+			com.liferay.faces.bridge.ext,\
+			com.liferay.faces.bridge.impl,\
+			com.sun.faces,\
+			javax.annotation,\
+			javax.faces,\
+			javax.portlet.faces,\
+			net.fortuna.ical4j.*;resolution:=optional,\
+			org.apache.axis.tools.ant.*;resolution:=optional,\
+			org.apache.poi.*;resolution:=optional,\
+			com.swabunga.spell.*;resolution:=optional,\
+			*
+		</osgi.import.package.liferay.faces.bridge>
+		<skip.thin.war.setup>true</skip.thin.war.setup>
+		<thick.or.thin>thick</thick.or.thin>
+		<war.dependency.scope>compile</war.dependency.scope>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.3</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.3</version>
+					<configuration>
+						<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+						<webResources>
+							<resource>
+								<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+								<filtering>true</filtering>
+								<targetPath>WEB-INF</targetPath>
+								<includes>
+									<include>**/liferay-plugin-package.properties</include>
+								</includes>
+							</resource>
+						</webResources>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

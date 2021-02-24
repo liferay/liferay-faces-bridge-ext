@@ -4,11 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay.faces.archetype</groupId>
 	<artifactId>com.liferay.faces.archetype.bridge.ext.parent</artifactId>
-	<version>6.0.0-SNAPSHOT</version>
+	<version>6.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Liferay Faces Bridge Ext Archetypes</name>
 
 	<modules>
+		<module>bom</module>
 		<module>alloy-portlet</module>
 		<module>bootsfaces-portlet</module>
 		<module>butterfaces-portlet</module>
@@ -50,23 +51,14 @@
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.7</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-install-plugin</artifactId>
 				<version>2.5.2</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.5.1</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
