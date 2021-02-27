@@ -142,6 +142,10 @@
 			weblogic.invocation;resolution:=optional,\
 			weblogic.server;resolution:=optional
 		</osgi.import.package.adf>
+		<!-- Excludes unused ButterFaces transitive package dependencies so that a WAB can resolve. -->
+		<osgi.import.package.butterfaces>
+			sun.reflect.*;resolution:=optional
+		</osgi.import.package.butterfaces>
 		<!-- Specifies that $LIFERAY_HOME/osgi/modules/com.liferay.faces.alloy.jar is required for a WAB to resolve, -->
 		<!-- and ensures that it will be included for scanning of descriptors like META-INF/faces-config.xml. -->
 		<osgi.import.package.liferay.faces.alloy>
