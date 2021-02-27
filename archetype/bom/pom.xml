@@ -214,6 +214,41 @@
 			org.mozilla.javascript;resolution:=optional,\
 			org.reflections.*;resolution:=optional
 		</osgi.import.package.richfaces>
+		<!-- Excludes unused Spring Framework transitive package dependencies so that a WAB can resolve. -->
+		<osgi.import.package.spring>
+			COM.newmonics.PercClassLoader.*;resolution:=optional,\
+			android.os.*;resolution:=optional,\
+			bsh.*;resolution:=optional,\
+			com.caucho.*;resolution:=optional,\
+			com.fasterxml.jackson.dataformat.xml;resolution:=optional,\
+			com.google.gson.*;resolution:=optional,\
+			com.google.protobuf.*;resolution:=optional,\
+			com.googlecode.protobuf.*;resolution:=optional,\
+			com.jamonapi.*;resolution:=optional,\
+			com.rometools.rome.*;resolution:=optional,\
+			com.squareup.okhttp.*;resolution:=optional,\
+			com.sun.net.httpserver;resolution:=optional,\
+			groovy.*;resolution:=optional,\
+			io.netty.*;resolution:=optional,\
+			javax.ejb.*;resolution:=optional,\
+			javax.enterprise.*;resolution:=optional,\
+			javax.money.*;resolution:=optional,\
+			joptsimple.*;resolution:=optional,\
+			jrockit.vm.*;resolution:=optional,\
+			org.apache.commons.pool.*;resolution:=optional,\
+			org.apache.commons.pool2.*;resolution:=optional,\
+			org.apache.http.*;resolution:=optional,\
+			org.aspectj.*;resolution:=optional,\
+			org.codehaus.groovy.*;resolution:=optional,\
+			org.hibernate.validator.*;resolution:=optional,\
+			org.joda.time.*;resolution:=optional,\
+			org.jruby.*;resolution:=optional,\
+			org.omg.CORBA.*;resolution:=optional,\
+			org.springframework.asm.util;resolution:=optional,\
+			org.springframework.instrument;resolution:=optional,\
+			org.yaml.snakeyaml.*;resolution:=optional,\
+			sun.reflect;resolution:=optional
+		</osgi.import.package.spring>
 		<skip.thin.war.setup>true</skip.thin.war.setup>
 		<thick.or.thin>thick</thick.or.thin>
 		<war.dependency.scope>compile</war.dependency.scope>
