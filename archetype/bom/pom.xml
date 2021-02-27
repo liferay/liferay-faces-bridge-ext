@@ -181,6 +181,20 @@
 		<osgi.import.package.primefaces>
 			org.primefaces
 		</osgi.import.package.primefaces>
+		<!-- Excludes unused RichFaces transitive package dependencies so that a WAB can resolve. -->
+		<osgi.import.package.richfaces>
+			com.beust.jcommander;resolution:=optional,\
+			com.google.appengine.api;resolution:=optional,\
+			com.google.apphosting.api;resolution:=optional,\
+			com.opensymphony.oscache.*;resolution:=optional,\
+			com.yahoo.platform.yui.compressor;resolution:=optional,\
+			net.sf.ehcache.*;resolution:=optional,\
+			org.atmosphere.*;resolution:=optional,\
+			org.jboss.cache.*;resolution:=optional,\
+			org.jboss.el;resolution:=optional,\
+			org.mozilla.javascript;resolution:=optional,\
+			org.reflections.*;resolution:=optional
+		</osgi.import.package.richfaces>
 		<skip.thin.war.setup>true</skip.thin.war.setup>
 		<thick.or.thin>thick</thick.or.thin>
 		<war.dependency.scope>compile</war.dependency.scope>
