@@ -151,6 +151,15 @@
 		<osgi.import.package.butterfaces>
 			sun.reflect.*;resolution:=optional
 		</osgi.import.package.butterfaces>
+		<!-- Excludes unused Hibernate Validator transitive package dependencies so that a WAB can resolve. -->
+		<osgi.import.package.hibernate>
+			com.thoughtworks.paranamer;resolution:=optional,\
+			javafx.beans.*;resolution:=optional,\
+			javax.money;resolution:=optional,\
+			org.apache.logging.log4j.*;resolution:=optional,\
+			org.jboss.logmanager;resolution:=optional,\
+			org.joda.time;resolution:=optional
+		</osgi.import.package.hibernate>
 		<!-- Excludes unused ICEfaces transitive package dependencies so that a WAB can resolve. -->
 		<osgi.import.package.icefaces>
 			com.ibm.ws.portletcontainer;resolution:=optional,\
