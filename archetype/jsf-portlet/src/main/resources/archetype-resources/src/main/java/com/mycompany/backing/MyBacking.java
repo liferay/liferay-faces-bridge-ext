@@ -7,8 +7,7 @@ import javax.enterprise.context.RequestScoped;
 
 @Named
 @RequestScoped
-// CDI will only be activated if WEB-INF/beans.xml is present. If building with
-// Maven, use the "-P cdi" profile to generate the WEB-INF/beans.xml descriptor.
+// If building with Maven, specify the "-P cdi" profile to activate CDI.
 public class MyBacking {
 
 	private Greeting greeting = new Greeting();
