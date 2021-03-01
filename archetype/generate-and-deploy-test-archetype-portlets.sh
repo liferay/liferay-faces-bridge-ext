@@ -7,6 +7,7 @@ buildArchetypeAndGenerateAndDeployTestArchetypePortlet() {
 	JSF_VERSION=$3
 	BUILD_TOOL=$4
 	USE_RELEASE_ARCHETYPE_VERSIONS=$5
+	THICK_OR_THIN=$6
 
 	cd $ARCHETYPE
 
@@ -43,18 +44,18 @@ buildArchetypeAndGenerateAndDeployTestArchetypePortlet() {
 
 	if [[ "$BUILD_TOOL" == "maven" ]]; then
 		echo "Building test $ARCHETYPE:"
-		mvn clean package || { echo "Failed to build portlet from $ARCHETYPE."; exit 1; }
+		mvn clean package -P$THICK_OR_THIN || { echo "Failed to build portlet from $ARCHETYPE."; exit 1; }
 
 		echo "Deploying test $ARCHETYPE:"
 		cp target/*.war \
-			$HOME/Portals/liferay.com/liferay-portal-$LIFERAY_VERSION-jsf-$JSF_VERSION/deploy/com.mycompany.my.$ARCHETYPE_LIBRARY.portlet.war
+			$HOME/Portals/liferay.com/liferay-portal-$LIFERAY_VERSION-jsf-$JSF_VERSION-$THICK_OR_THIN/deploy/com.mycompany.my.$ARCHETYPE_LIBRARY.portlet.war
 	elif [[ "$BUILD_TOOL" == "gradle" ]]; then
 		echo "Building test $ARCHETYPE:"
 		gradle clean build || { echo "Failed to build portlet from $ARCHETYPE."; exit 1; }
 
 		echo "Deploying test $ARCHETYPE:"
 		cp build/libs/*.war \
-			$HOME/Portals/liferay.com/liferay-portal-$LIFERAY_VERSION-jsf-$JSF_VERSION/deploy/com.mycompany.my.$ARCHETYPE_LIBRARY.portlet.war
+			$HOME/Portals/liferay.com/liferay-portal-$LIFERAY_VERSION-jsf-$JSF_VERSION-$THICK_OR_THIN/deploy/com.mycompany.my.$ARCHETYPE_LIBRARY.portlet.war
 	fi
 }
 
@@ -73,6 +74,14 @@ if [[ "$@" == *"release"* ]]; then
 	USE_RELEASE_ARCHETYPE_VERSIONS=true
 fi
 
+THICK_OR_THIN="thick"
+
+if [[ "$@" == *"thin"* ]]; then
+	THICK_OR_THIN="thin"
+fi
+
+echo "THICK_OR_THIN=$THICK_OR_THIN"
+
 LIFERAY_VERSION=$(mvn org.codehaus.mojo:exec-maven-plugin:1.2.1:exec -Dexec.executable="echo" \
 	-q --non-recursive \
 	-Dexec.args='${liferay.version}')
@@ -86,10 +95,10 @@ if hash parallel 2>/dev/null; then
 	export -f buildArchetypeAndGenerateAndDeployTestArchetypePortlet
 	parallel --no-notice --max-args=1 \
 		buildArchetypeAndGenerateAndDeployTestArchetypePortlet {} \
-			$LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS ::: ./*-portlet
+			$LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS $THICK_OR_THIN ::: ./*-portlet
 else
 	for ARCHETYPE in ./*-portlet; do
 		(buildArchetypeAndGenerateAndDeployTestArchetypePortlet \
-			$ARCHETYPE $LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS)
+			$ARCHETYPE $LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS $THICK_OR_THIN)
 	done
 fi
