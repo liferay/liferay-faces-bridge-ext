@@ -102,7 +102,6 @@
 									<goal>run</goal>
 								</goals>
 								<configuration>
-									<skip>${skip.thin.war.setup}</skip>
 									<target>
 										<mkdir dir="${project.build.outputDirectory}/META-INF/services" />
 										<echo file="${project.build.outputDirectory}/META-INF/services/javax.enterprise.inject.spi.Extension">com.liferay.faces.bridge.servlet.BridgeExtension
