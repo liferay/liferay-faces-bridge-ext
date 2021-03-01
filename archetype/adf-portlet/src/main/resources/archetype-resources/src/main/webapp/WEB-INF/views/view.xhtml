@@ -12,6 +12,7 @@
 		<h:body>
 			<af:panelGroupLayout id="panelId">
 				<af:outputText styleClass="bold-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
+				<p><af:outputText styleClass="bold-hello-world" value="#{myBacking.greeting}" /></p>
 			</af:panelGroupLayout>
 			<af:panelList>
 				<af:outputText value="#{product.JSF}" />

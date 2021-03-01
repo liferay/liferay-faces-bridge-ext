@@ -13,6 +13,7 @@
 	<h:body>
 		<ace:panel id="panelId">
 			<h:outputText styleClass="bold-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
+			<p><h:outputText styleClass="bold-hello-world" value="#{myBacking.greeting}" /></p>
 		</ace:panel>
 		<ul>
 			<li><em><h:outputText value="#{product.JSF}" /></em></li>
