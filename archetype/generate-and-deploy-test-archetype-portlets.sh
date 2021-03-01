@@ -8,6 +8,7 @@ buildArchetypeAndGenerateAndDeployTestArchetypePortlet() {
 	BUILD_TOOL=$4
 	USE_RELEASE_ARCHETYPE_VERSIONS=$5
 	THICK_OR_THIN=$6
+	CDI=$7
 
 	cd $ARCHETYPE
 
@@ -44,7 +45,7 @@ buildArchetypeAndGenerateAndDeployTestArchetypePortlet() {
 
 	if [[ "$BUILD_TOOL" == "maven" ]]; then
 		echo "Building test $ARCHETYPE:"
-		mvn clean package -P$THICK_OR_THIN || { echo "Failed to build portlet from $ARCHETYPE."; exit 1; }
+		mvn clean package -P$THICK_OR_THIN,$CDI || { echo "Failed to build portlet from $ARCHETYPE."; exit 1; }
 
 		echo "Deploying test $ARCHETYPE:"
 		cp target/*.war \
@@ -75,12 +76,17 @@ if [[ "$@" == *"release"* ]]; then
 fi
 
 THICK_OR_THIN="thick"
+CDI=""
 
 if [[ "$@" == *"thin"* ]]; then
 	THICK_OR_THIN="thin"
 fi
 
-echo "THICK_OR_THIN=$THICK_OR_THIN"
+if [[ "$@" == *"cdi"* ]]; then
+	CDI="cdi"
+fi
+
+echo "[OPTIONS] THICK_OR_THIN=$THICK_OR_THIN CDI=$CDI"
 
 LIFERAY_VERSION=$(mvn org.codehaus.mojo:exec-maven-plugin:1.2.1:exec -Dexec.executable="echo" \
 	-q --non-recursive \
@@ -95,10 +101,10 @@ if hash parallel 2>/dev/null; then
 	export -f buildArchetypeAndGenerateAndDeployTestArchetypePortlet
 	parallel --no-notice --max-args=1 \
 		buildArchetypeAndGenerateAndDeployTestArchetypePortlet {} \
-			$LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS $THICK_OR_THIN ::: ./*-portlet
+			$LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS $THICK_OR_THIN $CDI ::: ./*-portlet
 else
 	for ARCHETYPE in ./*-portlet; do
 		(buildArchetypeAndGenerateAndDeployTestArchetypePortlet \
-			$ARCHETYPE $LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS $THICK_OR_THIN)
+			$ARCHETYPE $LIFERAY_VERSION $JSF_VERSION $BUILD_TOOL $USE_RELEASE_ARCHETYPE_VERSIONS $THICK_OR_THIN $CDI)
 	done
 fi

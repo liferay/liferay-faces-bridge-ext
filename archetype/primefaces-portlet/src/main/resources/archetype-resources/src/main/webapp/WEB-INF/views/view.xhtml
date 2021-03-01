@@ -12,6 +12,7 @@
 	<h:body>
 		<p:panel id="panelId">
 			<h:outputText styleClass="bold-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
+			<p><h:outputText styleClass="bold-hello-world" value="#{myBacking.greeting}" /></p>
 		</p:panel>
 		<ul>
 			<li><em><h:outputText value="#{product.JSF}" /></em></li>

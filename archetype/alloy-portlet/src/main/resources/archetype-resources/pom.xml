@@ -3,7 +3,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- Note: The Bill of Materials (BOM) parent POM contains a "thin" profile and associated configuration for building thin JSF WAR artifacts -->
+	<!-- Note: The Bill of Materials (BOM) parent POM contains "thin" and "cdi" profiles -->
 	<parent>
 		<groupId>com.liferay.faces.archetype</groupId>
 		<artifactId>com.liferay.faces.archetype.bom</artifactId>
@@ -45,6 +45,12 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>@cdi-api-version@</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>javax.faces-api</artifactId>
