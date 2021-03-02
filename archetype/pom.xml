@@ -8,6 +8,13 @@
 	<packaging>pom</packaging>
 	<name>Liferay Faces Bridge Ext Archetypes</name>
 
+	<scm>
+		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
+		<developerConnection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</developerConnection>
+		<url>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</url>
+		<tag>HEAD</tag>
+	</scm>
+
 	<modules>
 		<module>bom</module>
 		<module>alloy-portlet</module>
