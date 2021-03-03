@@ -8,7 +8,7 @@
 		<version>5.1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>com.liferay.faces.archetype.bom</artifactId>
+	<artifactId>com.liferay.faces.archetype.parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Liferay Faces Archetypes Bill of Materials (BOM)</name>
 
