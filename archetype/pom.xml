@@ -27,6 +27,29 @@
 		<module>test</module>
 	</modules>
 
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<!-- The following properties are necessary for fix-versions.pl -->
 	<properties>
 		<archetype.packaging.extension.version>2.4</archetype.packaging.extension.version>
