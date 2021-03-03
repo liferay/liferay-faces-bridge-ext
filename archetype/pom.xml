@@ -29,6 +29,7 @@
 
 	<!-- The following properties are necessary for fix-versions.pl -->
 	<properties>
+		<archetype.packaging.extension.version>2.4</archetype.packaging.extension.version>
 		<faces.api.version>${faces.spec.version}</faces.api.version>
 		<faces.spec.version>2.2</faces.spec.version>
 		<liferay.version>7.3.5</liferay.version>
@@ -54,20 +55,70 @@
 	</dependencyManagement>
 
 	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.7</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-install-plugin</artifactId>
-				<version>2.5.2</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.8</version>
+					<executions>
+						<execution>
+							<id>filter-build-file-properties</id>
+							<phase>none</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<target>
+									<replace dir="${project.build.outputDirectory}/archetype-resources" includes="build.gradle,pom.xml" replacefilterfile="${project.basedir}/../archetype-build-file.properties" />
+								</target>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-archetype-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<pushChanges>false</pushChanges>
+						<localCheckout>true</localCheckout>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.scm</groupId>
+					<artifactId>maven-scm-providers-git</artifactId>
+					<!-- http://jira.codehaus.org/browse/SCM-444 -->
+					<version>(,1.4]</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
