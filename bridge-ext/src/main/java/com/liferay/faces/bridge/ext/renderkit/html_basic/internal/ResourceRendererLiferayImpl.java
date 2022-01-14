@@ -89,6 +89,13 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 			dataSennaTrack = new NameValuePair<String, Object>(DATA_SENNA_TRACK,
 					primeFacesCSSDefaultDataSennaTrackValue);
 		}
+		else {
+
+			// Approximate the functionality of liferay-util:html-top for backward compatibility. However, specify
+			// "temporary" for script tags, since "permanent" is inappropriate.
+			// https://github.com/liferay/liferay-portal/blob/7.4.3.7-ga7/util-taglib/src/com/liferay/taglib/util/OutputTag.java#L56-L64
+			dataSennaTrack = new NameValuePair<String, Object>(DATA_SENNA_TRACK, "temporary");
+		}
 
 		return dataSennaTrack;
 	}

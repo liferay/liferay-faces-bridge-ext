@@ -86,31 +86,62 @@ public class HeadResourceTest {
 		UIComponent uiComponent = new UIComponentMockImpl(null, null);
 
 		NameValuePair<String, Object> dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false,
-				"foo", "permanent");
-		Assert.assertNull(dataSennaTrack);
+				"foo", null);
 
-		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "foo", "permanent");
-		Assert.assertNull(dataSennaTrack);
+		Assert.assertNotNull(dataSennaTrack);
 
-		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, null, "permanent");
-		Assert.assertNull(dataSennaTrack);
+		String message = "Expected data-senna-track=temporary";
 
-		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, null, "permanent");
-		Assert.assertNull(dataSennaTrack);
+		if (dataSennaTrack != null) {
+			Assert.assertEquals(message, dataSennaTrack.getValue(), "temporary");
+		}
+
+		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "foo", null);
+		Assert.assertNotNull(dataSennaTrack);
+
+		if (dataSennaTrack != null) {
+			Assert.assertEquals(message, dataSennaTrack.getValue(), "temporary");
+		}
+
+		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, null, null);
+		Assert.assertNotNull(dataSennaTrack);
+
+		if (dataSennaTrack != null) {
+			Assert.assertEquals(message, dataSennaTrack.getValue(), "temporary");
+		}
+
+		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, null, null);
+		Assert.assertNotNull(dataSennaTrack);
+
+		if (dataSennaTrack != null) {
+			Assert.assertEquals(message, dataSennaTrack.getValue(), "temporary");
+		}
 
 		// PrimeFaces
 		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "primefaces", null);
-		Assert.assertNull(dataSennaTrack);
+		Assert.assertNotNull(dataSennaTrack);
 
-		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, "primefaces", "permanent");
-		Assert.assertNull(dataSennaTrack);
+		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, "primefaces", null);
+
+		if (dataSennaTrack != null) {
+			Assert.assertEquals(message, dataSennaTrack.getValue(), "temporary");
+		}
+
+		Assert.assertNotNull(dataSennaTrack);
 
 		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, true, "primefaces-theme", null);
-		Assert.assertNull(dataSennaTrack);
+		Assert.assertNotNull(dataSennaTrack);
 
-		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, "primefaces-theme",
-				"permanent");
-		Assert.assertNull(dataSennaTrack);
+		if (dataSennaTrack != null) {
+			Assert.assertEquals(message, dataSennaTrack.getValue(), "temporary");
+		}
+
+		dataSennaTrack = ResourceRendererLiferayImpl.getDataSennaTrack(uiComponent, false, "primefaces-theme", null);
+		Assert.assertNotNull(dataSennaTrack);
+
+		if (dataSennaTrack != null) {
+			Assert.assertEquals(message, dataSennaTrack.getValue(), "temporary");
+		}
 
 		testGetDataSennaTrackWithNoPassThrougAttributes("temporary", true, "primefaces", "temporary");
 		testGetDataSennaTrackWithNoPassThrougAttributes("permanent", true, "primefaces", "permanent");
