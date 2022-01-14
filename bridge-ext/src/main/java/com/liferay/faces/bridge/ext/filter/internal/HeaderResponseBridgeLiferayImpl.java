@@ -48,6 +48,19 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 	}
 
 	@Override
+	public void addDependency(String name, String scope, String version, String markup) {
+
+		if (version == null) {
+
+			// In order for Liferay to de-duplicate resources, it is necessary to specify a non-null version.
+			// Otherwise, it will assign a random version in order to force uniqueness.
+			version = "1.0.0";
+		}
+
+		super.addDependency(name, scope, version, markup);
+	}
+
+	@Override
 	public PortletURL createActionURL() throws IllegalStateException {
 		return liferayURLFactory.getLiferayActionURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
 	}
