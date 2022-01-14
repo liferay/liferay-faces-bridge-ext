@@ -15,9 +15,11 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.faces.BridgeFactoryFinder;
 import javax.portlet.filter.HeaderResponseWrapper;
@@ -53,6 +55,11 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 	@Override
 	public PortletURL createRenderURL() throws IllegalStateException {
 		return liferayURLFactory.getLiferayRenderURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled());
+	}
+
+	@Override
+	public RenderURL createRenderURL(MimeResponse.Copy copy) throws IllegalStateException {
+		return liferayURLFactory.getLiferayRenderURL(headerRequest, getResponse(), isFriendlyURLMapperEnabled(), copy);
 	}
 
 	@Override

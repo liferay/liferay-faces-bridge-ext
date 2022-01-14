@@ -26,7 +26,19 @@ public class LiferayRenderURLImpl extends LiferayPortletURLImpl implements Lifer
 	}
 
 	@Override
+	public String getFragmentIdentifier() {
+
+		// no-op
+		return null;
+	}
+
+	@Override
 	public void setBeanParameter(PortletSerializable bean) {
+		// no-op
+	}
+
+	@Override
+	public void setFragmentIdentifier(String fragment) {
 		// no-op
 	}
 }
