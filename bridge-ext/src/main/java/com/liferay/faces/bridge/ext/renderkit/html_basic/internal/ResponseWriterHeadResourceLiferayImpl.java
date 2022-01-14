@@ -83,4 +83,9 @@ public class ResponseWriterHeadResourceLiferayImpl extends ResponseWriterWrapper
 			dataSennaTrackAttributeWritten = true;
 		}
 	}
+
+	@Override
+	public void writeURIAttribute(String name, Object value, String property) throws IOException {
+		super.writeURIAttribute(name, value, property);
+	}
 }

@@ -72,25 +72,37 @@ public class LiferayURLFactoryImpl extends LiferayURLFactory {
 	@Override
 	public LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
 		boolean friendlyURLMapperEnabled) {
+		return getLiferayRenderURL(portletRequest, mimeResponse, friendlyURLMapperEnabled, MimeResponse.Copy.PUBLIC);
+	}
+
+	@Override
+	public LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled, MimeResponse.Copy copy) {
 
 		if (friendlyURLMapperEnabled) {
 
-			PortletURL renderURL = mimeResponse.createRenderURL();
+			PortletURL renderURL = mimeResponse.createRenderURL(copy);
 
 			return new LiferayRenderURLFriendlyImpl(renderURL, mimeResponse.getNamespace(),
 					mimeResponse.getCharacterEncoding());
 		}
 		else {
 
+			String requestAttributeName = RENDER_URL_GENERATOR;
+
+			if (copy != null) {
+				requestAttributeName = requestAttributeName.concat(copy.name());
+			}
+
 			LiferayURLGenerator liferayURLGenerator = (LiferayURLGenerator) portletRequest.getAttribute(
-					RENDER_URL_GENERATOR);
+					requestAttributeName);
 
 			if (liferayURLGenerator == null) {
 
-				PortletURL renderURL = mimeResponse.createRenderURL();
+				PortletURL renderURL = mimeResponse.createRenderURL(copy);
 				liferayURLGenerator = new LiferayURLGeneratorRenderImpl(renderURL, mimeResponse.getNamespace(),
 						mimeResponse.getCharacterEncoding());
-				portletRequest.setAttribute(RENDER_URL_GENERATOR, liferayURLGenerator);
+				portletRequest.setAttribute(requestAttributeName, liferayURLGenerator);
 			}
 
 			return new LiferayRenderURLImpl(liferayURLGenerator);

@@ -14,6 +14,7 @@
 package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 
 
 /**
@@ -22,6 +23,6 @@ import javax.portlet.PortletURL;
  *
  * @author  Neil Griffin
  */
-public interface LiferayRenderURL extends PortletURL {
+public interface LiferayRenderURL extends RenderURL {
 
 }

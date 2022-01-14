@@ -14,6 +14,7 @@
 package com.liferay.faces.bridge.ext.filter.internal;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 import javax.portlet.annotations.PortletSerializable;
 
 
@@ -31,8 +32,18 @@ public class LiferayRenderURLFriendlyImpl extends LiferayPortletURLFriendlyImpl 
 	}
 
 	@Override
+	public String getFragmentIdentifier() {
+		return ((RenderURL) getWrapped()).getFragmentIdentifier();
+	}
+
+	@Override
 	public void setBeanParameter(PortletSerializable bean) {
 		((PortletURL) getWrapped()).setBeanParameter(bean);
+	}
+
+	@Override
+	public void setFragmentIdentifier(String fragment) {
+		((RenderURL) getWrapped()).setFragmentIdentifier(fragment);
 	}
 
 	@Override

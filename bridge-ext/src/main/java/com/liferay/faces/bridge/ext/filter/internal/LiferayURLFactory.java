@@ -29,6 +29,9 @@ public abstract class LiferayURLFactory implements FacesWrapper<LiferayURLFactor
 	public abstract LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
 		boolean friendlyURLMapperEnabled);
 
+	public abstract LiferayRenderURL getLiferayRenderURL(PortletRequest portletRequest, MimeResponse mimeResponse,
+		boolean friendlyURLMapperEnabled, MimeResponse.Copy copy);
+
 	public abstract LiferayResourceURL getLiferayResourceURL(PortletRequest portletRequest, MimeResponse mimeResponse,
 		boolean friendlyURLMapperEnabled);
 }
