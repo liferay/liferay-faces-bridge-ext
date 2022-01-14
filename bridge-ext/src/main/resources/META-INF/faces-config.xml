@@ -35,9 +35,4 @@
 			<util:scripts-encoder-factory>com.liferay.faces.bridge.ext.renderkit.html_basic.internal.ScriptsEncoderFactoryLiferayImpl</util:scripts-encoder-factory>
 		</factory-extension>
 	</factory>
-	<lifecycle>
-		<!-- Add the LiferayPageTopPhaseListener in order to remove duplicate resources from the -->
-		<!-- LIFERAY_SHARED_PAGE_TOP request attribute. -->
-		<phase-listener>com.liferay.faces.bridge.ext.event.internal.LiferayPageTopPhaseListenerCompat</phase-listener>
-	</lifecycle>
 </faces-config>
