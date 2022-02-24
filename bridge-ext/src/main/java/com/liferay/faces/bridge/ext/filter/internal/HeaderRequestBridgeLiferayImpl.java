@@ -26,8 +26,13 @@ import javax.portlet.filter.HeaderRequestWrapper;
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 
@@ -108,5 +113,42 @@ public class HeaderRequestBridgeLiferayImpl extends HeaderRequestWrapper {
 	@Override
 	public Enumeration<String> getPropertyNames() {
 		return liferayPortletRequest.getPropertyNames();
+	}
+
+	@Override
+	public boolean isPortletModeAllowed(PortletMode portletMode) {
+		boolean portletModeAllowed = super.isPortletModeAllowed(portletMode);
+
+		if (portletModeAllowed && PortletMode.EDIT.equals(portletMode)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay) super.getAttribute(WebKeys.THEME_DISPLAY);
+
+			try {
+				Portlet portlet = (Portlet) getAttribute(WebKeys.RENDER_PORTLET);
+
+				if (portlet == null) {
+					com.liferay.portal.kernel.portlet.LiferayPortletRequest liferayPortletRequest = PortalUtil
+						.getLiferayPortletRequest(getRequest());
+
+					if (liferayPortletRequest != null) {
+						portlet = liferayPortletRequest.getPortlet();
+					}
+				}
+
+				if (portlet == null) {
+					logger.warn("Unable to determine com.liferay.portal.kernel.model.Portlet from PortletRequest");
+					portletModeAllowed = !isUserInRole(RoleConstants.GUEST);
+				}
+				else {
+					portletModeAllowed = PortletPermissionUtil.hasAccessPermission(themeDisplay.getPermissionChecker(),
+							themeDisplay.getScopeGroupId(), themeDisplay.getLayout(), portlet, portletMode);
+				}
+			}
+			catch (PortalException portalException) {
+				logger.error(portalException);
+				portletModeAllowed = false;
+			}
+		}
+
+		return portletModeAllowed;
 	}
 }
