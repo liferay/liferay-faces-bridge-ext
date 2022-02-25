@@ -29,6 +29,7 @@ import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -130,7 +131,8 @@ public class RenderRequestBridgeLiferayImpl extends RenderRequestWrapper {
 						.getLiferayPortletRequest(getRequest());
 
 					if (liferayPortletRequest != null) {
-						portlet = liferayPortletRequest.getPortlet();
+						portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(),
+								liferayPortletRequest.getPortletName());
 					}
 				}
 
