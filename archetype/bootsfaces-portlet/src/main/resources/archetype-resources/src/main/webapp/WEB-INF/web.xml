@@ -34,6 +34,7 @@
 		<param-name>com.liferay.faces.bridge.jsfBridgeViewPathParameterEnabled</param-name>
 		<param-value>false</param-value>
 	</context-param>
+	<!-- FACES-3645: Note that disabling the render and resource parameters will cause JSF navigation to not work -->
 	<context-param>
 		<param-name>com.liferay.faces.bridge.viewIdRenderParameterEnabled</param-name>
 		<param-value>false</param-value>
