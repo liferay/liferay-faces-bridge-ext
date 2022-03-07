@@ -249,6 +249,7 @@
 			net.fortuna.ical4j.*;resolution:=optional,\
 			org.apache.axis.tools.ant.*;resolution:=optional,\
 			org.apache.poi.*;resolution:=optional,\
+			com.ibm.uvm.tools;resolution:=optional,\
 			com.swabunga.spell.*;resolution:=optional,\
 			*
 		</osgi.import.package.liferay.faces.bridge>
