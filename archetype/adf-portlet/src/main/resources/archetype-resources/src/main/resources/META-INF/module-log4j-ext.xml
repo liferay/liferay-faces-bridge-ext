@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.faces.adf.base.internal.logging.LiferayADFLoggingInitializer">
+		<priority value="INFO" />
+	</category>
+	<category name="com.liferay.faces.demos.applicant.adf.facelets.mbf.ApplicantBacking">
+		<priority value="INFO" />
+	</category>
+	<category name="com.liferay.faces.util.lifecycle.DebugPhaseListener">
+		<priority value="INFO" />
+	</category>
+	<category name="oracle.adfinternal.view.faces.partition.FeatureUtils">
+		<priority value="OFF" />
+	</category>
+	<category name="oracle.adfinternal.view.rich.marshal.DefaultMarshalingService">
+		<priority value="OFF" />
+	</category>
+	<category name="oracle.as.jmx.framework.PortableMBeanFactory">
+		<priority value="OFF" />
+	</category>
+	<category name="oracle.dfw.framework">
+		<priority value="OFF" />
+	</category>
+	<category name="oracle.mds">
+		<priority value="OFF" />
+	</category>
+	<category name="org.apache.myfaces.trinidadinternal.agent.AgentFactoryImpl">
+		<priority value="OFF" />
+	</category>
+	<category name="org.apache.myfaces.trinidadinternal.skin.SkinStyleSheetParserUtils">
+		<priority value="OFF" />
+	</category>
+</log4j:configuration>
