@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>9</version>
+		<relativePath />
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.liferay.faces.archetype</groupId>
+	<artifactId>com.liferay.faces.archetype.bridge.ext.parent</artifactId>
+	<version>7.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Liferay Faces Bridge Ext Archetypes</name>
+
+	<scm>
+		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
+		<developerConnection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</developerConnection>
+		<url>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<modules>
+		<module>parent</module>
+		<module>adf-portlet</module>
+		<module>alloy-portlet</module>
+		<module>bootsfaces-portlet</module>
+		<module>butterfaces-portlet</module>
+		<module>icefaces-portlet</module>
+		<module>jsf-portlet</module>
+		<module>primefaces-portlet</module>
+		<module>richfaces-portlet</module>
+		<module>test</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<!-- The following properties are necessary for fix-versions.pl -->
+	<properties>
+		<archetype.packaging.extension.version>2.4</archetype.packaging.extension.version>
+		<faces.api.version>${faces.spec.version}</faces.api.version>
+		<faces.spec.version>2.2</faces.spec.version>
+		<liferay.version>7.3.7</liferay.version>
+		<liferay.version.dtd>7.2</liferay.version.dtd>
+	</properties>
+
+	<!-- The following dependencies are necessary for fix-versions.pl -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax.portlet</groupId>
+				<artifactId>portlet-api</artifactId>
+				<version>2.0</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.8</version>
+					<executions>
+						<execution>
+							<id>filter-build-file-properties</id>
+							<phase>none</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<target>
+									<replace dir="${project.build.outputDirectory}/archetype-resources" includes="build.gradle,pom.xml" replacefilterfile="${project.basedir}/../archetype-build-file.properties" />
+								</target>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-archetype-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<pushChanges>false</pushChanges>
+						<localCheckout>true</localCheckout>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.scm</groupId>
+					<artifactId>maven-scm-providers-git</artifactId>
+					<!-- http://jira.codehaus.org/browse/SCM-444 -->
+					<version>(,1.4]</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

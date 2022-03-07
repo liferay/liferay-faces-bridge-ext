@@ -8,10 +8,10 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>com.liferay.faces.archetype.adf.portlet</artifactId>
+	<artifactId>com.liferay.faces.archetype.richfaces.portlet</artifactId>
 	<packaging>maven-archetype</packaging>
-	<name>adf-portlet</name>
-	<description>Maven archetype for a Liferay ADF portlet</description>
+	<name>richfaces-portlet</name>
+	<description>Maven archetype for a Liferay RichFaces portlet</description>
 	<build>
 		<extensions>
 			<extension>
