@@ -245,6 +245,8 @@
 								com.liferay.portal.kernel.theme;version="1.6.0",\
 								com.liferay.portal.kernel.util;version="8.0.0",\
 								com.liferay.taglib.util;version="7.0.0",\
+								com.liferay.portal.kernel.security.permission;version="1.0",\
+								com.liferay.portal.kernel.service.permission;version="1.0",\
 								javax.portlet.faces.*;version="[4.2.0,4.4.0)",\
 								*
 							# The following configuration enables the Bridge API bundle to obtain necessary SPI
