@@ -238,14 +238,12 @@
 								com.liferay.portal.kernel.language;version="7.0.0",\
 								com.liferay.portal.kernel.model;version="2.0.0",\
 								com.liferay.portal.kernel.portlet;version="8.0.0",\
-								com.liferay.portal.kernel.security.permission;version="1.7.0",\
 								com.liferay.portal.kernel.service;version="1.27.0",\
-								com.liferay.portal.kernel.service.permission;version="1.1.0",\
+								com.liferay.portal.kernel.servlet;version="7.11.0",\
 								com.liferay.portal.kernel.servlet.taglib.aui;version="7.0.0",\
+								com.liferay.portal.kernel.servlet.taglib.util;version="6.4.0",\
 								com.liferay.portal.kernel.theme;version="1.6.0",\
 								com.liferay.portal.kernel.util;version="8.0.0",\
-								com.liferay.portal.kernel.servlet;version="7.11.0",\
-								com.liferay.portal.kernel.servlet.taglib.util;version="6.4.0",\
 								com.liferay.taglib.util;version="7.0.0",\
 								javax.portlet.faces.*;version="[4.2.0,4.4.0)",\
 								*
