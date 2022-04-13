@@ -90,9 +90,11 @@ public class PortalContextBridgeLiferayImpl extends PortalContextBridgeLiferayCo
 		if (BridgePortalContext.ADD_ELEMENT_TO_HEAD_SUPPORT.equals(name) ||
 				BridgePortalContext.ADD_SCRIPT_RESOURCE_TO_HEAD_SUPPORT.equals(name) ||
 				BridgePortalContext.ADD_SCRIPT_TEXT_TO_HEAD_SUPPORT.equals(name) ||
-				BridgePortalContext.ADD_STYLE_SHEET_RESOURCE_TO_HEAD_SUPPORT.equals(name) ||
-				BridgePortalContext.ADD_STYLE_SHEET_TEXT_TO_HEAD_SUPPORT.equals(name)) {
+				BridgePortalContext.ADD_STYLE_SHEET_RESOURCE_TO_HEAD_SUPPORT.equals(name)) {
 			return addToHeadSupport;
+		}
+		else if (BridgePortalContext.ADD_STYLE_SHEET_TEXT_TO_HEAD_SUPPORT.equals(name)) {
+			return null;
 		}
 		else if (BridgePortalContext.CREATE_RENDER_URL_DURING_ACTION_PHASE_SUPPORT.equals(name)) {
 			return "true";
