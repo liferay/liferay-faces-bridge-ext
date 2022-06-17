@@ -11,7 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay.faces.archetype</groupId>
 	<artifactId>com.liferay.faces.archetype.bridge.ext.parent</artifactId>
-	<version>7.0.0</version>
+	<version>7.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Liferay Faces Bridge Ext Archetypes</name>
 
@@ -19,7 +19,7 @@
 		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
 		<developerConnection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</developerConnection>
 		<url>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</url>
-		<tag>archetypes-7.0.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<modules>
