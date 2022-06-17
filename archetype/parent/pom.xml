@@ -266,6 +266,7 @@
 			com.google.apphosting.api;resolution:=optional,\
 			com.opensymphony.oscache.*;resolution:=optional,\
 			com.yahoo.platform.yui.compressor;resolution:=optional,\
+			javax.jms;resolution:=optional,\
 			net.sf.ehcache.*;resolution:=optional,\
 			org.atmosphere.*;resolution:=optional,\
 			org.jboss.cache.*;resolution:=optional,\
