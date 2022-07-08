@@ -62,7 +62,7 @@
 		<archetype.packaging.extension.version>2.4</archetype.packaging.extension.version>
 		<faces.api.version>${faces.spec.version}</faces.api.version>
 		<faces.spec.version>2.2</faces.spec.version>
-		<liferay.version>7.3.7</liferay.version>
+		<liferay.version>7.4.13.u31</liferay.version>
 		<liferay.version.dtd>7.2</liferay.version.dtd>
 		<portlet.api.version>2.0</portlet.api.version>
 	</properties>
