@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.liferay.faces.archetype</groupId>
 		<artifactId>com.liferay.faces.archetype.bridge.ext.parent</artifactId>
-		<version>8.0.0-SNAPSHOT</version>
+		<version>8.0.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
