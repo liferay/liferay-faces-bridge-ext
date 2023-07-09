@@ -10,9 +10,6 @@ dependencies {
     compile group: 'javax.faces', name: 'jsf-api', version: '@mojarra-version@'
     compile group: 'javax.faces', name: 'jsf-impl', version: '@mojarra-version@'
     compile group: 'javax.servlet', name: 'jstl', version: '@jstl-version@'
-    compile(group: 'org.glassfish.web', name: 'el-impl', version: '@el-impl-version@') {
-        exclude group: 'javax.servlet.jsp', module: 'jsp-api'
-    }
     compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
     compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
     compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
