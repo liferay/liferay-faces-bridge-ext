@@ -3,11 +3,18 @@
 <archetype>
 	<id>com.liferay.faces.archetype.jsf.jsp.portlet</id>
 	<resources>
+		<resource>src/main/java/com/mycompany/backing/MyBacking.java</resource>
+		<resource>src/main/java/com/mycompany/dto/Greeting.java</resource>
+		<resource>src/main/resources/i18n.properties</resource>
+		<resource>src/main/resources/log4j.properties</resource>
 		<resource>src/main/webapp/WEB-INF/faces-config.xml</resource>
+		<resource>src/main/webapp/WEB-INF/liferay-display.xml</resource>
 		<resource>src/main/webapp/WEB-INF/liferay-plugin-package.properties</resource>
+		<resource>src/main/webapp/WEB-INF/liferay-portlet.xml</resource>
+		<resource>src/main/webapp/WEB-INF/portlet.xml</resource>
 		<resource>src/main/webapp/WEB-INF/web.xml</resource>
 		<resource>src/main/webapp/WEB-INF/views/view.jspx</resource>
-		<resource>src/main/webapp/WEB-INF/resources/css/main.css</resource>
-		<resource>src/main/webapp/WEB-INF/resources/images/icon.png</resource>
+		<resource>src/main/webapp/css/main.css</resource>
+		<resource>src/main/webapp/images/icon.png</resource>
 	</resources>
 </archetype>
