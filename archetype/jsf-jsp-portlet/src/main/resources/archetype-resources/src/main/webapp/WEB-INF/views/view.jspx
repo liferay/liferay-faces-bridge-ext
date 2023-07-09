@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" version="2.1">
+
+	<jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+	<f:view>
+		<link rel="stylesheet" type="text/css" href="${request.contextPath}/css/main.css" />
+		<h:panelGroup id="panelId" layout="block">
+			<h:outputText styleClass="bold-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
+			<p><h:outputText styleClass="bold-hello-world" value="#{myBacking.greeting}" /></p>
+		</h:panelGroup>
+		<ul>
+			<li><em><h:outputText value="#{product.JSF}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_BRIDGE}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_BRIDGE_EXT}" /></em></li>
+			<li><em><h:outputText value="#{product.LIFERAY_FACES_UTIL}" /></em></li>
+		</ul>
+	</f:view>
+
+</jsp:root>
