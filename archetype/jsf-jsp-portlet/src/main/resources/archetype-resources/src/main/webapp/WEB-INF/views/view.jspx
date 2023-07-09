@@ -5,7 +5,7 @@
 
 	<jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
 	<f:view>
-		<link rel="stylesheet" type="text/css" href="${request.contextPath}/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="${facesContext.externalContext.requestContextPath}/css/main.css" />
 		<h:panelGroup id="panelId" layout="block">
 			<h:outputText styleClass="bold-hello-world" value="#{i18n['${artifactId}-hello-world']}" />
 			<p><h:outputText styleClass="bold-hello-world" value="#{myBacking.greeting}" /></p>
