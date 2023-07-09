@@ -27,6 +27,16 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>@commons-fileupload-version@</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>@commons-io-version@</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>jsf-api</artifactId>
 			<version>@mojarra-version@</version>
@@ -37,9 +47,20 @@
 			<version>@mojarra-version@</version>
 		</dependency>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>@jstl-version@</version>
+		</dependency>
+		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>el-impl</artifactId>
 			<version>@el-impl-version@</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet.jsp</groupId>
+					<artifactId>jsp-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.faces</groupId>

@@ -5,11 +5,16 @@ repositories {
 }
 
 dependencies {
-    providedCompile group: 'javax.enterprise', name: 'cdi-api', version: '@cdi-api-version@'
-    providedCompile group: 'javax.faces', name: 'javax.faces-api', version: '@faces-api-version@'
-    runtime group: 'org.glassfish', name: 'javax.faces', version: '@mojarra-version@'
-    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
-    runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '@commons-fileupload-version@'
+    compile group: 'commons-io', name: 'commons-io', version: '@commons-io-version@'
+    compile group: 'javax.faces', name: 'jsf-api', version: '@mojarra-version@'
+    compile group: 'javax.faces', name: 'jsf-impl', version: '@mojarra-version@'
+    compile group: 'javax.servlet', name: 'jstl', version: '@jstl-version@'
+    compile(group: 'org.glassfish.web', name: 'el-impl', version: '@el-impl-version@') {
+        exclude group: 'javax.servlet.jsp', module: 'jsp-api'
+    }
+    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
+    compile group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
     compile group: 'log4j', name: 'log4j', version: '@log4j-version@'
 }
 
