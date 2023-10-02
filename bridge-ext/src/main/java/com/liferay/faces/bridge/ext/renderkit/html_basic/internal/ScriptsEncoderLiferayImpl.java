@@ -74,18 +74,32 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl i
 
 		String scriptsString = getScriptsAsString(facesContext, scripts);
 
-		// Strip off opening <script> and CDATA tags.
+		// Strip off the opening CDATA tag.
 		int startCDATAIndex = scriptsString.indexOf("<![CDATA[");
 
-		if (startCDATAIndex != -1) {
+		if (startCDATAIndex >= 0) {
 			scriptsString = scriptsString.substring(startCDATAIndex + "<![CDATA[".length());
 		}
 
-		// Strip off closing <script> and CDATA tags.
+		// Strip off the opening <script> tag.
+		int startScriptIndex = scriptsString.indexOf("<script>");
+
+		if (startScriptIndex >= 0) {
+			scriptsString = scriptsString.substring(startScriptIndex + "<script>".length());
+		}
+
+		// Strip off the closing CDATA tag.
 		int endCDATAIndex = scriptsString.indexOf("]]>");
 
-		if (endCDATAIndex != -1) {
+		if (endCDATAIndex >= 0) {
 			scriptsString = scriptsString.substring(0, endCDATAIndex);
+		}
+
+		// Strip off the closing </script>.
+		int endScriptIndex = scriptsString.indexOf("</script>");
+
+		if (endScriptIndex >= 0) {
+			scriptsString = scriptsString.substring(0, endScriptIndex);
 		}
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
