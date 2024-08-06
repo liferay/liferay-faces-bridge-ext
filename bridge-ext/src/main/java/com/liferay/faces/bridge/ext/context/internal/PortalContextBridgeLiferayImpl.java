@@ -19,6 +19,7 @@ import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
+import javax.portlet.faces.Bridge;
 
 import com.liferay.faces.bridge.context.BridgePortalContext;
 import com.liferay.faces.util.helper.BooleanHelper;
@@ -64,7 +65,11 @@ public class PortalContextBridgeLiferayImpl extends PortalContextBridgeLiferayCo
 		ThemeDisplay themeDisplay = (ThemeDisplay) portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		boolean stateExclusive = themeDisplay.isStateExclusive();
 
-		if (!(isAjaxRequest(portletRequest) || runtimePortlet || wsrpPortlet || stateExclusive)) {
+		String portletPhase = (String) portletRequest.getAttribute(PortletRequest.LIFECYCLE_PHASE);
+
+		boolean headerPhase = PortletRequest.HEADER_PHASE.equals(portletPhase);
+
+		if (headerPhase && !wsrpPortlet && !stateExclusive) {
 			this.addToHeadSupport = "true";
 		}
 		else {
