@@ -391,13 +391,15 @@
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>3.0.0</version>
+			<!-- CE.GA125/DXP.2024.Q3: https://github.com/liferay/liferay-portal/blob/7.4.3.125-ga125/portal-kernel/bnd.bnd#L3 -->
+			<version>146.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.util.taglib</artifactId>
-			<version>2.1.0</version>
+			<!-- CE.GA125/DXP.2024.Q3: https://github.com/liferay/liferay-portal/blob/7.4.3.125-ga125/util-taglib/bnd.bnd#L3 -->
+			<version>24.0.5</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
