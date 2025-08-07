@@ -13,6 +13,10 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
+
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.MimeResponse;
@@ -23,7 +27,7 @@ import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.faces.BridgeFactoryFinder;
 import javax.portlet.filter.HeaderResponseWrapper;
-
+import javax.servlet.http.Cookie;
 
 /**
  * @author  Neil Griffin
@@ -35,13 +39,11 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 	private LiferayURLFactory liferayURLFactory;
 	private String namespace;
 	private String namespaceWSRP;
-	private PortletContext portletContext;
 	private HeaderRequest headerRequest;
 
 	public HeaderResponseBridgeLiferayImpl(PortletContext portletContext, HeaderRequest headerRequest,
 		HeaderResponse headerResponse) {
 		super(headerResponse);
-		this.portletContext = portletContext;
 		this.headerRequest = headerRequest;
 		this.liferayURLFactory = (LiferayURLFactory) BridgeFactoryFinder.getFactory(portletContext,
 				LiferayURLFactory.class);
@@ -58,6 +60,12 @@ public class HeaderResponseBridgeLiferayImpl extends HeaderResponseWrapper {
 		}
 
 		super.addDependency(name, scope, version, markup);
+	}
+
+	@Override
+	public void addProperty(Cookie cookie) {
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
+			PortalUtil.getHttpServletRequest(headerRequest), PortalUtil.getHttpServletResponse(super.getResponse()));
 	}
 
 	@Override

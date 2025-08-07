@@ -13,6 +13,10 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
+
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletURL;
@@ -21,7 +25,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.portlet.faces.BridgeFactoryFinder;
 import javax.portlet.filter.ResourceResponseWrapper;
-
+import javax.servlet.http.Cookie;
 
 /**
  * @author  Neil Griffin
@@ -41,6 +45,12 @@ public class ResourceResponseBridgeLiferayImpl extends ResourceResponseWrapper {
 		this.resourceRequest = resourceRequest;
 		this.liferayURLFactory = (LiferayURLFactory) BridgeFactoryFinder.getFactory(portletContext,
 				LiferayURLFactory.class);
+	}
+
+	@Override
+	public void addProperty(Cookie cookie) {
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
+			PortalUtil.getHttpServletRequest(resourceRequest), PortalUtil.getHttpServletResponse(super.getResponse()));
 	}
 
 	@Override
