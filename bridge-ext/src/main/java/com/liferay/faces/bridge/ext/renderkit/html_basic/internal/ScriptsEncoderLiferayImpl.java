@@ -74,39 +74,36 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl i
 
 		String scriptsString = getScriptsAsString(facesContext, scripts);
 
-		// Optional: Remove CDATA if present
-		scriptsString = scriptsString.replace("<![CDATA[", "").replace("]]>", "");
+		// Strip off the opening CDATA tag.
+		int startCDATAIndex = scriptsString.indexOf("<![CDATA[");
 
-		StringBuilder extractedScripts = new StringBuilder();
+		if (startCDATAIndex >= 0) {
+			scriptsString = scriptsString.substring(startCDATAIndex + "<![CDATA[".length());
+		}
 
-		int searchIndex = 0;
-		while (true) {
-			int startTagIndex = scriptsString.indexOf("<script", searchIndex);
-			if (startTagIndex == -1) {
-				break;
-			}
+		// Strip off the opening <script> tag.
+		int startScriptIndex = scriptsString.indexOf("<script>");
 
-			// Move past <script> tag (skip attributes too)
-			int startClose = scriptsString.indexOf(">", startTagIndex);
-			if (startClose == -1) {
-				break; // malformed, stop
-			}
+		if (startScriptIndex >= 0) {
+			scriptsString = scriptsString.substring(startScriptIndex + "<script>".length());
+		}
 
-			int endTagIndex = scriptsString.indexOf("</script>", startClose);
-			if (endTagIndex == -1) {
-				break; // malformed, stop
-			}
+		// Strip off the closing CDATA tag.
+		int endCDATAIndex = scriptsString.indexOf("]]>");
 
-			String scriptContent = scriptsString.substring(startClose + 1, endTagIndex).trim();
-			if (!scriptContent.isEmpty()) {
-				extractedScripts.append(scriptContent).append('\n');
-			}
+		if (endCDATAIndex >= 0) {
+			scriptsString = scriptsString.substring(0, endCDATAIndex);
+		}
 
-			searchIndex = endTagIndex + "</script>".length();
+		// Strip off the closing </script>.
+		int endScriptIndex = scriptsString.indexOf("</script>");
+
+		if (endScriptIndex >= 0) {
+			scriptsString = scriptsString.substring(0, endScriptIndex);
 		}
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		responseWriter.write(extractedScripts.toString());
+		responseWriter.write(scriptsString);
 	}
 
 	private String getScriptsAsString(FacesContext facesContext, List<Script> scripts) throws IOException {
