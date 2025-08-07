@@ -13,6 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import com.liferay.faces.bridge.BridgeFactoryFinder;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -23,7 +24,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
-import javax.portlet.faces.BridgeFactoryFinder;
 import javax.portlet.filter.RenderResponseWrapper;
 import javax.servlet.http.Cookie;
 
