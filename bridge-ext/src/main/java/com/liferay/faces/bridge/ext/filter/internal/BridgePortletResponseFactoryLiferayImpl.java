@@ -52,7 +52,7 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 		ActionResponse wrappedActionResponse = getWrapped().getActionResponse(actionRequest, actionResponse,
 				portletConfig, bridgeConfig);
 
-		return new ActionResponseBridgeLiferayImpl(wrappedActionResponse);
+		return new ActionResponseBridgeLiferayImpl(actionRequest, wrappedActionResponse);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class BridgePortletResponseFactoryLiferayImpl extends BridgePortletRespon
 		EventResponse wrappedEventResponse = getWrapped().getEventResponse(eventRequest, eventResponse, portletConfig,
 				bridgeConfig);
 
-		return new EventResponseBridgeLiferayImpl(wrappedEventResponse);
+		return new EventResponseBridgeLiferayImpl(eventRequest, wrappedEventResponse);
 	}
 
 	@Override
