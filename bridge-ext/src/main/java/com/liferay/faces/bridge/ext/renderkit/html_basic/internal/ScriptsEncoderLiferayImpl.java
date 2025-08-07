@@ -74,36 +74,39 @@ public class ScriptsEncoderLiferayImpl extends ScriptsEncoderLiferayCompatImpl i
 
 		String scriptsString = getScriptsAsString(facesContext, scripts);
 
-		// Strip off the opening CDATA tag.
-		int startCDATAIndex = scriptsString.indexOf("<![CDATA[");
+		// Optional: Remove CDATA if present
+		scriptsString = scriptsString.replace("<![CDATA[", "").replace("]]>", "");
 
-		if (startCDATAIndex >= 0) {
-			scriptsString = scriptsString.substring(startCDATAIndex + "<![CDATA[".length());
-		}
+		StringBuilder extractedScripts = new StringBuilder();
 
-		// Strip off the opening <script> tag.
-		int startScriptIndex = scriptsString.indexOf("<script>");
+		int searchIndex = 0;
+		while (true) {
+			int startTagIndex = scriptsString.indexOf("<script", searchIndex);
+			if (startTagIndex == -1) {
+				break;
+			}
 
-		if (startScriptIndex >= 0) {
-			scriptsString = scriptsString.substring(startScriptIndex + "<script>".length());
-		}
+			// Move past <script> tag (skip attributes too)
+			int startClose = scriptsString.indexOf(">", startTagIndex);
+			if (startClose == -1) {
+				break; // malformed, stop
+			}
 
-		// Strip off the closing CDATA tag.
-		int endCDATAIndex = scriptsString.indexOf("]]>");
+			int endTagIndex = scriptsString.indexOf("</script>", startClose);
+			if (endTagIndex == -1) {
+				break; // malformed, stop
+			}
 
-		if (endCDATAIndex >= 0) {
-			scriptsString = scriptsString.substring(0, endCDATAIndex);
-		}
+			String scriptContent = scriptsString.substring(startClose + 1, endTagIndex).trim();
+			if (!scriptContent.isEmpty()) {
+				extractedScripts.append(scriptContent).append('\n');
+			}
 
-		// Strip off the closing </script>.
-		int endScriptIndex = scriptsString.indexOf("</script>");
-
-		if (endScriptIndex >= 0) {
-			scriptsString = scriptsString.substring(0, endScriptIndex);
+			searchIndex = endTagIndex + "</script>".length();
 		}
 
 		ResponseWriter responseWriter = facesContext.getResponseWriter();
-		responseWriter.write(scriptsString);
+		responseWriter.write(extractedScripts.toString());
 	}
 
 	private String getScriptsAsString(FacesContext facesContext, List<Script> scripts) throws IOException {
