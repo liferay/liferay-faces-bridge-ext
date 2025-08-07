@@ -13,12 +13,17 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.filter.EventResponseWrapper;
-
+import javax.servlet.http.Cookie;
 
 /**
  * @author  Neil Griffin
@@ -26,11 +31,19 @@ import javax.portlet.filter.EventResponseWrapper;
 public class EventResponseBridgeLiferayImpl extends EventResponseWrapper {
 
 	// Private Data Members
+	private EventRequest eventRequest;
 	private String namespace;
 	private String namespaceWSRP;
 
-	public EventResponseBridgeLiferayImpl(EventResponse response) {
-		super(response);
+	public EventResponseBridgeLiferayImpl(EventRequest eventRequest, EventResponse eventResponse) {
+		super(eventResponse);
+		this.eventRequest = eventRequest;
+	}
+
+	@Override
+	public void addProperty(Cookie cookie) {
+		CookiesManagerUtil.addCookie(CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
+			PortalUtil.getHttpServletRequest(eventRequest), PortalUtil.getHttpServletResponse(super.getResponse()));
 	}
 
 	@Override
