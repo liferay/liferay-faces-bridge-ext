@@ -40,8 +40,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.faces</artifactId>
+			<groupId>com.liferay</groupId>
+			<artifactId>org.glassfish.jakarta.faces</artifactId>
 			<version>@mojarra-version@</version>
 			<scope>runtime</scope>
 		</dependency>
