@@ -71,12 +71,6 @@
 			<scope>${war.dependency.scope}</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>@log4j-version@</version>
-			<scope>${war.dependency.scope}</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.github.albfernandez.richfaces</groupId>
 			<artifactId>richfaces</artifactId>
 			<version>@richfaces-version@</version>

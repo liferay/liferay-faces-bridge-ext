@@ -80,12 +80,6 @@
 			<scope>${war.dependency.scope}</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>@log4j-version@</version>
-			<scope>${war.dependency.scope}</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.oracle.fmwshare</groupId>
 			<artifactId>adf-richclient-api-11</artifactId>
 			<version>${adf.version}</version>
