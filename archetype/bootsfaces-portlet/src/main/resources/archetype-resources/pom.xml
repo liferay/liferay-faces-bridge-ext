@@ -58,12 +58,6 @@
 			<scope>${war.dependency.scope}</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>@log4j-version@</version>
-			<scope>${war.dependency.scope}</scope>
-		</dependency>
-		<dependency>
 			<groupId>net.bootsfaces</groupId>
 			<artifactId>bootsfaces</artifactId>
 			<version>@bootsfaces-version@</version>
