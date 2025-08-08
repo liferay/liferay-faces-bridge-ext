@@ -10,6 +10,5 @@ dependencies {
     runtime group: 'com.liferay', name: 'org.glassfish.jakarta.faces', version: '@mojarra-version@'
     runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
     runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
-    compile group: 'org.primefaces', name: 'primefaces', version: '@primefaces-version@'
+    compile group: 'com.liferay', name: 'org.primefaces.primefaces', version: '@primefaces-version@'
 }
-
