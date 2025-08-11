@@ -172,38 +172,6 @@
 		</osgi.dynamic.import.package.primefaces>
 		<!-- Specifies the Import-Package directive for use with the "thin" Maven profile. -->
 		<osgi.import.package />
-		<!-- Excludes unused ADF Faces transitive package dependencies so that a WAB can resolve. -->
-		<osgi.import.package.adf>
-			com.oracle.jrf.mt.tenant.*;resolution:=optional,\
-			com.sun.enterprise.config.serverbeans;resolution:=optional,\
-			com.sun.xml.fastinfoset.*;resolution:=optional,\
-			javax.enterprise.concurrent;resolution:=optional,\
-			oracle.adf.model;resolution:=optional,\
-			oracle.adf.share.http;resolution:=optional,\
-			oracle.core.ojdl.*;resolution:=optional,\
-			oracle.dms.context;resolution:=optional,\
-			oracle.dms.instrument.*;resolution:=optional,\
-			oracle.ide.net;resolution:=optional,\
-			oracle.javatools.annotations;resolution:=optional,\
-			oracle.jbo;resolution:=optional,\
-			oracle.jbo.common.*;resolution:=optional,\
-			oracle.jdbc.*;resolution:=optional,\
-			oracle.jdeveloper.java.*;resolution:=optional,\
-			oracle.jrf;resolution:=optional,\
-			oracle.jrf.i18n;resolution:=optional,\
-			oracle.jrf.wls;resolution:=optional,\
-			oracle.jsp.el;resolution:=optional,\
-			oracle.portlet.bridge.adf.lifecycle;resolution:=optional,\
-			oracle.sql;resolution:=optional,\
-			oracle.xdb;resolution:=optional,\
-			oracle.xml.schemavalidator;resolution:=optional,\
-			org.antlr.runtime.*;resolution:=optional,\
-			org.glassfish.hk2.*;resolution:=optional,\
-			org.glassfish.internal.api;resolution:=optional,\
-			org.jvnet.fastinfoset;resolution:=optional,\
-			weblogic.invocation;resolution:=optional,\
-			weblogic.server;resolution:=optional
-		</osgi.import.package.adf>
 		<!-- Excludes unused ButterFaces transitive package dependencies so that a WAB can resolve. -->
 		<osgi.import.package.butterfaces>
 			sun.reflect.*;resolution:=optional
