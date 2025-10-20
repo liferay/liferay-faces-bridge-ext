@@ -7,7 +7,7 @@ repositories {
 dependencies {
     providedCompile group: 'javax.enterprise', name: 'cdi-api', version: '@cdi-api-version@'
     providedCompile group: 'javax.faces', name: 'javax.faces-api', version: '@faces-api-version@'
-    runtime group: 'com.liferay', name: 'org.glassfish.jakarta.faces', version: '@mojarra-version@'
+    runtime group: 'com.liferay.faces', name: 'jakarta.faces', version: '@mojarra-version@'
     runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.ext', version: '@liferay-faces-bridge-ext-version@'
     runtime group: 'com.liferay.faces', name: 'com.liferay.faces.bridge.impl', version: '@liferay-faces-bridge-impl-version@'
 }
