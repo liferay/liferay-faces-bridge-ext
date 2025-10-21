@@ -26,8 +26,11 @@ if [[ "$@" == *"cdi"* ]]; then
 fi
 echo "CDI=$CDI"
 
+PORTLET_TYPES="alloy bootsfaces butterfaces icefaces jsf primefaces richfaces"
+
 THICK_OR_THIN="thick"
 if [[ "$@" == *"thin"* ]]; then
+	PORTLET_TYPES="alloy bootsfaces butterfaces jsf primefaces richfaces"
     THICK_OR_THIN="thin"
 fi
 echo "THICK_OR_THIN=$THICK_OR_THIN"
@@ -44,12 +47,11 @@ mvn clean install -P externalLiferayFacesRepositories
 mkdir -p target
 pushd target
 
-PORTLET_TYPES="adf alloy bootsfaces butterfaces icefaces jsf primefaces richfaces"
 for PORTLET_TYPE in $PORTLET_TYPES; do
 	echo $PORTLET_TYPE
 	ARTIFACT_ID="com.mycompany.my.$PORTLET_TYPE.portlet"
 	rm -rf $ARTIFACT_ID
-	mvn --batch-mode archetype:generate \
+	mvn -P externalLiferayFacesRepositories --batch-mode archetype:generate \
 		-DarchetypeCatalog=local \
 		-DgroupId=com.mycompany \
 		-Dversion="1.0.0" \
@@ -58,15 +60,19 @@ for PORTLET_TYPE in $PORTLET_TYPES; do
 		-DarchetypeArtifactId=com.liferay.faces.archetype.$PORTLET_TYPE.portlet \
 		-DarchetypeVersion=$ARCHETYPE_VERSION \
 		-DinteractiveMode=false
+    rc=$?
+    if [ $rc -ne 0 ]; then
+        exit $rc
+    fi
 done
 
-mvn archetype:crawl
+mvn -P externalLiferayFacesRepositories archetype:crawl
 
 for PORTLET_TYPE in $PORTLET_TYPES; do
 	echo $PORTLET_TYPE
 	ARTIFACT_ID="com.mycompany.my.$PORTLET_TYPE.portlet"
 	pushd $ARTIFACT_ID
-	mvn clean package -P $THICK_OR_THIN,$CDI
+	mvn clean package -P $THICK_OR_THIN,$CDI,externalLiferayFacesRepositories
 	cp target/*.war $LIFERAY_HOME/deploy
 	popd
 done
