@@ -1,3 +1,13 @@
 .bold-hello-world {
     font-weight: bold;
 }
+
+/* Overcome Liferay OOTB CSS that initially hides the panel by restoring the Bootstrap "open" behavior */
+.bootsFacesPanel .collapse.in {
+    display: block !important;
+}
+
+/* Make sure that truly closed panels are not displayed */
+.bootsFacesPanel .collapse:not(.in) {
+    display: none !important;
+}
