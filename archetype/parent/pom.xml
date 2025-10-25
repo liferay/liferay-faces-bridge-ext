@@ -11,7 +11,25 @@
 	<artifactId>com.liferay.faces.archetype.parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Liferay Faces Archetypes Bill of Materials (BOM)</name>
-
+	<description>Liferay Faces Archetypes Bill of Materials (BOM)</description>
+	<developers>
+		<developer>
+			<name>Neil Griffin</name>
+			<organization>Liferay, Inc.</organization>
+			<organizationUrl>http://www.liferay.com</organizationUrl>
+		</developer>
+	</developers>
+	<organization>
+		<name>Liferay, Inc.</name>
+		<url>http://www.liferay.com</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+	<url>http://www.liferay.com/community/liferay-projects/liferay-faces</url>
 	<profiles>
 		<profile>
 			<id>thin</id>
