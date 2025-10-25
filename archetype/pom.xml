@@ -7,6 +7,25 @@
 	<version>8.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Liferay Faces Bridge Ext Archetypes</name>
+	<description>Liferay Faces Bridge Ext Archetypes</description>
+	<developers>
+		<developer>
+			<name>Neil Griffin</name>
+			<organization>Liferay, Inc.</organization>
+			<organizationUrl>http://www.liferay.com</organizationUrl>
+		</developer>
+	</developers>
+	<organization>
+		<name>Liferay, Inc.</name>
+		<url>http://www.liferay.com</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+	<url>http://www.liferay.com/community/liferay-projects/liferay-faces</url>
 
 	<scm>
 		<connection>scm:git:https://github.com/liferay/liferay-faces-bridge-ext</connection>
