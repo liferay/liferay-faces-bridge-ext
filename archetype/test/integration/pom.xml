@@ -41,7 +41,6 @@
 									<systemPropertyVariables>
 										<it.archetype.version>${it.archetype.version}</it.archetype.version>
 										<it.archetype.whitelist>${it.archetype.whitelist}</it.archetype.whitelist>
-										<it.bootsfaces.archetype.version>${it.bootsfaces.archetype.version}</it.bootsfaces.archetype.version>
 										<it.butterfaces.archetype.version>${it.butterfaces.archetype.version}</it.butterfaces.archetype.version>
 										<it.liferay.faces.alloy.archetype.version>${it.liferay.faces.alloy.archetype.version}</it.liferay.faces.alloy.archetype.version>
 										<it.icefaces.archetype.version>${it.icefaces.archetype.version}</it.icefaces.archetype.version>

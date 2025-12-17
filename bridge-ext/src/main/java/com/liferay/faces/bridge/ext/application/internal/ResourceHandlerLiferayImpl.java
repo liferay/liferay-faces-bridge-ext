@@ -35,7 +35,6 @@ import com.liferay.faces.util.product.ProductFactory;
 public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	// Private Constants
-	private static final Set<String> BOOTSFACES_JQUERY_PLUGIN_JS_RESOURCES;
 	private static final Set<String> BUTTERFACES_DIST_BOWER_JQUERY_PLUGIN_JS_RESOURCES;
 	private static final Set<String> BUTTERFACES_DIST_BUNDLE_JS_JQUERY_PLUGIN_JS_RESOURCES;
 	private static final Set<String> BUTTERFACES_EXTERNAL_JQUERY_PLUGIN_JS_RESOURCES;
@@ -43,37 +42,6 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 
 	static {
 
-		// This list of resources was obtained by building BootsFaces and searching the target/ directory for js files
-		// containg "typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']|[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define".
-		Set<String> bootsFacesJQueryPluginResources = new HashSet<String>();
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-pt.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-es.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-hu.js");
-		bootsFacesJQueryPluginResources.add("jq/jquery.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/mouse.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/slider.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/widget.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-nl.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-it.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-pl.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-de.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-ru.js");
-		bootsFacesJQueryPluginResources.add("jq/mobile/shake.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/core.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/i18n/datepicker-fr.js");
-		bootsFacesJQueryPluginResources.add("jq/ui/datepicker.js");
-		bootsFacesJQueryPluginResources.add("js/bootstrap-notify.min.js");
-		bootsFacesJQueryPluginResources.add("js/jquery.blockUI.js");
-		bootsFacesJQueryPluginResources.add("js/moment.min.js");
-		bootsFacesJQueryPluginResources.add("js/typeahead.js");
-		bootsFacesJQueryPluginResources.add("js/bootstrap-slider.min.js");
-		bootsFacesJQueryPluginResources.add("js/fullcalendar-lang-all.js");
-		bootsFacesJQueryPluginResources.add("js/jquery.minicolors.min.js");
-		bootsFacesJQueryPluginResources.add("js/bootstrap-datetimepicker.min.js");
-		bootsFacesJQueryPluginResources.add("js/fullcalendar.min.js");
-		bootsFacesJQueryPluginResources.add("js/moment-with-locales.min.js");
-		bootsFacesJQueryPluginResources.add("js/datatables.min.js");
-		BOOTSFACES_JQUERY_PLUGIN_JS_RESOURCES = Collections.unmodifiableSet(bootsFacesJQueryPluginResources);
 
 		// This list of resources was obtained by building ButterFaces and searching the target/ directory for js files
 		// containg "typeof\\s+define\\s*=(=+)\\s*[\"']function[\"']|[\"']function[\"']\\s*=(=+)\\s*typeof\\s+define".
@@ -256,9 +224,6 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 		ExternalContext externalContext = startupFacesContext.getExternalContext();
 		ProductFactory productFactory = (ProductFactory) FactoryExtensionFinder.getFactory(externalContext,
 				ProductFactory.class);
-		final Product BOOTSFACES = productFactory.getProductInfo(Product.Name.BOOTSFACES);
-		boolean bootsFacesJQueryPluginJSResource = BOOTSFACES.isDetected() && "bsf".equals(resourceLibrary) &&
-			BOOTSFACES_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName);
 
 		boolean butterFacesJQueryPluginJSResource = false;
 		final Product BUTTERFACES = productFactory.getProductInfo(Product.Name.BUTTERFACES);
@@ -291,7 +256,7 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 				(resourceName.endsWith("packed.js") || resourceName.endsWith("jquery.js"));
 		}
 
-		return (bootsFacesJQueryPluginJSResource || butterFacesJQueryPluginJSResource ||
+		return (butterFacesJQueryPluginJSResource ||
 				primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource);
 	}
 }

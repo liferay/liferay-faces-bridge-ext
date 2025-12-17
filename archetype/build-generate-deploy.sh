@@ -26,11 +26,11 @@ if [[ "$@" == *"cdi"* ]]; then
 fi
 echo "CDI=$CDI"
 
-PORTLET_TYPES="alloy bootsfaces butterfaces icefaces jsf primefaces richfaces"
+PORTLET_TYPES="alloy butterfaces icefaces jsf primefaces richfaces"
 
 THICK_OR_THIN="thick"
 if [[ "$@" == *"thin"* ]]; then
-	PORTLET_TYPES="alloy bootsfaces butterfaces jsf primefaces richfaces"
+	PORTLET_TYPES="alloy butterfaces jsf primefaces richfaces"
     THICK_OR_THIN="thin"
 fi
 echo "THICK_OR_THIN=$THICK_OR_THIN"

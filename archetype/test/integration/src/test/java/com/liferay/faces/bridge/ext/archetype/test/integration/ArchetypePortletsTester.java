@@ -30,7 +30,7 @@ public class ArchetypePortletsTester extends BrowserDriverManagingTesterBase {
 
 	// Private Constants
 	private String[] ARCHETYPE_LIBRARIES = {
-			"Alloy", "ICEfaces", "jsf", "PrimeFaces", "RichFaces", "BootsFaces", "ButterFaces"
+			"Alloy", "ICEfaces", "jsf", "PrimeFaces", "RichFaces", "ButterFaces"
 		};
 	private String[] CONTAINER_CLASSES = {
 			"alloy-panel", "ui-panel", "liferay-faces-bridge-body", "ui-panel", "rf-p", "panel-group",
