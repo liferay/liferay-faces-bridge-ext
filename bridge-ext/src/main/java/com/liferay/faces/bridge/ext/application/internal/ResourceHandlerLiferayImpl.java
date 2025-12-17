@@ -203,18 +203,6 @@ public class ResourceHandlerLiferayImpl extends ResourceHandlerWrapper {
 			((resourceLibrary == null) || resourceLibrary.equals("primefaces")) &&
 			PRIMEFACES_JQUERY_PLUGIN_JS_RESOURCES.contains(resourceName);
 
-		boolean richFacesJQueryPluginJSResource = false;
-		final Product RICHFACES = productFactory.getProductInfo(Product.Name.RICHFACES);
-
-		if (RICHFACES.isDetected()) {
-
-			boolean richfacesResourceLibrary = ("org.richfaces.resource".equals(resourceLibrary) ||
-					"org.richfaces.staticResource".equals(resourceLibrary) || "org.richfaces".equals(resourceLibrary));
-
-			richFacesJQueryPluginJSResource = ((resourceLibrary == null) || richfacesResourceLibrary) &&
-				(resourceName.endsWith("packed.js") || resourceName.endsWith("jquery.js"));
-		}
-
-		return (primeFacesJQueryPluginJSResource || richFacesJQueryPluginJSResource);
+		return primeFacesJQueryPluginJSResource;
 	}
 }

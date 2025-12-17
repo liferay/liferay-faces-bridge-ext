@@ -39,7 +39,6 @@
 		<module>alloy-portlet</module>
 		<module>jsf-portlet</module>
 		<module>primefaces-portlet</module>
-		<module>richfaces-portlet</module>
 		<module>test</module>
 	</modules>
 

@@ -114,14 +114,8 @@ public class ResourceRendererLiferayImpl extends RendererWrapper implements Comp
 		return liferayBridgeInlineScript;
 	}
 
-	private static boolean isRichFacesReslibResource(String resourceName, String resourceLibrary) {
-		return ((resourceName != null) && resourceName.endsWith("reslib")) &&
-			((resourceLibrary != null) && resourceLibrary.startsWith("org.richfaces"));
-	}
-
 	private static boolean isScriptResource(String resourceName, String resourceLibrary) {
-		return ((resourceName != null) && (resourceName.endsWith("js") || resourceName.contains(".js?"))) ||
-			isRichFacesReslibResource(resourceName, resourceLibrary);
+		return ((resourceName != null) && (resourceName.endsWith("js") || resourceName.contains(".js?")));
 	}
 
 	private static boolean isStyleSheetResource(String resourceName) {

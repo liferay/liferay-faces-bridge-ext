@@ -148,10 +148,6 @@ public class SennaJSAttrTest {
 				new UICommandMockImpl("org.primefaces.component", "org.primefaces.component.CommandLinkRenderer"),
 				true);
 
-		//	<a4j:commandLink value="a4j:commandLink"		pt:data-data-senna-off-true-expected="true" /><br />
-		testWriteElement(responseWriter, "a",
-				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "org.richfaces.CommandLinkRenderer"), true);
-
 		//	<h:commandLink value="h:commandLink"			pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "a", new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link"),
 				true);

@@ -44,7 +44,6 @@
 										<it.liferay.faces.alloy.archetype.version>${it.liferay.faces.alloy.archetype.version}</it.liferay.faces.alloy.archetype.version>
 										<it.jsf.archetype.version>${it.jsf.archetype.version}</it.jsf.archetype.version>
 										<it.primefaces.archetype.version>${it.primefaces.archetype.version}</it.primefaces.archetype.version>
-										<it.richfaces.archetype.version>${it.richfaces.archetype.version}</it.richfaces.archetype.version>
 										<it.liferay.faces.alloy.archetype.version>${it.liferay.faces.alloy.archetype.version}</it.liferay.faces.alloy.archetype.version>
 										<maven.home>${env.MAVEN_HOME}</maven.home>
 									</systemPropertyVariables>
