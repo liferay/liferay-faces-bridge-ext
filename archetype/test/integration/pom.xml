@@ -42,7 +42,6 @@
 										<it.archetype.version>${it.archetype.version}</it.archetype.version>
 										<it.archetype.whitelist>${it.archetype.whitelist}</it.archetype.whitelist>
 										<it.liferay.faces.alloy.archetype.version>${it.liferay.faces.alloy.archetype.version}</it.liferay.faces.alloy.archetype.version>
-										<it.icefaces.archetype.version>${it.icefaces.archetype.version}</it.icefaces.archetype.version>
 										<it.jsf.archetype.version>${it.jsf.archetype.version}</it.jsf.archetype.version>
 										<it.primefaces.archetype.version>${it.primefaces.archetype.version}</it.primefaces.archetype.version>
 										<it.richfaces.archetype.version>${it.richfaces.archetype.version}</it.richfaces.archetype.version>

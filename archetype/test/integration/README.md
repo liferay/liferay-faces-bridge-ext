@@ -32,7 +32,7 @@ To use different versions for specific archetypes, use one or more of the `it.*.
 To test only some archetypes, use a comma separated whitelist with the `it.archetype.whitelist` properties:
 
 	mvn clean install -Dit.archetype.version=6.0.0 \
-		-Dit.archetype.whitelist=alloy,icefaces,jsf,primefaces,richfaces
+		-Dit.archetype.whitelist=alloy,jsf,primefaces,richfaces
 
 ## Running the Liferay Faces Archetype Selenium Integration Tests
 

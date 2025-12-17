@@ -148,10 +148,6 @@ public class SennaJSAttrTest {
 				new UICommandMockImpl("org.primefaces.component", "org.primefaces.component.CommandLinkRenderer"),
 				true);
 
-		//	<ace:linkButton value="ace:linkButton"			pt:data-data-senna-off-true-expected="true" /><br />
-		//	<h:link value="h:link"							pt:data-data-senna-off-true-expected="false" /><br />
-		testWriteIceFacesElement(responseWriter);
-
 		//	<a4j:commandLink value="a4j:commandLink"		pt:data-data-senna-off-true-expected="true" /><br />
 		testWriteElement(responseWriter, "a",
 				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "org.richfaces.CommandLinkRenderer"), true);
@@ -272,28 +268,5 @@ public class SennaJSAttrTest {
 			Assert.assertFalse("The element has the \"data-senna-off\" attribute.",
 				elementString.contains("data-senna-off"));
 		}
-	}
-
-	private void testWriteIceFacesElement(ResponseWriter responseWriter) {
-
-		try {
-
-			responseWriter.startElement("div",
-				new UICommandMockImpl("org.icefaces.ace.LinkButton", "org.icefaces.ace.component.LinkButtonRenderer"));
-			responseWriter.startElement("span", null);
-			responseWriter.startElement("span", null);
-			testWriteElement(responseWriter, "a", null, true);
-			responseWriter.endElement("span");
-			responseWriter.endElement("span");
-			responseWriter.endElement("div");
-
-			// Test writing another <a> tag to ensure that the ResponseWriter does not add the data-senna-off="true"
-			// attribute once a command link component has completed its rendering.
-			testWriteElement(responseWriter, "a", null, false);
-		}
-		catch (IOException e) {
-			throw new AssertionError(e);
-		}
-
 	}
 }

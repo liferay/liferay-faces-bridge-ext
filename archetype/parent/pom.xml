@@ -200,16 +200,6 @@
 			org.jboss.logmanager;resolution:=optional,\
 			org.joda.time;resolution:=optional
 		</osgi.import.package.hibernate>
-		<!-- Excludes unused ICEfaces transitive package dependencies so that a WAB can resolve. -->
-		<osgi.import.package.icefaces>
-			com.ibm.ws.portletcontainer;resolution:=optional,\
-			!com.liferay.portal.theme,\
-			!com.liferay.portal.util,\
-			com.lowagie.text.*;resolution:=optional,\
-			org.apache.myfaces.shared.config;resolution:=optional,\
-			org.apache.pluto.container;resolution:=optional,\
-			org.icepush.*;resolution:=optional
-		</osgi.import.package.icefaces>
 		<!-- Specifies that $LIFERAY_HOME/osgi/modules/com.liferay.faces.alloy.jar is required for a WAB to resolve, -->
 		<!-- and ensures that it will be included for scanning of descriptors like META-INF/faces-config.xml. -->
 		<osgi.import.package.liferay.faces.alloy>

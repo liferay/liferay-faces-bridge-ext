@@ -51,11 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
  * with Liferay Portal. The main reason why this is necessary is because the Liferay Portal's
  * com.liferay.portlet.PortletURLImpl#toString() method returns different values depending on the portlet lifecycle
  * phase during which it is called. Additionally, it sometimes includes the public render parameters in the URL (which
- * are not required for JSF portlets). Another issue is related to ICEfaces, which uses a server-side DOM-diff algorithm
- * within it's {@link RenderKit}. When DOM-diff strategies are used, it is critical that URLs always be the same
- * regardless of which portlet lifecycle phase is executing. For example, a URL generated during the {@link
- * PortletRequest#RENDER_PHASE} of the portlet lifecycle must be identical to the one generated during the {@link
- * PortletRequest#RESOURCE_PHASE}, or else a DOM-diff will be detected.</p>
+ * are not required for JSF portlets).
  *
  * <p>The constructors of this class receive a String-based parameter named "baseURL" which is expected to be the result
  * of calling the toString() method of a Liferay URL. The baseURL is then parsed and the URL parameters are cached so
