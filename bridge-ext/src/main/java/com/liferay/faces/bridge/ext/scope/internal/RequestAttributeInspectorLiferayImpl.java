@@ -56,11 +56,11 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 	private static final Logger logger = LoggerFactory.getLogger(RequestAttributeInspectorLiferayImpl.class);
 
 	// Private Constants for EXCLUDED namespaces listed in Section 5.1.2 of the JSR 329 Spec
-	private static final String EXCLUDED_NAMESPACE_JAVAX_FACES = "jakarta.faces";
-	private static final String EXCLUDED_NAMESPACE_JAVAX_PORTLET = "jakarta.portlet";
-	private static final String EXCLUDED_NAMESPACE_JAVAX_PORTLET_FACES = "jakarta.portlet.faces";
-	private static final String EXCLUCED_NAMESPACE_JAVAX_SERVLET = "jakarta.servlet";
-	private static final String EXCLUCED_NAMESPACE_JAVAX_SERVLET_INCLUDE = "jakarta.servlet.include";
+	private static final String EXCLUDED_NAMESPACE_JAKARTA_FACES = "jakarta.faces";
+	private static final String EXCLUDED_NAMESPACE_JAKARTA_PORTLET = "jakarta.portlet";
+	private static final String EXCLUDED_NAMESPACE_JAKARTA_PORTLET_FACES = "jakarta.portlet.faces";
+	private static final String EXCLUCED_NAMESPACE_JAKARTA_SERVLET = "jakarta.servlet";
+	private static final String EXCLUCED_NAMESPACE_JAKARTA_SERVLET_INCLUDE = "jakarta.servlet.include";
 
 	// Private Constants
 	private static final List<String> LIFERAY_ATTRIBUTE_NAMES;
@@ -88,7 +88,7 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 
 			String fieldName = field.getName();
 
-			if ((fieldName != null) && fieldName.startsWith("JAVAX")) {
+			if ((fieldName != null) && fieldName.startsWith("JAKARTA")) {
 
 				try {
 					Object value = field.get(null);
@@ -122,21 +122,21 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 	public boolean containsExcludedNamespace(String name) {
 		boolean excluded = false;
 
-		if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAVAX_FACES) ||
-				isNamespaceMatch(name, EXCLUCED_NAMESPACE_JAVAX_SERVLET) ||
-				isNamespaceMatch(name, EXCLUCED_NAMESPACE_JAVAX_SERVLET_INCLUDE)) {
+		if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAKARTA_FACES) ||
+				isNamespaceMatch(name, EXCLUCED_NAMESPACE_JAKARTA_SERVLET) ||
+				isNamespaceMatch(name, EXCLUCED_NAMESPACE_JAKARTA_SERVLET_INCLUDE)) {
 
 			// Always safe to exclude when running under Liferay Portal.
 			excluded = true;
 		}
-		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAVAX_PORTLET_FACES) &&
+		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAKARTA_PORTLET_FACES) &&
 				!Bridge.PORTLET_LIFECYCLE_PHASE.equals(name)) {
 
 			// The "jakarta.portlet.faces.phase" request attribute must never be excluded, as it is required by {@link
 			// BridgeUtil#getPortletRequestPhase()}.
 			excluded = true;
 		}
-		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAVAX_PORTLET)) {
+		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAKARTA_PORTLET)) {
 			excluded = true;
 		}
 
@@ -175,22 +175,22 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 				// also includes an attribute named "jakarta.portlet.portlet" that is the current GenericFacesPortlet
 				// (which extends GenericPortlet). But since GenericPortlet implements the PortletConfig interface, need
 				// to prevent it from being excluded as well.
-				if (!JavaConstants.JAVAX_PORTLET_CONFIG.equals(name) &&
-						!JavaConstants.JAVAX_PORTLET_PORTLET.equals(name)) {
+				if (!JavaConstants.JAKARTA_PORTLET_CONFIG.equals(name) &&
+						!JavaConstants.JAKARTA_PORTLET_PORTLET.equals(name)) {
 					excluded = true;
 				}
 			}
 			else if (value instanceof PortletRequest) {
 
 				// Liferay Portal includes request attribute named "jakarta.portlet.request" that must not be excluded.
-				if (!JavaConstants.JAVAX_PORTLET_REQUEST.equals(name)) {
+				if (!JavaConstants.JAKARTA_PORTLET_REQUEST.equals(name)) {
 					excluded = true;
 				}
 			}
 			else if (value instanceof PortletResponse) {
 
 				// Liferay Portal includes request attribute named "jakarta.portlet.response" that must not be excluded.
-				if (!JavaConstants.JAVAX_PORTLET_RESPONSE.equals(name)) {
+				if (!JavaConstants.JAKARTA_PORTLET_RESPONSE.equals(name)) {
 					excluded = true;
 				}
 			}
