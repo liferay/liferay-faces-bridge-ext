@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay.faces</groupId>
 	<artifactId>com.liferay.faces.bridge.ext</artifactId>
-	<version>8.0.3-SNAPSHOT</version>
+	<version>9.0.0-SNAPSHOT</version>
 	<name>Liferay Faces Bridge Ext</name>
 	<description>Liferay Faces Bridge Extenstions for Liferay Portal</description>
 
@@ -70,7 +70,7 @@
 	<properties>
 		<bnd.version>5.3.0</bnd.version>
 		<faces.api.version>${faces.spec.version}</faces.api.version>
-		<faces.spec.version>2.3</faces.spec.version>
+		<faces.spec.version>3.0.0</faces.spec.version>
 		<full.version>${project.version} (${timestamp} AD)</full.version>
 		<liferay.version>7.2.1</liferay.version>
 		<liferay.version.dtd>7.2</liferay.version.dtd>
@@ -230,25 +230,25 @@
 							Import-Package: \
 								!com.liferay.faces.bridge.ext,\
 								!com.liferay.faces.bridge.ext.*,\
-								jakarta.el;version="[2.2.0,4.0.0)",\
-								jakarta.enterprise.inject.spi;version="[1.1.0,2.1.0)",\
-								com.liferay.faces.util.*;version="[4.0.0,5.0.0)",\
-								com.liferay.faces.bridge.*;version="[6.0.0,7.0.0)",\
-								com.liferay.faces.portlet.*;version="[6.0.0,7.0.0)",\
-								com.liferay.portal.kernel.exception;version="7.0.0",\
-								com.liferay.portal.kernel.language;version="7.0.0",\
-								com.liferay.portal.kernel.model;version="2.0.0",\
-								com.liferay.portal.kernel.portlet;version="8.0.0",\
-								com.liferay.portal.kernel.security.permission;version="1.7.0",\
-								com.liferay.portal.kernel.service;version="1.27.0",\
-								com.liferay.portal.kernel.service.permission;version="1.1.0",\
-								com.liferay.portal.kernel.servlet.taglib.aui;version="7.0.0",\
-								com.liferay.portal.kernel.theme;version="1.6.0",\
-								com.liferay.portal.kernel.util;version="8.0.0",\
-								com.liferay.portal.kernel.servlet;version="7.11.0",\
-								com.liferay.portal.kernel.servlet.taglib.util;version="6.4.0",\
-								com.liferay.taglib.util;version="7.0.0",\
-								jakarta.portlet.faces;version="[6.0.0,7.0.0)",\
+								jakarta.el;version="[5.0.0,6.0.0)",\
+								jakarta.enterprise.inject.spi;version="[4.0,5.0)",\
+								com.liferay.faces.util.*;version="[5.0.0,6.0.0)",\
+								com.liferay.faces.bridge.*;version="[7.0.0,8.0.0)",\
+								com.liferay.faces.portlet.*;version="[7.0.0,8.0.0)",\
+								com.liferay.portal.kernel.exception,\
+								com.liferay.portal.kernel.language,\
+								com.liferay.portal.kernel.model,\
+								com.liferay.portal.kernel.portlet,\
+								com.liferay.portal.kernel.security.permission,\
+								com.liferay.portal.kernel.service,\
+								com.liferay.portal.kernel.service.permission,\
+								com.liferay.portal.kernel.servlet.taglib.aui,\
+								com.liferay.portal.kernel.theme,\
+								com.liferay.portal.kernel.util,\
+								com.liferay.portal.kernel.servlet,\
+								com.liferay.portal.kernel.servlet.taglib.util,\
+								com.liferay.taglib.util,\
+								jakarta.portlet.faces.*;version="[7.0.0,8.0.0)",\
 								*
 							# The following configuration enables the Bridge API bundle to obtain necessary SPI
 							# implementations.
@@ -404,39 +404,37 @@
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.bridge.api</artifactId>
-			<version>6.0.0</version>
+			<version>7.0.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.util</artifactId>
-			<version>4.0.1</version>
+			<version>5.0.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
-			<!-- CE.GA125/DXP.2024.Q3: https://github.com/liferay/liferay-portal/blob/7.4.3.125-ga125/portal-kernel/bnd.bnd#L3 -->
-			<version>146.0.1</version>
+			<version>178.0.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.util.taglib</artifactId>
-			<!-- CE.GA125/DXP.2024.Q3: https://github.com/liferay/liferay-portal/blob/7.4.3.125-ga125/util-taglib/bnd.bnd#L3 -->
-			<version>24.0.5</version>
+			<version>28.3.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.el</groupId>
 			<artifactId>jakarta.el-api</artifactId>
-			<version>2.2.1</version>
+			<version>5.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>1.2</version>
+			<artifactId>jakarta.enterprise.cdi-api</artifactId>
+			<version>4.1.0</version>
 			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
@@ -456,21 +454,21 @@
 		</dependency>
 		-->
 		<dependency>
-			<groupId>jakarta.portlet</groupId>
-			<artifactId>portlet-api</artifactId>
-			<version>3.0.0</version>
+			<groupId>com.liferay.jakarta.portlet</groupId>
+			<artifactId>com.liferay.jakarta.portlet-api</artifactId>
+			<version>4.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>6.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet.jsp</groupId>
 			<artifactId>jakarta.servlet.jsp-api</artifactId>
-			<version>2.2.1</version>
+			<version>3.1.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -484,6 +482,13 @@
 			<artifactId>osgi.annotation</artifactId>
 			<version>6.0.1</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.faces</artifactId>
+			<version>3.0.5</version>
+			<scope>test</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
