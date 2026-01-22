@@ -13,8 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.BaseURL;
-import javax.portlet.filter.BaseURLWrapper;
+import jakarta.portlet.BaseURL;
+import jakarta.portlet.filter.BaseURLWrapper;
 
 
 /**

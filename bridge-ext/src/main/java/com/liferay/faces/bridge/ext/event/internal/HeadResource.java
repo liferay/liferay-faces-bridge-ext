@@ -179,7 +179,7 @@ public class HeadResource {
 					if (equalsPos > 0) {
 						String name = nameValuePair.substring(0, equalsPos);
 
-						if (name.endsWith("javax.faces.resource")) {
+						if (name.endsWith("jakarta.faces.resource")) {
 							facesResource = nameValuePair.substring(equalsPos + 1);
 						}
 						else if (name.endsWith("ln")) {

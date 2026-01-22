@@ -15,11 +15,11 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.IOException;
 
-import javax.portlet.MutableResourceParameters;
-import javax.portlet.PortletMode;
-import javax.portlet.RenderParameters;
-import javax.portlet.ResourceURL;
-import javax.portlet.WindowState;
+import jakarta.portlet.MutableResourceParameters;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.RenderParameters;
+import jakarta.portlet.ResourceURL;
+import jakarta.portlet.WindowState;
 
 
 /**

@@ -15,9 +15,9 @@ package com.liferay.faces.bridge.ext.client.internal;
 
 import java.io.Serializable;
 
-import javax.faces.context.ExternalContext;
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.faces.context.ExternalContext;
+import jakarta.portlet.PortletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.liferay.faces.util.client.BrowserSniffer;
 import com.liferay.faces.util.client.BrowserSnifferFactory;

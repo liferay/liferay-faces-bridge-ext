@@ -13,7 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.PortletRequest;
+import jakarta.portlet.PortletRequest;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;

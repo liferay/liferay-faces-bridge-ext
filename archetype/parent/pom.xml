@@ -64,7 +64,7 @@
 									<skip>${skip.thin.war.setup}</skip>
 									<target>
 										<mkdir dir="${project.build.outputDirectory}/META-INF/services" />
-										<echo file="${project.build.outputDirectory}/META-INF/services/javax.servlet.ServletContainerInitializer">com.sun.faces.config.FacesInitializer
+										<echo file="${project.build.outputDirectory}/META-INF/services/jakarta.servlet.ServletContainerInitializer">com.sun.faces.config.FacesInitializer
 											com.liferay.faces.util.osgi.internal.FacesThinWabInitializer
 											com.liferay.faces.bridge.servlet.BridgeServletContainerInitializer
 										</echo>
@@ -122,7 +122,7 @@
 								<configuration>
 									<target>
 										<mkdir dir="${project.build.outputDirectory}/META-INF/services" />
-										<echo file="${project.build.outputDirectory}/META-INF/services/javax.enterprise.inject.spi.Extension">com.liferay.faces.bridge.servlet.BridgeExtension
+										<echo file="${project.build.outputDirectory}/META-INF/services/jakarta.enterprise.inject.spi.Extension">com.liferay.faces.bridge.servlet.BridgeExtension
 											com.liferay.faces.util.servlet.internal.UtilExtension
 											com.sun.faces.application.view.ViewScopeExtension
 											com.sun.faces.cdi.CdiExtension
@@ -130,9 +130,9 @@
 											com.sun.faces.flow.FlowDiscoveryCDIExtension
 										</echo>
 										<echo file="${project.build.directory}/${project.build.finalName}/WEB-INF/beans.xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-											&lt;beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" bean-discovery-mode="all" version="1.2"
+											&lt;beans xmlns="https://jakarta.ee/xml/ns/jakartaee" bean-discovery-mode="all" version="1.2"
 											xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-											xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"&gt;
+											xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_1_1.xsd"&gt;
 											&lt;/beans&gt;
 										</echo>
 									</target>
@@ -181,8 +181,8 @@
 			com.liferay.faces.portlet.*,\
 			com.liferay.faces.util.*,\
 			com.sun.faces.*,\
-			javax.faces.*,\
-			javax.portlet.faces.*
+			jakarta.faces.*,\
+			jakarta.portlet.faces
 		</osgi.dynamic.import.package.liferay.faces.bridge>
 		<!-- Ensures that the PrimeFaces component/renderer classes can be loaded dynamically via -->
 		<!-- Class.forName(String) -->
@@ -195,7 +195,7 @@
 		<osgi.import.package.hibernate>
 			com.thoughtworks.paranamer;resolution:=optional,\
 			javafx.beans.*;resolution:=optional,\
-			javax.money;resolution:=optional,\
+			jakarta.money;resolution:=optional,\
 			org.apache.logging.log4j.*;resolution:=optional,\
 			org.jboss.logmanager;resolution:=optional,\
 			org.joda.time;resolution:=optional
@@ -208,7 +208,7 @@
 		<!-- Specifies that $LIFERAY_HOME/osgi/modules/com.liferay.faces.bridge.api.jar, -->
 		<!-- $LIFERAY_HOME/osgi/modules/com.liferay.faces.bridge.impl.jar, -->
 		<!-- $LIFERAY_HOME/osgi/modules/com.liferay.faces.bridge.ext.jar, -->
-		<!-- and javax.faces.jar (the JSF runtime) are required for a WAB to resolve, and ensures that each JAR -->
+		<!-- and jakarta.faces.jar (the JSF runtime) are required for a WAB to resolve, and ensures that each JAR -->
 		<!-- will be included for scanning of descriptors like META-INF/faces-config.xml. The optional imports are -->
 		<!-- unused transitive package dependencies. They are added automatically by the Liferay WAB generator at -->
 		<!-- deploy time, but must be marked as optional since they are not present in the runtime classpath. -->
@@ -216,10 +216,10 @@
 			com.liferay.faces.bridge.ext,\
 			com.liferay.faces.bridge.impl,\
 			com.sun.faces,\
-			javax.annotation,\
-			javax.el,\
-			javax.faces,\
-			javax.portlet.faces,\
+			jakarta.annotation,\
+			jakarta.el,\
+			jakarta.faces,\
+			jakarta.portlet.faces,\
 			net.fortuna.ical4j.*;resolution:=optional,\
 			org.apache.axis.tools.ant.*;resolution:=optional,\
 			org.apache.poi.*;resolution:=optional,\
@@ -251,10 +251,10 @@
 			io.reactivex.*;resolution:=optional,\
 			io.smallrye.mutiny.*;resolution:=optional,\
 			io.undertow.*;resolution:=optional,\
-			javax.annotation.meta.*;resolution:=optional,\
-			javax.ejb.*;resolution:=optional,\
-			javax.enterprise.*;resolution:=optional,\
-			javax.money.*;resolution:=optional,\
+			jakarta.annotation.meta.*;resolution:=optional,\
+			jakarta.ejb.*;resolution:=optional,\
+			jakarta.enterprise.*;resolution:=optional,\
+			jakarta.money.*;resolution:=optional,\
 			javax.rmi.*;resolution:=optional,\
 			joptsimple.*;resolution:=optional,\
 			jrockit.vm.*;resolution:=optional,\

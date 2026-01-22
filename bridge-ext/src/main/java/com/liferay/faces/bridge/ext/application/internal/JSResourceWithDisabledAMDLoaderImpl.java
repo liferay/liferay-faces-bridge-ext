@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import javax.faces.application.ProjectStage;
-import javax.faces.application.Resource;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.ProjectStage;
+import jakarta.faces.application.Resource;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 
 import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.application.FilteredResourceBase;
@@ -46,7 +46,7 @@ public class JSResourceWithDisabledAMDLoaderImpl extends FilteredResourceBase {
 	 * cannot be performed in the constructor of {@link
 	 * com.liferay.faces.bridge.ext.application.internal.ResourceHandlerLiferayImpl} since that class is created before
 	 * the {@link CacheFactory} has been created. This method is called in {@link
-	 * com.liferay.faces.bridge.ext.event.internal.PostConstructApplicationConfigEventListener#processEvent(javax.faces.event.SystemEvent)
+	 * com.liferay.faces.bridge.ext.event.internal.PostConstructApplicationConfigEventListener#processEvent(jakarta.faces.event.SystemEvent)
 	 * } to ensure that the CacheFactory has been created.
 	 *
 	 * @param  initFacesContext

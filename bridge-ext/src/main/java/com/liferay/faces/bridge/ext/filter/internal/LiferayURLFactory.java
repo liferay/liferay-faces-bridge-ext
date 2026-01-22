@@ -13,9 +13,9 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.faces.FacesWrapper;
-import javax.portlet.MimeResponse;
-import javax.portlet.PortletRequest;
+import jakarta.faces.FacesWrapper;
+import jakarta.portlet.MimeResponse;
+import jakarta.portlet.PortletRequest;
 
 
 /**

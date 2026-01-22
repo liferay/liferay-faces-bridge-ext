@@ -15,12 +15,12 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.Writer;
 
-import javax.faces.component.UIOutput;
-import javax.faces.context.ResponseWriter;
-import javax.faces.context.ResponseWriterWrapper;
-import javax.faces.render.RenderKit;
-import javax.faces.render.RenderKitWrapper;
-import javax.faces.render.Renderer;
+import jakarta.faces.component.UIOutput;
+import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.context.ResponseWriterWrapper;
+import jakarta.faces.render.RenderKit;
+import jakarta.faces.render.RenderKitWrapper;
+import jakarta.faces.render.Renderer;
 
 
 /**
@@ -29,8 +29,8 @@ import javax.faces.render.Renderer;
 public class RenderKitLiferayImpl extends RenderKitWrapper {
 
 	// Private Constants
-	private static final String SCRIPT_RENDERER_TYPE = "javax.faces.resource.Script";
-	private static final String STYLESHEET_RENDERER_TYPE = "javax.faces.resource.Stylesheet";
+	private static final String SCRIPT_RENDERER_TYPE = "jakarta.faces.resource.Script";
+	private static final String STYLESHEET_RENDERER_TYPE = "jakarta.faces.resource.Stylesheet";
 
 	// Private Final Data Members
 	private final String primeFacesCSSDefaultDataSennaTrackValue;
@@ -87,7 +87,7 @@ public class RenderKitLiferayImpl extends RenderKitWrapper {
 
 		if (UIOutput.COMPONENT_FAMILY.equals(family)) {
 
-			if ("javax.faces.Head".equals(rendererType)) {
+			if ("jakarta.faces.Head".equals(rendererType)) {
 				renderer = new HeadRendererLiferayImpl(renderer);
 			}
 			else if (SCRIPT_RENDERER_TYPE.equals(rendererType) || STYLESHEET_RENDERER_TYPE.equals(rendererType)) {

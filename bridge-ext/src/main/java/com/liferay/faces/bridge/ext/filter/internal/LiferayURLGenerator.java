@@ -15,8 +15,8 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.util.Map;
 
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.WindowState;
 
 
 /**

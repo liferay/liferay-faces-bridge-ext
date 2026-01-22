@@ -17,10 +17,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.context.FacesContext;
-import javax.portlet.faces.BridgeException;
-import javax.portlet.faces.BridgeURL;
-import javax.portlet.faces.BridgeURLFactory;
+import jakarta.faces.context.FacesContext;
+import jakarta.portlet.faces.BridgeException;
+import jakarta.portlet.faces.BridgeURL;
+import jakarta.portlet.faces.BridgeURLFactory;
 
 
 /**

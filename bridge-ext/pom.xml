@@ -216,8 +216,8 @@
 								com.liferay.faces.bridge.ext.lifecycle.internal,\
 								com.liferay.faces.bridge.ext.renderkit.html_basic.internal,\
 								com.liferay.faces.bridge.ext.scope.internal
-							# javax.el is automatically imported with the following versions:
-							# javax.el;version="[2.2.0,3.0.0)", but versions 3.0.0+ are also valid.
+							# jakarta.el is automatically imported with the following versions:
+							# jakarta.el;version="[2.2.0,3.0.0)", but versions 3.0.0+ are also valid.
 							# com.liferay.* is automatically imported according to the package
 							# versions specified in the com.liferay.portal.kernel-3.0.0.jar
 							# dependency, but the package versions are not stable enough to specify
@@ -230,8 +230,8 @@
 							Import-Package: \
 								!com.liferay.faces.bridge.ext,\
 								!com.liferay.faces.bridge.ext.*,\
-								javax.el;version="[2.2.0,4.0.0)",\
-								javax.enterprise.inject.spi;version="[1.1.0,2.1.0)",\
+								jakarta.el;version="[2.2.0,4.0.0)",\
+								jakarta.enterprise.inject.spi;version="[1.1.0,2.1.0)",\
 								com.liferay.faces.util.*;version="[4.0.0,5.0.0)",\
 								com.liferay.faces.bridge.*;version="[6.0.0,7.0.0)",\
 								com.liferay.faces.portlet.*;version="[6.0.0,7.0.0)",\
@@ -248,14 +248,14 @@
 								com.liferay.portal.kernel.servlet;version="7.11.0",\
 								com.liferay.portal.kernel.servlet.taglib.util;version="6.4.0",\
 								com.liferay.taglib.util;version="7.0.0",\
-								javax.portlet.faces.*;version="[6.0.0,7.0.0)",\
+								jakarta.portlet.faces;version="[6.0.0,7.0.0)",\
 								*
 							# The following configuration enables the Bridge API bundle to obtain necessary SPI
 							# implementations.
 							Require-Capability: \
-								osgi.serviceloader;filter:="(osgi.serviceloader=javax.portlet.faces.Bridge)";\
+								osgi.serviceloader;filter:="(osgi.serviceloader=jakarta.portlet.faces.Bridge)";\
 								cardinality:=multiple,\
-								osgi.serviceloader;filter:="(osgi.serviceloader=javax.portlet.faces.BridgeFactoryFinder)";\
+								osgi.serviceloader;filter:="(osgi.serviceloader=jakarta.portlet.faces.BridgeFactoryFinder)";\
 								cardinality:=multiple,\
 								osgi.extender; filter:="(osgi.extender=osgi.serviceloader.processor)"
 						]]>
@@ -428,48 +428,48 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
+			<groupId>jakarta.el</groupId>
+			<artifactId>jakarta.el-api</artifactId>
 			<version>2.2.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.enterprise</groupId>
+			<groupId>jakarta.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<version>1.2</version>
 			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>javax.faces</groupId>
-			<artifactId>javax.faces-api</artifactId>
+			<groupId>jakarta.faces</groupId>
+			<artifactId>jakarta.faces-api</artifactId>
 			<version>${faces.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!--
 		<dependency>
 			<groupId>org.glassfish</groupId>
-			<artifactId>javax.faces</artifactId>
+			<artifactId>jakarta.faces</artifactId>
 			<version>${mojarra.version}</version>
 			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 		-->
 		<dependency>
-			<groupId>javax.portlet</groupId>
+			<groupId>jakarta.portlet</groupId>
 			<artifactId>portlet-api</artifactId>
 			<version>3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
+			<groupId>jakarta.servlet.jsp</groupId>
+			<artifactId>jakarta.servlet.jsp-api</artifactId>
 			<version>2.2.1</version>
 			<scope>provided</scope>
 		</dependency>

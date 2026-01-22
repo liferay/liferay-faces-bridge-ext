@@ -13,9 +13,9 @@
  */
 package com.liferay.faces.bridge.ext.config.internal;
 
-import javax.faces.context.ExternalContext;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
+import jakarta.faces.context.ExternalContext;
+import jakarta.portlet.PortletConfig;
+import jakarta.portlet.PortletContext;
 
 import com.liferay.faces.util.helper.BooleanHelper;
 import com.liferay.faces.util.helper.IntegerHelper;

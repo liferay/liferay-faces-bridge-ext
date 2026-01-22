@@ -15,20 +15,20 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.IOException;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
-import javax.portlet.faces.BridgeFactoryFinder;
-import javax.portlet.filter.PortletRequestDispatcherWrapper;
-import javax.portlet.filter.PortletRequestWrapper;
-import javax.portlet.filter.PortletResponseWrapper;
-import javax.servlet.ServletResponse;
-import javax.servlet.ServletResponseWrapper;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.portlet.PortletConfig;
+import jakarta.portlet.PortletContext;
+import jakarta.portlet.PortletException;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletRequestDispatcher;
+import jakarta.portlet.PortletResponse;
+import jakarta.portlet.PortletSession;
+import jakarta.portlet.faces.BridgeFactoryFinder;
+import jakarta.portlet.filter.PortletRequestDispatcherWrapper;
+import jakarta.portlet.filter.PortletRequestWrapper;
+import jakarta.portlet.filter.PortletResponseWrapper;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.ServletResponseWrapper;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 
 import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.logging.Logger;

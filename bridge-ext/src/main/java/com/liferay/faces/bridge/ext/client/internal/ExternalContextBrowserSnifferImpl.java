@@ -13,9 +13,9 @@
  */
 package com.liferay.faces.bridge.ext.client.internal;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.ExternalContextWrapper;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.ExternalContextWrapper;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 /**

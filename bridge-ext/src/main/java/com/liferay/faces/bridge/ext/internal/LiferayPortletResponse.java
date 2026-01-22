@@ -15,9 +15,9 @@ package com.liferay.faces.bridge.ext.internal;
 
 import java.lang.reflect.Method;
 
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
-import javax.portlet.filter.PortletResponseWrapper;
+import jakarta.portlet.PortletResponse;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.filter.PortletResponseWrapper;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;

@@ -13,11 +13,11 @@
  */
 package com.liferay.faces.bridge.ext.event.internal;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.SystemEvent;
-import javax.faces.event.SystemEventListener;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AbortProcessingException;
+import jakarta.faces.event.SystemEvent;
+import jakarta.faces.event.SystemEventListener;
 
 import com.liferay.faces.bridge.ext.application.internal.JSResourceWithDisabledAMDLoaderImpl;
 import com.liferay.faces.bridge.ext.internal.BridgeExtDependencyVerifier;

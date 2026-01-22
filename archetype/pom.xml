@@ -97,14 +97,14 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>javax.portlet</groupId>
+				<groupId>jakarta.portlet</groupId>
 				<artifactId>portlet-api</artifactId>
 				<version>${portlet.api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
+				<groupId>jakarta.servlet</groupId>
+				<artifactId>jakarta.servlet-api</artifactId>
 				<version>3.0.1</version>
 				<scope>provided</scope>
 			</dependency>

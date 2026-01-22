@@ -17,13 +17,13 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
 
-import javax.faces.component.UICommand;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIForm;
-import javax.faces.component.UIOutcomeTarget;
-import javax.faces.context.ResponseWriter;
-import javax.faces.context.ResponseWriterWrapper;
-import javax.faces.render.RenderKit;
+import jakarta.faces.component.UICommand;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.UIForm;
+import jakarta.faces.component.UIOutcomeTarget;
+import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.context.ResponseWriterWrapper;
+import jakarta.faces.render.RenderKit;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -134,7 +134,7 @@ public class SennaJSAttrTest {
 
 		//	<h:link value="h:link"							pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "a",
-				new UIComponentMockImpl(UIOutcomeTarget.COMPONENT_FAMILY, "javax.faces.Link"), false);
+				new UIComponentMockImpl(UIOutcomeTarget.COMPONENT_FAMILY, "jakarta.faces.Link"), false);
 
 		//	<!-- /FACES-2937 -->
 
@@ -149,30 +149,30 @@ public class SennaJSAttrTest {
 				true);
 
 		//	<h:commandLink value="h:commandLink"			pt:data-data-senna-off-true-expected="false" /><br />
-		testWriteElement(responseWriter, "a", new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link"),
+		testWriteElement(responseWriter, "a", new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "jakarta.faces.Link"),
 				true);
 
 		//	<h:commandLink value="h:commandLink data-senna-off=&quot;false&quot;" pt:data-senna-off="#{null}"
 		//													pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "a",
-				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link", "data-senna-off", null),
+				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "jakarta.faces.Link", "data-senna-off", null),
 				false);
 
 		//	<h:commandLink value="h:commandLink data-senna-off=&quot;false&quot;" pt:data-senna-off=""
 		//													pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "a",
-				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link", "data-senna-off", ""),
+				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "jakarta.faces.Link", "data-senna-off", ""),
 				false);
 
 		//	<h:commandLink value="h:commandLink data-senna-off=&quot;false&quot;" pt:data-senna-off="false"
 		//													pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "a",
-				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Link", "data-senna-off", "false"),
+				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "jakarta.faces.Link", "data-senna-off", "false"),
 				false);
 
 		//	<h:commandButton value="h:commandButton"		pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "input",
-				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "javax.faces.Button"), false);
+				new UICommandMockImpl(UICommand.COMPONENT_FAMILY, "jakarta.faces.Button"), false);
 
 		// </h:form>
 		try {
@@ -194,7 +194,7 @@ public class SennaJSAttrTest {
 
 		// <h:link value="h:link"							pt:data-data-senna-off-true-expected="false" /><br />
 		testWriteElement(responseWriter, "a",
-				new UIComponentMockImpl(UIOutcomeTarget.COMPONENT_FAMILY, "javax.faces.Link"), false);
+				new UIComponentMockImpl(UIOutcomeTarget.COMPONENT_FAMILY, "jakarta.faces.Link"), false);
 		//J+
 	}
 

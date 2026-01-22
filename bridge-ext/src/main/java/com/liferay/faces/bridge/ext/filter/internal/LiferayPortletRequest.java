@@ -20,10 +20,10 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
-import javax.portlet.filter.PortletRequestWrapper;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.portlet.PortletConfig;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.filter.PortletRequestWrapper;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.liferay.faces.bridge.ext.config.internal.LiferayPortletConfigParam;
 import com.liferay.faces.util.logging.Logger;
@@ -42,7 +42,7 @@ public class LiferayPortletRequest {
 	// Private Constants
 	private static final String METHOD_NAME_GET_ORIGINAL_HTTP_SERVLET_REQUEST = "getOriginalHttpServletRequest";
 	private static final String METHOD_NAME_GET_PORTLET = "getPortlet";
-	private static final String REQUEST_SCOPED_FQCN = "javax.faces.bean.RequestScoped";
+	private static final String REQUEST_SCOPED_FQCN = "jakarta.faces.bean.RequestScoped";
 
 	// Logger
 	private static final Logger logger = LoggerFactory.getLogger(LiferayPortletRequest.class);
@@ -152,7 +152,7 @@ public class LiferayPortletRequest {
 		// determine the viewId for a webapp environment. Because of this, it is necessary to return null so that the
 		// JSF runtime will attempt to determine the viewId a different way, namely by calling
 		// ExternalContext#getRequestPathInfo() or ExternalContext#getRequestServletPath().
-		if ("javax.servlet.include.path_info".equals(name) || "javax.servlet.include.servlet_path".equals(name)) {
+		if ("jakarta.servlet.include.path_info".equals(name) || "jakarta.servlet.include.servlet_path".equals(name)) {
 			return null;
 		}
 		else {

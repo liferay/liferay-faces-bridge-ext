@@ -16,15 +16,15 @@ package com.liferay.faces.bridge.ext.internal;
 import java.util.Map;
 import java.util.Set;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
-import javax.portlet.faces.Bridge;
-import javax.portlet.faces.BridgeConfig;
-import javax.portlet.faces.BridgeURL;
-import javax.portlet.faces.BridgeURLWrapper;
-import javax.portlet.faces.BridgeUtil;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.portlet.PortletResponse;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.faces.Bridge;
+import jakarta.portlet.faces.BridgeConfig;
+import jakarta.portlet.faces.BridgeURL;
+import jakarta.portlet.faces.BridgeURLWrapper;
+import jakarta.portlet.faces.BridgeUtil;
 
 
 /**

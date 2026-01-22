@@ -2,8 +2,8 @@ package com.mycompany.backing;
 
 import com.mycompany.dto.Greeting;
 
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
 
 @Named
 @RequestScoped

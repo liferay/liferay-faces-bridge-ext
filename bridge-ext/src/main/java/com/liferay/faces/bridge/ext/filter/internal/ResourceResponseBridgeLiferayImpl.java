@@ -17,15 +17,15 @@ import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletURL;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
-import javax.portlet.faces.BridgeFactoryFinder;
-import javax.portlet.filter.ResourceResponseWrapper;
-import javax.servlet.http.Cookie;
+import jakarta.portlet.PortletConfig;
+import jakarta.portlet.PortletContext;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.ResourceRequest;
+import jakarta.portlet.ResourceResponse;
+import jakarta.portlet.ResourceURL;
+import jakarta.portlet.faces.BridgeFactoryFinder;
+import jakarta.portlet.filter.ResourceResponseWrapper;
+import jakarta.servlet.http.Cookie;
 
 /**
  * @author  Neil Griffin

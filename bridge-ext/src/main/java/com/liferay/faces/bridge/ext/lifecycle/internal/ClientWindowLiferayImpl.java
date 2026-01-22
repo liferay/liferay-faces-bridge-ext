@@ -15,12 +15,12 @@ package com.liferay.faces.bridge.ext.lifecycle.internal;
 
 import java.util.Map;
 
-import javax.faces.component.UINamingContainer;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.lifecycle.ClientWindow;
-import javax.faces.lifecycle.ClientWindowWrapper;
-import javax.faces.render.ResponseStateManager;
+import jakarta.faces.component.UINamingContainer;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.lifecycle.ClientWindow;
+import jakarta.faces.lifecycle.ClientWindowWrapper;
+import jakarta.faces.render.ResponseStateManager;
 
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

@@ -13,7 +13,7 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.MutableResourceParameters;
+import jakarta.portlet.MutableResourceParameters;
 
 
 /**

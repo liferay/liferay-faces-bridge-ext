@@ -15,10 +15,10 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.util.Enumeration;
 
-import javax.portlet.EventRequest;
-import javax.portlet.PortalContext;
-import javax.portlet.PortletConfig;
-import javax.portlet.filter.EventRequestWrapper;
+import jakarta.portlet.EventRequest;
+import jakarta.portlet.PortalContext;
+import jakarta.portlet.PortletConfig;
+import jakarta.portlet.filter.EventRequestWrapper;
 
 
 /**

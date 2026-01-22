@@ -17,13 +17,13 @@ import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.filter.EventResponseWrapper;
-import javax.servlet.http.Cookie;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.portlet.EventRequest;
+import jakarta.portlet.EventResponse;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.filter.EventResponseWrapper;
+import jakarta.servlet.http.Cookie;
 
 /**
  * @author  Neil Griffin

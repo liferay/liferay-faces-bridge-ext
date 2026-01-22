@@ -15,13 +15,13 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.util.Enumeration;
 
-import javax.portlet.HeaderRequest;
-import javax.portlet.PortalContext;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
-import javax.portlet.filter.HeaderRequestWrapper;
+import jakarta.portlet.HeaderRequest;
+import jakarta.portlet.PortalContext;
+import jakarta.portlet.PortletConfig;
+import jakarta.portlet.PortletContext;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.WindowState;
+import jakarta.portlet.filter.HeaderRequestWrapper;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;

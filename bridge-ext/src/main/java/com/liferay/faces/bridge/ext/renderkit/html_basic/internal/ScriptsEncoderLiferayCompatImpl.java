@@ -16,7 +16,7 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import javax.faces.context.ExternalContext;
+import jakarta.faces.context.ExternalContext;
 
 import com.liferay.faces.util.client.ScriptsEncoder;
 

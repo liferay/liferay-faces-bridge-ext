@@ -15,7 +15,7 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.util.Map;
 
-import javax.portlet.BaseURL;
+import jakarta.portlet.BaseURL;
 
 
 /**

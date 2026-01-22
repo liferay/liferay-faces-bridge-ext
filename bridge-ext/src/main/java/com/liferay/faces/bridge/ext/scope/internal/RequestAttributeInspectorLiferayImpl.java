@@ -20,23 +20,23 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.portlet.PortalContext;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
-import javax.portlet.faces.Bridge;
-import javax.portlet.faces.RequestAttributeInspector;
-import javax.portlet.faces.RequestAttributeInspectorWrapper;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.portlet.PortalContext;
+import jakarta.portlet.PortletConfig;
+import jakarta.portlet.PortletContext;
+import jakarta.portlet.PortletPreferences;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletResponse;
+import jakarta.portlet.PortletSession;
+import jakarta.portlet.faces.Bridge;
+import jakarta.portlet.faces.RequestAttributeInspector;
+import jakarta.portlet.faces.RequestAttributeInspectorWrapper;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
@@ -56,11 +56,11 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 	private static final Logger logger = LoggerFactory.getLogger(RequestAttributeInspectorLiferayImpl.class);
 
 	// Private Constants for EXCLUDED namespaces listed in Section 5.1.2 of the JSR 329 Spec
-	private static final String EXCLUDED_NAMESPACE_JAVAX_FACES = "javax.faces";
-	private static final String EXCLUDED_NAMESPACE_JAVAX_PORTLET = "javax.portlet";
-	private static final String EXCLUDED_NAMESPACE_JAVAX_PORTLET_FACES = "javax.portlet.faces";
-	private static final String EXCLUCED_NAMESPACE_JAVAX_SERVLET = "javax.servlet";
-	private static final String EXCLUCED_NAMESPACE_JAVAX_SERVLET_INCLUDE = "javax.servlet.include";
+	private static final String EXCLUDED_NAMESPACE_JAVAX_FACES = "jakarta.faces";
+	private static final String EXCLUDED_NAMESPACE_JAVAX_PORTLET = "jakarta.portlet";
+	private static final String EXCLUDED_NAMESPACE_JAVAX_PORTLET_FACES = "jakarta.portlet.faces";
+	private static final String EXCLUCED_NAMESPACE_JAVAX_SERVLET = "jakarta.servlet";
+	private static final String EXCLUCED_NAMESPACE_JAVAX_SERVLET_INCLUDE = "jakarta.servlet.include";
 
 	// Private Constants
 	private static final List<String> LIFERAY_ATTRIBUTE_NAMES;
@@ -132,7 +132,7 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAVAX_PORTLET_FACES) &&
 				!Bridge.PORTLET_LIFECYCLE_PHASE.equals(name)) {
 
-			// The "javax.portlet.faces.phase" request attribute must never be excluded, as it is required by {@link
+			// The "jakarta.portlet.faces.phase" request attribute must never be excluded, as it is required by {@link
 			// BridgeUtil#getPortletRequestPhase()}.
 			excluded = true;
 		}
@@ -171,8 +171,8 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 			}
 			else if (value instanceof PortletConfig) {
 
-				// Liferay Portal includes request attribute named "javax.portlet.config" that must not be excluded. It
-				// also includes an attribute named "javax.portlet.portlet" that is the current GenericFacesPortlet
+				// Liferay Portal includes request attribute named "jakarta.portlet.config" that must not be excluded. It
+				// also includes an attribute named "jakarta.portlet.portlet" that is the current GenericFacesPortlet
 				// (which extends GenericPortlet). But since GenericPortlet implements the PortletConfig interface, need
 				// to prevent it from being excluded as well.
 				if (!JavaConstants.JAVAX_PORTLET_CONFIG.equals(name) &&
@@ -182,14 +182,14 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 			}
 			else if (value instanceof PortletRequest) {
 
-				// Liferay Portal includes request attribute named "javax.portlet.request" that must not be excluded.
+				// Liferay Portal includes request attribute named "jakarta.portlet.request" that must not be excluded.
 				if (!JavaConstants.JAVAX_PORTLET_REQUEST.equals(name)) {
 					excluded = true;
 				}
 			}
 			else if (value instanceof PortletResponse) {
 
-				// Liferay Portal includes request attribute named "javax.portlet.response" that must not be excluded.
+				// Liferay Portal includes request attribute named "jakarta.portlet.response" that must not be excluded.
 				if (!JavaConstants.JAVAX_PORTLET_RESPONSE.equals(name)) {
 					excluded = true;
 				}

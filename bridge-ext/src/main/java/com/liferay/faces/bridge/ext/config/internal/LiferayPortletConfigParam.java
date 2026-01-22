@@ -13,8 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.config.internal;
 
-import javax.faces.context.ExternalContext;
-import javax.portlet.PortletConfig;
+import jakarta.faces.context.ExternalContext;
+import jakarta.portlet.PortletConfig;
 
 import com.liferay.faces.util.config.ConfigParam;
 import com.liferay.faces.util.helper.BooleanHelper;
@@ -26,8 +26,8 @@ import com.liferay.faces.util.helper.BooleanHelper;
 public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 
 	/**
-	 * Flag indicating whether or not JSF {@link javax.faces.bean.ManagedBean} classes annotated with {@link
-	 * javax.faces.bean.RequestScoped} should be distinct for each portlet. Default value is false.
+	 * Flag indicating whether or not JSF {@link jakarta.faces.bean.ManagedBean} classes annotated with {@link
+	 * jakarta.faces.bean.RequestScoped} should be distinct for each portlet. Default value is false.
 	 */
 	DistinctRequestScopedManagedBeans("com.liferay.faces.bridge.distinctRequestScopedManagedBeans", false),
 
@@ -61,7 +61,7 @@ public enum LiferayPortletConfigParam implements ConfigParam<PortletConfig> {
 	 * order to ensure that PrimeFaces CSS remains on the page after SennaJS navigation (in order to hide PrimeFaces
 	 * elements that may not have been cleaned up). This value can be overridden on a per-component basis by setting the
 	 * data-senna-track attribute as a JSF pass-through attribute in your view or via {@link
-	 * javax.faces.component.UIComponent#getPassThroughAttributes()}. This value will be ignored if {@link
+	 * jakarta.faces.component.UIComponent#getPassThroughAttributes()}. This value will be ignored if {@link
 	 * #PrimeFacesCSSRenderDefaultDataSennaTrack} is set to false.
 	 */
 	PrimeFacesCSSDefaultDataSennaTrackValue("com.liferay.faces.bridge.ext.primeFacesCSSDefaultDataSennaTrackValue",

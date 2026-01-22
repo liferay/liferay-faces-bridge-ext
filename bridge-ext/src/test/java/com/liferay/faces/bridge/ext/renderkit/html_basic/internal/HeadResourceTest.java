@@ -16,8 +16,8 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.ResponseWriter;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.ResponseWriter;
 
 import org.junit.Assert;
 import org.junit.Test;

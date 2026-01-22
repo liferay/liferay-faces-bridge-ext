@@ -46,14 +46,14 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>javax.enterprise</groupId>
+			<groupId>jakarta.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<version>@cdi-api-version@</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.faces</groupId>
-			<artifactId>javax.faces-api</artifactId>
+			<groupId>jakarta.faces</groupId>
+			<artifactId>jakarta.faces-api</artifactId>
 			<version>@faces-api-version@</version>
 			<scope>provided</scope>
 		</dependency>

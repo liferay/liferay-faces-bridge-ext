@@ -13,10 +13,10 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.MimeResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.ResourceURL;
+import jakarta.portlet.MimeResponse;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.ResourceURL;
 
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 

@@ -16,8 +16,8 @@ package com.liferay.faces.bridge.ext.i18n.internal;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 
 import com.liferay.faces.util.i18n.I18n;
 import com.liferay.faces.util.i18n.I18nUtil;

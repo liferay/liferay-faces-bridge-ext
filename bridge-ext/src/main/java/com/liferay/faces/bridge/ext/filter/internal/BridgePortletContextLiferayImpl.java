@@ -16,9 +16,9 @@ package com.liferay.faces.bridge.ext.filter.internal;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.filter.PortletContextWrapper;
+import jakarta.portlet.PortletContext;
+import jakarta.portlet.PortletRequestDispatcher;
+import jakarta.portlet.filter.PortletContextWrapper;
 
 
 /**

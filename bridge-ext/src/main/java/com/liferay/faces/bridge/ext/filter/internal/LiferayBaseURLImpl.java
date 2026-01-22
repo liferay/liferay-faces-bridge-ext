@@ -18,7 +18,7 @@ import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.portlet.PortletSecurityException;
+import jakarta.portlet.PortletSecurityException;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
 

@@ -15,9 +15,9 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.io.IOException;
 
-import javax.portlet.PortletMode;
-import javax.portlet.RenderParameters;
-import javax.portlet.WindowState;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.RenderParameters;
+import jakarta.portlet.WindowState;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
 

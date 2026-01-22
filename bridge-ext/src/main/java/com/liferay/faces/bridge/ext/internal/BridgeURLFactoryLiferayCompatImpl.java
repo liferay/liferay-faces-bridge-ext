@@ -13,8 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.internal;
 
-import javax.portlet.faces.Bridge;
-import javax.portlet.faces.BridgeURLFactory;
+import jakarta.portlet.faces.Bridge;
+import jakarta.portlet.faces.BridgeURLFactory;
 
 
 /**

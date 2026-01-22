@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
-import javax.portlet.BaseURL;
-import javax.portlet.PortletSecurityException;
+import jakarta.portlet.BaseURL;
+import jakarta.portlet.PortletSecurityException;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
 

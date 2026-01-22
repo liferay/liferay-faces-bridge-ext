@@ -15,11 +15,11 @@ package com.liferay.faces.bridge.ext;
 
 import java.io.IOException;
 
-import javax.portlet.PortletException;
-import javax.portlet.PortletMode;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.faces.GenericFacesPortlet;
+import jakarta.portlet.PortletException;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.RenderRequest;
+import jakarta.portlet.RenderResponse;
+import jakarta.portlet.faces.GenericFacesPortlet;
 
 import org.osgi.annotation.versioning.ConsumerType;
 

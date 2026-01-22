@@ -15,11 +15,11 @@ package com.liferay.faces.bridge.ext.context.internal;
 
 import java.util.Enumeration;
 
-import javax.portlet.PortalContext;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletRequest;
-import javax.portlet.WindowState;
-import javax.portlet.faces.Bridge;
+import jakarta.portlet.PortalContext;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.WindowState;
+import jakarta.portlet.faces.Bridge;
 
 import com.liferay.faces.bridge.context.BridgePortalContext;
 import com.liferay.faces.util.helper.BooleanHelper;

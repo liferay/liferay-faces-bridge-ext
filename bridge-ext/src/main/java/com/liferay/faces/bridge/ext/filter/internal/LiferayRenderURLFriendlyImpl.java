@@ -13,9 +13,9 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.PortletURL;
-import javax.portlet.RenderURL;
-import javax.portlet.annotations.PortletSerializable;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.RenderURL;
+import jakarta.portlet.annotations.PortletSerializable;
 
 
 /**

@@ -15,13 +15,13 @@ package com.liferay.faces.bridge.ext.filter.internal;
 
 import java.util.List;
 
-import javax.portlet.MimeResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+import jakarta.portlet.MimeResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 
 
 /**
- * This class wraps an instance of javax.servlet.http.HttpServletRequest which represents the "original" request that
+ * This class wraps an instance of jakarta.servlet.http.HttpServletRequest which represents the "original" request that
  * Liferay received that initiated the rendering of the current portlet.
  */
 public class LiferayHttpServletRequest extends HttpServletRequestWrapper {

@@ -15,8 +15,8 @@ package com.liferay.faces.bridge.ext.renderkit.html_basic.internal;
 
 import java.io.IOException;
 
-import javax.faces.context.ResponseWriter;
-import javax.faces.context.ResponseWriterWrapper;
+import jakarta.faces.context.ResponseWriter;
+import jakarta.faces.context.ResponseWriterWrapper;
 
 import com.liferay.faces.util.application.ResourceUtil;
 import com.liferay.faces.util.lang.NameValuePair;

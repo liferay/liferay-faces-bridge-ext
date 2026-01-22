@@ -13,8 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.context.internal;
 
-import javax.portlet.PortalContext;
-import javax.portlet.PortletRequest;
+import jakarta.portlet.PortalContext;
+import jakarta.portlet.PortletRequest;
 
 import com.liferay.faces.util.helper.BooleanHelper;
 

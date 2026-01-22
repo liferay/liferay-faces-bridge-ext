@@ -13,8 +13,8 @@
  */
 package com.liferay.faces.bridge.ext.filter.internal;
 
-import javax.portlet.PortletURL;
-import javax.portlet.RenderURL;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.RenderURL;
 
 
 /**
