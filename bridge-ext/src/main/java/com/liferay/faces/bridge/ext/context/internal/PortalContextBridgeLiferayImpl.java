@@ -19,7 +19,6 @@ import jakarta.portlet.PortalContext;
 import jakarta.portlet.PortletMode;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.WindowState;
-import jakarta.portlet.faces.Bridge;
 
 import com.liferay.faces.bridge.context.BridgePortalContext;
 import com.liferay.faces.util.helper.BooleanHelper;

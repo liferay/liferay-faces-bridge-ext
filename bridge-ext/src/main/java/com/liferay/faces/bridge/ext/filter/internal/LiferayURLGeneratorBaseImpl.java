@@ -25,7 +25,6 @@ import java.util.Set;
 
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.render.RenderKit;
 import jakarta.portlet.PortletMode;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
