@@ -182,7 +182,7 @@
 			com.liferay.faces.util.*,\
 			com.sun.faces.*,\
 			jakarta.faces.*,\
-			jakarta.portlet.faces
+			com.liferay.faces
 		</osgi.dynamic.import.package.liferay.faces.bridge>
 		<!-- Ensures that the PrimeFaces component/renderer classes can be loaded dynamically via -->
 		<!-- Class.forName(String) -->
@@ -219,7 +219,7 @@
 			jakarta.annotation,\
 			jakarta.el,\
 			jakarta.faces,\
-			jakarta.portlet.faces,\
+			com.liferay.faces,\
 			net.fortuna.ical4j.*;resolution:=optional,\
 			org.apache.axis.tools.ant.*;resolution:=optional,\
 			org.apache.poi.*;resolution:=optional,\

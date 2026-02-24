@@ -58,7 +58,7 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 	// Private Constants for EXCLUDED namespaces listed in Section 5.1.2 of the JSR 329 Spec
 	private static final String EXCLUDED_NAMESPACE_JAKARTA_FACES = "jakarta.faces";
 	private static final String EXCLUDED_NAMESPACE_JAKARTA_PORTLET = "jakarta.portlet";
-	private static final String EXCLUDED_NAMESPACE_JAKARTA_PORTLET_FACES = "jakarta.portlet.faces";
+	private static final String EXCLUDED_NAMESPACE_JAKARTA_PORTLET_FACES = "com.liferay.faces";
 	private static final String EXCLUCED_NAMESPACE_JAKARTA_SERVLET = "jakarta.servlet";
 	private static final String EXCLUCED_NAMESPACE_JAKARTA_SERVLET_INCLUDE = "jakarta.servlet.include";
 
@@ -132,7 +132,7 @@ public class RequestAttributeInspectorLiferayImpl extends RequestAttributeInspec
 		else if (isNamespaceMatch(name, EXCLUDED_NAMESPACE_JAKARTA_PORTLET_FACES) &&
 				!Bridge.PORTLET_LIFECYCLE_PHASE.equals(name)) {
 
-			// The "jakarta.portlet.faces.phase" request attribute must never be excluded, as it is required by {@link
+			// The "com.liferay.faces.phase" request attribute must never be excluded, as it is required by {@link
 			// BridgeUtil#getPortletRequestPhase()}.
 			excluded = true;
 		}
