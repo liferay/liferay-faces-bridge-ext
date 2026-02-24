@@ -23,7 +23,7 @@ import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 import jakarta.portlet.ResourceURL;
-import jakarta.portlet.faces.BridgeFactoryFinder;
+import com.liferay.faces.BridgeFactoryFinder;
 import jakarta.portlet.filter.RenderResponseWrapper;
 import jakarta.servlet.http.Cookie;
 

@@ -20,11 +20,11 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.portlet.PortletResponse;
 import jakarta.portlet.PortletURL;
-import jakarta.portlet.faces.Bridge;
-import jakarta.portlet.faces.BridgeConfig;
-import jakarta.portlet.faces.BridgeURL;
-import jakarta.portlet.faces.BridgeURLWrapper;
-import jakarta.portlet.faces.BridgeUtil;
+import com.liferay.faces.Bridge;
+import com.liferay.faces.BridgeConfig;
+import com.liferay.faces.BridgeURL;
+import com.liferay.faces.BridgeURLWrapper;
+import com.liferay.faces.BridgeUtil;
 
 
 /**

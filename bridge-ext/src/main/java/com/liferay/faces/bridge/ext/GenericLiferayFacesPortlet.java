@@ -19,7 +19,7 @@ import jakarta.portlet.PortletException;
 import jakarta.portlet.PortletMode;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
-import jakarta.portlet.faces.GenericFacesPortlet;
+import com.liferay.faces.GenericFacesPortlet;
 
 import org.osgi.annotation.versioning.ConsumerType;
 

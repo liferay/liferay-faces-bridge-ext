@@ -25,7 +25,7 @@ import jakarta.portlet.PortletContext;
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderURL;
 import jakarta.portlet.ResourceURL;
-import jakarta.portlet.faces.BridgeFactoryFinder;
+import com.liferay.faces.BridgeFactoryFinder;
 import jakarta.portlet.filter.HeaderResponseWrapper;
 import jakarta.servlet.http.Cookie;
 

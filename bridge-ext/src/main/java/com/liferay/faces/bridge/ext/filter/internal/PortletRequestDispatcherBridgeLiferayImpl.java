@@ -22,7 +22,7 @@ import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletRequestDispatcher;
 import jakarta.portlet.PortletResponse;
 import jakarta.portlet.PortletSession;
-import jakarta.portlet.faces.BridgeFactoryFinder;
+import com.liferay.faces.BridgeFactoryFinder;
 import jakarta.portlet.filter.PortletRequestDispatcherWrapper;
 import jakarta.portlet.filter.PortletRequestWrapper;
 import jakarta.portlet.filter.PortletResponseWrapper;

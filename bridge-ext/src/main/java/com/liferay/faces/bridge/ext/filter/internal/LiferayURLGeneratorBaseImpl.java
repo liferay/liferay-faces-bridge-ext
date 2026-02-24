@@ -29,7 +29,7 @@ import jakarta.portlet.PortletMode;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.WindowState;
-import jakarta.portlet.faces.BridgeException;
+import com.liferay.faces.BridgeException;
 
 import com.liferay.faces.util.helper.StringHelper;
 import com.liferay.faces.util.logging.Logger;
