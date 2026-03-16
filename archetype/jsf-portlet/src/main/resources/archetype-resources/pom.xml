@@ -34,13 +34,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>jakarta.faces</groupId>
-			<artifactId>jakarta.faces-api</artifactId>
+			<groupId>com.liferay</groupId>
+			<artifactId>jakarta.faces.api</artifactId>
 			<version>@faces-api-version@</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.liferay.faces</groupId>
+			<groupId>com.liferay</groupId>
 			<artifactId>jakarta.faces</artifactId>
 			<version>@mojarra-version@</version>
 			<scope>${faces.impl.scope}</scope>
