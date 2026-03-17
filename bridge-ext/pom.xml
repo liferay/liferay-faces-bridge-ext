@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay.faces</groupId>
 	<artifactId>com.liferay.faces.bridge.ext</artifactId>
-	<version>9.0.0-SNAPSHOT</version>
+	<version>9.0.0</version>
 	<name>Liferay Faces Bridge Ext</name>
 	<description>Liferay Faces Bridge Extenstions for Liferay Portal</description>
 
@@ -404,25 +404,26 @@
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.bridge.api</artifactId>
-			<version>7.0.0-SNAPSHOT</version>
+			<version>7.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.faces</groupId>
 			<artifactId>com.liferay.faces.util</artifactId>
-			<version>5.0.0-SNAPSHOT</version>
+			<version>5.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>181.1.0-SNAPSHOT</version>
+			<!-- DXP.2026.Q1: https://github.com/liferay/liferay-portal-ee/blob/release-2026.q1/portal-kernel/bnd.bnd#L3 -->
+			<version>181.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.util.taglib</artifactId>
-			<version>28.3.0-SNAPSHOT</version>
+			<version>28.2.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
