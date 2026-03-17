@@ -235,19 +235,20 @@
 								com.liferay.faces.util.*;version="[5.0.0,6.0.0)",\
 								com.liferay.faces.bridge.*;version="[7.0.0,8.0.0)",\
 								com.liferay.faces.portlet.*;version="[7.0.0,8.0.0)",\
-								com.liferay.portal.kernel.exception,\
-								com.liferay.portal.kernel.language,\
-								com.liferay.portal.kernel.model,\
-								com.liferay.portal.kernel.portlet,\
-								com.liferay.portal.kernel.security.permission,\
-								com.liferay.portal.kernel.service,\
-								com.liferay.portal.kernel.service.permission,\
-								com.liferay.portal.kernel.servlet.taglib.aui,\
-								com.liferay.portal.kernel.theme,\
-								com.liferay.portal.kernel.util,\
-								com.liferay.portal.kernel.servlet,\
-								com.liferay.portal.kernel.servlet.taglib.util,\
-								com.liferay.taglib.util,\
+								com.liferay.portal.kernel.exception;version=16.5,\
+								com.liferay.portal.kernel.language;version=13.1,\
+								com.liferay.portal.kernel.model;version=48.0,\
+								com.liferay.portal.kernel.portlet;version=34.0,\
+								com.liferay.portal.kernel.security.permission;version=13.0,\
+								com.liferay.portal.kernel.service;version=52.0,\
+								com.liferay.portal.kernel.service.permission;version=12.1,\
+								com.liferay.portal.kernel.servlet.taglib.aui;version=10.1,\
+                                com.liferay.portal.kernel.cookies;version=5.0,\
+								com.liferay.portal.kernel.theme;version=14.1,\
+								com.liferay.portal.kernel.util;version=96.4,\
+								com.liferay.portal.kernel.servlet;version=17.2,\
+								com.liferay.portal.kernel.servlet.taglib.util;version=7.0,\
+								com.liferay.taglib.util;version=15.1,\
 								com.liferay.faces.*;version="[7.0.0,8.0.0)",\
 								*
 							# The following configuration enables the Bridge API bundle to obtain necessary SPI
